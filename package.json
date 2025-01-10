@@ -5,7 +5,7 @@
     "start": "govuk-prototype-kit start"
   },
   "dependencies": {
-    "@dwp/dwp-frontend": "3.3.0",
+    "@dwp/dwp-frontend": "3.2.0",
     "@govuk-prototype-kit/common-templates": "2.0.1",
     "@govuk-prototype-kit/step-by-step": "2.2.3",
     "find-an-address-plugin": "github:dwp/find-an-address-plugin",
@@ -13,26 +13,6 @@
     "govuk-prototype-kit": "13.16.2",
     "hmrc-frontend": "6.42.0",
     "jquery": "3.7.1",
-
     "notifications-node-client": "8.2.1"
-  },
-  "name": "launchpad-prototype",
-  "description": "Use this template to create new prototypes in DWP. This template is updated with every major version release of the GOVUK prototype kit.",
-  "version": "1.0.0",
-  "main": "index.js",
-  "devDependencies": {
-    "gulp-sass": "^6.0.1",
-    "sass": "^1.86.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dwp/launchpad-prototype.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/dwp/launchpad-prototype/issues"
-  },
-  "homepage": "https://github.com/dwp/launchpad-prototype#readme"
+  }
 }

@@ -9,7 +9,7 @@ const router = govukPrototypeKit.requests.setupRouter()
 // Find an address plugin
 const findAddressPlugin = require("find-an-address-plugin");
 
-findAddressPlugin(router);  
+findAddressPlugin(router);
 
 // Logging session data  
 // This code shows in the terminal what session data has been saved.
@@ -23,18 +23,6 @@ router.use((req, res, next) => {
    
   next()  
 })  
-
-// Base route
-router.get('/main-1', function(req, res) {
-  res.render('main-1')
-})
-
-// Subfolder route
-router.get('/v0/main-1', function(req, res) {
-  res.render('v0/main-1')
-})
-
-module.exports = router
 
 // This code shows in the terminal what page you are on and what the previous page was.
 router.use('/', (req, res, next) => {  
@@ -59,52 +47,3 @@ router.use('/', (req, res, next) => {
 
 
   // Add your routes here
-
-  //PIP E2E ROUTING//
-
-  // Scenario selection 
-  router.post('/scenario-answer', function(request, response) {
-
-    var scenario = request.session.data['scenario']
-    if (scenario == "self"){
-        response.redirect("e2e/sign-in/sign-in-home-pip-1-start")
-    } else if (scenario == "invited"){
-      response.redirect("e2e/sign-in/sign-in-home-pip-2-continue")
-  }
-})
-
-  // Identity routing
-  router.post('/identity-answer', function(request, response) {
-
-    var scenario = request.session.data['scenario'];
-    if (scenario === "self"){
-        response.redirect("e2e/home-supporting-evidence")
-    } else if (scenario === "invited"){
-      response.redirect("e2e/home-pip-2-continue")
-  }
-})
-
-  // IDV
-  router.post('/idv', function(request, response) {
-
-    var scenario = request.session.data['scenario'];
-    if (scenario === "self"){
-        response.redirect("e2e/oidv/confirm-your-identity-start")
-    } else if (scenario === "invited"){
-      response.redirect("e2e/home-supporting-evidence")
-  }
-})
-
-// HIG end
-
-router.post('/hig-submitted', function(request, response) {
-
-  var scenario = request.session.data['scenario'];
-  if (scenario === "self"){
-      response.redirect("e2e/health-form/hig-submitted-idv-no")
-  } else if (scenario === "invited"){
-    response.redirect("e2e/health-form/hig-submitted-idv-complete")
-}
-})
-
-

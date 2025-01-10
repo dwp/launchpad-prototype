@@ -1,148 +1,25 @@
 {% extends "layouts/main.html" %}
 
-{% set pageName="Personal Independence Payment" %}
+{% set pageName="Home" %}
 
 {% block content %}
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    {% from "govuk/components/button/macro.njk" import govukButton %}
+    {% include "govuk-prototype-kit/includes/homepage-top.njk" %}
 
-      
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-full">
-        <h1 class="govuk-heading-xl">PIP Home Prototype</h1>
-    
-        <p>This prototype is managed by <a
-            href="https://dwpdigital.atlassian.net/wiki/spaces/HPDU/pages/133637996566/Team+Buzzard">Team Buzzard</a></p>
+    <h1 class="govuk-heading-xl">
+      {{ serviceName }}
+    </h1>
 
-            <h2 class="govuk-heading-m">Appointee UR May 2025</a></h2>
 
-            <div class="govuk-grid-row">
-              <div class="govuk-grid-column-one-half">
-                 
-              
-                      <h2 class="govuk-heading-s"> <a href="../v1/scenarios/scenario1/email-welcome.html" class="govuk-link">Scenario 1</a></h2>
-            
-                      <!-- <h2 class="govuk-heading-s"> <a href="../v0/main-2.html" class="govuk-link">PIP 2 Start </a></h2> -->
-                     
-                      <!-- <p>Add information about their health condition or disability to complete the PIP application.</p> -->
-            
-              
-              
-                      <h2 class="govuk-heading-s"> <a href="../v1/scenarios/scenario2/sign-in-home.html" class="govuk-link">Scenario 2</a></h2>
-            
-                      <h2 class="govuk-heading-s"> <a href="../v1/scenarios/scenario3/sign-in-home.html" class="govuk-link">Scenario 3</a></h2>
-                     
-                     
-                     
-                      
-            
-                      <!-- <p>Add information about their health condition or disability to complete the PIP application.</p> -->
-                      
-                 
-                
-            
-                    </div>
-            
-                  </div>
-            
-                  <h2 class="govuk-heading-s"> <a href="../v1/scenarios/scenario4/sign-in-home.html" class="govuk-link">Scenario 4</a></h2>
-            
-                  <h2 class="govuk-heading-s"> <a href="../v1/scenarios/scenario5/sign-in-home.html" class="govuk-link">Scenario 5</a></h2>
-                  
-                
-                  <h2 class="govuk-heading-s"> <a href="../v1/scenarios/scenario6/sign-in-home.html" class="govuk-link">Scenario 6</a></h2>
-                  
-            
-    
-            <h2 class="govuk-heading-m">Screens with progress bar</a></h2>
-
-            <div class="govuk-grid-row">
-              <div class="govuk-grid-column-one-half">
-                 
-              
-                      <h2 class="govuk-heading-s"> <a href="../v0/main-1.html" class="govuk-link">PIP 1 Start </a></h2>
-
-                      <!-- <h2 class="govuk-heading-s"> <a href="../v0/main-2.html" class="govuk-link">PIP 2 Start </a></h2> -->
-                     
-                      <!-- <p>Add information about their health condition or disability to complete the PIP application.</p> -->
-
-              
-              
-                      <h2 class="govuk-heading-s"> <a href="../v0/main-1-con.html" class="govuk-link">PIP 1 Continue</a></h2>
-
-                      <h2 class="govuk-heading-s"> <a href="../v0/main-2-con.html" class="govuk-link">PIP 2 Continue</a></h2>
-                     
-                     
-                     
-                      
-
-                      <!-- <p>Add information about their health condition or disability to complete the PIP application.</p> -->
-                      
-                 
-                
-
-                    </div>
-
-                  </div>
-
-                  <h2 class="govuk-heading-s"> <a href="../v0/main-3.html" class="govuk-link">OIDV and add supporting evidence</a></h2>
-
-                  <h2 class="govuk-heading-s"> <a href="../v0/main-4.html" class="govuk-link">Application submitted</a></h2>
-                  
-                
-
-</h3>
+      {{ govukButton({
+          text: "Continue",
+          href: "example/where-do-you-live"
+        }) }}
+    {% include "govuk-prototype-kit/includes/homepage-bottom.njk" %}
   </div>
 </div>
-
-<hr class="govuk-section-break govuk-section-break--visible">
-
-<br>
-<br>
-
-<h2 class="govuk-heading-m">Screens without progress bar</a></h2>
-
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-one-half">
-     
-  
-          <h2 class="govuk-heading-s"> <a href="../v0/sans-prog/main-1-n.html" class="govuk-link">PIP 1 Start </a></h2>
-
-          <!-- <h2 class="govuk-heading-s"> <a href="../v0/main-2.html" class="govuk-link">PIP 2 Start </a></h2> -->
-         
-          <!-- <p>Add information about their health condition or disability to complete the PIP application.</p> -->
-
-  
-  
-          <h2 class="govuk-heading-s"> <a href="../v0/sans-prog/main-1-con-n.html" class="govuk-link">PIP 1 Continue</a></h2>
-
-          <h2 class="govuk-heading-s"> <a href="../v0/sans-prog/main-2-con-n.html" class="govuk-link">PIP 2 Continue</a></h2>
-         
-         
-         
-          
-
-          <!-- <p>Add information about their health condition or disability to complete the PIP application.</p> -->
-          
-     
-    
-
-        </div>
-
-      </div>
-
-      <h2 class="govuk-heading-s"> <a href="../v0/sans-prog/main-3-n.html" class="govuk-link">OIDV and add supporting evidence</a></h2>
-
-      <h2 class="govuk-heading-s"> <a href="../v0/sans-prog/main-4-n.html" class="govuk-link">Application submitted</a></h2>
-      
-    
-      <hr class="govuk-section-break govuk-section-break--visible">
-
-<br>
-<br>
-
-
 
 {% endblock %}
