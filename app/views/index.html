@@ -1,24 +1,29 @@
 {% extends "layouts/main.html" %}
 
-{% set pageName="Home" %}
+{% set pageName="Launch Pad" %}
 
 {% block content %}
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    {% include "govuk-prototype-kit/includes/homepage-top.njk" %}
+    
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <h1 class="govuk-heading-xl">Prototype Home</h1>
+    
+        <p>This prototype is managed by <a
+            href="https://dwpdigital.atlassian.net/wiki/spaces/HPDU/pages/133637996566/Team+Buzzard">Team Buzzard</a></p>
+    
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-full">
+            <h1 class="govuk-heading-l">
+    
+              Hello world
+    
+    
+              <h3 class="govuk-heading-s">
+  
 
-    <h1 class="govuk-heading-xl">
-      {{ serviceName }}
-    </h1>
-
-
-      {{ govukButton({
-          text: "Continue",
-          href: "example/where-do-you-live"
-        }) }}
-    {% include "govuk-prototype-kit/includes/homepage-bottom.njk" %}
   </div>
 </div>
 
