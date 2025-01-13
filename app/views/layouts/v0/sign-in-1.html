@@ -1,0 +1,72 @@
+{% set status = "signed-out" %}
+{% set pageTitle = "Sign in" %}
+
+{% extends "layout-p5-v12.html" %}
+
+{% block pageTitle %}
+  {{ pageTitle }} {% include "p5-v12/_page-title-slug.html" %}
+{% endblock %}
+
+{% block beforeContent %}
+  {% include "p5-v12/_beta-banner.html" %}
+  {% include "p5-v12/_back-link.html" %}
+{% endblock %}
+
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-l">Sign in</h1>
+
+      <form action="code-text-1" method="post" novalidate>
+
+        {{ govukInput({
+          label: {
+            text: "Enter your email address"
+          },
+          hint: {
+            text: "This must be the same email address we sent your invitation email to."
+          },
+          id: "email",
+          name: "email",
+          type: "email",
+          autocomplete: "email",
+          classes: "govuk-input--width-20",
+          attributes: {
+            spellcheck: "false"
+          }
+        }) }}
+
+        {{ govukInput({
+        label: {
+          text: "Enter your password"
+        },
+          classes: "govuk-input--width-20",
+          id: "password",
+          name: "password",
+          type: "password",
+          attributes: {
+            spellcheck: "false"
+          }
+        }) }}
+
+{#         {{ govukButton({
+          text: "Continue"
+        }) }} #}
+
+
+          <a href="code-text-1" class="govuk-button">Continue</a>
+
+
+      </form>
+
+
+      <p><a href="/p5-v12/sign-in/register-start">Register now</a> if you have not used this service before.</p>
+      <p><a href="/p5-v12/sign-in/forgot-password">I forgot my password</a></p>
+
+    </div>{# /govuk-grid-column-two-thirds #}
+  </div>{# /govuk-grid-row #}
+
+{% endblock %}
