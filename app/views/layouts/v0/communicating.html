@@ -1,0 +1,88 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Start page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block header %}
+  <!-- Blank header with no service name for the start page -->
+  {{ govukHeader() }}
+{% endblock %}
+
+{% block beforeContent %}
+
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "#"
+      },
+      {
+        text: "Section",
+        href: "#"
+      },
+      {
+        text: "Subsection"
+      }
+    ]
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+
+<form id="form" method="post" action="#">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+            <h1 class="govuk-fieldset__heading">
+              Communicating with us
+            </h1>
+          </legend>
+          <p>We need to know whether you have difficulty communicating with us due to any of these things:</p>
+
+          <ul class="govuk-list govuk-list--bullet">
+            <li>a mental health condition</li>
+            <li>learning, developmental or behavioural difficulties</li>
+            <li>a cognitive impairment</li>
+          </ul>
+
+          <p>This could include difficulty sending information to us or difficulty understanding information we send you.</p>
+
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+            <h2 class="govuk-fieldset__heading">
+              Do you have difficulty communicating with us?
+            </h2>
+          </legend>
+
+          <div class="govuk-radios govuk-radios--inline">
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="add-support-communicating-1" name="add-support-communicating"
+                type="radio" value="Yes">
+              <label class="govuk-label govuk-radios__label" for="add-support-communicating-1">
+                Yes
+              </label>
+            </div> <!-- govuk-radios__item -->
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="add-support-communicating-2" name="add-support-communicating"
+                type="radio" value="No">
+              <label class="govuk-label govuk-radios__label" for="add-support-communicating-2">
+                No
+              </label>
+            </div> <!-- govuk-radios__item -->
+
+          </div> <!-- govuk-radios -->
+
+        </fieldset>
+      </div> <!-- govuk-form-group -->
+
+      <input type="submit" class="govuk-button" value="Save and continue" id="submit">
+
+    </div> <!-- govuk-grid-column-two-thirds -->
+  </div> <!-- govuk-grid-column-two-thirds -->
+</form>
+
+{% endblock %}
