@@ -1,0 +1,18 @@
+{% from "macros/progress-indicator.njk" import progressIndicator %}
+
+{{ progress-indicator({
+
+steps: [
+    {
+        text: "Personal details",
+        complete: true
+
+    },
+    {
+        text: "Submission",
+        active: true
+
+    }
+]
+
+})}}

@@ -9,7 +9,7 @@ const router = govukPrototypeKit.requests.setupRouter()
 // Find an address plugin
 const findAddressPlugin = require("find-an-address-plugin");
 
-findAddressPlugin(router);
+findAddressPlugin(router);  
 
 // Logging session data  
 // This code shows in the terminal what session data has been saved.
@@ -23,6 +23,18 @@ router.use((req, res, next) => {
    
   next()  
 })  
+
+// Base route
+router.get('/main-1', function(req, res) {
+  res.render('main-1')
+})
+
+// Subfolder route
+router.get('/v0/main-1', function(req, res) {
+  res.render('v0/main-1')
+})
+
+module.exports = router
 
 // This code shows in the terminal what page you are on and what the previous page was.
 router.use('/', (req, res, next) => {  
