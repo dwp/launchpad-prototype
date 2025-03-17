@@ -1,0 +1,77 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Home - Your Application
+{% endblock %}
+
+{% block header %}
+  <!-- Standard GOV.UK header with username -->
+  {{ govukHeader({
+    homepageUrl: "/",
+    serviceName: "Your service name",
+    serviceUrl: "/",
+    navigation: [
+      {
+        href: "#",
+        text: "UserName"
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <!-- H1 heading -->
+      <h1 class="govuk-heading-xl">Home</h1>
+      
+      <!-- Horizontal navigation from DWP design system -->
+      <nav class="dwp-navigation" aria-label="Navigation">
+        <ul class="dwp-navigation__list">
+          <li class="dwp-navigation__item dwp-navigation__item--active">
+            <a class="dwp-navigation__link" href="#" aria-current="page">Your application</a>
+          </li>
+        </ul>
+      </nav>
+      
+      <!-- Progress bar component -->
+      <div class="app-progress-bar">
+        <ol class="app-progress-bar__list">
+          <li class="app-progress-bar__item app-progress-bar__item--current">
+            <span class="app-progress-bar__icon"></span>
+            <span class="app-progress-bar__label">Step 1</span>
+          </li>
+          <li class="app-progress-bar__item">
+            <span class="app-progress-bar__icon"></span>
+            <span class="app-progress-bar__label">Step 2</span>
+          </li>
+          <li class="app-progress-bar__item">
+            <span class="app-progress-bar__icon"></span>
+            <span class="app-progress-bar__label">Step 3</span>
+          </li>
+          <li class="app-progress-bar__item">
+            <span class="app-progress-bar__icon"></span>
+            <span class="app-progress-bar__label">Step 4</span>
+          </li>
+          <li class="app-progress-bar__item">
+            <span class="app-progress-bar__icon"></span>
+            <span class="app-progress-bar__label">Step 5</span>
+          </li>
+        </ol>
+      </div>
+      
+      <!-- H2 heading -->
+      <h2 class="govuk-heading-l">Title</h2>
+      
+      <!-- Paragraph section -->
+      <p class="govuk-body">
+        This is the paragraph section where you can provide information to the user.
+      </p>
+      
+      <!-- Link to other content -->
+      <p class="govuk-body">
+        <a href="#" class="govuk-link">Link to other content</a>
+      </p>
+    </div>
+  </div>
+{% endblock %}
