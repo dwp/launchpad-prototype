@@ -1,0 +1,86 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Home - Your Application
+{% endblock %}
+
+{% block header %}
+  <!-- Standard GOV.UK header with username -->
+  {{ govukHeader({
+    homepageUrl: "/",
+    serviceName: "Apply for Personal Independence Payment (PIP)",
+    serviceUrl: "/",
+    navigation: [
+      {
+        href: "#",
+        text: "Help and contact"
+      },
+
+      {
+        href: "#",
+        text: "Sign out"
+      },
+
+      {
+        href: "/v0/sans-prog/main-3-n.html",
+        text: "Next"
+      }
+
+
+
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+ 
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+    
+            <!-- <div class="govuk-width-container">
+                <main class="govuk-main-wrapper"> -->
+                  <!-- <div class="govuk-grid-row"> -->
+     <h1 class="govuk-caption-xl">UserName</h1>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">PIP Home</h1>
+    
+      
+      <!-- Horizontal navigation from DWP design system -->
+      <nav class="dwp-horizontal-navigation" aria-label="Horizontal">
+        <ul class="dwp-horizontal-navigation__list">
+        <li class="dwp-horizontal-navigation__item dwp-horizontal-navigation__item--selected">
+          <a id="s-item-1" href="#s-item-1" class="dwp-horizontal-navigation__link" aria-current="true">Your application</a>
+        </li>
+        <li class="dwp-horizontal-navigation__item">
+          <!-- <a id="s-item-2" href="#s-item-2" class="dwp-horizontal-navigation__link">Item 2</a> -->
+        </li>
+        <li class="dwp-horizontal-navigation__item">
+          <!-- <a id="s-item-3" href="#s-item-3" class="dwp-horizontal-navigation__link">Item 3</a> -->
+        </li>
+        </ul>
+        </nav>
+      
+  
+        <br>
+        <br>
+      
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-one-half">
+        <!-- H2 heading -->
+      <h3 class="govuk-heading-m">Your health and daily life</h3>
+      
+      
+
+      <!-- Paragraph section -->
+      <p class="govuk-body">
+        Tell us about your health condition or disability and how it affects you. There are 16 sections to complete.
+      </p>
+      
+      <!-- Link to other content -->
+      <p class="govuk-body">
+        <a href="#" class="govuk-link">Continue your application</a>
+      </p>
+    </div>
+    </div>
+        </div>
+  </div>
+{% endblock %}
