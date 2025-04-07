@@ -59,3 +59,27 @@ router.use('/', (req, res, next) => {
 
 
   // Add your routes here
+
+  //PIP E2E ROUTING//
+
+  // Scenario selection 
+  router.post('/scenario-answer', function(request, response) {
+
+    var scenario = request.session.data['scenario']
+    if (scenario == "self"){
+        response.redirect("e2e/sign-in/sign-in-home-pip-1-start")
+    } else if (scenario == "invited"){
+      response.redirect("e2e/sign-in/sign-in-home-oidv")
+  }
+})
+
+  // Identity routing
+  router.post('/identity-answer', function(request, response) {
+
+    var identity = request.session.data['identity']
+    if (identity == "self-journey"){
+        response.redirect("e2e/home-supporting-evidence")
+    } else if (identity == "invited-journey"){
+      response.redirect("e2e/home-pip-2-continue")
+  }
+})

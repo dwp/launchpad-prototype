@@ -1,0 +1,111 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Home - Your Application
+{% endblock %}
+
+{% block header %}
+  <!-- Standard GOV.UK header with username -->
+  {{ govukHeader({
+    homepageUrl: "/",
+    serviceName: "Apply for Personal Independence Payment (PIP)",
+    serviceUrl: "/",
+    navigation: [
+      {
+        href: "#",
+        text: "Help and contact"
+      },
+
+      {
+        href: "signed-out",
+        text: "Sign out"
+      }
+
+
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form action="condition-details" method="post" novalidate="">
+
+      <fieldset class="govuk-fieldset moj-add-another__item">
+  
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+  
+    <h1 class="govuk-fieldset__heading">
+      What health condition or disability do you have?
+    </h1>
+  
+  </legend>
+  
+
+
+      <p>By condition or disability, we mean physical, sight, hearing or speech difficulties, learning, developmental or behavioural difficulties or mental health conditions.</p>
+
+      <p>You can add other conditions and disabilities later if you need to.</p>
+
+      
+
+<div class="govuk-form-group">
+  <label class="govuk-label govuk-!-font-weight-bold" for="condition-name-1">
+    Name of your condition or disability
+  </label>
+
+  
+  
+  <div id="condition-name-1-hint" class="govuk-hint">
+    For example, kidney failure.
+  </div>
+
+<input class="govuk-input" id="condition-name-1" name="condition-name-1" type="text" aria-describedby="condition-name-1-hint">
+
+</div>
+
+
+      
+
+<div class="govuk-form-group">
+  <label class="govuk-label govuk-!-font-weight-bold" for="condition-date-1">
+    Approximate start date
+  </label>
+
+  
+  
+  <div id="condition-date-1-hint" class="govuk-hint">
+    For example, about 14 months ago.
+  </div>
+
+<input class="govuk-input govuk-!-width-two-thirds" id="condition-date-1" name="condition-date-1" type="text" aria-describedby="condition-date-1-hint">
+
+</div>
+
+
+      
+
+</fieldset>
+
+
+      
+  
+    
+  
+
+<button type="submit" class="govuk-button" data-module="govuk-button">
+  Save and continue
+</button>
+
+
+    </form>
+
+    <p><a href="task-list-return">Return to list</a></p>
+
+
+
+  </div>
+</div>
+{% endblock %}

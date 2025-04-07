@@ -1,0 +1,56 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Home - Your Application
+{% endblock %}
+
+{% block header %}
+  <!-- Standard GOV.UK header with username -->
+  {{ govukHeader({
+    homepageUrl: "/",
+    serviceName: "Apply for Personal Independence Payment (PIP)",
+    serviceUrl: "/",
+    navigation: [
+      {
+        href: "#",
+        text: "Help and contact"
+      },
+
+      {
+        href: "../e2e/health-form/signed-out",
+        text: "Sign out"
+      }
+
+
+
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl ">
+        How your health conditions or disabilities affect you
+      </h1>
+      <p class="govuk-body">This is stage 2 of your PIP claim. This stage is about health conditions or disabilities and how they affect you.</p>
+      <p class="govuk-body">You will be asked questions about your ability to carry out everyday activities. Your answers will help us assess your entitlement to PIP. You can also upload evidence to support your claim</p>
+      <p class="govuk-body">Take your time and describe all the help you need. You do have to answer all the questions in one go. You can save your progress at any point and continue later.</p>
+      <h2 class="govuk-heading-m ">Before you start</h2>
+      <p class="govuk-body">You will need:</p>
+      <form method="post" action="task-list" name="">
+        <ul class="govuk-list govuk-list--bullet">
+            <li>Details of your health conditions or disabilities</li>
+            <li>Details of any medicines or treatments you have</li>
+            <li>Your health and care professionals' contact details</li>
+          </ul>
+        
+        <input class="govuk-button " type="submit" value="Continue">
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}
