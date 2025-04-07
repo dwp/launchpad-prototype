@@ -1,0 +1,115 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Home - Your Application
+{% endblock %}
+
+{% block header %}
+  <!-- Standard GOV.UK header with username -->
+  {{ govukHeader({
+    homepageUrl: "/",
+    serviceName: "Apply for Personal Independence Payment (PIP)",
+    serviceUrl: "/",
+    navigation: [
+      {
+        href: "#",
+        text: "Help and contact"
+      },
+
+      {
+        href: "signed-out",
+        text: "Sign out"
+      }
+
+
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <!-- <p class="govuk-!-font-size-24">You have added details for:
+      <br><strong></strong>
+    </p> -->
+
+    <form action="check" method="post" novalidate="">
+
+      
+
+
+<div class="govuk-form-group">
+
+<fieldset class="govuk-fieldset">
+
+<legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+
+  <h1 class="govuk-fieldset__heading">
+    Do you have another condition or disability?
+  </h1>
+
+</legend>
+
+
+<div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+  
+    
+        
+      
+      
+      
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="condition2" name="condition2" type="radio" value="Yes">
+        <label class="govuk-label govuk-radios__label" for="condition2">
+      Yes
+    </label>
+        
+      </div>
+      
+      
+    
+  
+    
+      
+      
+      
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="condition2-2" name="condition2" type="radio" value="No">
+        <label class="govuk-label govuk-radios__label" for="condition2-2">
+      No
+    </label>
+        
+      </div>
+      
+      
+    
+  
+</div>
+
+
+</fieldset>
+
+
+</div>
+
+
+      
+
+  
+
+
+<button type="submit" class="govuk-button" data-module="govuk-button">
+Save and continue
+</button>
+
+
+    </form>
+
+    <p><a href="task-list-return">Return to list</a></p>
+
+
+  </div>
+</div>
+{% endblock %}

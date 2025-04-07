@@ -1,0 +1,107 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Home - Your Application
+{% endblock %}
+
+{% block header %}
+  <!-- Standard GOV.UK header with username -->
+  {{ govukHeader({
+    homepageUrl: "/",
+    serviceName: "Apply for Personal Independence Payment (PIP)",
+    serviceUrl: "/",
+    navigation: [
+      {
+        href: "#",
+        text: "Help and contact"
+      },
+
+      {
+        href: "../e2e/claim-registration/signed-out",
+        text: "Sign out"
+      }
+
+
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+  
+      <!--Start row-->
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            {% from "language-toggle/macro.njk" import dwpLanguageToggle %}
+
+            {{
+                dwpLanguageToggle({
+                    selectedLang: "en",
+                    href: {
+                        en: "#",
+                        cy: "#"
+                    }
+                })
+            }}
+              <!-- <div class="govuk-width-container">
+                  <main class="govuk-main-wrapper"> -->
+                    <!-- <div class="govuk-grid-row"> -->
+          <h1 class="govuk-caption-xl">UserName</h1>
+          <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">PIP Home</h1>
+    
+        
+    
+          <br>
+          <br>
+        </div>
+      </div>
+      <!-- End row -->
+      
+      <!-- Start row -->
+        <div class="govuk-grid-row">
+          <!-- Start cards -->
+          <ul class="nhsuk-grid-row nhsuk-card-group">
+            <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+          
+              <div class="nhsuk-card nhsuk-card--clickable">
+                <div class="nhsuk-card__content nhsuk-card__content--primary">
+                  <h2 class="nhsuk-card__heading nhsuk-heading-m">
+                    <a class="nhsuk-card__link" href="../e2e/claim-registration/start.html">Enter your details</a>
+                  </h2>
+                  <p class="nhsuk-card__description">Tell us about you, your health or care providers and if you have any communication needs.</p>
+          
+                  <svg class="nhsuk-icon" xmlns="http://www.w3.org/2000/svg" width="27" height="27" aria-hidden="true" focusable="false">
+                    <circle cx="13.333" cy="13.333" r="13.333" fill="" />
+                    <g data-name="Group 1" fill="none" stroke="#fff" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2.667">
+                      <path d="M15.438 13l-3.771 3.771" />
+                      <path data-name="Path" d="M11.667 9.229L15.438 13" />
+                    </g>
+                  </svg>
+          
+                </div>
+              </div>
+          
+            </li>
+
+    
+          </ul>
+          <!-- End cards -->
+           
+          <!--<div class="govuk-grid-column-one-half">-->
+        <!-- H2 heading -->
+        <!-- <h3 class="govuk-heading-m">Your details</h3>-->
+      
+      
+
+      <!-- Paragraph section -->
+      <!-- <p class="govuk-body">
+        Tell us about you, your health or care providers and if you have any communication needs. 
+      </p>-->
+      
+      <!-- Link to other content -->
+     <!-- <p class="govuk-body">
+        <a href="../e2e/claim-registration/start.html" class="govuk-link">Start your application</a>
+      </p>
+          </div>-->
+        </div>
+
+{% endblock %}

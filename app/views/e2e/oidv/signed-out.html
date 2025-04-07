@@ -1,0 +1,41 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Home - Your Application
+{% endblock %}
+
+{% block header %}
+  <!-- Standard GOV.UK header with username -->
+  {{ govukHeader({
+    homepageUrl: "/",
+    serviceName: "Apply for Personal Independence Payment (PIP)",
+    serviceUrl: "/",
+    navigation: [
+
+
+
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+ 
+<form id="form" method="post" action="#">
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div class="govuk-panel govuk-panel--confirmation">
+        <h1 class="govuk-panel__title">
+          You have signed out
+        </h1>
+      </div> <!-- govuk-panel -->
+      <h2 class="govuk-heading-m">What happens next</h2>
+      <p>To complete your claim <a href="../sign-in/sign-in-home-oidv-supporting-evidence.html">sign in</a> again.</p>
+      <p>You will need your email address, mobile phone and password when you next sign in.</p>
+      <p>It is now safe to close this window.</p>
+    </div>
+  </div>
+</form>
+    </div> <!-- govuk-grid-column-two-thirds -->
+</div>
+{% endblock %}

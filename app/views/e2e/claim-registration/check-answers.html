@@ -1,0 +1,78 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Home - Your Application
+{% endblock %}
+
+{% block header %}
+  <!-- Standard GOV.UK header with username -->
+  {{ govukHeader({
+    homepageUrl: "/",
+    serviceName: "Apply for Personal Independence Payment (PIP)",
+    serviceUrl: "/",
+    navigation: [
+    {
+      href: "#",
+      text: "Help and contact"
+    },
+
+    {
+      href: "signed-out",
+      text: "Sign out"
+    }
+
+
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+<form id="form" method="post" action="../claim-registration/name">
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl">
+        Check your answers
+      </h1>
+
+      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Need help to communicate with us
+          </dt>
+          <dd class="govuk-summary-list__value">
+            No
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="./communicating">
+              Change<span class="govuk-visually-hidden"> if you need help communicating</span>
+            </a>
+          </dd>
+        </div> <!-- govuk-summary-list__row -->
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Need help with forms or letters
+          </dt>
+          <dd class="govuk-summary-list__value">
+            No
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="./forms-letters">
+              Change<span class="govuk-visually-hidden"> if you need help </span>
+            </a>
+          </dd>
+        </div> <!-- govuk-summary-list__row -->
+
+        
+
+        
+      </dl>
+
+      <input type="submit" class="govuk-button" data-module="govuk-button" value="Confirm and save" id="submit">
+    </div> <!-- govuk-grid-column-two-thirds-from-desktop -->
+  </div> <!-- govuk-grid-row -->
+
+</form>
+{% endblock %}
