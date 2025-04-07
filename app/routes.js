@@ -76,10 +76,21 @@ router.use('/', (req, res, next) => {
   // Identity routing
   router.post('/identity-answer', function(request, response) {
 
-    var identity = request.session.data['identity']
-    if (identity == "self-journey"){
+    var scenario = request.session.data['scenario'];
+    if (scenario === "self"){
         response.redirect("e2e/home-supporting-evidence")
-    } else if (identity == "invited-journey"){
+    } else if (scenario === "invited"){
       response.redirect("e2e/home-pip-2-continue")
+  }
+})
+
+  // Identity routing
+  router.post('/idv', function(request, response) {
+
+    var scenario = request.session.data['scenario'];
+    if (scenario === "self"){
+        response.redirect("e2e/home-oidv-supporting-evidence")
+    } else if (scenario === "invited"){
+      response.redirect("e2e/home-supporting-evidence")
   }
 })
