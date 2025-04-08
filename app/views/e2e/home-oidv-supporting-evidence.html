@@ -29,11 +29,6 @@
 
 {% block content %}
 
-{{ govukNotificationBanner({
-  title: "Important",
-  html: "<strong>Before we can review your application, <span style='white-space: nowrap;'>you need to </span>confirm your identity.</strong>"
-}) }}
-
 
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
@@ -47,7 +42,12 @@
                       cy: "#"
                   }
               })
-          }}   
+          }}
+
+          {{ govukNotificationBanner({
+            title: "Important",
+            html: "<strong>Before we can review your application, <span style='white-space: nowrap;'>you need to </span>confirm your identity.</strong>"
+          }) }}
             <!-- <div class="govuk-width-container">
                 <main class="govuk-main-wrapper"> -->
                   <!-- <div class="govuk-grid-row"> -->
@@ -60,7 +60,7 @@
       <br>
        </div>
       </div>
-      <h3 class="govuk-heading-s">Your form has been submitted.</h3>
+      <h3 class="govuk-heading-s">You have submitted your application.</h3>
    
        
       
@@ -95,7 +95,7 @@
               <h2 class="nhsuk-card__heading nhsuk-heading-m">
                 <a class="nhsuk-card__link" href="../e2e/additional-supporting-evidence/supporting-evidence">Upload supporting evidence</a>
               </h2>
-              <p class="nhsuk-card__description">Even if you have uploaded evidence already, you can still add more. This may be a document such as a recent medical letter.</p>
+              <p class="nhsuk-card__description">Add documents such as recent medical letters. You can upload more at any time.</p>
       
               <svg class="nhsuk-icon" xmlns="http://www.w3.org/2000/svg" width="27" height="27" aria-hidden="true" focusable="false">
                 <circle cx="13.333" cy="13.333" r="13.333" fill="" />
