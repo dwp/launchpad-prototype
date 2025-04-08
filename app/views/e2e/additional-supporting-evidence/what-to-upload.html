@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block header %}
-  <!-- Standard GOV.UK header with username -->
+  <!-- Standard GOV.UK header with Firstname Lastname -->
   {{ govukHeader({
     homepageUrl: "/",
     serviceName: "Apply for Personal Independence Payment (PIP)",
@@ -49,11 +49,10 @@
         <li>appointment cards or letters</li>
         <li>general information or fact sheets about your condition or medication</li>
       </ul>
-      <p class="govuk-body">You can add more evidence afer you've submitted your PIP claim if you need to.</p>
-      <h2 class="govuk-heading-m">Do you want to upload any supporting evidence now?</h2>
+      <p class="govuk-body">Do not request documents you have to pay for.</p>
 
       <form method="post" action="upload" name="">
-        {% from "govuk/components/radios/macro.njk" import govukRadios %}
+        <!--{% from "govuk/components/radios/macro.njk" import govukRadios %}
 
 {{ govukRadios({
   classes: "govuk-radios--inline",
@@ -68,7 +67,7 @@
       text: "No"
     }
   ]
-}) }}
+      }) }}-->
         
         <input class="govuk-button " type="submit" value="Continue">
 
