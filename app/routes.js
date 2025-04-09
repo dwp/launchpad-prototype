@@ -69,7 +69,7 @@ router.use('/', (req, res, next) => {
     if (scenario == "self"){
         response.redirect("e2e/sign-in/sign-in-home-pip-1-start")
     } else if (scenario == "invited"){
-      response.redirect("e2e/sign-in/sign-in-home-oidv")
+      response.redirect("e2e/sign-in/sign-in-home-pip-2-continue")
   }
 })
 
