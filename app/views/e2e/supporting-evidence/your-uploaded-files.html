@@ -26,6 +26,15 @@
   }) }}
 {% endblock %}
 
+{% block beforeContent %}
+  {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+  {{ govukBackLink({
+  text: "Back",
+  href: "#"
+  }) }}
+{% endblock %}
+
 {% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">

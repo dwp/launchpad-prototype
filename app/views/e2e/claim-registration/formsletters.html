@@ -25,7 +25,14 @@
     ]
   }) }}
 {% endblock %}
+{% block beforeContent %}
+  {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 
+  {{ govukBackLink({
+  text: "Back",
+  href: "#"
+  }) }}
+{% endblock %}
 {% block content %}
 <form id="form" method="post" action="../claim-registration/check-answers">
   <div class="govuk-grid-row">
