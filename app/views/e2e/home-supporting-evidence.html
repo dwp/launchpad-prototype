@@ -32,7 +32,17 @@
 
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-    
+          {% from "language-toggle/macro.njk" import dwpLanguageToggle %}
+
+          {{
+              dwpLanguageToggle({
+                  selectedLang: "en",
+                  href: {
+                      en: "#",
+                      cy: "#"
+                  }
+              })
+          }}
             <!-- <div class="govuk-width-container">
                 <main class="govuk-main-wrapper"> -->
                   <!-- <div class="govuk-grid-row"> -->
