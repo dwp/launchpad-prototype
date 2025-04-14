@@ -84,13 +84,27 @@ router.use('/', (req, res, next) => {
   }
 })
 
-  // Identity routing
+  // IDV
   router.post('/idv', function(request, response) {
 
     var scenario = request.session.data['scenario'];
     if (scenario === "self"){
-        response.redirect("e2e/home-oidv-supporting-evidence")
+        response.redirect("e2e/oidv/confirm-your-identity-start")
     } else if (scenario === "invited"){
       response.redirect("e2e/home-supporting-evidence")
   }
 })
+
+// HIG end
+
+router.post('/hig-submitted', function(request, response) {
+
+  var scenario = request.session.data['scenario'];
+  if (scenario === "self"){
+      response.redirect("e2e/health-form/hig-submitted-idv-no")
+  } else if (scenario === "invited"){
+    response.redirect("e2e/health-form/hig-submitted-idv-complete")
+}
+})
+
+
