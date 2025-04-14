@@ -26,7 +26,7 @@
   }) }}
 {% endblock %}
 
-{% block content %}
+{% block content %} 
 <form name="idv" method="post" action="/idv">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
@@ -45,15 +45,17 @@
       <!-- <p class="govuk-body">If you're awarded PIP, your payments will start from today.</p> -->
       <p class="govuk-body">We have received your stage 2 form. We have sent a confirmation email to [email address].</p>
       <h2 class="govuk-heading-m">What happens next</h2>
-      <h3 class="govuk-heading-s">If you have not confirmed your identity</h3>
-      <p class="govuk-body">We cannot assess your application until you <a href="#"> your identity</a>. Do this as soon as possible. We check everyone's identity to protect from fraud.</p>
-      <h3 class="govuk-heading-s">If you have confirmed your identity</h3>
-      <p class="govuk-body">Your PIP claim will progress to the assessment stage.
-        We will keep you up to date about your PIP claim by text message if you have agreed for us to do this.</p>
-      <p class="govuk-body">You might be contacted to arrange an assessment with a health professional if more information is needed. You may not need an assessment if you have provided enough information for us to make a decision.</p>
-      <h3 class="govuk-heading-s">If you want to add more supporting evidence</h3>
-      <p class="govuk-body">You can <a href="#">upload more evidence</a> to support your application at any time.</p>
-      <!-- <input type="submit" class="govuk-button" value="Tell us how your conditions affect you" id="submit"> -->
+      <p class="govuk-body">You need to confirm your identity as soon as possible. We check everyone's identity to protect from fraud.</p>
+      {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+      {{ govukWarningText({
+        text: "We cannot assess your application until you confirm your identity.",
+        iconFallbackText: "Warning"
+      }) }}
+      <input type="submit" class="govuk-button" value="Tell us how your conditions affect you" id="submit"> 
+      <h2 class="govuk-heading-m">If you want to add more supporting evidence</h2>
+      <p class="govuk-body">You can <a href="../e2e/home-supporting-evidence">return to PIP Home</a> upload more evidence to support your application at any time.</p>
+      <!-- -->
 
       <!-- <p class="govuk-body">If you are getting Disability Living Allowance at the moment, this will stop if you do not send your answers and upload any evidence you have by this date.</p> -->
       <input class="govuk-button govuk-button--start" type="submit" value="Continue">
