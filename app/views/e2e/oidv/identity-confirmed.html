@@ -10,36 +10,45 @@
     homepageUrl: "/",
     serviceName: "Apply for Personal Independence Payment (PIP)",
     serviceUrl: "/",
-    navigation: [      {
-        href: "#",
-        text: "Help and contact"
-      },
+    navigation: [
+    {
+      href: "#",
+      text: "Help and contact"
+    },
 
-      {
-        href: "signed-out",
-        text: "Sign out"
-      }
+    {
+      href: "../oidv/signed-out",
+      text: "Sign out"
+    }
+
 
     ]
   }) }}
 {% endblock %}
 
-{% block content %}
-<div class="govuk-grid-row">
+{% block content %} 
+<form name="idv" method="post" action="/idv">
+  <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <h1 class="govuk-heading-xl ">
-        Identity confirmed: copy to be confirmed
-      </h1>
+      <div class="govuk-panel govuk-panel--confirmation">
+          <h1 class="govuk-panel__title">
+            Identity confirmed
+          </h1>
+          <!--<div class="govuk-panel__body">
+            You must submit further details by <br><strong>12th April 2024</strong>.
+          </div>-->
+        </div>
+     
+      <h2 class="govuk-heading-m">What happens next</h2>
+      <p class="govuk-body">You do not need to do anything.</p>
+      <p class="govuk-body">We will assess your application.  If we need more information, we will contact you to arrange an assessment with a health professional.</p>
 
-      <form method="post" action="/identity-answer" name="identity">
+      <h2 class="govuk-heading-m">If you want to add more supporting evidence</h2>
+      <p class="govuk-body">You can <a href="../e2e/home-supporting-evidence">sign out</a> and return later to confirm your identity or upload more evidence to support your application.</p>
 
-        
-        <input class="govuk-button " type="submit" value="Continue">
-
-      </form>
 
     </div>
   </div>
-
+</form>
 {% endblock %}
