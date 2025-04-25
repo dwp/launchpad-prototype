@@ -1,0 +1,130 @@
+{% extends "layout.html" %}
+
+{% set pageTitle = "Personal Independence Payment: health condition or disability" %}
+
+{% block pageTitle %}
+  {{ pageTitle }}
+{% endblock %}
+
+{% block header %}
+<p style="padding: 20px; margin: 0"><strong>Subject:</strong> {{ pageTitle }}</p>
+  {% include "cookie-banner.html" %}
+  {# Set serviceName in config.js. #}
+  {{ govukHeader({
+    homepageUrl: "/",
+    serviceName: &nbsp;,
+    serviceUrl: "/",
+    containerClasses: "notify-width-container-border"
+  }) }}
+{% endblock %} 
+
+{% block beforeContent %}
+{% endblock %}
+
+{% block content %}
+
+
+<div class="notify-width-container">
+
+  <!-- <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+      <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+        Prototype notes
+      </h2>
+    </div>
+    <div class="govuk-notification-banner__content">
+      <p class="govuk-notification-banner__heading">
+        This email content was tested with users and does not sit at this point in the user journey. Appointees would receive this after the agent UI flow and before the registration flow.
+      </p>
+    </div>
+  </div> -->
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full sans">
+
+      <p>Dear Appointee name,</p>
+
+      <p>We have received the Personal Independance Payment (PIP) application you started for  <br> James Smith.</p>
+
+      <p>For the next part of the PIP application, we will ask about their daily living and mobility needs to help us make our decision. 
+        </p>
+      <p>If we need more information after you have submitted the application, we may invite you to do an assesment.
+      </p>
+
+      <h2 class="govuk-heading-m">When to fill in the application by</h2>
+
+      <p>You will need to answer all the questions and upload any 
+        evidence you have by: </p>
+       <p>31 October 2024  </p>
+
+<p><b>Need more time? </p>
+      <p>
+        If you need a bit longer to fill in the form, let us know. 
+        Otherwise, once the deadline has past, we may need to 
+        end the PIP claim. </p> <p> Our contact details are at the end of this email.  </p>
+<br>
+      
+        <h1 class="govuk-heading-s">Are they receiving Disability Living Allowance (DLA)? </h1>
+
+     <p>DLA is being replaced by PIP. If they are getting DLA at 
+      the moment, this will stop if you do not complete the 
+      form by the return date.</p>
+      <br>
+     <h2 class="govuk-heading-m">Useful tips before you start</h2>
+
+     <p>You need to register to access our online service. </p>
+     <p>We will ask you to enter your email address and some basic information. We will then send a 6 digit code to your mobile phone number. After we have verified it is you, you can set a password.</p>
+     <p>Before you register, have the following ready: </p>
+     <ul class="govuk-list govuk-list--bullet">
+      <li>the email address we sent this email to and access to your emails </li>
+        <li>your mobile phone</li>
+      <li>James Smith's National Insurance number</li>
+     </ul>
+      <p> Go to <a href="../apply-for-pip/account-home.html" >https://www.apply-for-pip.dwp.gov.uk/register</a></p> <br>
+
+
+      <h2 class="govuk-heading-m">How to complete the form</h2>
+
+      <p>Once logged in, we will ask you questions about James' 
+        health condition or disability and how it affects them. You 
+        will also be able to upload any supporting evidence.</p>
+
+      <p>You do not need to answer all the questions in one go 
+        and can save and return.
+         </p>
+
+      <p>Save this email or bookmark the sign in page so you can 
+        continue your application.</p>
+
+  
+
+        <h2 class="govuk-heading-m">Help and support</h2>
+      <p>There is information at each step of the online service to help you. </p>
+      <p>You can download our PDF guide for completing the form once you have registered.</p>
+        <p>If you change your mind and would prefer to complete a paper form instead, contact us so we can post it to you.</p>
+
+        <h2 class="govuk-heading-m">Contact us</h2>
+        <div class="govuk-inset-text">
+      <p>Telephone: 0800 121 4433<br>
+      Textphone (if you have speech or hearing difficulties): 0800 121 4493 <br>Relay UK (if you cannot hear or speak on the phone): 18001 then 0800 121 4433 <br>
+      <a href="#">https://www.relayuk.bt.com </a></p>
+
+      <p>Video relay service for British Sign Language (BSL) users:<br> <a href="#">https://
+        conntect.interpreterslive.co.uk/vrs?ilc=DWP</a> <br> <br>
+        Check if you can use the video relay service: <br> 
+        <a href="#"> https://www.youtube.com/watch?v=oELNMfAvDxw </a></p>
+        <p>Open 9am to 5pm, Monday to Friday</p>
+        </div>
+        
+        <h2 class="govuk-heading-m">Keep your information safe</h2>
+        <p>        <p>Please do not reply to this message. We will not answer any emails sent to this email address. If you have any questions about PIP or the application you've submitted, contact us.</p>
+<p>DWP will never ask you to send any usernames, passwords, personal, health, medical or bank account information via email.</p>
+    </div>{# /govuk-grid-column-two-thirds #}
+
+  </div>{# /govuk-grid-row #}
+
+</div>{# /notify-width-container #}
+
+{% endblock %}
+{% block footer %}
+{% endblock %}

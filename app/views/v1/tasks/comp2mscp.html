@@ -1,0 +1,67 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Home - Your Application
+{% endblock %}
+
+{% block header %}
+  <!-- Standard GOV.UK header with Firstname Lastname -->
+  {{ govukHeader({
+    homepageUrl: "/",
+    serviceName: "Apply for Personal Independence Payment (PIP)",
+    serviceUrl: "/",
+    navigation: [
+      {
+        href: "#",
+        text: "Help and contact"
+      },
+      {
+        href: "../e2e/health-form/signed-out",
+        text: "Sign out"
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      {% from "language-toggle/macro.njk" import dwpLanguageToggle %}
+      {{
+        dwpLanguageToggle({
+          selectedLang: "en",
+          href: {
+            en: "#",
+            cy: "#"
+          }
+        })
+      }}
+      <h1 class="govuk-caption-xl govuk-!-margin-top-0">Jasmine Kang</h1>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">PIP Home</h1>
+      <br>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h3 class="govuk-heading-m govuk-!-margin-bottom-2">Application for others</h3>
+      <p>Choose the application you want to view.</p>
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">James Kang</dt>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="#">Continue application<span class="govuk-visually-hidden"> name</span></a>
+          </dd>
+        </div>
+        <!-- Duplicate row added -->
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Sarah Philips</dt>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="#">Continue application<span class="govuk-visually-hidden"> name</span></a>
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+{% endblock %}
+```
