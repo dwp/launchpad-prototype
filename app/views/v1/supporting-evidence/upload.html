@@ -1,0 +1,76 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Home - Your Application
+{% endblock %}
+
+{% block header %}
+  <!-- Standard GOV.UK header with Firstname Lastname -->
+  {{ govukHeader({
+    homepageUrl: "/",
+    serviceName: "Apply for Personal Independence Payment (PIP)",
+    serviceUrl: "/",
+    navigation: [
+      {
+        href: "#",
+        text: "Help and contact"
+      },
+
+      {
+        href: "signed-out",
+        text: "Sign out"
+      }
+
+
+    ]
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+  {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+  {{ govukBackLink({
+  text: "Back",
+  href: "#"
+  }) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl ">
+        Upload a file
+      </h1>
+      {% from "govuk/components/file-upload/macro.njk" import govukFileUpload %}
+
+{{ govukFileUpload({
+  id: "file-upload-1",
+  name: "fileUpload1",
+  label: {
+    text: "Upload a file"
+  }
+}) }}
+      <p class="govuk-body">Your file must be:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>a PDF, JPEG, JPG, PNG, DOCX, or ODT</li>
+        <li>smaller than 10MB</li>
+      </ul>
+      {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
+      <div class="govuk-inset-text">
+        If you have problems uploading and sending your files, you can post them to us instead.<br><br>
+        DWP FREEPOST 01<br><br>
+        You do not need stamp.
+      </div>
+      <form method="post" action="your-uploaded-files" name="">
+
+        
+        <input class="govuk-button " type="submit" value="Continue">
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,124 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Home - Your Application
+{% endblock %}
+
+{% block header %}
+  <!-- Standard GOV.UK header with Firstname Lastname -->
+  {{ govukHeader({
+    homepageUrl: "/",
+    serviceName: "Apply for Personal Independence Payment (PIP)",
+    serviceUrl: "/",
+    navigation: [
+      {
+        href: "#",
+        text: "Help and contact"
+      },
+
+      {
+        href: "../e2e/health-form/signed-out",
+        text: "Sign out"
+      }
+
+
+
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+ 
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          {% from "language-toggle/macro.njk" import dwpLanguageToggle %}
+
+          {{
+              dwpLanguageToggle({
+                  selectedLang: "en",
+                  href: {
+                      en: "#",
+                      cy: "#"
+                  }
+              })
+          }}
+            <!--
+    
+             <div class="govuk-width-container">
+                <main class="govuk-main-wrapper"> -->
+                  <!-- <div class="govuk-grid-row"> -->
+     <h1 class="govuk-caption-xl govuk-!-margin-top-0">Jasmine Kang</h1> 
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-2 ">PIP Home</h1>
+    <br>
+      </div>
+      </div>
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half">
+
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-2 ">Your application</h3>
+          
+
+
+          <div class="nhsuk-card nhsuk-card--clickable">
+            <div class="nhsuk-card__content nhsuk-card__content--primary">
+              <h2 class="nhsuk-card__heading nhsuk-heading-m">
+                <a class="nhsuk-card__link" href="../scenario4/supporting-evidence.html">Upload supporting evidence</a>
+              </h2>
+              <p class="nhsuk-card__description">Add documents such as recent medical letters. Even if you have uploaded evidence already, you can still add more.</p>
+      
+              <svg class="nhsuk-icon" xmlns="http://www.w3.org/2000/svg" width="27" height="27" aria-hidden="true" focusable="false">
+                <circle cx="13.333" cy="13.333" r="13.333" fill="" />
+                <g data-name="Group 1" fill="none" stroke="#fff" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2.667">
+                  <path d="M15.438 13l-3.771 3.771" />
+                  <path data-name="Path" d="M11.667 9.229L15.438 13" />
+                </g>
+              </svg>
+      
+            </div>
+          </div>
+      
+        </li>
+  
+        <!-- <img src="/public/images/card2n.png" alt="Description" style="width: 100%; height: auto;"/> -->
+        
+  
+        <!-- Paragraph section -->
+        
+        
+        <!-- Link to other content -->
+        <p class="govuk-body">
+          <!-- <a href="#" class="govuk-link">Start your application</a> -->
+        </p>
+      </div>
+      </div>
+
+
+          <h3 class="govuk-heading-m govuk-!-margin-bottom-2 ">Application for others</h3>
+
+      <p>Choose the application you want to view.</p>
+
+
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              James Kang
+            </dt>
+            <!-- <dd class="govuk-summary-list__value">
+              Sarah Philips -->
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="#">Continue application<span class="govuk-visually-hidden"> name</span></a>
+            </dd>
+          </div>
+         
+                </li>
+              </ul>
+            </dd>
+          </div>
+        </dl>
+
+
+
+
+{% endblock %}

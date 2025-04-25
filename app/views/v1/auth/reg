@@ -1,0 +1,29 @@
+<!-- File: /Users/kevin.sinclair/Documents/prototypes/launchpad-prototype/app/views/v1/login/index.html -->
+
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1 class="govuk-heading-l">Sign in</h1>
+
+    <form method="post" action="/v1/login">
+        <div class="govuk-form-group">
+            <label class="govuk-label" for="email">
+                Email address
+            </label>
+            <input class="govuk-input" id="email" name="email" type="email" autocomplete="email" required>
+        </div>
+
+        <div class="govuk-form-group">
+            <label class="govuk-label" for="password">
+                Password
+            </label>
+            <input class="govuk-input" id="password" name="password" type="password" autocomplete="current-password" required>
+        </div>
+
+        <button class="govuk-button" data-module="govuk-button">Sign in</button>
+    </form>
+
+    <p class="govuk-body">
+        <a href="/v1/forgot-password" class="govuk-link">Forgot your password?</a>
+    </p>
+{% endblock %}
