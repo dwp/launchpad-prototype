@@ -1,0 +1,81 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Home - Your Application
+{% endblock %}
+
+{% block header %}
+  <!-- Standard GOV.UK header with Firstname Lastname -->
+  {{ govukHeader({
+    homepageUrl: "/",
+    serviceName: "Apply for Personal Independence Payment (PIP)",
+    serviceUrl: "/",
+    navigation: [
+    {
+        href: "#",
+        text: "Help and contact"
+      },
+
+      {
+        href: "signed-out",
+        text: "Sign out"
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-l ">
+        We were unable to confirm your identity</h1>
+
+
+      <p>We were unable to confirm your identity as part of our check. 
+        <br>
+        <br>
+The information you entered does not match what we found. If you think you may have entered the wrong information by mistake, you can try again by returning to PIP Home.
+
+<br>
+<br>
+
+<a href="../scenario5/home-pre-oidv-b.html" role="button" draggable="false" class="govuk-button govuk-button" data-module="govuk-button">
+  Return to PIP Home
+</a>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      I tried again and cannot continue
+    </span>
+  </summary>
+  <div class="govuk-details__text">
+    Contact our PIP enquiry line so we can explain what to do next so you can continue the application.  
+        <br>
+        <br>
+      Telephone: 0800 121 4433<br>
+      Textphone: 0800 121 4493<br>
+      Relay UK (if you cannot hear or speak on the phone): 18001 then<br> 
+      0800 121 4433<br>
+      British Sign Language (BSL)  video relay service if you’re on a computer - find out how to use the service on mobile or tablet
+      <br>
+      <br>
+
+      Monday to Friday, 9am to 5pm</p>
+  </div>
+</details>
+
+
+
+      <form method="post" action="identity-confirmed" name="">
+
+        
+      
+
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}
