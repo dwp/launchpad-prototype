@@ -20,46 +20,16 @@
         href: "../e2e/health-form/signed-out",
         text: "Sign out"
       }
+
+
+
     ]
-
   }) }}
-
-
-
-  <section class="dwp-quick-reference dwp-quick-reference--alternative " aria-label="Case information">
-    <dl class="dwp-quick-reference__block govuk-width-container">
-   
-    <dt class="dwp-quick-reference__label dwp-quick-reference__label--unbolded">You are acting on behalf of:</dt>
-
-    <dd class="dwp-quick-reference__primary">Emily Sinclair</dd>
-    </dl>
-    </section>
-  {% endblock %}
+{% endblock %}
 
 {% block content %}
  
 <a href="../scenario2/PH-list-2afo.html" class="govuk-back-link">Back</a>
-
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-          {% from "language-toggle/macro.njk" import dwpLanguageToggle %}
-
-          {{
-              dwpLanguageToggle({
-                  selectedLang: "en",
-                  href: {
-                      en: "#",
-                      cy: "#"
-                  }
-              })
-          }}
-            <!--
-    
-<div>  -->
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-
-
 
       <div class="govuk-grid-row">
         <!-- Start cards -->
@@ -69,7 +39,7 @@
             <div class="nhsuk-card nhsuk-card--clickable">
               <div class="nhsuk-card__content nhsuk-card__content--primary">
                 <h2 class="nhsuk-card__heading nhsuk-heading-m">
-                  <a class="nhsuk-card__link" href="../scenario2/PIP2-pre-emily.html">Continue the application</a>
+                  <a class="nhsuk-card__link" href="../scenario2/PIP2-pre-emily.html">Continue Emily's application</a>
                 </h2>
                 <!--<p class="nhsuk-card__description">Continue your application.</p>-->
                 <p class="nhsuk-card__description">Tell us about their health condition or disability and how it affects them. There are 16 sections to complete.</p>
