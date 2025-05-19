@@ -30,7 +30,7 @@
 {% from "govuk/components/warning-text/macro.njk"     import govukWarningText %}
 
 {% block head %}
-  {% include "includes/head.html" %}
+  {% include "head.html" %}
 {% endblock %}
 
 {% block pageTitle %}
@@ -39,13 +39,13 @@
 
 {% block header %}
   {% if status === "signed-out" %}
-    {% include "includes/cookie-banner.html" %}
+    {% include "cookie-banner.html" %}
     {{ govukHeader({
       serviceName: serviceName,
       serviceUrl: "/index.html"
     }) }}
   {% else %}
-    {% include "includes/cookie-banner.html" %}
+    {% include "cookie-banner.html" %}
     {{ govukHeader({
       serviceName: serviceName,
       serviceUrl: "/index.html",
@@ -106,7 +106,7 @@
 
 {% block bodyEnd %}
   {% block scripts %}
-    {% include "includes/scripts.html" %}
+    {% include "scripts.html" %}
     {% block pageScripts %}{% endblock %}
   {% endblock %}
   <!-- GOV.UK Prototype Kit {{releaseVersion}} -->
