@@ -1,0 +1,50 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+    <form class="form" action="/oidvScenario" method="post">
+
+      <p class="govuk-body">
+        {{govukTag({
+          text: "Scenario builder",
+          classes: "govuk-tag--green"
+        })}}
+        </p>  
+      
+      {{ govukRadios({
+        name: "oidvScenario",
+        fieldset: {
+          legend: {
+            text: "What OIDV status do you want to simulate?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--xl"
+          }
+        },
+        items: [
+          {
+            value: "Already verified by One Login",
+            text: "Already verified by One Login"
+          },
+          {
+            value: "Already verified by DTH",
+            text: "Already verified by DTH"
+          },
+          {
+            value: "Unverified",
+            text: "Unverified"
+          }
+        ]
+      }) }}
+      {{ govukButton({
+        text: "Continue"
+      }) }} 
+    </form>
+  </div>
+  <!-- End column -->
+</div>
+<!-- End row -->
+{% endblock %}

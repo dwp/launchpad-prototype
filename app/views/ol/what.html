@@ -1,0 +1,42 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+    <form class="form" action="/ol/age" method="post">
+    {% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+    {{ govukRadios({
+      classes: "govuk-radios",
+      name: "changedName",
+      fieldset: {
+        legend: {
+          text: "What do you want to do?",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--xl"
+        }
+      },
+      items: [
+        {
+          value: "Check if I'm eligible for PIP and if I can claim online",
+          text: "Check if I'm eligible for PIP and if I can claim online"
+        },
+        {
+          value: "Just check if I can claim PIP online",
+          text: "Just check if I can claim PIP online"
+        }
+      ]
+    }) }}
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+  </form>
+  </div>
+  <!-- End column -->
+</div>
+<!-- End row -->
+{% endblock %}

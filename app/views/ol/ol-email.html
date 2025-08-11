@@ -1,0 +1,36 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+    <form class="form" action="ol-login-password" method="post">
+  
+      <h1 class="govuk-label-wrapper">
+        <label class="govuk-label govuk-label--l" for="email">
+          Enter your email address to sign in to your GOV.UK One Login
+        </label>
+      </h1>
+    
+    
+      <input class="govuk-input" id="email" name="email" type="email" spellcheck="false" autocomplete="email">
+        
+    
+    
+    
+        
+      
+    
+    <button type="Submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button" data-govuk-button-init="" style="margin-top: 1rem;" href="pip-home">
+      Continue
+    </button>
+
+    </form>
+  </div>
+  <!-- End column -->
+</div>
+<!-- End row -->
+{% endblock %}

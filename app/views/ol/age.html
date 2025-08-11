@@ -1,0 +1,42 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+    <form class="form" action="/ol/pension" method="post">
+    {% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+    {{ govukRadios({
+      classes: "govuk-radios--inline",
+      name: "changedName",
+      fieldset: {
+        legend: {
+          text: "Are you 16 or over?",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--xl"
+        }
+      },
+      items: [
+        {
+          value: "yes",
+          text: "Yes"
+        },
+        {
+          value: "no",
+          text: "No"
+        }
+      ]
+    }) }}
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+  </form>
+  </div>
+  <!-- End column -->
+</div>
+<!-- End row -->
+{% endblock %}

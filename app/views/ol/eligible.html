@@ -1,0 +1,39 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+    <form class="form" action="/eligible" method="post">
+
+      {% from "govuk/components/input/macro.njk" import govukInput %}
+      <h1 class="govuk-heading-xl">Based on your answers, you're eligible to apply for PIP online</h1>
+      <p class="govuk-body">Register and fill in the first stage of the application as soon as you can. This usually takes around 15 minutes.</p>
+      <!--<p class="govuk-body">You can save your progress and return at any time.</p>-->
+      <p class="govuk-body">The date you submit this first stage will be the date of claim. The sooner you do this, the earlier your payments could start if your application is successful.</p>
+
+      {{ govukInsetText({
+        text: "This is a new online service. It is being tested with a limited number of people before it is available to everyone."
+      }) }}
+
+      {% if (data['protoVariant'] == "B") %}
+      <p class="govuk-body">You need a GOV.UK One Login to continue. You can create one if you do not already have one.</p>
+      {% endif %}
+
+      <!--<p>When we send you a message about your PIP application, we'll send it to the email address you use for your GOV.UK One Login.</p>-->
+
+      {{ govukButton({
+        text: "Start now"
+      }) }}
+
+      
+
+    </form>
+  </div>
+  <!-- End column -->
+</div>
+<!-- End row -->
+{% endblock %}

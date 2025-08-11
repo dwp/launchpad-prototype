@@ -1,0 +1,82 @@
+{% extends "layouts/ol.html" %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+      
+<h1 class="govuk-heading-xl" id="header">Your services</h1>
+
+<p class="govuk-body">You're signed in as <b>name@email.com</b></p>
+
+<h2 class="govuk-heading-m">Your accounts</h2>
+
+<ul class="govuk-list your-services__list ">
+        
+          
+  <li class="your-services__card">
+    <h3 class="govuk-heading-s your-services__card__heading" data-test-id="account-card-heading">GOV.UK email subscriptions</h3>
+    <div class="your-services__card__content">
+      <p class="govuk-body">See and manage the updates you get about GOV.UK pages you’re interested in.</p>
+      <p class="govuk-body">
+        <a class="govuk-link govuk-link--no-visited-state" href="#">Go to your GOV.UK email subscriptions</a>
+      </p>
+      <p class="govuk-body govuk-body your-services__card__last-used">Last used: 9 November 2023</p>
+    </div>
+  </li>
+
+  
+  <li class="your-services__card">
+    <h3 class="govuk-heading-s your-services__card__heading" data-test-id="account-card-heading">Ofqual subject matter specialist account</h3>
+    <div class="your-services__card__content">
+      <p class="govuk-body">Apply to give specialist advice to Ofqual.</p>
+      <p class="govuk-body">
+        <a class="govuk-link govuk-link--no-visited-state" href="#">Go to your Ofqual subject matter specialist account</a>
+      </p>
+      <p class="govuk-body govuk-body your-services__card__last-used">Last used: 18 September 2023</p>
+    </div>
+  </li>
+</ul>
+
+<h2 class="govuk-heading-m">Other services you've used</h2>
+
+<ul class="govuk-list your-services__list">
+        
+          
+  <li class="your-services__card">
+    <div class="your-services__card__content">
+      <h2 class="govuk-heading-s">A service run by HM Revenue and Customs (HMRC)</h2>
+      <p class="govuk-body govuk-body your-services__card__last-used">For example services about tax, childcare, or state pensions.</p>
+      <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-3">
+      <p class="govuk-body">At the moment, GOV.UK One Login cannot show you which HMRC service you’ve used.</p>
+      <p class="govuk-body">We’re working to make this possible. </p>
+    <h3 class="govuk-heading-s govuk-!-font-weight-regular" data-test-id="service-card-heading">
+      <a class="govuk-link govuk-link--no-visited-state" href="#">Find the HMRC service you need</a>
+    </h3>
+    <p class="govuk-body your-services__card__last-used">Last used: 26 March 2024</p>
+    </div>
+  </li>
+
+  <li class="your-services__card">
+    <div class="your-services__card__content">
+    <h3 class="govuk-heading-s govuk-!-font-weight-regular" data-test-id="service-card-heading">
+      <a class="govuk-link govuk-link--no-visited-state" href="#">Request a basic DBS check</a>
+    </h3>
+    <p class="govuk-body your-services__card__last-used">Last used: 12 March 2024</p>
+    </div>
+  </li>
+</ul>
+
+<div class="information-box">
+  <h2 class="govuk-heading-m">Services you can use with GOV.UK One Login</h2>
+  <p class="govuk-body">GOV.UK One Login is new. At the moment you can only use it to access some government services.</p>
+  <p class="govuk-body">In the future, you'll be able to use GOV.UK One Login to access all services on GOV.UK.</p>
+  <p class="govuk-body">See the <a class="govuk-link govuk-link--no-visited-state" href="https://www.gov.uk/using-your-gov-uk-one-login/services">services you can use with GOV.UK One Login</a>.</p>
+</div>
+
+
+  </div>
+</div>
+<!-- End row -->
+{% endblock %}

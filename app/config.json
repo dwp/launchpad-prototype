@@ -1,3 +1,8 @@
 {
-  "serviceName": "Launch Pad"
+  "serviceName": "",
+  "plugins": {
+  "govuk-frontend": {
+    "rebrand": true
+  }
+}
 }

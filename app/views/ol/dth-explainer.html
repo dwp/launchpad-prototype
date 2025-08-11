@@ -1,0 +1,41 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+    <form class="form" action="/ol/ol-landing" method="post">
+      <h1 class="govuk-heading-xl">How you sign in has changed</h1>
+      <p class="govuk-body">You need a GOV.UK One Login to continue. You can create one if you do not already have one. </p>
+
+      {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+      {{ govukWarningText({
+        text: "You should sign up for GOV.UK One Login using the same email address you signed in with: example@example.com.",
+        iconFallbackText: "Warning"
+      }) }}
+      <p class="govuk-body">In future, you will use your GOV.UK One Login to sign in.</p>
+
+
+      <p class="govuk-body">After you sign in or create your GOV.UK One Login, you will continue from where you last saved your application.</p>
+      <!--
+      {{ govukInsetText({
+        text: "We'll send any messages about your PIP application to the email address you use for GOV.UK One Login."
+      }) }}
+        -->
+
+      <p class="govuk-body"></p>
+
+      {{ govukButton({
+        text: "Continue to GOV.UK One Login"
+      }) }}
+
+    </form>
+  </div>
+  <!-- End column -->
+</div>
+<!-- End row -->
+{% endblock %}

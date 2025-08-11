@@ -1,0 +1,155 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+      
+
+  <dialog id="js-timeout-warning" class="govuk-timeout-warning dialog" data-module="govuk-timeout-warning" data-minutes-idle-timeout="19" data-minutes-modal-visible="1" data-minutes-with-activity-timeout="240" data-url-redirect="/session-timeout" data-text="We will delete your answers if you do not continue in the next" data-extra-text="This is to protect your information." role="dialog" aria-live="polite" aria-labelledby="dialog-title" aria-describedby="at-timer">
+<h1 id="dialog-title" class="govuk-heading-l">
+  Your answers will be deleted soon
+</h1>
+
+<div class="govuk-body">
+  <div class="timer" aria-hidden="false" aria-relevant="additions"></div>
+  <div class="at-timer govuk-visually-hidden" role="status" id="at-timer"></div>
+</div>
+
+<button class="govuk-button dialog-button js-dialog-close" data-module="govuk-button" data-govuk-button-init="">
+  Continue
+</button>
+</dialog>
+  <noscript>
+      
+
+
+
+
+
+<div class="govuk-notification-banner govuk-notification-banner--blue" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+<div class="govuk-notification-banner__header">
+<h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+Important
+</h2>
+</div>
+<div class="govuk-notification-banner__content">
+
+<div class="govuk-body">
+      <p>We will delete your answers if you do not do anything for <strong>20 minutes</strong> and you will have to start again. This is to protect your information.</p>
+  </div>
+
+</div>
+</div>
+
+
+  </noscript>
+
+
+<form name="form" method="post" autocomplete="off" novalidate="true" action="dth-explainer">
+  <input type="hidden" name="_csrf" value="qeHVKZzt-4XZtXNm1XbcKF6U7hhsCuh92Oow">
+  <input type="hidden" name="js" id="js" value="true">
+  <script>
+      document.getElementById('js').value = 'true';
+  </script>
+  
+      
+
+<fieldset class="govuk-fieldset">
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+      <h1 class="govuk-fieldset__heading" id="page-heading">
+          Sign in
+      </h1>
+  </legend>
+
+  
+      
+
+
+
+
+
+
+<div class="govuk-form-group">
+<label class="govuk-label" for="callbacks[0]">
+Email address
+</label>
+
+
+<input class="govuk-input govuk-!-width-full-width" id="callbacks[0]" name="callbacks" type="text" value="" spellcheck="false">
+
+</div>
+
+
+
+  
+
+
+<div class="govuk-show-password" data-module="show-password" data-disable-form-submit-check="false" data-show-hide-toggle-id="show-password-toggle-1" data-show-text="Show" data-hide-text="Hide" data-show-full-text="Show password" data-hide-full-text="Hide password" data-announce-show="Your password is shown" data-announce-hide="Your password is hidden">
+  <div class="govuk-form-group">
+      
+
+
+
+
+<div class="govuk-form-group">
+<label class="govuk-label" for="callbacks[1]">
+Password
+</label>
+
+
+<div class="govuk-show-password__input-wrapper"><input class="govuk-input govuk-!-width-full-width govuk-password-input govuk-input--with-password" id="callbacks[1]" name="callbacks" type="password" value="" spellcheck="false"><!--<button class="govuk-show-password__toggle" aria-controls="callbacks[1]" id="show-password-toggle-1" type="button" aria-label="Show password">Show</button>--><span class="govuk-visually-hidden" aria-live="polite">Your password is hidden</span></div>
+
+</div>
+
+  </div>
+</div>
+
+</fieldset>
+
+
+      
+
+
+
+
+<button type="submit" name="submit-button" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
+Continue
+</button>
+
+</form>
+
+
+
+  <p>
+      <a id="register" href="/register">Register now</a>
+      if you have not used this service before.
+  </p>
+
+
+<h2 class="govuk-heading-m">
+  Problems signing in
+</h2>
+
+<ul class="govuk-list sign-in">
+  <li>
+      <a id="password-reset" href="/password-reset">
+          I forgot my password
+      </a>
+  </li>
+  <li>
+      <p>
+          <a id="cannot-access-email" href="/account-recovery/cannot-access-email">
+              I cannot access the email I use to sign in
+          </a>
+      </p>
+  </li>
+</ul>
+
+
+
+  </div>
+</div>
+<!-- End row -->
+{% endblock %}

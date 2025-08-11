@@ -1,0 +1,85 @@
+{% extends "di-govuk-one-login-service-header/layouts/service-header.html" %}
+
+
+{% block pageTitle %}
+  {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block header %}
+  {{ govukOneLoginServiceHeader({
+    signOutLink: "/test-signout",
+    oneLoginLink: "/test-one-login",
+    rebrand: true,
+    serviceNavigationParams: { 
+      rebrand: true,
+      navigation: [
+      {
+        href: "#navigation1", 
+        text: "Home",
+        active: true
+      },{
+        href: "#navigation2", 
+        text: "Help and contact"
+      }], 
+      serviceName: "Apply for Personal Independence Payment (PIP)",
+      navigationLabel: "Help and support"
+    }
+  }) }}
+{% endblock %}
+
+
+{% block content %}
+
+      <!--Start row-->
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            {% from "language-toggle/macro.njk" import dwpLanguageToggle %}
+
+            {{
+                dwpLanguageToggle({
+                    selectedLang: "en",
+                    href: {
+                        en: "#",
+                        cy: "#"
+                    }
+                })
+            }}
+              <!-- <div class="govuk-width-container">
+                  <main class="govuk-main-wrapper"> -->
+                    <!-- <div class="govuk-grid-row"> -->
+          <h1 class="govuk-caption-xl">Firstname Lastname</h1>
+          <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">PIP Home</h1>
+        </div>
+      </div>
+      <!-- End row -->
+      
+      <!-- Start row -->
+        <div class="govuk-grid-row">
+          <!-- Start cards -->
+          <ul class="nhsuk-grid-row nhsuk-card-group">
+            {% include "includes/pip1-start.njk" %}
+
+    
+          </ul>
+          <!-- End cards -->
+           
+          <!--<div class="govuk-grid-column-one-half">-->
+        <!-- H2 heading -->
+        <!-- <h3 class="govuk-heading-m">Your details</h3>-->
+      
+      
+
+      <!-- Paragraph section -->
+      <!-- <p class="govuk-body">
+        Tell us about you, your health or care providers and if you have any communication needs. 
+      </p>-->
+      
+      <!-- Link to other content -->
+     <!-- <p class="govuk-body">
+        <a href="../e2e/claim-registration/start.html" class="govuk-link">Start your application</a>
+      </p>
+          </div>-->
+        </div>
+
+
+{% endblock %}

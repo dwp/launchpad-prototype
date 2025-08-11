@@ -1,0 +1,32 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+    <form class="form" action="/email" method="post">
+      {% from "govuk/components/input/macro.njk" import govukInput %}
+
+      {{ govukInput({
+        label: {
+          text: "Your email address",
+          classes: "govuk-label--xl",
+          isPageHeading: true
+        },
+        id: "email",
+        name: "email"
+      }) }} 
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+  </div>
+  <!-- End column -->
+</div>
+<!-- End row -->
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+    <form class="form" action="/logInScenario" method="post">
+      <p class="govuk-body">
+      {{govukTag({
+        text: "Scenario builder",
+        classes: "govuk-tag--green"
+      })}}
+      </p>
+
+      {{ govukRadios({
+        name: "logInScenario",
+        fieldset: {
+          legend: {
+            text: "Which scenario do you want to simulate?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--xl"
+          }
+        },
+        items: [
+          {
+            value: "Returning DTH user",
+            text: "Returning DTH user",
+            hint: {
+              text: "Choose this option for alternative One Login approach"
+            }
+          },
+          {
+            value: "Invited digital user",
+            text: "Invited digital user"
+          },
+          {
+            value: "New One Login user during migration",
+            text: "New One Login user during migration"
+          },
+          {
+            value: "Returning One Login user during migration",
+            text: "Returning One Login user during migration"
+          },
+          {
+            divider: "or"
+          },
+          {
+            value: "New One Login user after migration",
+            text: "New One Login user after migration"
+          },
+          {
+            value: "Returning One Login user after migration",
+            text: "Returning One Login user after migration"
+          }
+        ]
+      }) }}
+      {{ govukButton({
+        text: "Continue"
+      }) }} 
+    </form>
+  </div>
+  <!-- End column -->
+</div>
+
+{% if not (data['protoVariant'] == "B: condensed" ) %}
+{% endif %}
+
+<!-- End row -->
+{% endblock %}

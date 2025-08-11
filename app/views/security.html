@@ -1,0 +1,87 @@
+{% extends "layouts/ol-security.html" %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+      
+<h1 class="govuk-heading-xl" id="header">Security</h1>
+
+
+      <div class="activity-card govuk-!-margin-bottom-6">
+        <h2 class="govuk-heading-m">Your sign in details</h2>    
+        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+        <div class="govuk-summary-list__row" style="border-top: 1px solid #b1b4b6; padding-top:10px">
+          <dt class="govuk-summary-list__key">
+            Email address
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <p>
+              name@email.com
+          </p> 
+          </dd>
+    
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link govuk-link--no-visited-state" href="/page-index/home/change-email/enter-password">
+              Change<span class="govuk-visually-hidden">change email address</span>
+            </a>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row govuk-summary-list__row--no-border">
+          <dt class="govuk-summary-list__key">
+            Password
+          </dt>
+          <dd class="govuk-summary-list__value">
+            ••••••••••••••••
+          </dd>
+    
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link govuk-link--no-visited-state" href="/page-index/home/change-password/enter-current-password">
+              Change<span class="govuk-visually-hidden">change password</span>
+            </a>
+          </dd>
+        </div>
+      </dl>
+    
+      </div>
+  
+    <div class="activity-card govuk-!-margin-bottom-6">
+      <h2 class="govuk-heading-m">How you get security codes to sign in</h2>
+      <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-3">
+      <h2 class="govuk-heading-s">Your default method</h2>
+      <p class="govuk-body">Text message to your phone number ending with ####</p>
+      <p class="govuk-body"><a href="/page-index/home/change-phone-number/enter-password" class="govuk-link--no-visited-state">Change phone number</a></p>
+      <p class="govuk-body govuk-!-margin-bottom-6"><a href="/page-index/home/different-default-method-app/enter-password" class="govuk-link--no-visited-state">Use a different default method</a></p>
+
+      <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-3">
+      <h2 class="govuk-heading-s">Add a back-up method </h2>
+      <p class="govuk-body">We recommend you add a back-up method for getting security codes.</p>
+      <p class="govuk-body">This will make sure you can always sign in, even if you cannot get security codes using your default method.</p>
+      <p class="govuk-body govuk-!-margin-bottom-0"><a href="/page-index/home/add-back-up-method/enter-password" class="govuk-link--no-visited-state">Add a back-up method</a></p>
+
+
+
+
+   
+    </div>
+
+    <div class="activity-card govuk-!-margin-bottom-6">
+      <h2 class="govuk-heading-m">Activity history</h2>
+      <p class="govuk-body">See what you've visited with your GOV.UK One Login and when.</p>
+      <p class="govuk-body govuk-!-margin-bottom-0"><a href="/page-index/home/activity-history" class="govuk-link--no-visited-state">See your activity history</a></p>
+    </div>
+
+  
+    <div class="activity-card govuk-!-margin-bottom-6">
+      <h2 class="govuk-heading-m">Delete your GOV.UK One Login</h2>
+      <p class="govuk-body">This will permanently delete your GOV.UK One Login. You’ll no longer be able to sign in to the services you’ve used with it.</p>
+      <p class="govuk-body govuk-!-margin-bottom-0"><a href="/page-index/home/delete/enter-password" class="govuk-link--no-visited-state">Delete your GOV.UK One Login</a></p>
+    </div>
+  
+
+
+  </div>
+</div>
+<!-- End row -->
+{% endblock %}

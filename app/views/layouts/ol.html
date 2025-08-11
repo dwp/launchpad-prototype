@@ -1,0 +1,30 @@
+ 
+{#
+    For guidance on how to use layouts see:
+    https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
+    #}
+     
+    {% extends "govuk-prototype-kit/layouts/govuk-branded.njk" %}
+    {% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+     
+    {% block header %}
+    {{ govukOneLoginServiceHeader({
+      signOutLink: "/test-signout",
+      oneLoginLink: "/test-one-login",
+      rebrand: true,
+      serviceNavigationParams: { 
+        rebrand: true,
+        navigation: [
+        {
+          href: "#navigation1", 
+          text: "Your services",
+          active: true
+        },{
+          href: "security", 
+          text: "Security"
+        }], 
+        serviceName: "One Login",
+        navigationLabel: "Help and support"
+      }
+    }) }}
+  {% endblock %}

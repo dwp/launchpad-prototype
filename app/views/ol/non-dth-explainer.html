@@ -1,0 +1,31 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+    <form class="form" action="ol-landing" method="post">
+      {% from "govuk/components/input/macro.njk" import govukInput %}
+      <h1 class="govuk-heading-xl">Sign in with GOV.UK One Login</h1>
+      <p class="govuk-body">You need a GOV.UK One Login to continue. You can create one if you do not already have one. </p>
+    <p class="govuk-body">While you fill in your PIP application, you can save your progress and return at any time.</p>
+      <!--
+      {{ govukInsetText({
+        text: "We will send any messages about your PIP application to the email address you use for GOV.UK One Login."
+      }) }}
+        -->
+     
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+  </div>
+  <!-- End column -->
+</div>
+<!-- End row -->
+{% endblock %}

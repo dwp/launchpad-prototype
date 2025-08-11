@@ -1,0 +1,58 @@
+{% extends "di-govuk-one-login-service-header/layouts/service-header.html" %}
+
+
+{% block pageTitle %}
+  {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block header %}
+  {{ govukOneLoginServiceHeader({
+    signOutLink: "/test-signout",
+    oneLoginLink: "/test-one-login",
+    rebrand: true,
+    serviceNavigationParams: { 
+      rebrand: true,
+      navigation: [
+      {
+        href: "pip-home-alt
+        ", 
+        text: "Home"
+      },{
+        href: "change-sign-in", 
+        text: "Change your sign in details",
+        active: true
+      },{
+        href: "#navigation2", 
+        text: "Help and contact"
+      }], 
+      
+      serviceName: "Apply for Personal Independence Payment (PIP)",
+      navigationLabel: "Help and support"
+    }
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+    <form class="form" action="/ol/age" method="post">
+      You use your GOV.UK One Login to sign in to {Service name}.
+
+      You can change these details in your GOV.UK One Login:
+      
+      - email address
+      - password
+      - how you get security codes to sign in
+      
+      [Change your sign in details in your GOV.UK One Login]
+      (https://home.account.gov.uk/settings)"Continue"]
+  </form>
+  </div>
+  <!-- End column -->
+</div>
+<!-- End row -->
+{% endblock %}

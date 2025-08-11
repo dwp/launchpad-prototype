@@ -108,3 +108,102 @@ router.post('/hig-submitted', function(request, response) {
 })
 
 
+
+//
+//
+// ONE LOGIN
+//
+//
+
+//Set user scenario
+router.post('/logInScenario', function (req, res) {
+  //Store response
+  var logInScenario = req.session.data['logInScenario'];
+
+  //Redirect
+  res.redirect('/ol/variant');
+});
+
+//Set variant
+router.post('/protoVariant', function (req, res) {
+  //Store response
+  //var protoVariant = req.session.data['protoVariant'];
+  var logInScenario = req.session.data['logInScenario'];
+  if (logInScenario == "Invited digital user"){
+    res.redirect("/ol/invite-email");
+  } 
+  //Redirect
+  else res.redirect('/ol/pip-govuk');
+});
+
+//Set OIDV scenario
+router.post('/oidvScenario', function (req, res) {
+  //Store response
+  var dthScenario = req.session.data['oidvScenario'];
+
+  //Redirect
+  res.redirect('/ol/email');
+});
+
+router.post('/eligible', function(request, response) {
+  var protoVariant = request.session.data['protoVariant'];
+  if (protoVariant == "B"){
+    response.redirect("/ol/ol-landing");
+  } else if (protoVariant == "A") {
+      response.redirect("/ol/non-dth-explainer");
+  }
+
+});
+
+ //Redirect from email screen based on scenario selected
+ router.post('/email',function(request, response) {
+  var logInScenario = request.session.data['logInScenario'];
+  var protoVariant = request.session.data['protoVariant'];
+  if (logInScenario == "Returning DTH user"){
+      response.redirect("/ol/sign-in");
+  } else if (logInScenario == "New One Login user during migration") {
+      response.redirect("/ol/eligible");
+  } else if (logInScenario == "Returning One Login user during migration"  && protoVariant == "A") {
+      response.redirect("/ol/non-dth-explainer");
+  } else if (logInScenario == "Returning One Login user during migration"  && protoVariant == "B") {
+    response.redirect("/ol/ol-landing");
+}
+  })
+
+    //Redirect from state pension screen based on scenario selected
+ router.post('/statePension',function(request, response) {
+  var logInScenario = request.session.data['logInScenario'];
+  var protoVariant = request.session.data['protoVariant'];
+  if (logInScenario == "Returning DTH user"){
+      response.redirect("/ol/returning-email");
+  } else if (logInScenario == "New One Login user during migration") {
+      response.redirect("/ol/email");
+  } else if (logInScenario == "Returning One Login user during migration"  && protoVariant == "A") {
+      response.redirect("/ol/email");
+  } else if (logInScenario == "Returning One Login user during migration"  && protoVariant == "B") {
+    response.redirect("/ol/email");
+} else if (logInScenario == "New One Login user after migration") {
+  response.redirect("/ol/eligible");
+}
+  })
+
+  //Redirect from email screen based on scenario selected
+ router.post('/returningEmail',function(request, response) {
+  var logInScenario = request.session.data['logInScenario'];
+  var protoVariant = request.session.data['protoVariant'];
+  if (logInScenario == "Returning DTH user"){
+      response.redirect("/ol/sign-in");
+  } else if (logInScenario == "New One Login user during migration") {
+      response.redirect("/ol/eligible");
+  } else if (logInScenario == "Invited digital user") {
+    response.redirect("/ol/ol-landing");
+  } else if (logInScenario == "Returning One Login user during migration"  && protoVariant == "A") {
+      response.redirect("/ol/non-dth-explainer");
+  } else if (logInScenario == "Returning One Login user during migration"  && protoVariant == "B") {
+    response.redirect("/ol/ol-landing");
+}
+  })
+
+
+
+  
