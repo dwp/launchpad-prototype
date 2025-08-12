@@ -1,4 +1,4 @@
-{% extends "layouts/main.html" %}
+{% extends "layouts/main-email.html" %}
 
 {% block content %}
 
@@ -9,19 +9,54 @@
   <div class="govuk-grid-column-two-thirds">
     <form class="form" action="returning-email" method="post">
       {% from "govuk/components/input/macro.njk" import govukInput %}
-      <h1 class="govuk-heading-xl">INVITE EMAIL GOES HERE</h1>
 
-      <!--
-      {{ govukInsetText({
-        text: "We will send any messages about your PIP application to the email address you use for GOV.UK One Login."
-      }) }}
-        -->
-     
+      <p class="govuk-body">Dear [name],</p>
 
-      {{ govukButton({
-        text: "Continue"
-      }) }}
-
+        <p class="govuk-body"> We have received the Personal Independence Payment (PIP) application you have started.</p>
+        
+          <p class="govuk-body">Next, we will ask about your daily living and mobility needs to help us make our decision.</p>
+        
+            <p class="govuk-body"> If we need more information after you hgave submitted teh application we may invite you to an assessment.</p>
+        
+            <h2 class="govuk-heading-m">When to complete your application by</h2>
+        
+        <p class="govuk-body">You will need to answer all the questions and upload any evidence you have by:</p>
+        
+        <p class="govuk-body">(return date)</p>
+        
+        <h2 class="govuk-heading-m"> If you need more time</h2>
+        
+        <p class="govuk-body"> Contact us if you need more time to complete this application. Our contract details are at the end of this email.</p>
+        
+          <p class="govuk-body"> If you have not submitted the application by the return date, and you have not let us know, we may end the PIP application.</p>
+        
+          <h2 class="govuk-heading-m"> Disability Living Allowance</h2>
+        
+        <p class="govuk-body">Disability Living Allowance (DLA) is being replaced by PIP. If you are currently receiving DLA this will stop if you do not complete the form by the retutn date or contact us for more time.</p>
+        
+        <h2 class="govuk-heading-m">How to get started</h2>
+        
+        <h3 class="govuk-heading-s">Create your account</h2>
+        
+        <p class="govuk-body"> To register for our online services, you will need your:</p>
+        
+        <ul class="govuk-list govuk-list--bullet">
+          <li>email address and access to your emails</li>
+          <li>mobile phone</li>
+        </ul>
+        
+        <p class="govuk-body">The first time you sign in, you will be asked to enter some personal details so we can match them to our records.</p>
+        
+        <p class="govuk-body"> We will guide you through what you need to do at each step.</p>
+        
+        <h2 class="govuk-heading-m">Register to complete your application</h2>
+        
+        <p class="govuk-body">Create an account to continue to your PIP application.</p>
+        
+        <p class="govuk-body">If you already have an account, you can sign in.</p>
+        
+        <p class="govuk-body">Go to: <a href="returning-email">returning-email</a></p>
+      
     </form>
   </div>
   <!-- End column -->

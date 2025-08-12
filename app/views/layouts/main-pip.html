@@ -1,0 +1,32 @@
+ 
+{#
+    For guidance on how to use layouts see:
+    https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
+    #}
+     
+    {% extends "govuk-prototype-kit/layouts/govuk-branded.njk" %}
+    {% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+     
+    {% block header %}
+        {{ govukHeader() }}
+        {{ govukServiceNavigation({
+            serviceName: serviceName
+        })}}
+        {{ govukServiceNavigation({
+            serviceName: "Apply for Personal Independence Payment (PIP)",
+            serviceUrl: "#",
+            navigation: [
+            {
+              href: "pip-home-alt
+              ", 
+              text: "Home",
+              active: true
+            },{
+              href: "change-sign-in", 
+              text: "Change your sign in details"
+            },{
+              href: "#navigation2", 
+              text: "Help and contact"
+            }]
+          }) }}
+    {% endblock %}

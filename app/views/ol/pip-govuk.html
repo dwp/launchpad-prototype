@@ -1,4 +1,4 @@
-{% extends "layouts/main.html" %}
+{% extends "layouts/main-gov.html" %}
 
 {% block content %}
 
@@ -177,10 +177,19 @@ Freepost <abbr title="Department for Work and Pensions">DWP</abbr> <abbr title="
 </ul>
 
 <p><a class="gem-c-button govuk-button govuk-button--start" role="button" data-module="govuk-button" data-ga4-attributes="{&quot;event_name&quot;:&quot;navigation&quot;,&quot;type&quot;:&quot;start button&quot;}" draggable="false" href="checker" data-govuk-button-init="" data-govuk-button-module-started="true"><span> Check if you can apply for <abbr title="Personal Independence Payment">PIP</abbr> online </span><svg class="govuk-button__start-icon govuk-!-display-none-print" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" focusable="false" aria-hidden="true"><path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"></path></svg></a></p>
-
+{% if (data['logInScenario'] == "Returning One Login user after migration") and (data['protoVariant'] == "A")  %}
+<div role="note" aria-label="Information" class="application-notice info-notice">
+  <p>If you’ve already registered, you can <a rel="external" href="non-dth-explainer">sign in to PIP</a>.</p>
+</div>
+{% elif (data['logInScenario'] == "Returning One Login user after migration") and (data['protoVariant'] == "B")  %}
+<div role="note" aria-label="Information" class="application-notice info-notice">
+  <p>If you’ve already registered, you can <a rel="external" href="ol-landing">sign in to PIP</a>.</p>
+</div>
+{% else %}
 <div role="note" aria-label="Information" class="application-notice info-notice">
   <p>If you’ve already registered, you can <a rel="external" href="returning-email">sign in to PIP</a>.</p>
 </div>
+{% endif %}
 
 
 

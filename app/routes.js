@@ -195,7 +195,9 @@ router.post('/eligible', function(request, response) {
       response.redirect("/ol/sign-in");
   } else if (logInScenario == "New One Login user during migration") {
       response.redirect("/ol/eligible");
-  } else if (logInScenario == "Invited digital user") {
+  } else if (logInScenario == "Invited digital user" && protoVariant == "A") {
+    response.redirect("/ol/non-dth-explainer");
+  } else if (logInScenario == "Invited digital user" && protoVariant == "B") {
     response.redirect("/ol/ol-landing");
   } else if (logInScenario == "Returning One Login user during migration"  && protoVariant == "A") {
       response.redirect("/ol/non-dth-explainer");

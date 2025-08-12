@@ -1,35 +1,4 @@
-{% extends "di-govuk-one-login-service-header/layouts/service-header.html" %}
-
-
-{% block pageTitle %}
-  {{ serviceName }} – GOV.UK Prototype Kit
-{% endblock %}
-
-{% block header %}
-  {{ govukOneLoginServiceHeader({
-    signOutLink: "/test-signout",
-    oneLoginLink: "/test-one-login",
-    rebrand: true,
-    serviceNavigationParams: { 
-      rebrand: true,
-      navigation: [
-      {
-        href: "#navigation1", 
-        text: "Home",
-        active: true
-      },{
-        href: "change-sign-in", 
-        text: "Change your sign in details"
-      },{
-        href: "#navigation2", 
-        text: "Help and contact"
-      }], 
-      
-      serviceName: "Apply for Personal Independence Payment (PIP)",
-      navigationLabel: "Help and support"
-    }
-  }) }}
-{% endblock %}
+{% extends "layouts/main-pip.html" %}
 
 
 {% block content %}
