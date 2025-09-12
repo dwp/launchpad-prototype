@@ -18,7 +18,7 @@
         name: "logInScenario",
         fieldset: {
           legend: {
-            text: "Which scenario do you want to simulate?",
+            text: "Which migration scenario do you want to simulate?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--xl"
           }
@@ -26,7 +26,7 @@
         items: [
           {
             value: "Returning DTH user",
-            text: "Returning DTH user"
+            text: "DTH user"
           },
           {
             value: "Invited digital user",
@@ -34,12 +34,21 @@
           },
           {
             value: "New One Login user during migration",
-            text: "New One Login user during migration"
+            text: "New self-serve user"
           },
           {
             value: "Returning One Login user during migration",
-            text: "Returning One Login user during migration"
-          },
+            text: "Returning self-serve user"
+          }
+        ]
+      }) }}
+      {{ govukButton({
+        text: "Continue"
+      }) }} 
+    </form>
+  </div>
+  <!--
+  ,
           {
             divider: "or"
           },
@@ -51,13 +60,7 @@
             value: "Returning One Login user after migration",
             text: "Returning One Login user after migration"
           }
-        ]
-      }) }}
-      {{ govukButton({
-        text: "Continue"
-      }) }} 
-    </form>
-  </div>
+  -->
   <!-- End column -->
 </div>
 

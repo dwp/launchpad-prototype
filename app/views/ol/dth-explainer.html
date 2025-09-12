@@ -8,19 +8,26 @@
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
     <form class="form" action="/ol/ol-landing" method="post">
-      <h1 class="govuk-heading-xl">How you sign in has changed</h1>
-      <p class="govuk-body">You need a GOV.UK One Login to continue. You can create one if you do not already have one. </p>
+      {{ govukNotificationBanner({
+        text: "GOV.UK One Login is the new way to sign in to government services."
+      }) }}
+      <h1 class="govuk-heading-xl">How you sign in to PIP has changed</h1>
+      <p class="govuk-body">You need to sign in to PIP with a GOV.UK One Login to continue.  If you do not have a GOV.UK One Login, you will need to create one.</p>
+
+      <p class="govuk-body">From now, you will always use your GOV.UK One Login to sign in to PIP.</p>
+
+      <p class="govuk-body">After you sign in, you will continue your application.</p>
 
       {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+          <span class="govuk-visually-hidden">Warning</span>
+          You should sign up for GOV.UK One Login using the same email address you signed into PIP with.
+        </strong>
+      </div>
 
-      {{ govukWarningText({
-        text: "You should sign up for GOV.UK One Login using the same email address you signed in with: example@example.com.",
-        iconFallbackText: "Warning"
-      }) }}
-      <p class="govuk-body">In future, you will use your GOV.UK One Login to sign in.</p>
 
-
-      <p class="govuk-body">After you sign in or create your GOV.UK One Login, you will continue from where you last saved your application.</p>
       <!--
       {{ govukInsetText({
         text: "We'll send any messages about your PIP application to the email address you use for GOV.UK One Login."

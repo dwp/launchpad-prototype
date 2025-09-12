@@ -1,0 +1,29 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+    <form class="form" action="/ol/pip-home" method="post">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">What is your postcode?</h1>
+
+    {{ govukInput({
+      label: {
+        text: "Postcode"
+      },
+      id: "event-name",
+      classes: "govuk-input--width-10",
+      name: "eventName"
+    }) }}
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+  </form>
+  </div>
+  <!-- End column -->
+</div>
+<!-- End row -->
+{% endblock %}

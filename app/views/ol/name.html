@@ -1,0 +1,65 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+    <form class="form" action="/ol/dob" method="post">
+    {% from "govuk/components/radios/macro.njk" import govukRadios %}
+    <h1 class="govuk-label-wrapper">
+      <label class="govuk-label govuk-label--xl" for="ni-number">
+        What is your name?
+      </label>
+    </h1>
+  
+    
+    
+    <div id="ni-number-hint" class="govuk-hint">
+      Enter your name as it is shown in offical documents, for example your passport or driving licence.
+    </div>
+
+    {{ govukInput({
+      label: {
+        text: "Full name"
+      },
+      classes: "govuk-input--width-20",
+      id: "full-name",
+      name: "fullName",
+      autocomplete: "name",
+      spellcheck: false
+    }) }}
+    {{ govukInput({
+      label: {
+        text: "Middle name(s)"
+      },
+      classes: "govuk-input--width-20",
+      id: "middle-name",
+      name: "middlelName",
+      autocomplete: "name",
+      spellcheck: false
+    }) }}
+
+    {{ govukInput({
+      label: {
+        text: "Last name"
+      },
+      classes: "govuk-input--width-20",
+      id: "last-name",
+      name: "lastName",
+      autocomplete: "name",
+      spellcheck: false
+    }) }}
+
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+
+  </form>
+  </div>
+  <!-- End column -->
+</div>
+<!-- End row -->
+{% endblock %}

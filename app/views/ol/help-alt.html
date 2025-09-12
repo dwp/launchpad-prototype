@@ -1,0 +1,94 @@
+{% extends "di-govuk-one-login-service-header/layouts/service-header.html" %}
+
+
+{% block pageTitle %}
+  {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block header %}
+  {{ govukOneLoginServiceHeader({
+    signOutLink: "/test-signout",
+    oneLoginLink: "/test-one-login",
+    rebrand: true,
+    serviceNavigationParams: { 
+      rebrand: true,
+      navigation: [
+      {
+        href: "pip-home-alt", 
+        text: "Home"
+      },{
+        href: "help-alt", 
+        text: "Help",
+        active: true
+      }], 
+      serviceName: "Apply for Personal Independence Payment (PIP)",
+      navigationLabel: "Apply for Personal Independence Payment (PIP)"
+    }
+  }) }}
+  <!--{% include "includes/scenario.njk" %}-->
+{% endblock %}
+
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+      {% from "language-toggle/macro.njk" import dwpLanguageToggle %}
+
+      {{
+          dwpLanguageToggle({
+              selectedLang: "en",
+              href: {
+                  en: "#",
+                  cy: "#"
+              }
+          })
+      }}
+        <!-- <div class="govuk-width-container">
+            <main class="govuk-main-wrapper"> -->
+              <!-- <div class="govuk-grid-row"> -->
+    <!--<h1 class="govuk-caption-xl">Firstname Lastname</h1>-->
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">Help and contact</h1>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body"><a href="#">Help with answering questions and providing evidence (PDF)</a></p>
+    <p class="govuk-body"><a href="#">	
+        Watch a video about providing information to support your application</a></p>
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-6">If you need a paper form or no longer want to apply</h2>
+      <p class="govuk-body"> 	
+        Contact the Department for Work and Pensions if:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+      
+      <li>you would like to fill in and post a paper form</li>
+      <li>you no longer want to apply for PIP</li>
+      </ul>
+      <h2 class="govuk-heading-m govuk-!-margin-bottom-6">Contact</h2>
+      <p class="govuk-body">Telephone: 0800 121 6279<br>
+        Textphone: 0800 121 4493<br>
+        Relay UK (if you cannot hear or speak on the phone): 18001 then 0800 121 6279<br>
+        Video relay service for British Sign Language (BSL) users - check you can use the service<br>
+        Monday to Friday, 9am to 5pm.</p>
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-6">Change your sign in details</h1>
+          <p class="govuk-body">You use your GOV.UK One Login to sign in to Apply for Personal Independence Payment.</p>
+    
+          <p class="govuk-body"> You can change these details in your GOV.UK One Login:</p>
+    
+          <ul class="govuk-list govuk-list--bullet">
+          
+          <li>email address</li>
+          <li>password</li>
+          <li>how you get security codes to sign in</li>
+          </ul>
+          
+          <p class="govuk-body"><a href="../test-one-login-alt">Change your sign in details in your GOV.UK One Login</a>.</p>
+  </div>
+  <!-- End column -->
+</div>
+<!-- End row -->
+{% endblock %}

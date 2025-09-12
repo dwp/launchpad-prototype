@@ -476,3 +476,33 @@ flex-direction: column;
     margin-right : auto;
 
 }
+
+
+//One Login
+
+.govuk-list > .your-services__card {
+    margin-bottom: 20px;
+}
+
+.your-services__card {
+    border: 1px solid #b1b4b6;
+}
+
+.your-services__card__heading {
+    padding: 15px 15px 20px 15px;
+    background-color: #f3f2f1;
+    margin: 0;
+}
+
+.your-services__card__content {
+        padding-top: 20px;
+        padding-right: 15px;
+    padding-left: 15px;
+}
+
+.gem-c-contents-list__list-item,
+.gem-c-contents-list__list-item--dashed {
+
+    margin-bottom: 0.5rem;
+
+}
