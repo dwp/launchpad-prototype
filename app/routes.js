@@ -120,8 +120,11 @@ router.post('/logInScenario', function (req, res) {
   //Store response
   var logInScenario = req.session.data['logInScenario'];
 
+  if (logInScenario == "Invited digital user"){
+    res.redirect("/ol/invite-email");
+  } 
   //Redirect
-  res.redirect('/ol/variant');
+  else res.redirect('/ol/pip-govuk');
 });
 
 //Set variant
