@@ -122,7 +122,11 @@ router.post('/logInScenario', function (req, res) {
 
   if (logInScenario == "Invited digital user"){
     res.redirect("/ol/invite-email");
-  } 
+  } else if (logInScenario == "OIDV successful"){
+    res.redirect("/ol/pip-home-oidv");
+  } else if (logInScenario == "OIDV failed"){
+    res.redirect("/ol/pip-home-oidv");
+  }
   //Redirect
   else res.redirect('/ol/pip-govuk');
 });
@@ -150,28 +154,23 @@ router.post('/oidvScenario', function (req, res) {
 
 router.post('/eligible', function(request, response) {
   var protoVariant = request.session.data['protoVariant'];
-  if (protoVariant == "B"){
-    response.redirect("/ol/ol-landing");
-  } else if (protoVariant == "A") {
-      response.redirect("/ol/non-dth-explainer");
-  }
+  response.redirect('/ol/ol-landing');
 
 });
 
  //Redirect from email screen based on scenario selected
  router.post('/email',function(request, response) {
   var logInScenario = request.session.data['logInScenario'];
-  var protoVariant = request.session.data['protoVariant'];
   if (logInScenario == "Returning DTH user"){
       response.redirect("/ol/sign-in");
   } else if (logInScenario == "New One Login user during migration") {
       response.redirect("/ol/eligible");
-  } else if (logInScenario == "Returning One Login user during migration"  && protoVariant == "A") {
-      response.redirect("/ol/non-dth-explainer");
-  } else if (logInScenario == "Returning One Login user during migration"  && protoVariant == "B") {
-    response.redirect("/ol/ol-landing");
-}
-  })
+  } else if (logInScenario == "Invited digital user") {
+      response.redirect("/ol/ol-landing");
+  } else if (logInScenario == "Returning One Login user during migration") {
+      response.redirect("/ol/ol-landing");
+  }
+  })//Invited digital userNew One Login user during migrationReturning One Login user during migration
 
     //Redirect from state pension screen based on scenario selected
  router.post('/statePension',function(request, response) {
@@ -198,15 +197,11 @@ router.post('/eligible', function(request, response) {
       response.redirect("/ol/sign-in");
   } else if (logInScenario == "New One Login user during migration") {
       response.redirect("/ol/eligible");
-  } else if (logInScenario == "Invited digital user" && protoVariant == "A") {
-    response.redirect("/ol/non-dth-explainer");
-  } else if (logInScenario == "Invited digital user" && protoVariant == "B") {
+  } else if (logInScenario == "Returning One Login user during migration") {
     response.redirect("/ol/ol-landing");
-  } else if (logInScenario == "Returning One Login user during migration"  && protoVariant == "A") {
-      response.redirect("/ol/non-dth-explainer");
-  } else if (logInScenario == "Returning One Login user during migration"  && protoVariant == "B") {
+  } else if (logInScenario == "Invited digital user") {
     response.redirect("/ol/ol-landing");
-}
+  } 
   })
 
 

@@ -1,0 +1,60 @@
+{% extends "di-govuk-one-login-service-header/layouts/service-header.html" %}
+
+
+{% block pageTitle %}
+  {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block header %}
+  {{ govukOneLoginServiceHeader({
+    signOutLink: "/test-signout",
+    oneLoginLink: "/test-one-login",
+    rebrand: true,
+    serviceNavigationParams: { 
+      rebrand: true,
+      serviceName: "Apply for Personal Independence Payment (PIP)",
+      navigationLabel: "Apply for Personal Independence Payment (PIP)"
+    }
+  }) }}
+  <!--{% include "includes/scenario.njk" %}-->
+{% endblock %}
+
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+      {% from "language-toggle/macro.njk" import dwpLanguageToggle %}
+
+      {{
+          dwpLanguageToggle({
+              selectedLang: "en",
+              href: {
+                  en: "#",
+                  cy: "#"
+              }
+          })
+      }}
+  </div>
+</div>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% if (data['logInScenario'] == "OIDV successful") %}
+
+      <form method="post" action="identity-confirmed" name="">
+      {% else %}
+      <form method="post" action="oidv-alternative-method" name="">
+      {% endif %}
+        <h1 class="govuk-heading-xl ">
+       [One Login OIDV flow]
+        </h1>
+
+        <input class="govuk-button " type="submit" value="Continue">
+
+      </form>
+
+    </div>
+</div>
+<!-- End row -->
+{% endblock %}

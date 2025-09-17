@@ -1,0 +1,36 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Home - Your Application
+{% endblock %}
+
+
+
+{% block content %}
+ 
+<form name="idv" method="post" action="/idv">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <div class="govuk-panel govuk-panel--confirmation">
+          <h1 class="govuk-panel__title">
+            Identity confirmed
+          </h1>
+          <!--<div class="govuk-panel__body">
+            You must submit further details by <br><strong>12th April 2024</strong>.
+          </div>-->
+        </div>
+     
+      <h2 class="govuk-heading-m">What happens next</h2>
+      <p class="govuk-body">You do not need to do anything.</p>
+      <p class="govuk-body">We will assess your application.  If we need more information, we will contact you to arrange an assessment with a health professional.</p>
+
+      <h2 class="govuk-heading-m">If you want to add more supporting evidence</h2>
+      <p class="govuk-body">You can <a href="../additional-supporting-evidence/signed-out">sign out</a> and return later to upload more evidence to support your application.</p>
+
+
+    </div>
+  </div>
+</form>
+
+{% endblock %}
