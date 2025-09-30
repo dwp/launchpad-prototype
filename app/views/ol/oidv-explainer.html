@@ -28,23 +28,33 @@
   <!--{% include "includes/scenario.njk" %}-->
 {% endblock %}
 
+      {% block beforeContent %}
+
+            {% from "language-toggle/macro.njk" import dwpLanguageToggle %}
+            {{
+                dwpLanguageToggle({
+                    selectedLang: "en",
+                    href: {
+                        en: "#",
+                        cy: "#"
+                    }
+                })
+            }}
+        {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+        {{ govukBackLink({
+        text: "Back",
+        href: "javascript:history.back()"
+        }) }}
+      {% endblock %}
 
 {% block content %}
 
 <!-- Start row -->
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-      {% from "language-toggle/macro.njk" import dwpLanguageToggle %}
 
-      {{
-          dwpLanguageToggle({
-              selectedLang: "en",
-              href: {
-                  en: "#",
-                  cy: "#"
-              }
-          })
-      }}
+
   </div>
 </div>
 <div class="govuk-grid-row">
@@ -53,16 +63,34 @@
       <form method="post" action="ol-oidv" name="">
 
         <h1 class="govuk-heading-xl ">
-       Placeholder
+       Prove your identity with a GOV.UK One Login
         </h1>
 
 
         <p class="govuk-body">
-          Placeholder
+          You will need to prove your identity with GOV.UK One Login to protect your application and prevent fraud.
+        </p>
+
+        <p class="govuk-body">
+          When you do this, your identity information is automatically saved to your GOV.UK One Login.
+        </p>
+
+        <p class="govuk-body">
+          This means you will not need to prove your identity again next time a GOV.UK One Login service needs to check who you are.
+        </p>
+
+        <p class="govuk-body">
+          There are 3 ways to prove your identity with GOV.UK One Login:
+        </p>
+
+        <p class="govuk-body">
+          There are 3 ways to prove your identity with GOV.UK One Login:
         </p>
 
         <ul class="govuk-list govuk-list--bullet">
-          <li>Placeholder</li>
+          <li>with the GOV.UK One Login app</li>
+          <li>by answering security questions online</li>
+          <li>at a Post Office</li>
         </ul>
 
         <input class="govuk-button " type="submit" value="Continue">

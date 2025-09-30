@@ -11,8 +11,8 @@
       {{ govukNotificationBanner({
         text: "GOV.UK One Login is the new way to sign in to some government services."
       }) }}
-      <h1 class="govuk-heading-xl">How you sign in to PIP has changed</h1>
-      <p class="govuk-body">You need a GOV.UK One Login to continue. You'll be able to create a GOV.UK One Login if you do not already have one.</p>
+      <h1 class="govuk-heading-xl">You need a GOV.UK One Login to continue</h1>
+      <p class="govuk-body">How you sign in to PIP has changed. You can create a GOV.UK One Login if you do not already have one.</p>
 
 
       {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
@@ -20,11 +20,11 @@
         <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
         <strong class="govuk-warning-text__text">
           <span class="govuk-visually-hidden">Warning</span>
-          Sign up to GOV.UK One Login with the same email address that you signed in with: {{ data['email'] }}.
+         Create a GOV.UK One Login with the same email address that you signed in with: {{ data['email'] }}.
         </strong>
       </div>
 
-      <p class="govuk-body">You will continue your PIP claim from where you last saved your progress.</p>
+      <p class="govuk-body">You will continue your PIP application from where you last saved your progress.</p>
 
       <p class="govuk-body"></p>
 

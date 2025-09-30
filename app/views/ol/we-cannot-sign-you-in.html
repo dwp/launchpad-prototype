@@ -1,0 +1,83 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+    <form class="form" action="/eligible" method="post">
+
+      {% from "govuk/components/input/macro.njk" import govukInput %}
+      <h1 class="govuk-heading-xl">We could not sign you in</h1>
+      <p class="govuk-body">We were unable to match the email address you entered to our records. If you think you have entered your details incorrectly, you can <a href="returning-email" class="govuk-link">try again</a>.</p>
+      
+      <p class="govuk-body">You can <a href="eligibility">check your eligibility</a> if you have not used this service before.</p>
+
+      <details class="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            I’m having problems signing in
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+          
+        <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+
+          <h2 class="govuk-heading-m">
+            PIP enquiry line
+          </h2>
+
+          <p class="govuk-body govuk-!-margin-bottom-0">
+            
+              Telephone: 0800 121 6297
+            
+          </p>
+
+          <p class="govuk-body govuk-!-margin-bottom-0">
+            Textphone: 0800 121 4493
+          </p>
+
+          <p class="govuk-body govuk-!-margin-bottom-0">
+            <a href="https://www.relayuk.bt.com" class="govuk-link">
+              Relay UK</a>
+            
+              (if you cannot hear or speak on the phone): 18001 then 0800 917 2222
+            
+          </p>
+
+          <p class="govuk-body govuk-!-margin-bottom-0">
+            British Sign Language (BSL)
+            <a href="https://connect.interpreterslive.co.uk/vrs?ilc=DWP" class="govuk-link">video relay service</a>
+            if you’re on a computer - find out how to
+            <a href="https://www.youtube.com/watch?v=oELNMfAvDxw" class="govuk-link">
+              use the service on mobile or tablet
+            </a>
+          </p>
+
+          <p class="govuk-body govuk-!-margin-bottom-0">
+            Monday to Friday, 9am to 5pm
+          </p>
+
+          <p class="govuk-body">
+            <a href="https://www.gov.uk/call-charges" class="govuk-link">
+              Find out about call charges
+            </a>
+          </p>
+        </div>
+      </div>
+
+
+        </div>
+      </details>
+
+      
+
+    </form>
+  </div>
+  <!-- End column -->
+</div>
+<!-- End row -->
+{% endblock %}

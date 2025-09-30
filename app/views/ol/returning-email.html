@@ -17,7 +17,7 @@
           isPageHeading: true
         },
         hint: {
-          text: "We will use your email address to check if you already have an account."
+          text: "This is the email address you registered with."
         },
         id: "email",
         name: "email"
@@ -26,6 +26,8 @@
       {{ govukButton({
         text: "Continue"
       }) }}
+
+      <p class="govuk-body"> <a href="checker" class="govuk-link">Check your eligibility</a> if you have not used this service before.</p>
 
     </form>
   </div>
