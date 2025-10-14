@@ -7,8 +7,8 @@
 
 {% block header %}
   {{ govukOneLoginServiceHeader({
-    signOutLink: "/test-signout",
-    oneLoginLink: "/test-one-login",
+    signOutLink: "test-signout",
+    oneLoginLink: "test-one-login",
     rebrand: true,
     serviceNavigationParams: { 
       rebrand: true,
@@ -39,16 +39,36 @@
   </div>
 </div>
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-grid-column-full">
       {% if (data['logInScenario'] == "OIDV successful") %}
 
       <form method="post" action="pip-home-oidv-confirmed" name="">
       {% else %}
       <form method="post" action="oidv-alternative-method" name="">
       {% endif %}
-        <h1 class="govuk-heading-xl ">
-       [One Login OIDV flow]
-        </h1>
+        <div class="govuk-panel govuk-panel--interruption govuk-!-padding-left-8 govuk-!-padding-top-8 govuk-!-padding-right-8" style="background-color: #4c2c92;
+    text-align: left;
+    border: none;">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds" style="color: #fff !important">
+                    <h1 class="govuk-heading-xl govuk-!-margin-bottom-6 white-text" style="color: #fff !important;">
+                        One Login OIDV screens
+                    </h1>
+
+                    <p class="govuk-body govuk-!-margin-bottom-6 white-text" style="color: #fff !important">
+                        User will move to One Login service to complete the OIDV process.
+                    </p>
+                        
+                    <p class="govuk-body govuk-!-margin-bottom-6 white-text" style="color: #fff !important">
+                       If they're successful, they'll be returned to PIP Home with the state updated to confirm their identity has been verified and their application is submitted.
+                    </p>
+                     <p class="govuk-body govuk-!-margin-bottom-6 white-text" style="color: #fff !important">
+                       If they're unsuccessful, they'll be returned to a screen within PIP to explain an alternative method to verify their identity.
+                    </p>       
+
+                </div>
+            </div>
+        </div>
 
         <input class="govuk-button " type="submit" value="Continue">
 

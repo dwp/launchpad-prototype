@@ -1,0 +1,73 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Home - Your Application
+{% endblock %}
+
+
+
+{% block content %}
+ 
+<form id="form" method="post" action="#">
+<div class="govuk-grid-row">
+        <div id="pageContent" class="govuk-grid-column-two-thirds">
+            
+
+              <div class="govuk-panel govuk-panel--confirmation" data-gtm-vis-recent-on-screen36536868_1731="462" data-gtm-vis-first-on-screen36536868_1731="462" data-gtm-vis-total-visible-time36536868_1731="100" data-gtm-vis-has-fired36536868_1731="1">
+  <h1 class="govuk-panel__title">
+    You have signed out
+  </h1>
+  
+</div>
+
+
+              <p class="govuk-body">It’s now safe to close this window.</p>
+              <p class="govuk-body">
+                <a id="signInLink" href="/verify/">Sign in to your Apply for PIP account</a>.
+              </p>
+              <p class="govuk-body">You will need your email address, mobile phone and password to sign in.</p>
+
+              <h2 class="govuk-heading-m">Give feedback</h2>
+              <p class="govuk-body">
+                <a id="feedbackLink" href="https://www.apply-for-pip.dwp.gov.uk/feedback" class="govuk-link" target="_blank">
+                    What did you think of this service? (opens in new tab)</a>
+                takes 30 seconds.
+              </p>
+
+              <p class="govuk-body">
+                <a id="volunteerLink" href="https://forms.office.com/e/NpDfmG01rr" class="govuk-link" target="_blank">
+                    Volunteer to take part in research about PIP (opens in new tab)</a>.
+              </p>
+            
+        </div>
+    </div>
+  <!--
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">You have signed out</h1>
+
+    <p class="govuk-body">
+      To go back, <a href="https://www.gov.uk/using-your-gov-uk-one-lo" class="govuk-link">sign in to your GOV.UK One Login</a>.
+    </p>
+
+    <p class="govuk-body">
+      Or <a href="https://www.gov.uk" class="govuk-link">go to the GOV.UK homepage</a>.
+    </p>
+  -->
+      <!-- PIP specific sign out blurb
+      <div class="govuk-panel govuk-panel--confirmation">
+        <h1 class="govuk-panel__title">
+          You have signed out
+        </h1>
+      </div>
+      <h2 class="govuk-heading-m">What happens next</h2>
+      <p> <a href="../sign-in/sign-in-home-pip-1-continue">Sign in</a> again to complete your application.</p>
+      <p>You will need your email address, mobile phone and password when you next sign in.</p>
+      <p>It is now safe to close this window.</p>
+      -->
+    <!--</div>
+  </div>-->
+</form>
+    </div> <!-- govuk-grid-column-two-thirds -->
+</div>
+{% endblock %}

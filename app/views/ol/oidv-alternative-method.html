@@ -7,8 +7,8 @@
 
 {% block header %}
   {{ govukOneLoginServiceHeader({
-    signOutLink: "/test-signout",
-    oneLoginLink: "/test-one-login",
+    signOutLink: "test-signout",
+    oneLoginLink: "test-one-login",
     rebrand: true,
     serviceNavigationParams: { 
       rebrand: true, 
@@ -47,18 +47,31 @@
   
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
-    <form class="form" action="/ol/age" method="post">
-      <h1 class="govuk-heading-xl govuk-!-margin-bottom-6"> GOV.UK One Login could not confirm your identity</h1>
-      <p class="govuk-body">We cannot assess your application until you confirm your identity.</p>
-      <p class="govuk-body">Contact the PIP enquiry line to confirm your identity in a different way.</p>
-      <p class="govuk-body">If you think you have entered the wrong information by mistake, <a href="pip-home-oidv">return to PIP Home</a> to try again.</p>
-      <h2 class="govuk-heading-m">Contact the PIP enquiry line </h2>
-      <ul class="govuk-list">
-        <li>Phone: 0800 121 4433</li>
-        <li>Monday to Friday, 9am to 5pm (except public holidays)</li>
-      </ul>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">Call us to confirm your identity</h1>
 
-  </form>
+      {{ govukWarningText({
+        text: "We cannot assess your application until you confirm your identity.",
+        iconFallbackText: "Warning"
+      }) }}
+      <p class="govuk-body">Call DWP to do your identity check as soon as possible.</p>
+      <p class="govuk-body">You'll need to five some details about yourself, for example:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>your name</li>
+        <li>your National Insurance number, if you have one (you can find this on letters about tax, pensions and benefits)</li>
+        <li>your date of birth</li>
+        <li>your address</li>
+      </ul>
+      <p class="govuk-body">You'll also need to answer some questions baout yourself or events in your life, so that we can confirm your identity.</p>
+      <p class="govuk-body">
+        Telephone: 0800 171 2169<br>
+        Textphone: 0800 121 4493<br>
+        <a href="#">Relay UK</a> (if you cannot hear or speak on the phone): 18001 then 0800 171 2169<br>
+        <a href="#">Video relay service for British Sign Language (BSL) users</a>. <a href="#">Check you can use the video relay service</a>.<br>
+        Monday to Friday, 9am to 5pm.<br>
+      </p>
+      <p class="govuk-body">
+        <a href="#">Find out about call charges</a>.
+      </p> 
   </div>
   <!-- End column -->
 </div>

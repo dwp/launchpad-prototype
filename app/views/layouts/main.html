@@ -10,14 +10,14 @@
     {% block header %}
         {{ govukHeader() }}
         {{ govukServiceNavigation({
-            serviceName: serviceName
+            serviceName: asas
         })}}
         {{ govukServiceNavigation({
             serviceName: "Apply for Personal Independence Payment (PIP)",
             serviceUrl: "#"
           }) }}
 
-          {% include "includes/scenario.njk" %}
+          <!--{% include "includes/scenario.njk" %}-->
 
     {% endblock %}
 

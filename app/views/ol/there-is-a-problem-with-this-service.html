@@ -1,0 +1,56 @@
+{% extends "layouts/main.html" %}
+
+
+{% block pageTitle %}
+  {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+      {% from "language-toggle/macro.njk" import dwpLanguageToggle %}
+
+      {{
+          dwpLanguageToggle({
+              selectedLang: "en",
+              href: {
+                  en: "#",
+                  cy: "#"
+              }
+          })
+      }}
+        <!-- <div class="govuk-width-container">
+            <main class="govuk-main-wrapper"> -->
+              <!-- <div class="govuk-grid-row"> -->
+    <!--<h1 class="govuk-caption-xl">Firstname Lastname</h1>-->
+    
+  </div>
+</div>
+<div class="govuk-grid-row">
+  
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">Sorry, there is a problem with the service</h1>
+
+      <p class="govuk-body">Try again later.</p>
+      <p class="govuk-body">If the problem persists, contact the Department for Work and Pensions.</p>
+
+      <h2 class="govuk-heading-m">Contact DWP</h2>
+      <p class="govuk-body">
+        Telephone: 0800 171 6279<br>
+        Textphone: 0800 121 4493<br>
+        <a href="#">Relay UK</a> (if you cannot hear or speak on the phone): 18001 then 0800 121 6279<br>
+        <a href="#">Video relay service for British Sign Language (BSL) users</a>. <a href="#">Check you can use the video relay service</a>.<br>
+        Monday to Friday, 9am to 5pm.<br>
+      </p>
+      <p class="govuk-body">
+        <a href="#">Find out about call charges</a>.
+      </p> 
+  </div>
+  <!-- End column -->
+</div>
+<!-- End row -->
+{% endblock %}

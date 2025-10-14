@@ -1,0 +1,42 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+    <form class="form" action="/ol/oidv-explainer" method="post">
+            {{ govukPanel({
+        titleText: "Stage 2 submitted"
+      }) }}
+      <p class="govuk-body">We have received your stage 2 form within the time allowed. We have sent a confirmation email to <strong>example@example.com.</strong>.</p>
+      <h2 class="govuk-heading-m">What you need to do next</h2>
+      <p class="govuk-body">You now need to confirm your indentity. We check everyone's identity to protect from fraud.</p>
+      <p class="govuk-body">Do this as soon as possible.</p>
+      <h1></h1>
+
+      {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+          <span class="govuk-visually-hidden">Warning</span>
+         We cannot assess your application until you confirm your identity.
+        </strong>
+      </div>
+
+      <p class="govuk-body">You will continue your PIP application from where you last saved your progress.</p>
+
+      {{ govukButton({
+        text: "Confirm your identity"
+      }) }}
+
+       <p class="govuk-body">You can <a href="#">sign out</a> and return later to confirm your identity or upload more evidence to support your application.</p>
+
+    </form>
+  </div>
+  <!-- End column -->
+</div>
+<!-- End row -->
+{% endblock %}

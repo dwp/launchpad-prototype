@@ -1,0 +1,58 @@
+{% extends "layouts/main.html" %}
+
+
+{% block pageTitle %}
+  {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+
+
+      {% block beforeContent %}
+
+            {% from "language-toggle/macro.njk" import dwpLanguageToggle %}
+            {{
+                dwpLanguageToggle({
+                    selectedLang: "en",
+                    href: {
+                        en: "#",
+                        cy: "#"
+                    }
+                })
+            }}
+        {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+        {{ govukBackLink({
+        text: "Back",
+        href: "javascript:history.back()"
+        }) }}
+      {% endblock %}
+
+{% block content %}
+
+<!-- Start row -->
+
+<div class="govuk-grid-row">
+  
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">There is a problem registering you</h1>
+
+      <p class="govuk-body">If you’ve done any part of a PIP claim online before, you can <a href="/ol/returning-email">sign in</a>.</p>
+      <p class="govuk-body">Alternatively you can contact DWP to start your claim by phone.</p>
+
+      <h2 class="govuk-heading-m">Contact DWP to start your claim by phone</h2>
+      <p class="govuk-body">The sooner you do this, the earlier you could set your date of claim and the earlier your payments could begin if you’re awarded PIP.</p>
+      <p class="govuk-body">
+      Telephone: 0800 917 2222<br>
+      Textphone: 0800 917 7777<br>
+     <a href="#">Relay UK</a> (if you cannot hear or speak on the phone): 18001 then 0800 917 2222<br>
+      British Sign Language (BSL) <a href="#">video relay service</a> if you’re on a computer - find out how to <a href="#">use the service on mobile or tablet</a><br>
+      Calling from abroad: +44 191 218 7766 <br>
+      Monday to Friday, 8am to 5pm<br>
+      <a href="#">Find out about call charges</a>
+      </p>
+  </div>
+  <!-- End column -->
+</div>
+<!-- End row -->
+{% endblock %}

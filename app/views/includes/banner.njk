@@ -1,0 +1,16 @@
+ {% set html %}
+      <p class="govuk-notification-banner__heading">
+        This screen is not part of the user-facing journey.
+      </p>
+    {% endset %}
+
+    {{ govukNotificationBanner({
+      html: html
+    }) }}
+
+    <p class="govuk-body">
+      {{govukTag({
+        text: "Journey builder",
+        classes: "govuk-tag--green"
+      })}}
+    </p>

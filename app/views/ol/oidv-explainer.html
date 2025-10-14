@@ -7,8 +7,8 @@
 
 {% block header %}
   {{ govukOneLoginServiceHeader({
-    signOutLink: "/test-signout",
-    oneLoginLink: "/test-one-login",
+    signOutLink: "test-signout",
+    oneLoginLink: "test-one-login",
     rebrand: true,
     serviceNavigationParams: { 
       rebrand: true,
@@ -68,7 +68,7 @@
 
 
         <p class="govuk-body">
-          You will need to prove your identity with GOV.UK One Login to protect your application and prevent fraud.
+          You need to prove your identity with GOV.UK One Login to use this service.
         </p>
 
         <p class="govuk-body">
@@ -80,17 +80,22 @@
         </p>
 
         <p class="govuk-body">
-          There are 3 ways to prove your identity with GOV.UK One Login:
-        </p>
-
-        <p class="govuk-body">
-          There are 3 ways to prove your identity with GOV.UK One Login:
+          You can prove your identity online if you have a:
         </p>
 
         <ul class="govuk-list govuk-list--bullet">
-          <li>with the GOV.UK One Login app</li>
-          <li>by answering security questions online</li>
-          <li>at a Post Office</li>
+          <li>UK passport</li>
+          <li>driving licence</li>
+          <li>other form of accepted photo ID</li>
+        </ul>
+
+        <p class="govuk-body">
+          You can prove your identity at a Post Office if you have a:
+        </p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>EU driving licence</li>
+          <li>non-UK passport</li>
         </ul>
 
         <input class="govuk-button " type="submit" value="Continue">

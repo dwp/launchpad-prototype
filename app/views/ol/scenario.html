@@ -1,0 +1,74 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+    {% include "includes/banner.njk" %}
+    <form class="form" action="/logInScenario" method="post">
+
+      {{ govukRadios({
+        name: "logInScenario",
+        fieldset: {
+          legend: {
+            text: "Select a scenario to simulate",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--xl"
+          }
+        },
+        items: [
+          {
+            value: "Returning DTH user",
+            text: "DTH user"
+          },
+          
+          {
+            value: "Unmatched NINO",
+            text: "DTH user (unmatched on NINO)"
+          },          {
+            value: "Unmatched email",
+            text: "DTH user (unmatched on email)"
+          },
+          {
+            value: "Invited digital user",
+            text: "New invited digital user"
+          },
+          {
+            value: "New One Login user during migration",
+            text: "New self-serve user"
+          },
+          {
+            value: "Returning One Login user during migration",
+            text: "Returning self-serve user"
+          },         {
+            value: "Post migration journey",
+            text: "Post-migration journey"
+          },
+          {
+            value: "OIDV successful",
+            text: "OIDV successful"
+          },
+          {
+            value: "OIDV failed",
+            text: "OIDV failed"
+          },
+          {
+            value: "Not registered",
+            text: "Not registered"
+          }
+        ]
+      }) }}
+      {{ govukButton({
+        text: "Continue"
+      }) }} 
+    </form>
+  </div>
+</div>
+
+{% if not (data['protoVariant'] == "B: condensed" ) %}
+{% endif %}
+
+<!-- End row -->
+{% endblock %}

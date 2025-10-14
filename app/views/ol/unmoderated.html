@@ -6,26 +6,27 @@
 <div class="govuk-grid-row">
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
-    {% include "includes/banner.njk" %}
-    <form class="form" action="/oidvScenario" method="post">
-      
+    <form class="form" action="/logInScenario" method="post">
+      <p class="govuk-body">
+      {{govukTag({
+        text: "Scenario builder",
+        classes: "govuk-tag--green"
+      })}}
+      </p>
+
       {{ govukRadios({
-        name: "oidvScenario",
+        name: "logInScenario",
         fieldset: {
           legend: {
-            text: "Select where to start the OIDV journey",
+            text: "Start the journey",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--xl"
           }
         },
         items: [
           {
-            value: "PIP Home",
-            text: "PIP Home"
-          },
-          {
-            value: "HIG submitted confirmation screen",
-            text: "HIG submitted confirmation screen"
+            value: "Returning DTH user",
+            text: "Select this option and click Continue to begin"
           }
         ]
       }) }}
@@ -34,7 +35,10 @@
       }) }} 
     </form>
   </div>
-  <!-- End column -->
 </div>
+
+{% if not (data['protoVariant'] == "B: condensed" ) %}
+{% endif %}
+
 <!-- End row -->
 {% endblock %}
