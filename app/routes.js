@@ -206,7 +206,7 @@ router.post('/eligible', function(request, response) {
   }  else if (logInScenario == "Unmatched NINO" || logInScenario == "Unmatched email"){
       response.redirect("/ol/dth-explainer");
   } else if (logInScenario == "New One Login user during migration") {
-      response.redirect("/ol/we-cannot-sign-you-in");
+      response.redirect("/ol/ol-landing");
   } else if (logInScenario == "Returning One Login user during migration") {
     response.redirect("/ol/ol-landing");
   } else if (logInScenario == "Invited digital user") {
