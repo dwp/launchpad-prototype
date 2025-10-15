@@ -14,7 +14,8 @@
     "govuk-prototype-kit": "13.18.0",
     "hmrc-frontend": "6.42.0",
     "jquery": "3.7.1",
-    "notifications-node-client": "8.2.1"
+    "notifications-node-client": "8.2.1",
+    "axios": "1.12.0"
   },
   "name": "launchpad-prototype",
   "description": "Use this template to create new prototypes in DWP. This template is updated with every major version release of the GOVUK prototype kit.",
