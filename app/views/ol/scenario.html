@@ -26,10 +26,7 @@
           
           {
             value: "Unmatched NINO",
-            text: "Migrating DTH user (unmatched on NINO)"
-          },          {
-            value: "Unmatched email",
-            text: "Migrating DTH user (unmatched on email)"
+            text: "Migrating DTH user (unmatched on NINO or email)"
           },
           {
             value: "Invited digital user",
@@ -60,6 +57,11 @@
           }
         ]
       }) }}
+       <!--         {
+            value: "Unmatched email",
+            text: "Migrating DTH user (unmatched on email)"
+          },-->
+      <p class="govuk-body govuk-!-margin-bottom-6"><a href="unmoderated" class="govuk-link--no-visited-state">Custom scenario for unmoderated testing</a></p>
       {{ govukButton({
         text: "Continue"
       }) }} 
