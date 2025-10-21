@@ -1,6 +1,19 @@
 {% extends "layouts/main.html" %}
 {% set pageName = "One Login migration prototypes" %}
 
+{% block beforeContent %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+
+{{ govukBreadcrumbs({
+  items: [
+    {
+      text: "Prototype index",
+      href: "../index"
+    }
+  ]
+}) }}
+{% endblock %}
+
 {% block content %}
 
 <!-- Start row -->
@@ -8,16 +21,19 @@
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l">One Login migration prototype</h1>
-    <p class="govuk-body">This prototype was created and is maintained by <a href="https://dwpdigital.atlassian.net/wiki/spaces/HPDU/pages/133438865442/Team+Phoenix">Team Phoenix</a>.</p>
-    <p class="govuk-body">
-        {{govukTag({
-          text: "Third iteration",
-          classes: "govuk-tag--green"
-        })}}
-    </p>
+    <p class="govuk-body">This prototype was created and is maintained by <a href="https://dwpdigital.atlassian.net/wiki/spaces/HPDU/pages/133438865442/Team+Phoenix">Team Phoenix</a>.</p> 
+    
+    <p class="govuk-body"> <a href="https://dwpdigital.atlassian.net/wiki/spaces/HPDU/pages/133965218079/UCD_One+Login+Migration">Research and design documentation</a> is published on the team's Confluence page.</p>
 
     <h2 class="govuk-heading-m">Last updated</h2>
-    <p class="govuk-body">September 2025</p>
+        <p class="govuk-body">
+        {{govukTag({
+          text: "Version 3",
+          classes: "govuk-tag--green"
+        })}}
+      </p>
+
+    <p class="govuk-body">October 2025</p>
     <h2 class="govuk-heading-m">Date created</h2>
     <p class="govuk-body">July 2025</p>
     <h2 class="govuk-heading-m">What it is</h2>
@@ -29,17 +45,92 @@
       <li>OIDV journeys</li>
     </ul>
      <h2 class="govuk-heading-m">Updates</h2>
-     <p class="govuk-body">September 2025:</p>
+
+{% from "govuk/components/accordion/macro.njk" import govukAccordion %}
+
+{{ govukAccordion({
+  id: "accordion-default",
+  headingLevel: "3",
+  items: [
+    {
+      heading: {
+        text: "October 2025"
+      },
+      content: {
+        html: '<p class="govuk-body">
+            <strong class="govuk-tag govuk-tag--green">
+          Version 3</strong>
+          </p>
          <ul class="govuk-list govuk-list--bullet">
-          <li>Added index page</li>
+
+<li>Content of “Your email address” [PIP auth] screen reverted to original content</li>
+<li>Copy updated on “We could not sign you in” screen</li>
+<li>Routing change on “There is a problem registering you” screen</li>
+<li>Removed DTH sign in screen</li>
+<li>Included “Change your sign in details” content on “Help” screen</li>
+<li>Added screen for users returning from One Login who are unmatched on their personal details (NINO)</li>
+<li>Added screen for users returning from One Login who are unmatched on their personal details (email)</li>
+<li>Used One Login header across the logged-in PIP service</li>
+<li>Updated “Confirm your identity” copy on PIP home screen</li>
+<li>Added a “Prove your identity” explainer screen within PIP home</li>
+<li>Updated routing on HIG submission screen</li>
+<li>Removed “Your email address” and migration splash screens  post-migration</li>
+          <!--<li>Added index page</li>
           <li>Added routing for returning users who enter via the eligibilty checker</li>
           <li>Added OIDV journeys</li>
           <li>Updated DTH migration explanation screen</li>
           <li>Added revised "We cannot sign you in" page</li>
           <li>Updated sign-out page</li>
           <li>Copy amend to "eligibility" screen</li>
-          <li>Updated "Help" page heading markup and link to One Login security page</li>
-        </ul>
+          <li>Updated "Help" page heading markup and link to One Login security page</li>-->
+        </ul>'
+      }
+    },
+    {
+      heading: {
+        text: "September 2025"
+      },
+      content: {
+        html: '<p class="govuk-body">
+                <strong class="govuk-tag govuk-tag--yellow">
+          Version 2</strong>
+               </p>
+<ul class="govuk-list govuk-list--bullet">
+
+<li>Amended copy on “Your email” screen</li>
+<li>Redirected all routes back to the service to “Your email” screen</li>
+<li>Amended copy on “You’re eligible” screen</li>
+<li>Amended copy on migration splash screen</li>
+<li>Remove One Login explanation screen prior to One Login sign in screen</li>
+<li>Removed PIP heading variant with link to discrete page to hand users off to One Login</li>
+<li>Added “Change your One login details” copy to “Help” screen </li>
+<li>Update invited digital email</li>
+
+        </ul>'
+      }
+    },
+    {
+      heading: {
+        text: "August 2025"
+      },
+      content: {
+        html: '<strong class="govuk-tag govuk-tag--yellow">
+          Version 1</strong>
+               </p>
+                        <ul class="govuk-list govuk-list--bullet">
+
+<li>Amended references to creating an account on “You’re eligible” screen</li>
+<li>Added GOV.UK One Login explanation screen before user is routed out to One Login</li>
+<li>Returning (DTH) users routed through the DTH sign-in screen</li>
+<li>After log-in, returning DTH users routed through a splash screen to explain the migration process</li>
+<li>Added a way for users to access their One Login account from PIP</li>
+<li>Simulated link to PIP from the One Login logged in home screen</li>
+
+        </ul>'
+      }
+    }
+  ]
+}) }}
       {{ govukButton({
         text: "Start prototype",
         href: "scenario"

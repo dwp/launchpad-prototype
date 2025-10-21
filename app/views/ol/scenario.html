@@ -1,4 +1,18 @@
 {% extends "layouts/main.html" %}
+{% block beforeContent %}
+{{ govukBreadcrumbs({
+  items: [
+    {
+      text: "Prototype index",
+      href: "../index"
+    },
+    {
+      text: "One Login",
+      href: "index"
+    }
+  ]
+}) }}
+{% endblock %}
 
 {% block content %}
 
@@ -13,9 +27,9 @@
         name: "logInScenario",
         fieldset: {
           legend: {
-            text: "Select a scenario to simulate",
+            text: "One Login migration: select a scenario",
             isPageHeading: true,
-            classes: "govuk-fieldset__legend--xl"
+            classes: "govuk-fieldset__legend--l"
           }
         },
         items: [
@@ -26,7 +40,11 @@
           
           {
             value: "Unmatched NINO",
-            text: "Migrating DTH user (unmatched on NINO or email)"
+            text: "Migrating DTH user (unmatched on NINO)"
+          },
+          {
+            value: "Unmatched email",
+            text: "Migrating DTH user (unmatched email)"
           },
           {
             value: "Invited digital user",
