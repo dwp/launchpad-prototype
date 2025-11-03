@@ -7,18 +7,12 @@
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
     <form class="form" action="/logInScenario" method="post">
-      <p class="govuk-body">
-      {{govukTag({
-        text: "Scenario builder",
-        classes: "govuk-tag--green"
-      })}}
-      </p>
 
       {{ govukRadios({
         name: "logInScenario",
         fieldset: {
           legend: {
-            text: "Start the journey",
+            text: "Start",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--xl"
           }
@@ -26,7 +20,7 @@
         items: [
           {
             value: "Returning DTH user",
-            text: "Select this option and click Continue to begin"
+            text: "Select this option and click 'Continue' to begin"
           }
         ]
       }) }}
