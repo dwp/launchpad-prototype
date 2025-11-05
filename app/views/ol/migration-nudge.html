@@ -1,0 +1,43 @@
+{% extends "layouts/main-email.html" %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+    <form class="form" action="returning-email" method="post"></form>
+    {% from "govuk/components/input/macro.njk" import govukInput %}
+
+
+    <p class="govuk-body">Dear [name],</p>
+
+    <p class="govuk-body">Personal Independence Payment (PIP) is moving to GOV.UK One Login. GOV.UK One Login is the new way to sign in to some government services.</p>
+
+    <p class="govuk-body">To avoid losing your application, you need to sign in and link your PIP account to GOV.UK One Login.</p>
+    <p class="govuk-body">You can create a GOV.UK One Login if you do not already have one. Creating a GOV.UK One Login will not restart your PIP application or affect its progress.</p>
+
+    <h2 class="govuk-heading-m">You will need:</h2>
+    <ul class="govuk-list govuk-list--bullet">
+        <li>a mobile phone</li>
+        <li>access to this email address</li>
+    </ul>
+
+    <h2 class="govuk-heading-m">How to get started</h2>
+    <p class="govuk-body">Go to [insert link]</a> and sign in to PIP.</p>
+    <p class="govuk-body">Follow the instructions to create a GOV.UK One Login, using the same email address you used for your PIP account.</p>
+    <p class="govuk-body">If you have already created a GOV.UK One Login using a different email address, you can change it by signing in to GOV.UK One Login.</p>
+
+    <h2 class="govuk-heading-m">Important:</h2>
+    <p class="govuk-body">To keep access to your PIP application, connect your PIP account to GOV.UK One Login before (date TBC). You must still complete your application within 40 days of starting it.</p>
+    <h2 class=" govuk-heading-m">Contact us</h2>
+    <p class="govuk-body">Telephone: 0800 121 6297</a> <br>Textphone: 0800 121 4493<br><a href="https://uk.bt.com18001">Relay UK </a>(if you cannot hear or speak on the phone): then 0800 917 2222<br><a href="https://connect.interpreterslive.co.uk/vrs?ilc=DWPhow">British Sign Language (BSL)</a> video relay service if you’re on a computer -  to use the service on mobile or tablet<br>Monday to Friday, 9am to 5pm<br><a href="/www.gov.uk/call-chargesFind">Find out about call charges </a></p>
+        
+    </form>
+  </div>
+  <!-- End column -->
+</div>
+<!-- End row -->
+
+{% endblock %}
