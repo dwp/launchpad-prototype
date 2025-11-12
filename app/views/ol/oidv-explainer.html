@@ -59,15 +59,11 @@
 </div>
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        {% if (data['logInScenario'] == "OIDV successful") %}
 
-        <form method="post" action="identity-confirmed" name="">
-        {% else %}
-        <form method="post" action="oidv-alternative-method" name="">
-        {% endif %}
+      <form method="post" action="ol-oidv" name="">
 
-        <h1 class="govuk-heading-l ">
-       Prove your identity with GOV.UK One Login
+        <h1 class="govuk-heading-xl ">
+       Prove your identity with a GOV.UK One Login
         </h1>
 
 
@@ -75,35 +71,28 @@
           You need to prove your identity with GOV.UK One Login to finish your application.
         </p>
 
-        <h2 class="govuk-heading-m">
-          How to prove your identity
-        </h2>
-
         <p class="govuk-body">
-          GOV.UK One Login will ask you questions to find the best way for you to prove your identity.
+          This means you will not need to prove your identity again next time a GOV.UK One Login service needs to check who you are.
         </p>
 
         <p class="govuk-body">
-          You may be able to:
+          You can prove your identity online if you have a:
         </p>
 
         <ul class="govuk-list govuk-list--bullet">
-          <li>prove your identity online with accepted photo ID</li>
-          <li>answer security questions online</li>
-          <li>verify your ID at the Post Office</li>
+          <li>UK passport</li>
+          <li>driving licence</li>
+          <li>other form of accepted photo ID</li>
         </ul>
 
-        <h3 class="govuk-heading-s">You will need:</h3>
+        <p class="govuk-body">
+          You can prove your identity at a Post Office if you have a:
+        </p>
 
-<ul class="govuk-list govuk-list--bullet">
-                        <li>
-                          a valid photo ID such as a passport or driving licence
-                        </li>
-                         or
-                         <li>
-                        your bank and building society details
-                        </li>
-                      </ul>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>EU driving licence</li>
+          <li>non-UK passport</li>
+        </ul>
 
         <input class="govuk-button " type="submit" value="Continue">
 
