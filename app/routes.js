@@ -220,7 +220,21 @@ router.post('/eligible', function(request, response) {
 
  router.post('/ol-password',function(request, response) {
   var logInScenario = request.session.data['logInScenario'];
-  if (logInScenario == "Unmatched NINO" || logInScenario == "Unmatched email"){
-      response.redirect("/ol/unmatched");
+  if (logInScenario == "Unmatched NINO" || logInScenario == "Unmatched email" || logInScenario == "Returning DTH user"){
+      response.redirect("/ol/name");
   } else response.redirect('/ol/pip-home');
+  })
+
+  //Redirect from One Login posctcode screen based on scenario
+
+
+  router.post('/postcode-answer',function(request, response) {
+  var logInScenario = request.session.data['logInScenario'];
+  if (logInScenario == "Unmatched NINO"){
+      response.redirect("/ol/unmatched");
+  }  else if (logInScenario == "Unmatched email"){
+      response.redirect("/ol/unmatched");
+  } else if (logInScenario == "Returning DTH user"){
+      response.redirect("/ol/pip-home");
+  };
   })
