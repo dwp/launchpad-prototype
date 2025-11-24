@@ -165,8 +165,6 @@ router.post('/eligible', function(request, response) {
   var logInScenario = request.session.data['logInScenario'];
   if (logInScenario == "Returning DTH user"){
       response.redirect("/ol/there-is-a-problem-registering-you");
-  } else if (logInScenario == "Returning DTH user unmatched"){
-      response.redirect("/ol/sign-in");
   } else if (logInScenario == "Unmatched NINO"){
       response.redirect("/ol/there-is-a-problem-registering-you");
   } else if (logInScenario == "Unmatched email"){
@@ -199,14 +197,9 @@ router.post('/eligible', function(request, response) {
       response.redirect("/ol/email");
   } else if (logInScenario == "Returning One Login user during migration") {
       response.redirect("/ol/email");
-  }
-  else if (logInScenario == "Returning One Login user during migration"  && protoVariant == "A") {
-      response.redirect("/ol/email");
   } else if (logInScenario == "Post migration journey") {
     response.redirect("/ol/email");
-} else if (logInScenario == "New One Login user after migration") {
-  response.redirect("/ol/eligible");
-}
+} 
   })
 
   //Redirect from email screen based on scenario selected
