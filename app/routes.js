@@ -164,17 +164,22 @@ router.post('/eligible', function(request, response) {
  router.post('/email',function(request, response) {
   var logInScenario = request.session.data['logInScenario'];
   if (logInScenario == "Returning DTH user"){
-      response.redirect("/ol/sign-in");
-  } else if (logInScenario == "Returning DTH user unmatched"){
-      response.redirect("/ol/sign-in");
-  } else if (logInScenario == "New One Login user during migration") {
+      response.redirect("/ol/there-is-a-problem-registering-you");
+  } else if (logInScenario == "Unmatched NINO"){
+      response.redirect("/ol/there-is-a-problem-registering-you");
+  } else if (logInScenario == "Unmatched email"){
+      response.redirect("/ol/there-is-a-problem-registering-you");
+  }
+  else if (logInScenario == "New One Login user during migration") {
       response.redirect("/ol/eligible");
   } else if (logInScenario == "Post migration journey") {
       response.redirect("/ol/eligible");
   } else if (logInScenario == "Invited digital user") {
       response.redirect("/ol/ol-landing");
+  } else if (logInScenario == "Not registered") {
+      response.redirect("/ol/eligible");
   } else if (logInScenario == "Returning One Login user during migration") {
-      response.redirect("/ol/ol-landing");
+      response.redirect("/ol/there-is-a-problem-registering-you");
   }
   })//Invited digital userNew One Login user during migrationReturning One Login user during migration
 
@@ -183,18 +188,18 @@ router.post('/eligible', function(request, response) {
   var logInScenario = request.session.data['logInScenario'];
   var protoVariant = request.session.data['protoVariant'];
   if (logInScenario == "Returning DTH user"){
-      response.redirect("/ol/returning-email");
+      response.redirect("/ol/email");
   } else if (logInScenario == "Unmatched NINO" || logInScenario == "Unmatched email"){
-      response.redirect("/ol/returning-email");
+      response.redirect("/ol/email");
   } else if (logInScenario == "New One Login user during migration") {
       response.redirect("/ol/email");
-  } else if (logInScenario == "Returning One Login user during migration"  && protoVariant == "A") {
+  } else if (logInScenario == "Not registered") {
+      response.redirect("/ol/email");
+  } else if (logInScenario == "Returning One Login user during migration") {
       response.redirect("/ol/email");
   } else if (logInScenario == "Post migration journey") {
     response.redirect("/ol/email");
-} else if (logInScenario == "New One Login user after migration") {
-  response.redirect("/ol/eligible");
-}
+} 
   })
 
   //Redirect from email screen based on scenario selected
@@ -220,7 +225,21 @@ router.post('/eligible', function(request, response) {
 
  router.post('/ol-password',function(request, response) {
   var logInScenario = request.session.data['logInScenario'];
-  if (logInScenario == "Unmatched NINO" || logInScenario == "Unmatched email"){
-      response.redirect("/ol/unmatched");
+  if (logInScenario == "Unmatched NINO" || logInScenario == "Unmatched email" || logInScenario == "Returning DTH user"){
+      response.redirect("/ol/name");
   } else response.redirect('/ol/pip-home');
+  })
+
+  //Redirect from One Login posctcode screen based on scenario
+
+
+  router.post('/postcode-answer',function(request, response) {
+  var logInScenario = request.session.data['logInScenario'];
+  if (logInScenario == "Unmatched NINO"){
+      response.redirect("/ol/unmatched");
+  }  else if (logInScenario == "Unmatched email"){
+      response.redirect("/ol/unmatched");
+  } else if (logInScenario == "Returning DTH user"){
+      response.redirect("/ol/pip-home");
+  };
   })
