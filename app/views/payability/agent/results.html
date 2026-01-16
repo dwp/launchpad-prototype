@@ -1,0 +1,87 @@
+{% extends "layouts/payability.html" %}
+
+{% block pageTitle %}
+  Content page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set pageName = "Agent home" %}
+
+<!-- HTML from Starling prototype-->
+
+{% block content %}
+
+<!-- Start row -->
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--xl govuk-!-margin-bottom-8">One record found</caption>
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header"></th>
+        <th scope="col" class="govuk-table__header"></th>
+      </tr>
+    </thead>
+
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">National Insurance number</th>
+      <td class="govuk-table__cell">NA 11 22 33 C</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Name</th>
+      <td class="govuk-table__cell">
+          Jeff Bridges
+        </td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Date of birth</th>
+      <td class="govuk-table__cell">4 December 1949</td>
+    </tr>
+  </tbody>
+</table>
+
+<form class="form" action="/payability/person-record/jeff-bridges" method="post">
+  <div class="govuk-form-group">
+    <fieldset class="govuk-fieldset" aria-describedby="find-someone-1-offline-return-hint">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-padding-top-4">
+      <h1 class="govuk-fieldset__heading">
+        Is this the correct record?
+      </h1>
+    </legend>
+    
+    <div id="find-someone-1-offline-return-hint" class="govuk-hint">
+    </div>
+
+
+    <div class="govuk-radios govuk-radios" data-module="govuk-radios">    
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="find-someone-1-offline-return" name="find-someone-1-offline-return" type="radio" value="Yes">
+        <label class="govuk-label govuk-radios__label" for="find-someone-1-offline-return">
+          Yes
+        </label>
+        
+    </div>
+      
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="find-someone-1-offline-return-4" name="find-someone-1-offline-return" type="radio" value="No">
+        <label class="govuk-label govuk-radios__label" for="find-someone-1-offline-return-4">
+          No
+        </label>
+      </div>
+    </div>
+
+  </fieldset>
+
+  </div>
+
+  <button type="submit" class="govuk-button govuk-!-margin-bottom-8" data-module="govuk-button">
+    Continue
+  </button>
+</form>
+
+        </div>
+      </div>
+
+<!-- End row -->
+{% endblock %}

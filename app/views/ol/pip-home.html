@@ -53,6 +53,20 @@
       <!-- Start row -->
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-full">
+            {% if (data['logInScenario'] == 'Email updated') %}
+              {% set html %}
+                <h3 class="govuk-notification-banner__heading">
+                  You have changed your GOV.UK One Login email address
+                </h3>
+                <p class="govuk-body">We will write to <strong>jamie@gmail.com</strong> when we need to contact you about your PIP application.</p>
+              {% endset %}
+
+              {{ govukNotificationBanner({
+                html: html,
+                titleText: "Email address changed",
+                type: "success"
+              }) }}
+            {% endif %}
           <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">PIP Home</h1>
           </div>
         </div>

@@ -7,7 +7,13 @@
   
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
-    <form class="form" action="/ol/oidv-explainer" method="post">
+            {% if (data['logInScenario'] != "Telephony") %}
+             <form class="form" action="/ol/oidv-explainer" method="post">
+             {% endif %}
+             {% if (data['logInScenario'] == "Telephony") %}
+             <form class="form" action="/ol/oidv-alternative-method" method="post">
+            {% endif %}
+    
             {{ govukPanel({
         titleText: "Stage 2 submitted"
       }) }}

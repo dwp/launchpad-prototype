@@ -126,6 +126,10 @@ router.post('/logInScenario', function (req, res) {
     res.redirect("/ol/oidv");
   } else if (logInScenario == "OIDV failed"){
     res.redirect("/ol/oidv");
+  } else if (logInScenario == "Email updated"){
+    res.redirect("/ol/pip-home");
+  } else if (logInScenario == "Telephony"){
+    res.redirect("/ol/oidv");
   }
   //Redirect
   else res.redirect('/ol/pip-govuk');
@@ -216,13 +220,14 @@ router.post('/eligible', function(request, response) {
     response.redirect("/ol/ol-landing");
   } else if (logInScenario == "Invited digital user") {
     response.redirect("/ol/ol-landing");
+  } else if (logInScenario == "Telephony") {
+    response.redirect("/ol/ol-landing");
   } else if (logInScenario == "Not registered") {
     response.redirect("/ol/we-cannot-sign-you-in");
   } 
   })
 
 //Redirect from One Login password screen based on scenario
-
  router.post('/ol-password',function(request, response) {
   var logInScenario = request.session.data['logInScenario'];
   if (logInScenario == "Unmatched NINO" || logInScenario == "Unmatched email" || logInScenario == "Returning DTH user"){
@@ -231,8 +236,6 @@ router.post('/eligible', function(request, response) {
   })
 
   //Redirect from One Login posctcode screen based on scenario
-
-
   router.post('/postcode-answer',function(request, response) {
   var logInScenario = request.session.data['logInScenario'];
   if (logInScenario == "Unmatched NINO"){
