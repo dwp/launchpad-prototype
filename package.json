@@ -18,7 +18,8 @@
     "axios": "1.12.0"
   },
   "overrides": {
-    "axios": "1.12.0"
+    "axios": "1.12.0",
+    "jws": "3.2.3"
   },
   "name": "launchpad-prototype",
   "description": "Use this template to create new prototypes in DWP. This template is updated with every major version release of the GOVUK prototype kit.",
