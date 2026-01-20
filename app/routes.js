@@ -6,6 +6,12 @@
 const govukPrototypeKit = require('govuk-prototype-kit')
 const router = govukPrototypeKit.requests.setupRouter()
 
+//Import from routes folder
+const payabilityRoutes = require('./routes/payability-routes-v1');
+
+//Use routes
+router.use('/', payabilityRoutes);
+
 // Find an address plugin
 const findAddressPlugin = require("find-an-address-plugin");
 
