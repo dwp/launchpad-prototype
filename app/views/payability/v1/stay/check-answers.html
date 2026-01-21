@@ -1,37 +1,98 @@
-{% extends "layouts/payability.html" %}
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Check your answers template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
 {% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
 {% endblock %}
 
 {% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
 
-<!-- Start row -->
-<div class="govuk-grid-row">
-  <!-- Start column -->
-  <div class="govuk-grid-column-two-thirds">
-    <form class="form" action="#" method="post">
+      <h1 class="govuk-heading-xl">
+        Check your answers before sending your application
+      </h1>
 
-      {{ govukRadios({
-        name: "Change_Me",
-        fieldset: {
-          legend: {
-            text: "Change Me",
-            isPageHeading: true,
-            classes: "govuk-fieldset__legend--l"
-          }
-        },
-        items: [
+      {{ govukSummaryList({
+        rows: [
           {
-            value: "Default",
-            text: "Default"
+            key: {
+              text: "Question 1"
+            },
+            value: {
+              text: "Answer 1"
+            },
+            actions: {
+              items: [
+                {
+                  href: "#",
+                  text: "Change",
+                  visuallyHiddenText: "Question 1"
+                }
+              ]
+            }
+          }
+          ,
+          {
+            key: {
+              text: "Question 2"
+            },
+            value: {
+              text: "Answer 2"
+            },
+            actions: {
+              items: [
+                {
+                  href: "#",
+                  text: "Change",
+                  visuallyHiddenText: "Question 2"
+                }
+              ]
+            }
+          }
+          ,
+          {
+            key: {
+              text: "Question 3"
+            },
+            value: {
+              text: "Answer 3"
+            },
+            actions: {
+              items: [
+                {
+                  href: "#",
+                  text: "Change",
+                  visuallyHiddenText: "Question 3"
+                }
+              ]
+            }
           }
         ]
       }) }}
-      {{ govukButton({
-        text: "Continue"
-      }) }}
-    </form>
-  </div>
-</div>
 
-<!-- End row -->
+      <h2 class="govuk-heading-m">
+        Now send your application
+      </h2>
+
+      <p>
+        By submitting this application you are confirming that, to the best of your knowledge, the details you are providing are correct.
+      </p>
+
+      <form action="/confirmation" method="post" novalidate>
+
+        {{ govukButton({
+          text: "Accept and send"
+        }) }}
+
+      </form>
+
+    </div>
+  </div>
 {% endblock %}

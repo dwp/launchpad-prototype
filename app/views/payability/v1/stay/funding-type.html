@@ -1,0 +1,79 @@
+{% extends "layouts/payability.html" %}
+{% block beforeContent %}
+{% endblock %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+
+    <form class="form" action="funding-address" method="post">
+
+      {{ govukRadios({
+        name: "whereDoYouLive",
+        fieldset: {
+          legend: {
+            text: "Who funded the " + data['type_scenario'] | lower + " stay",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        hint: {
+          text: "Select all that apply"
+        },
+        items: [
+         {
+            value: "Claimant",
+            text: "Claimant"
+          },
+          { 
+            value: "Local authority",
+            text: "Local authority"
+          },
+          {
+            value: "Health authority",
+            text: "Health authority"
+          },
+          {
+            value: "Charity",
+            text: "Charity"
+          },
+          {
+            value: "Department for Work and Pensions",
+            text: "Department for Work and Pensions"
+          },
+          {
+            value: "None of these",
+            text: "None of these"
+          },
+          
+          {
+            value: "Prison",
+            text: "Prison"
+          },
+          {
+            value: "None of the above",
+            text: "None of the above"
+          },
+          {
+            value: "I don't know",
+            text: "I don't know"
+          }
+        ]
+      }) }}
+
+
+
+<button type="submit" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
+  Save and continue
+</button>
+
+  </fieldset>
+
+
+
+
+<!-- End row -->
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "layouts/payability.html" %}
+{% block beforeContent %}
+{% endblock %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+
+    <form class="form" action="funding-type" method="post">
+    
+      {{ govukRadios({
+      name: "boarder-scenario",
+      fieldset: {
+        legend: {
+          text: "Does the claimant live there as a boarder?",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      items: [
+        {
+          value: "Yes",
+          text: "Yes"
+        },
+        {
+          value: "No",
+          text: "No"
+        },
+        {
+          value: "Unsure",
+          text: "Unsure"
+        }
+      ]}) }}
+
+
+    <button type="submit" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
+      Save and continue
+    </button>
+
+</form>
+
+
+
+
+
+<!-- End row -->
+{% endblock %}

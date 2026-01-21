@@ -1,0 +1,50 @@
+{% extends "layouts/payability.html" %}
+{% block beforeContent %}
+{% endblock %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+
+    <form class="form" action="" method="post">
+
+      <fieldset class="govuk-fieldset">
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--l" for="event-name">
+            Funding provider contact information
+          </label>
+        </h1> 
+        
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="primary-contact">
+            Funding provider primary contact name
+          </label>
+          <input class="govuk-input" id="primary-contact" name="primary-contact" type="text" autocomplete="primary-contact">
+        </div>
+
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="accomodation-email">
+            Funding provider contact email
+          </label>
+          <input class="govuk-input" id="accomodation-email" name="accomodation-email" type="text" autocomplete="accomodation-email">
+        </div>
+
+
+        <button type="submit" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
+          Save and continue
+        </button>
+
+      </fieldset>
+</form>
+
+
+
+
+
+
+<!-- End row -->
+{% endblock %}

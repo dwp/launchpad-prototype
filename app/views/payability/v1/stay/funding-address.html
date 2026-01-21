@@ -1,0 +1,79 @@
+{% extends "layouts/payability.html" %}
+{% block beforeContent %}
+{% endblock %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+
+    <form class="form" action="funding-contact" method="post">
+
+
+      <fieldset class="govuk-fieldset">
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--l" for="event-name">
+            Funding provider address details
+          </label>
+        </h1> 
+      </fieldset>
+        
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="funding-name">
+            Name of funding authority or body
+          </label>
+          <input class="govuk-input" id="funding-name" name="funding-name" type="text" autocomplete="funding-name">
+        </div>
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="funding-address-line-1">
+            Address line 1
+          </label>
+          <input class="govuk-input" id="funding-address-line-1" name="funding-address-line-1" type="text" autocomplete="funding-address-line1">
+        </div>
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="funding-address-line-2">
+            Address line 2 (optional)
+          </label>
+          <input class="govuk-input" id="funding-address-line-2" name="funding-address-line-2" type="text" autocomplete="funding-address-line2">
+        </div>
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="funding-address-town">
+            Town or city
+          </label>
+          <input class="govuk-input govuk-!-width-two-thirds" id="funding-address-town" name="funding-address-town" type="text" autocomplete="funding-address-level2">
+        </div>
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="funding-address-county">
+            County (optional)
+          </label>
+          <input class="govuk-input govuk-!-width-two-thirds" id="funding-address-county" name="funding-address-county" type="text">
+        </div>
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="funding-address-postcode">
+            Postcode
+          </label>
+          <input class="govuk-input govuk-input--width-10" id="funding-address-postcode" name="funding-address-postcode" type="text" autocomplete="postal-code">
+        </div>
+
+
+        <button type="submit" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
+          Save and continue
+        </button>
+
+    </form>
+
+
+
+
+
+
+<!-- End row -->
+{% endblock %}

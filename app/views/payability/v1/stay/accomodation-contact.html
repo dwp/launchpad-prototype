@@ -1,0 +1,61 @@
+{% extends "layouts/payability.html" %}
+{% block beforeContent %}
+{% endblock %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+
+    <form class="form" action="accomodation-boarder" method="post">
+<fieldset class="govuk-fieldset">
+  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+    <h1 class="govuk-fieldset__heading">
+      {{(data['type_scenario'])}} contact information
+    </h1>
+  </legend>
+  
+        
+
+<div class="govuk-form-group">
+<label class="govuk-label" for="accomodation-named-contact">
+    {{(data['type_scenario'])}} name
+  </label>
+  <input class="govuk-input" id="accomodation-named-contact" name="accomodation-named-contact" type="text" autocomplete="accomodation-named-contact">
+
+</div>
+  
+
+
+<div class="govuk-form-group">
+  <label class="govuk-label" for="primary-contact">
+    Name of primary contact
+  </label>
+  <input class="govuk-input" id="primary-contact" name="primary-contact" type="text" autocomplete="primary-contact">
+</div>
+
+
+
+<div class="govuk-form-group">
+  <label class="govuk-label" for="accomodation-email">
+    {{(data['type_scenario'])}} contact email
+  </label>
+  <input class="govuk-input" id="accomodation-email" name="accomodation-email" type="text" autocomplete="accomodation-email">
+</div>
+</fieldset>
+
+
+<button type="submit" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
+  Save and continue
+</button>
+
+</form>
+
+
+
+
+
+<!-- End row -->
+{% endblock %}
