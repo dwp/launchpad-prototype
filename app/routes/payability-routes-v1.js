@@ -7,11 +7,23 @@ router.post('/funding-scenario', function(request, response) {
  
   var fundingScenario = request.session.data['funding-scenario'];
   if (fundingScenario === "Health authority" || fundingScenario === "Claimant") {
-      response.redirect("payability/v1/stay/check-answers")
+      response.redirect("payability/v1/stay/check-answers2")
   } else {
     response.redirect("payability/v1/stay/funding-address.html")
 }
 })
+
+router.post('/add-another-stay', function(request, response) {
+ 
+  var addAnotherStay = request.session.data['add-another-stay'];
+  if (addAnotherStay === "Yes") {
+      response.redirect("payability/v1/stay/type")
+  } else {
+    response.redirect("payability/v1/stay/review-payment")
+}
+})
+
+
 
 //export routes
 module.exports = router;

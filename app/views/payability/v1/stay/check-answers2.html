@@ -213,17 +213,30 @@
           
 
 
- <h1 class="govuk-heading-xl">
+
+
+        <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+       
+      <h1 class="govuk-heading-xl">
         {{(data['type-scenario'] or 'Accommodation')}} summary
       </h1>
-      
-    {{ govukSummaryList({
+
+          {{ govukSummaryList({
         rows: summaryRows
       }) }}
 
         {{ govukButton({
-          text: "Continue"
+          text: "Continue",
+          href: "stays-added"
+
+
+
         }) }}
+
+      </div>
+      
+
 
       </form>
 
