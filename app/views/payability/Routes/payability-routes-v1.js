@@ -9,7 +9,7 @@ const router = govukPrototypeKit.requests.setupRouter()
     if (fundingScenario === "Health authority" || fundingScenario === "Claimant") {
         response.redirect("payability/v1/stay/check-answers")
     } else {
-      response.redirect("e2e/home-supporting-evidence")
+      response.redirect("payability/v1/stay/check-answers.html")
   }
   })
 //export routes

@@ -15,7 +15,7 @@ router.post('/funding-scenario', function(request, response) {
   if (fundingScenario === "Health authority" || fundingScenario === "Claimant") {
       response.redirect("payability/v1/stay/check-answers")
   } else {
-    response.redirect("e2e/home-supporting-evidence")
+    response.redirect("payability/v1/stay/funding-address.html")
 }
 })
 
