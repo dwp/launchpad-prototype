@@ -104,7 +104,7 @@ router.use('/', (req, res, next) => {
     } else if (scenario === "invited"){
       response.redirect("e2e/home-supporting-evidence")
   }
-})
+  })
 
 // HIG end
 

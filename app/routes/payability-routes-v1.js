@@ -13,6 +13,5 @@ router.post('/funding-scenario', function(request, response) {
 }
 })
 
-
 //export routes
 module.exports = router;

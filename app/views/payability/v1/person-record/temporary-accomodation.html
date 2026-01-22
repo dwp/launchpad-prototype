@@ -1,0 +1,146 @@
+{% extends "layouts/payability.html" %}
+
+{% block pageTitle %}
+  Content page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set pageName = "Agent home" %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <form action="login-router" method="post" class="form">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-three-quarters">
+          <section class="dwp-quick-reference govuk-!-margin-bottom-8" aria-label="Case information">
+          <dl class="dwp-quick-reference__block">
+          <dt class="dwp-quick-reference__label govuk-visually-hidden">Name:</dt>
+        
+          <dd class="dwp-quick-reference__primary">Jeff Bridges</dd>
+        
+
+          <dt class="dwp-quick-reference__label dwp-quick-reference__label--primary govuk-visually-hidden">National Insurance number:</dt>
+          <dd class="dwp-quick-reference__secondary">NA 11 22 33 C</dd>
+          </dl>
+          </section>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- End row -->
+
+<!-- Start row -->
+  <!-- Start state with entries-->
+  <div class="govuk-grid-row">
+      <!-- Start LH column -->
+      <div class="govuk-grid-column-one-quarter govuk-!-margin-bottom-8">
+      {% include "includes/person-record-nav.njk" %}
+      </div>
+      <!-- End LH column -->
+
+    <div class="govuk-grid-column-three-quarters">
+      <h1 class="govuk-heading-l">Temporary accomodation</h1>
+      <p class="govuk-body"><a href="">Add a stay</a></p>
+     <h2 class="govuk-heading-m">Open stays</h2>
+      {{ govukSummaryList({
+        card: {
+          title: {
+            text: "Freeman Hospital"
+          },
+          actions: {
+            items: [
+              {
+                href: "#",
+                text: "View",
+                visuallyHiddenText: "of Freeman Hospital"
+              },
+              {
+                href: "#",
+                text: "Delete",
+                visuallyHiddenText: "of Freeman Hospital"
+              }
+            ]
+          }
+        },
+        rows: [
+          {
+            key: {
+              text: "Status"
+            },
+            value: {
+              html: '<strong class="govuk-tag govuk-tag--yellow">
+                     Current stay
+                     </strong>'
+            }
+          },
+          {
+            key: {
+              text: "Accomodation type"
+            },
+            value: {
+              html: "Hospital"
+            }
+          },
+          {
+            key: {
+              text: "Start date"
+            },
+            value: {
+              html: "20 January 2026"
+            }
+          }
+        ]
+      }) }}
+
+      <h2 class="govuk-heading-m">Complete stays</h3>
+      {{ govukSummaryList({
+        card: {
+          title: {
+            text: "Morgan Hospital"
+          },
+          actions: {
+            items: [
+              {
+                href: "#",
+                text: "View",
+                visuallyHiddenText: "of Morgan Hospital"
+              }
+            ]
+          }
+        },
+        rows: [
+          {
+            key: {
+              text: "Accomodation type"
+            },
+            value: {
+              html: "Hospital"
+            }
+          },
+          {
+            key: {
+              text: "Start date"
+            },
+            value: {
+              html: "5 September 2025"
+            }
+          },
+          {
+            key: {
+              text: "End date"
+            },
+            value: {
+              html: "15 September 2025"
+            }
+          }
+        ]
+      }) }}
+    </div>
+  </div>
+  <!-- Start state with no entries -->
+<!-- End row -->
+
+{% endblock %}

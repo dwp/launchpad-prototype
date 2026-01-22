@@ -1,0 +1,198 @@
+{% extends "layouts/payability.html" %}
+
+{% block pageTitle %}
+  Content page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set pageName = "Agent home" %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <form action="login-router" method="post" class="form">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-three-quarters">
+          <section class="dwp-quick-reference govuk-!-margin-bottom-8" aria-label="Case information">
+          <dl class="dwp-quick-reference__block">
+          <dt class="dwp-quick-reference__label govuk-visually-hidden">Name:</dt>
+        
+          <dd class="dwp-quick-reference__primary">Jeff Bridges</dd>
+        
+
+          <dt class="dwp-quick-reference__label dwp-quick-reference__label--primary govuk-visually-hidden">National Insurance number:</dt>
+          <dd class="dwp-quick-reference__secondary">NA 11 22 33 C</dd>
+          </dl>
+          </section>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- End row -->
+
+<!-- Start row -->
+  <!-- Start state with entries-->
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-l">Payment impact</h1>
+            
+       {{ govukSummaryList({
+        card: {
+          title: {
+            text: "Stay in Freeman Hospital"
+          }
+        },
+
+        rows: [
+          {
+            key: {
+              text: "Status"
+            },
+            value: {
+              html: '<strong class="govuk-tag govuk-tag--green">
+                     Complete
+                     </strong>'
+            }
+          },
+          {
+            key: {
+              text: "Admitted"
+            },
+            value: {
+              html: "15 January 2026"
+            }
+          },
+          {
+            key: {
+              text: "Discharged"
+            },
+            value: {
+              html: "14 March 2026"
+            }
+          },
+          {
+            key: {
+              text: "Days in accomodation"
+            },
+            value: {
+              html: "60"
+            }
+          },
+          {
+            key: {
+              text: "Days affecting payment"
+            },
+            value: {
+              html: '32<br><br>
+              <details class="govuk-details">
+              <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">
+                 How this is calculated
+                </span>
+              </summary>
+              <div class="govuk-details__text">
+                Days in accomodation: 60<br>
+                Days PIP is payable on: 28<br>
+                Remaining days: 32
+              </div>
+            </details>'
+            }
+          },
+          {
+            key: {
+              text: "Payment periods affected"
+            },
+            value: {
+              html: '<p>5 January 2026 - 14 February 2026:</p>
+                <ul class="govuk-list govuk-list--bullet">
+                  <li>Days affecting payment: 2</li>
+                  <li>Owed for this period: £20</li>
+                </ul>
+                <p>5 January 2026 - 14 February 2026:</p>
+                <ul class="govuk-list govuk-list--bullet">
+                  <li>Days affecting payment: 30</li>
+                  <li>Owed for this period: £1300</li>
+                </ul>'
+            }
+          },
+          {
+            key: {
+              text: "Total amount owed"
+            },
+            value: {
+              html: '£1320<br><br>
+            <details class="govuk-details">
+              <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">
+                 How this is calculated
+                </span>
+              </summary>
+              <div class="govuk-details__text">
+                We need to know your nationality so we can work out which elections you’re entitled to vote in. If you cannot provide your nationality, you’ll have to send copies of identity documents through the post.
+              </div>
+            </details>'
+            }
+          }
+        ]
+      }) }}
+
+      {% from "govuk/components/table/macro.njk" import govukTable %}
+
+{{ govukTable({
+  caption: "Payment schedule",
+  captionClasses: "govuk-table__caption--m",
+  firstCellIsHeader: true,
+  head: [
+    {
+      text: "Payment period"
+    },
+    {
+      text: "Standard payment amount"
+    },
+    {
+      text: "Amended payment amount"
+    }
+  ],
+  rows: [
+    [
+      {
+        text: "April 15 - May 14 2026"
+      },
+      {
+        text: "£2000"
+      },
+      {
+        text: "£1340"
+      }
+    ],
+    [
+      {
+        text: "May 15 - April 14 2026"
+      },
+      {
+        text: "£2000"
+      },
+      {
+        text: "£1340"
+      }
+    ]
+  ]
+}) }}
+    </div>
+  </div>
+<!-- End row -->
+<!-- Start row -->
+ <div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <form class="form" action="/add-another-stay" method="post">
+        {{ govukButton({
+          text: "Send for review"
+        }) }}
+      </form>
+    </div>
+  </div>
+<!-- End row -->
+{% endblock %}

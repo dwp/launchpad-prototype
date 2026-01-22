@@ -1,0 +1,115 @@
+{% extends "layouts/payability.html" %}
+
+{% block pageTitle %}
+  Content page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set pageName = "Agent home" %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <form action="login-router" method="post" class="form">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-three-quarters">
+          <section class="dwp-quick-reference govuk-!-margin-bottom-8" aria-label="Case information">
+          <dl class="dwp-quick-reference__block">
+          <dt class="dwp-quick-reference__label govuk-visually-hidden">Name:</dt>
+        
+          <dd class="dwp-quick-reference__primary">Jeff Bridges</dd>
+        
+
+          <dt class="dwp-quick-reference__label dwp-quick-reference__label--primary govuk-visually-hidden">National Insurance number:</dt>
+          <dd class="dwp-quick-reference__secondary">NA 11 22 33 C</dd>
+          </dl>
+          </section>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- End row -->
+
+<!-- Start row -->
+  <!-- Start state with entries-->
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-l">Stays in temporary accomodation</h1>
+            
+       {{ govukSummaryList({
+        card: {
+          title: {
+            text: "Freeman Hospital"
+          },
+          actions: {
+            items: [
+              {
+                href: "#",
+                text: "View",
+                visuallyHiddenText: "of Freeman Hospital"
+              },
+              {
+                href: "#",
+                text: "Delete",
+                visuallyHiddenText: "of Freeman Hospital"
+              }
+            ]
+          }
+        },
+        rows: [
+          {
+            key: {
+              text: "Start date"
+            },
+            value: {
+              html: "20 January 2026"
+            }
+          },
+          {
+            key: {
+              text: "End date"
+            },
+            value: {
+              html: "20 January 2026"
+            }
+          }
+        ]
+      }) }}
+
+    </div>
+  </div>
+<!-- End row -->
+<!-- Start row -->
+ <div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <form class="form" action="/add-another-stay" method="post">
+        {{ govukRadios({
+          name: "add-another-stay",
+          fieldset: {
+            legend: {
+              text: "Do you want to add another stay?",
+              classes: "govuk-fieldset__legend--m"
+            }
+          },
+          items: [
+            {
+              value: "Yes",
+              text: "Yes"
+            },
+            {
+              value: "No",
+              text: "No"
+            }
+          ]
+        }) }}
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+    </div>
+  </div>
+<!-- End row -->
+{% endblock %}
