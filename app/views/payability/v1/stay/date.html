@@ -9,10 +9,11 @@
   <div class="govuk-grid-column-two-thirds">
     <form class="form" action="accomodation-address" method="post">
       {{govukDateInput({
-              id: "date-in",
+              id: "admission",
+              namePrefix: "date-in",
               fieldset: {
                 legend: {
-                  text: "When did the " ~ data['type-scenario'] | lower + " stay begin?",
+                  text: "When did the stay begin?",
                   isPageHeading: true,
                   classes: "govuk-fieldset__legend--l"
                 }                }
@@ -21,10 +22,10 @@
       {% set dateOutHtml %}
         {{ govukDateInput({
           id: "date-out",
+          namePrefix: "date-out",
           fieldset: {
             legend: {
-              text: "Date they left the " ~ data['type-scenario'] | lower,
-              isPageHeading: false,
+              text: "Date they left",
               classes: "govuk-fieldset__legend--m"
             }
           }
@@ -35,7 +36,7 @@
         name: "date-out-check",
         fieldset: {
           legend: {
-            text: "Are they currently in the " +  data['type-scenario'] | lower + "?",
+            text: "Are they still staying there?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--m"
           }

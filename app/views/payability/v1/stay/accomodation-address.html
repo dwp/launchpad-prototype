@@ -9,11 +9,11 @@
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
 
-    <form class="form" action="accomodation-contact" method="post">
+    <form class="form" action="accomodation-boarder" method="post">
 <fieldset class="govuk-fieldset">
   <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
     <h1 class="govuk-fieldset__heading">
-      {{(data['type-scenario'])}} address
+      Accomodation address
     </h1>
   </legend>
 
@@ -21,7 +21,7 @@
 
 <div class="govuk-form-group">
   <label class="govuk-label" for="accomodation-name">
-    {{(data['type-scenario'])}} name
+    Accomodation name
   </label>
   <input class="govuk-input" id="accomodation-name" name="accomodation-name" type="text" autocomplete="accomodation-name">
 </div>
@@ -62,7 +62,26 @@
   <input class="govuk-input govuk-input--width-10" id="address-postcode" name="address-postcode" type="text" autocomplete="postal-code">
 </div>
 
+
+
+<div class="govuk-form-group">
+  <label class="govuk-label" for="primary-contact">
+    Contact name
+  </label>
+  <input class="govuk-input" id="primary-contact" name="primary-contact" type="text" autocomplete="primary-contact">
+</div>
+
+
+
+<div class="govuk-form-group">
+  <label class="govuk-label" for="accomodation-email">
+    Contact email address
+  </label>
+  <input class="govuk-input" id="accomodation-email" name="accomodation-email" type="text" autocomplete="accomodation-email">
+</div>
 </fieldset>
+
+
 
 
 <!--Button-->

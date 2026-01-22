@@ -1,0 +1,232 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Check your answers template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+
+{% set dateIn =
+  data['date-in-day'] ~ " " ~
+  data['date-in-month'] ~ " " ~
+  data['date-in-year']
+%}
+
+{% set dateOut =
+  data['date-out-day'] ~ " " ~
+  data['date-out-month'] ~ " " ~
+  data['date-out-year']
+%}
+
+
+
+{% set summaryRows = [] %}
+
+{# Type of stay #}
+{% if data['type-scenario'] %}
+  {% set summaryRows = summaryRows.concat([{
+    key: { text: "Type of stay" },
+    value: { text: data['type-scenario'] },
+    actions: {
+      items: [{
+        href: "type",
+        text: "Change",
+        visuallyHiddenText: "type of stay"
+      }]
+    }
+  }]) %}
+{% endif %}
+
+{# Date of entry #}
+{% if dateIn %}
+  {% set summaryRows = summaryRows.concat([{
+    key: { text: "Date of entry" },
+    value: { text: dateIn },
+    actions: {
+      items: [{
+        href: "date",
+        text: "Change",
+        visuallyHiddenText: "date of entry"
+      }]
+    }
+  }]) %}
+{% endif %}
+
+{# Ongoing stay #}
+{% if data['date-out-check'] %}
+  {% set summaryRows = summaryRows.concat([{
+    key: { text: "Ongoing stay" },
+    value: { text: data['date-out-check'] },
+    actions: {
+      items: [{
+        href: "date",
+        text: "Change",
+        visuallyHiddenText: "ongoing stay"
+      }]
+    }
+  }]) %}
+{% endif %}
+
+{# End date #}
+{% if dateOut %}
+  {% set summaryRows = summaryRows.concat([{
+    key: { text: "End date" },
+    value: { text: dateOut },
+    actions: {
+      items: [{
+        href: "date",
+        text: "Change",
+        visuallyHiddenText: "end date"
+      }]
+    }
+  }]) %}
+{% endif %}
+
+{# Accommodation address #}
+{% if data['accomodation-name'] %}
+  {% set summaryRows = summaryRows.concat([{
+    key: {
+      text: (data['type-scenario'] or 'Accommodation') ~ " address"
+    },
+    value: {
+      html:
+        (data['accomodation-name']) ~ '<br>' ~
+        (data['address-line-1'] or '') ~ '<br>' ~
+        (data['address-line-2'] or '') ~ '<br>' ~
+        (data['address-town'] or '') ~ '<br>' ~
+        (data['address-county'] or '') ~ '<br>' ~
+        (data['address-postcode'] or '')
+    },
+    actions: {
+      items: [{
+        href: "accomodation-address",
+        text: "Change",
+        visuallyHiddenText: "accommodation address"
+      }]
+    }
+  }]) %}
+{% endif %}
+
+{# Accommodation contact #}
+{% if data['primary-contact'] or data['accomodation-email'] %}
+  {% set summaryRows = summaryRows.concat([{
+    key: {
+      text: (data['type-scenario'] or 'Accommodation') ~ " contact"
+    },
+    value: {
+      html:
+        (data['primary-contact'] or 'No named contact') ~ '<br>' ~
+        (data['accomodation-email'] or 'No email address')
+    },
+    actions: {
+      items: [{
+        href: "accomodation-address",
+        text: "Change",
+        visuallyHiddenText: "accommodation contact"
+      }]
+    }
+  }]) %}
+{% endif %}
+
+{# Boarder status #}
+{% if data['boarder-scenario'] %}
+  {% set summaryRows = summaryRows.concat([{
+    key: { text: "Boarder status" },
+    value: { text: data['boarder-scenario'] },
+    actions: {
+      items: [{
+        href: "accomodation-boarder",
+        text: "Change",
+        visuallyHiddenText: "boarder status"
+      }]
+    }
+  }]) %}
+{% endif %}
+
+{# Funding type #}
+{% if data['funding-scenario'] %}
+  {% set summaryRows = summaryRows.concat([{
+    key: { text: "Funding type" },
+    value: { text: data['funding-scenario'] },
+    actions: {
+      items: [{
+        href: "funding-type",
+        text: "Change",
+        visuallyHiddenText: "funding type"
+      }]
+    }
+  }]) %}
+{% endif %}
+
+{# Funding address #}
+{% if data['funding-address-line-1'] %}
+  {% set summaryRows = summaryRows.concat([{
+    key: { text: "Funding address" },
+    value: {
+      html:
+        (data['funding-address-line-1'] or '') ~ '<br>' ~
+        (data['funding-address-line-2'] or '') ~ '<br>' ~
+        (data['funding-address-town'] or '') ~ '<br>' ~
+        (data['funding-address-county'] or '') ~ '<br>' ~
+        (data['funding-address-postcode'] or '')
+    },
+    actions: {
+      items: [{
+        href: "funding-address",
+        text: "Change",
+        visuallyHiddenText: "funding address"
+      }]
+    }
+  }]) %}
+{% endif %}
+
+{# Funding contact #}
+{% if data['funding-primary-contact'] or data['funding-email'] %}
+  {% set summaryRows = summaryRows.concat([{
+    key: { text: "Funding contact" },
+    value: {
+      html:
+        (data['funding-primary-contact'] or 'No named contact') ~ '<br>' ~
+        (data['funding-email'] or 'No email address')
+    },
+    actions: {
+      items: [{
+        href: "funding-contact",
+        text: "Change",
+        visuallyHiddenText: "funding contact"
+      }]
+    }
+  }]) %}
+{% endif %}
+
+
+
+
+{% block content %}
+
+          
+
+
+ <h1 class="govuk-heading-xl">
+        {{(data['type-scenario'] or 'Accommodation')}} summary
+      </h1>
+      
+    {{ govukSummaryList({
+        rows: summaryRows
+      }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+    </div>
+  </div>
+{% endblock %}

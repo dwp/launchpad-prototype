@@ -12,6 +12,22 @@
 {% endblock %}
 
 
+{% set dateIn =
+  data['date-in-day'] ~ " " ~
+  data['date-in-month'] ~ " " ~
+  data['date-in-year']
+%}
+
+{% set dateOut =
+  data['date-out-day'] ~ " " ~
+  data['date-out-month'] ~ " " ~
+  data['date-out-year']
+%}
+
+
+
+
+
 
 
 {% block content %}
@@ -47,7 +63,7 @@
               text: "Date of entry"
             },
             value: {
-              text: (data['date-in'])
+              text: dateIn
               
             },
             actions: {
@@ -84,7 +100,7 @@
               text: "End date"
             },
             value: {
-              text: data['date-out']
+              text: dateOut
             },
             actions: {
               items: [
@@ -105,6 +121,7 @@
       },
       value: {
         html:
+          (data['accomodation-name']) ~ '<br>' ~
           (data['address-line-1'] or '') ~ '<br>' ~
           (data['address-line-2'] or '') ~ '<br>' ~
           (data['address-town'] or '')   ~ '<br>' ~
