@@ -11,27 +11,32 @@
   }) }}
 {% endblock %}
 
+
+
+
+
+
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
 
       <h1 class="govuk-heading-xl">
-        Check your answers before sending your application
+        {{(data['type-scenario'] or 'Accommodation')}} summary
       </h1>
 
       {{ govukSummaryList({
         rows: [
           {
             key: {
-              text: "Question 1"
+              text: "Type of stay"
             },
             value: {
-              text: "Answer 1"
+              text: data['type-scenario']
             },
             actions: {
               items: [
                 {
-                  href: "#",
+                  href: "type",
                   text: "Change",
                   visuallyHiddenText: "Question 1"
                 }
@@ -41,15 +46,15 @@
           ,
           {
             key: {
-              text: "Question 2"
+              text: "Date of entry"
             },
             value: {
-              text: "Answer 2"
+              text: (data['date-in'])
             },
             actions: {
               items: [
                 {
-                  href: "#",
+                  href: "date",
                   text: "Change",
                   visuallyHiddenText: "Question 2"
                 }
@@ -59,36 +64,182 @@
           ,
           {
             key: {
-              text: "Question 3"
+              text: "Ongoing stay"
             },
             value: {
-              text: "Answer 3"
-            },
+              text: data['date-out-check']
+            },  
             actions: {
               items: [
                 {
-                  href: "#",
+                  href: "date",
                   text: "Change",
                   visuallyHiddenText: "Question 3"
                 }
               ]
             }
           }
+          ,
+          {
+            key: {
+              text: "End date"
+            },
+            value: {
+              text: data['date-out']
+            },
+            actions: {
+              items: [
+                {
+                  href: "date",
+                  text: "Change",
+                  visuallyHiddenText: "Question 3"
+                }
+              ]
+            }
+          }
+          ,
+          
+          
+{
+      key: {
+        text: (data['type-scenario'] or 'Accommodation') ~ " address"
+      },
+      value: {
+        html:
+          (data['address-line-1'] or '') ~ '<br>' ~
+          (data['address-line-2'] or '') ~ '<br>' ~
+          (data['address-town'] or '')   ~ '<br>' ~
+          (data['address-county'] or '') ~ '<br>' ~
+          (data['address-postcode'] or '')
+      },
+      actions: {
+        items: [
+          {
+            href: "accomodation-address",
+            text: "Change",
+            visuallyHiddenText: "accommodation address"
+          }
         ]
-      }) }}
+      }
+    },
 
-      <h2 class="govuk-heading-m">
-        Now send your application
-      </h2>
+    {
+      key: {
+        text: (data['type-scenario'] or 'Accommodation') ~ " contact"
+      },
+      value: {
+        html:
+          (data['primary-contact'] or 'No named contact') ~ '<br>' ~
+          (data['accomodation-email'] or 'No email address')
+      },
+      actions: {
+        items: [
+          {
+            href: "accomodation-address",
+            text: "Change",
+            visuallyHiddenText: "accommodation contact"
+          }
+        ]
+      }
+    },
 
-      <p>
-        By submitting this application you are confirming that, to the best of your knowledge, the details you are providing are correct.
-      </p>
+    {
+      key: {
+        text: "Boarder status"
+      },
+      value: {
+        html:
+          (data['boarder-scenario'] or '')
+          
+      },
+      actions: {
+        items: [
+          {
+            href: "accomodation-boarder",
+            text: "Change",
+            visuallyHiddenText: "accommodation contact"
+          }
+        ]
+      }
+    },
 
-      <form action="/confirmation" method="post" novalidate>
+    {
+      key: {
+        text: "Funding type"
+      },
+      value: {
+        html:
+          (data['funding-scenario'] or '')
+          
+      },
+      actions: {
+        items: [
+          {
+            href: "funding-type",
+            text: "Change",
+            visuallyHiddenText: "accommodation contact"
+          }
+        ]
+      }
+    },
+
+    {
+      key: {
+        text: "Funding address"
+      },
+      value: {
+        html:
+          (data['funding-address-line-1'] or '') ~ '<br>' ~
+          (data['funding-address-line-2'] or '') ~ '<br>' ~
+          (data['funding-address-town'] or '')   ~ '<br>' ~
+          (data['funding-address-county'] or '') ~ '<br>' ~
+          (data['funding-address-postcode'] or '')
+          
+      },
+      actions: {
+        items: [
+          {
+            href: "funding-address",
+            text: "Change",
+            visuallyHiddenText: "accommodation contact"
+          }
+        ]
+      }
+    },
+
+    {
+      key: {
+        text: "Funding contact"
+      },
+      value: {
+        html:
+          (data['funding-primary-contact'] or 'No named contact') ~ '<br>' ~
+          (data['funding-email'] or 'No email address')
+          
+      },
+      actions: {
+        items: [
+          {
+            href: "funding-contact",
+            text: "Change",
+            visuallyHiddenText: "accommodation contact"
+          }
+        ]
+      }
+    }
+
+
+
+
+
+
+  ]
+}) }}
+
+
 
         {{ govukButton({
-          text: "Accept and send"
+          text: "Continue"
         }) }}
 
       </form>

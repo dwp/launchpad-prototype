@@ -9,13 +9,13 @@
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
 
-    <form class="form" action="funding-address" method="post">
+    <form class="form" action="/funding-scenario" method="post">
 
       {{ govukRadios({
-        name: "whereDoYouLive",
+        name: "funding-scenario",
         fieldset: {
           legend: {
-            text: "Who funded the " + data['type_scenario'] | lower + " stay",
+            text: "Who funded the " + data['type-scenario'] | lower + " stay",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
@@ -44,11 +44,6 @@
             value: "Department for Work and Pensions",
             text: "Department for Work and Pensions"
           },
-          {
-            value: "None of these",
-            text: "None of these"
-          },
-          
           {
             value: "Prison",
             text: "Prison"

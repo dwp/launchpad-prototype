@@ -9,8 +9,7 @@
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
 
-    <form class="form" action="" method="post">
-
+    <form class="form" action="check-answers" method="post">
       <fieldset class="govuk-fieldset">
         <h1 class="govuk-label-wrapper">
           <label class="govuk-label govuk-label--l" for="event-name">
@@ -19,18 +18,18 @@
         </h1> 
         
         <div class="govuk-form-group">
-          <label class="govuk-label" for="primary-contact">
+          <label class="govuk-label" for="funding-primary-contact">
             Funding provider primary contact name
           </label>
-          <input class="govuk-input" id="primary-contact" name="primary-contact" type="text" autocomplete="primary-contact">
+          <input class="govuk-input" id="funding-primary-contact" name="funding-primary-contact" type="text" autocomplete="funding-primary-contact">
         </div>
 
 
         <div class="govuk-form-group">
-          <label class="govuk-label" for="accomodation-email">
+          <label class="govuk-label" for="funding-email">
             Funding provider contact email
           </label>
-          <input class="govuk-input" id="accomodation-email" name="accomodation-email" type="text" autocomplete="accomodation-email">
+          <input class="govuk-input" id="funding-email" name="funding-email" type="text" autocomplete="funding-email">
         </div>
 
 
@@ -40,11 +39,6 @@
 
       </fieldset>
 </form>
-
-
-
-
-
 
 <!-- End row -->
 {% endblock %}

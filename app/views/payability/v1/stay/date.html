@@ -12,7 +12,7 @@
               id: "date-in",
               fieldset: {
                 legend: {
-                  text: "When did the " ~ data['type_scenario'] | lower + " stay begin?",
+                  text: "When did the " ~ data['type-scenario'] | lower + " stay begin?",
                   isPageHeading: true,
                   classes: "govuk-fieldset__legend--l"
                 }                }
@@ -23,7 +23,7 @@
           id: "date-out",
           fieldset: {
             legend: {
-              text: "Date they left the " ~ data['type_scenario'] | lower,
+              text: "Date they left the " ~ data['type-scenario'] | lower,
               isPageHeading: false,
               classes: "govuk-fieldset__legend--m"
             }
@@ -35,7 +35,7 @@
         name: "date-out-check",
         fieldset: {
           legend: {
-            text: "Are they currently in the " +  data['type_scenario'] | lower + "?",
+            text: "Are they currently in the " +  data['type-scenario'] | lower + "?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--m"
           }
