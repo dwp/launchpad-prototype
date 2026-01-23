@@ -41,7 +41,8 @@
       </div>
       <!-- End LH column -->
 
-    <div class="govuk-grid-column-three-quarters">
+{% if (data['PayabilityScenario'] == "Stays added") %}
+<div class="govuk-grid-column-three-quarters">
       <h1 class="govuk-heading-l">Temporary accomodation</h1>
       <p class="govuk-body"><a href="/payability/v1/stay/type">Add a stay</a></p>
      <h2 class="govuk-heading-m">Open stays</h2>
@@ -138,9 +139,15 @@
           }
         ]
       }) }}
-    </div>
-  </div>
+</div>
+  {% else %}
+
+<div class="govuk-grid-column-three-quarters">
+  <h1 class="govuk-heading-l">Temporary accomodation</h1>
+  <p class="govuk-body"><a href="/payability/v1/stay/type">Add a stay</a></p>
+</div>
+ {% endif %}
+
   <!-- Start state with no entries -->
 <!-- End row -->
-
-{% endblock %}
+ {% endblock %}

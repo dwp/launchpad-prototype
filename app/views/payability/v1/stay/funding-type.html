@@ -10,6 +10,38 @@
   <div class="govuk-grid-column-two-thirds">
 
     <form class="form" action="/funding-scenario" method="post">
+<!--Hospital funding options -->
+
+{% if (data['type-scenario'] == "Hospital") %}
+      {{ govukRadios({
+        name: "funding-scenario",
+        fieldset: {
+          legend: {
+            text: "Who funded the stay?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+         {
+            value: "Claimant",
+            text: "Claimant"
+          },
+          {
+            value: "Health authority",
+            text: "NHS"
+          },
+          {
+            value: "Not known",
+            text: "Not known"
+          }
+        ]
+      }) }}
+
+
+
+
+     {% else %}
 
       {{ govukRadios({
         name: "funding-scenario",
@@ -38,24 +70,16 @@
             text: "Charity"
           },
           {
-            value: "Department for Work and Pensions",
-            text: "Department for Work and Pensions"
-          },
-          {
-            value: "Prison",
-            text: "Prison"
-          },
-          {
-            value: "Other",
-            text: "Other"
-          },
-          {
             value: "Not known",
             text: "Not known"
           }
         ]
       }) }}
 
+
+     {% endif %}
+
+<!-- Other funding options-->
 
 
 <button type="submit" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">

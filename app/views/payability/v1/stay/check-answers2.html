@@ -73,6 +73,7 @@
   }]) %}
 {% endif %}
 
+{% if (data['date-out-check'] == "No") %}
 {# End date #}
 {% if dateOut %}
   {% set summaryRows = summaryRows.concat([{
@@ -87,6 +88,12 @@
     }
   }]) %}
 {% endif %}
+     {% else %}
+     
+     {% endif %}
+ 
+
+
 
 {# Accommodation address #}
 {% if data['accomodation-name'] %}
@@ -137,7 +144,7 @@
 {# Boarder status #}
 {% if data['boarder-scenario'] %}
   {% set summaryRows = summaryRows.concat([{
-    key: { text: "Boarder status" },
+    key: { text: "Long-term stay" },
     value: { text: data['boarder-scenario'] },
     actions: {
       items: [{
@@ -170,6 +177,7 @@
     key: { text: "Funding address" },
     value: {
       html:
+        (data['funding-name'] or '') ~ '<br>' ~
         (data['funding-address-line-1'] or '') ~ '<br>' ~
         (data['funding-address-line-2'] or '') ~ '<br>' ~
         (data['funding-address-town'] or '') ~ '<br>' ~
