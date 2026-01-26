@@ -2,66 +2,31 @@
 {% block beforeContent %}
 {% endblock %}
 {% block content %}
+{% include "includes/breadcrumbs.njk" %}
 
 <form action="eject-data" method="post" class="form">
  
-  <div class="govuk-grid-row">
-<div class="govuk-grid-column-two-thirds">
- 
-        <div class="govuk-grid-row">
-<div class="govuk-grid-column-three-quarters">
- 
- 
-        <section class="dwp-quick-reference govuk-!-margin-bottom-8" aria-label="Case information">
-<dl class="dwp-quick-reference__block">
-<dt class="dwp-quick-reference__label govuk-visually-hidden">Name:</dt>
-<dd class="dwp-quick-reference__primary">Jeff Bridges</dd>
-
- 
-<!-- <a href="/person-record-0-0-2/outbound-2-exit-to-call" class="govuk-link">Jeff Bridges</a> -->
- 
-        <dt class="dwp-quick-reference__label dwp-quick-reference__label--primary govuk-visually-hidden">National Insurance number:</dt>
-<dd class="dwp-quick-reference__secondary">NA 11 22 33 C</dd>
-</dl>
-</section>
- 
-      </div>
-</div>
- 
- 
- 
- 
-<h1 class="govuk-heading-xl govuk-!-margin-bottom-6">Describe what the event is</h1>
-<p class="govuk-body govuk-!-font-size-24 govuk-!-margin-bottom-8">This information will be added to the event history within the person's record so that others can see what's happened.</p>
- 
- 
- 
-      
- 
-        
- 
-            <!------------H1 LEGEND------------>
-<!------------Legend--------------->
- 
- 
-        
- 
- 
-<div class="govuk-form-group">
-<h1 class="govuk-label-wrapper">
-<label class="govuk-label govuk-label--s" for="record-1-event-history-reason-other-detail">
-<h1 class="govuk-body govuk-!-margin-bottom-0">Enter details of the event.</h1>
-</label>
-</h1>
- 
-  
-<div id="record-1-event-history-reason-other-detail-hint" class="govuk-hint">
-</div>
- 
- 
-  <textarea class="govuk-textarea  govukTextarea--overwrite" id="record-1-event-history-reason-other-detail" name="record-1-event-history-reason-other-detail" rows="5" aria-describedby="record-1-event-history-reason-other-detail-hint">erewqrwer</textarea>
- 
-</div>
+<div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+                <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">Add notes about this event</h1>
+                
+                <!------------H1 LEGEND------------>
+                <!------------Legend--------------->
+                <div class="govuk-form-group">
+                <h1 class="govuk-label-wrapper">
+                <label class="govuk-label govuk-label--s" for="record-1-event-history-reason-other-detail">
+                <h1 class="govuk-body govuk-!-margin-bottom-0">Enter details of the event.</h1>
+                </label>
+                </h1>
+                
+                
+                <div id="record-1-event-history-reason-other-detail-hint" class="govuk-hint">
+                </div>
+                
+                
+                <textarea class="govuk-textarea  govukTextarea--overwrite" id="record-1-event-history-reason-other-detail" name="record-1-event-history-reason-other-detail" rows="5" aria-describedby="record-1-event-history-reason-other-detail-hint">erewqrwer</textarea>
+                
+                </div>
  
  
 

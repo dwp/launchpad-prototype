@@ -31,6 +31,8 @@
 
 
 {% block content %}
+{% include "includes/breadcrumbs.njk" %}
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
 
@@ -131,7 +133,7 @@
       actions: {
         items: [
           {
-            href: "accomodation-address",
+            href: "accomodation-details",
             text: "Change",
             visuallyHiddenText: "accommodation address"
           }
@@ -151,7 +153,7 @@
       actions: {
         items: [
           {
-            href: "accomodation-address",
+            href: "accomodation-details",
             text: "Change",
             visuallyHiddenText: "accommodation contact"
           }

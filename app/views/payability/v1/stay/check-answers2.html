@@ -94,31 +94,48 @@
  
 
 
+<!-- setting the address-->
 
 {# Accommodation address #}
-{% if data['accomodation-name'] %}
+{% if data['accomodation-town'] %}
+  {% set addressHtml = "" %}
+
+  {% if data['accomodation-name'] %}
+    {% set addressHtml = addressHtml + data['accomodation-name'] + "<br>" %}
+  {% endif %}
+  {% if data['address-line-1'] %}
+    {% set addressHtml = addressHtml + data['address-line-1'] + "<br>" %}
+  {% endif %}
+  {% if data['address-line-2'] %}
+    {% set addressHtml = addressHtml + data['address-line-2'] + "<br>" %}
+  {% endif %}
+  {% if data['address-town'] %}
+    {% set addressHtml = addressHtml + data['address-town'] + "<br>" %}
+  {% endif %}
+  {% if data['address-county'] %}
+    {% set addressHtml = addressHtml + data['address-county'] + "<br>" %}
+  {% endif %}
+  {% if data['address-postcode'] %}
+    {% set addressHtml = addressHtml + data['address-postcode'] + "<br>" %}
+  {% endif %}
+
   {% set summaryRows = summaryRows.concat([{
     key: {
-      text: (data['type-scenario'] or 'Accommodation') ~ " address"
+      text: (data['type-scenario'] or 'Accommodation') ~ " details"
     },
     value: {
-      html:
-        (data['accomodation-name']) ~ '<br>' ~
-        (data['address-line-1'] or '') ~ '<br>' ~
-        (data['address-line-2'] or '') ~ '<br>' ~
-        (data['address-town'] or '') ~ '<br>' ~
-        (data['address-county'] or '') ~ '<br>' ~
-        (data['address-postcode'] or '')
+      html: addressHtml
     },
     actions: {
       items: [{
-        href: "accomodation-address",
+        href: "accomodation-details",
         text: "Change",
         visuallyHiddenText: "accommodation address"
       }]
     }
   }]) %}
 {% endif %}
+
 
 {# Accommodation contact #}
 {% if data['primary-contact'] or data['accomodation-email'] %}
@@ -171,19 +188,36 @@
   }]) %}
 {% endif %}
 
+
+
+<!--Funding adddress thing -->
+
 {# Funding address #}
 {% if data['funding-address-line-1'] %}
+  {% set addressHtml = "" %}
+
+  {% if data['funding-name'] %}
+    {% set addressHtml = addressHtml + data['funding-name'] + "<br>" %}
+  {% endif %}
+  {% if data['funding-address-line-1'] %}
+    {% set addressHtml = addressHtml + data['funding-address-line-1'] + "<br>" %}
+  {% endif %}
+  {% if data['funding-address-line-2'] %}
+    {% set addressHtml = addressHtml + data['funding-address-line-2'] + "<br>" %}
+  {% endif %}
+  {% if data['funding-address-town'] %}
+    {% set addressHtml = addressHtml + data['funding-address-town'] + "<br>" %}
+  {% endif %}
+  {% if data['funding-address-county'] %}
+    {% set addressHtml = addressHtml + data['funding-address-county'] + "<br>" %}
+  {% endif %}
+  {% if data['funding-address-postcode'] %}
+    {% set addressHtml = addressHtml + data['funding-address-postcode'] + "<br>" %}
+  {% endif %}
+
   {% set summaryRows = summaryRows.concat([{
     key: { text: "Funding address" },
-    value: {
-      html:
-        (data['funding-name'] or '') ~ '<br>' ~
-        (data['funding-address-line-1'] or '') ~ '<br>' ~
-        (data['funding-address-line-2'] or '') ~ '<br>' ~
-        (data['funding-address-town'] or '') ~ '<br>' ~
-        (data['funding-address-county'] or '') ~ '<br>' ~
-        (data['funding-address-postcode'] or '')
-    },
+    value: { html: addressHtml },
     actions: {
       items: [{
         href: "funding-address",
@@ -193,6 +227,7 @@
     }
   }]) %}
 {% endif %}
+
 
 {# Funding contact #}
 {% if data['funding-primary-contact'] or data['funding-email'] %}
@@ -217,6 +252,7 @@
 
 
 {% block content %}
+{% include "includes/breadcrumbs.njk" %}
 
           
 
@@ -226,9 +262,17 @@
         <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
        
+
+      {% if (data['type-scenario'] == "Other") %}
+     <h1 class="govuk-heading-xl">
+        Accomodation summary
+      </h1>
+      {% else %}
       <h1 class="govuk-heading-xl">
         {{(data['type-scenario'] or 'Accommodation')}} summary
       </h1>
+     {% endif %}
+      
 
           {{ govukSummaryList({
         rows: summaryRows
