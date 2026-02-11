@@ -1,104 +1,112 @@
 {% extends "layouts/payability.html" %}
-{% block beforeContent %}
-{% endblock %}
-
+{% block beforeContent %}{% endblock %}
 {% block content %}
 {% include "includes/breadcrumbs.njk" %}
 
-
-<!-- Start row -->
 <div class="govuk-grid-row">
-  <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
 
-    <form class="form" action="accomodation-boarder" method="post">
-<fieldset class="govuk-fieldset">
-  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-    <h1 class="govuk-fieldset__heading">
-      Accomodation details
-    </h1>
-  </legend>
+    <!-- error summary on top of the page -->
+    {% if errors %}
+      {{ govukErrorSummary({
+        titleText: "There is a problem",
+        errorList: [
+          { text: errors["accomodation-name"].text, href: "#accomodation-name" } if errors["accomodation-name"],
+          { text: errors["address-town"].text, href: "#address-town" } if errors["address-town"]
+        ] | reject("undefined")
+      }) }}
+    {% endif %}
 
-  <!--Input accomodation name-->
+    <form class="form" action="/accommodation-details" method="post" novalidate>
 
-<div class="govuk-form-group">
-  <label class="govuk-label" for="accomodation-name">
-    Accomodation name
-  </label>
-  <input class="govuk-input" id="accomodation-name" name="accomodation-name" type="text" autocomplete="accomodation-name">
+      <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+          <h1 class="govuk-fieldset__heading">Accommodation details</h1>
+        </legend>
+
+        <!-- Accomodation name -->
+        {{ govukInput({
+          id: "accomodation-name",
+          name: "accomodation-name",
+          label: { text: "Accomodation name" },
+          autocomplete: "accomodation-name",
+          value: data["accomodation-name"],
+          errorMessage: errors["accomodation-name"]
+        }) }}
+
+        <!-- Address line 1 -->
+        {{ govukInput({
+          id: "address-line-1",
+          name: "address-line-1",
+          label: { text: "Address line 1 (optional)" },
+          autocomplete: "address-line1",
+          value: data["address-line-1"]
+        }) }}
+
+        <!-- address line 2 -->
+        {{ govukInput({
+          id: "address-line-2",
+          name: "address-line-2",
+          label: { text: "Address line 2 (optional)" },
+          autocomplete: "address-line2",
+          value: data["address-line-2"]
+        }) }}
+
+        <!-- city -->
+        {{ govukInput({
+          id: "address-town",
+          name: "address-town",
+          label: { text: "Town or city" },
+          classes: "govuk-!-width-two-thirds",
+          autocomplete: "address-level2",
+          value: data["address-town"],
+          errorMessage: errors["address-town"]
+        }) }}
+
+        <!-- county-->
+        {{ govukInput({
+          id: "address-county",
+          name: "address-county",
+          label: { text: "County (optional)" },
+          classes: "govuk-!-width-two-thirds",
+          value: data["address-county"]
+        }) }}
+
+        <!-- postcode -->
+        {{ govukInput({
+          id: "address-postcode",
+          name: "address-postcode",
+          label: { text: "Postcode (optional)" },
+          classes: "govuk-input--width-10",
+          autocomplete: "postal-code",
+          value: data["address-postcode"]
+        }) }}
+
+        <!-- name of contact -->
+        {{ govukInput({
+          id: "primary-contact",
+          name: "primary-contact",
+          label: { text: "Contact name (optional)" },
+          value: data["primary-contact"]
+        }) }}
+
+        <!-- email of contact -->
+        {{ govukInput({
+          id: "accomodation-email",
+          name: "accomodation-email",
+          label: { text: "Contact email address (optional)" },
+          autocomplete: "accomodation-email",
+          value: data["accomodation-email"]
+        }) }}
+
+      </fieldset>
+
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Save and continue
+      </button>
+      
+    </form>
+  </div>
 </div>
 
-  <!--Input accomodation address-->
-<div class="govuk-form-group">
-  <label class="govuk-label" for="address-line-1">
-    Address line 1
-  </label>
-  <input class="govuk-input" id="address-line-1" name="address-line-1" type="text" autocomplete="address-line1">
-</div>
-
-<div class="govuk-form-group">
-  <label class="govuk-label" for="address-line-2">
-    Address line 2 (optional)
-  </label>
-  <input class="govuk-input" id="address-line-2" name="address-line-2" type="text" autocomplete="address-line2">
-</div>
-
-<div class="govuk-form-group">
-  <label class="govuk-label" for="address-town">
-    Town or city
-  </label>
-  <input class="govuk-input govuk-!-width-two-thirds" id="address-town" name="address-town" type="text" autocomplete="address-level2">
-</div>
-
-<div class="govuk-form-group">
-  <label class="govuk-label" for="address-county">
-    County (optional)
-  </label>
-  <input class="govuk-input govuk-!-width-two-thirds" id="address-county" name="address-county" type="text">
-</div>
-
-<div class="govuk-form-group">
-  <label class="govuk-label" for="address-postcode">
-    Postcode
-  </label>
-  <input class="govuk-input govuk-input--width-10" id="address-postcode" name="address-postcode" type="text" autocomplete="postal-code">
-</div>
-
-
-
-<div class="govuk-form-group">
-  <label class="govuk-label" for="primary-contact">
-    Contact name
-  </label>
-  <input class="govuk-input" id="primary-contact" name="primary-contact" type="text" autocomplete="primary-contact">
-</div>
-
-
-
-<div class="govuk-form-group">
-  <label class="govuk-label" for="accomodation-email">
-    Contact email address
-  </label>
-  <input class="govuk-input" id="accomodation-email" name="accomodation-email" type="text" autocomplete="accomodation-email">
-</div>
-</fieldset>
-
-
-
-
-
-
-<!--Button-->
-<button type="submit" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
-  Save and continue
-</button>
-
-</form>
-
-
-
-
-
-
-<!-- End row -->
 {% endblock %}

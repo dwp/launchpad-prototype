@@ -1,0 +1,109 @@
+<p class="govuk-body">Linked stay: 5 September - 31 October 2025</p>
+      {{ govukSummaryList({
+        card: {
+          title: {
+            text: "Morgan Hospital"
+          },
+          actions: {
+            items: [
+              {
+                href: "",
+                text: "View",
+                visuallyHiddenText: "of Morgan Hospital"
+              }
+            ]
+          }
+        },
+        rows: [
+          {
+            key: {
+              text: "Accomodation type"
+            },
+            value: {
+              html: "Hospital"
+            }
+          },
+          {
+            key: {
+              text: "Start date"
+            },
+            value: {
+              html: "5 September 2025"
+            }
+          },
+          {
+            key: {
+              text: "End date"
+            },
+            value: {
+              html: "31 October 2025"
+            }
+          }
+        ]
+      }) }}
+{{ govukSummaryList({
+        card: {
+          title: {
+            text: "Morgan Hospital"
+          },
+          actions: {
+            items: [
+              {
+                href: "#",
+                text: "View",
+                visuallyHiddenText: "of Morgan Hospital"
+              }
+            ]
+          }
+        },
+        rows: [
+          {
+            key: {
+              text: "Accomodation type"
+            },
+            value: {
+              html: "Hospital"
+            }
+          },
+          {
+            key: {
+              text: "Start date"
+            },
+            value: {
+              html: "5 September 2025"
+            }
+          },
+          {
+            key: {
+              text: "End date"
+            },
+            value: {
+              html: "31 October 2025"
+            }
+          }
+        ]
+      }) }}
+ 
+      {% from "govuk/components/pagination/macro.njk" import govukPagination %}
+ 
+      {{ govukPagination({
+        next: {
+          href: "#"
+        },
+        items: [
+          {
+            number: 1,
+            current: true,
+            href: "#"
+          },
+          {
+            number: 2,
+            href: "#"
+          },
+          {
+            number: 3,
+            href: "#"
+          }
+        ]
+      }) }}
+    </div>

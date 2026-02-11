@@ -9,13 +9,13 @@
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
 
-    <form class="form" action="funding-type" method="post">
+    <form class="form" action="accomodation-details" method="post">
     
       {{ govukRadios({
       name: "boarder-scenario",
       fieldset: {
         legend: {
-          text: "Does the claimant live there full-time?",
+          text: "Does the claimant stay there regularly?",
           isPageHeading: true,
           classes: "govuk-fieldset__legend--l"
         }
@@ -34,7 +34,6 @@
           text: "Not known"
         }
       ]}) }}
-
 
     <button type="submit" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
       Save and continue

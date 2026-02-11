@@ -1,0 +1,28 @@
+<p class="govuk-body">5 March 2026 – 4 April 2026</p>
+
+      {{ govukSummaryList({
+        card: {
+          title: {
+            text: "Freeman Hospital"
+          },
+          actions: {
+            items: [
+              {
+                href: "/payability/v1/stay/stay-overview",
+                text: "View",
+                visuallyHiddenText: "of Freeman Hospital"
+              }
+            ]
+          }
+        },
+        rows: [
+          {
+            key: { text: "Accommodation type" },
+            value: { text: "Hospital" }
+          },
+          {
+            key: { text: "Date stay was added" },
+            value: { text: "12 April 2026" }
+          }
+        ]
+      }) }}

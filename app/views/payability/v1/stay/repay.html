@@ -1,0 +1,46 @@
+{% extends "layouts/payability.html" %}
+{% block beforeContent %}
+{% endblock %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+      <H1 class="govuk-heading-l">Does the claimant have an agreement to pay back any of the costs?</H1>
+
+
+      {{ govukRadios({
+          name: "repayment-scenario",
+          fieldset: {
+            legend: {
+              classes: "govuk-fieldset__legend--m"
+            }
+          },
+          items: [
+            {
+              value: "Yes",
+              text: "Yes"
+            },
+            {
+              value: "No",
+              text: "No"
+            },
+            {
+              value: "Not sure",
+              text: "Not sure"
+            }
+          ]
+        }) }}
+
+
+      {{ govukButton({
+        text: "Continue",
+        href: "check-answers2"
+      }) }}
+  </div>
+</div>
+
+<!-- End row -->
+{% endblock %}

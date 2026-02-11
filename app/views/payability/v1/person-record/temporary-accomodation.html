@@ -8,95 +8,66 @@
 
 {% block content %}
 
-<!-- Start row -->
+<!-- Case header -->
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
     <form action="login-router" method="post" class="form">
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-three-quarters">
-          <section class="dwp-quick-reference govuk-!-margin-bottom-8" aria-label="Case information">
-          <dl class="dwp-quick-reference__block">
-          <dt class="dwp-quick-reference__label govuk-visually-hidden">Name:</dt>
-        
+      <section class="dwp-quick-reference govuk-!-margin-bottom-8" aria-label="Case information">
+        <dl class="dwp-quick-reference__block">
+          <dt class="govuk-visually-hidden">Name</dt>
           <dd class="dwp-quick-reference__primary">Jeff Bridges</dd>
-        
 
-          <dt class="dwp-quick-reference__label dwp-quick-reference__label--primary govuk-visually-hidden">National Insurance number:</dt>
+          <dt class="govuk-visually-hidden">National Insurance number</dt>
           <dd class="dwp-quick-reference__secondary">NA 11 22 33 C</dd>
-          </dl>
-          </section>
-        </div>
-      </div>
+        </dl>
+      </section>
     </form>
   </div>
 </div>
-<!-- End row -->
 
-<!-- Start row -->
-  <!-- Start state with entries-->
-  <div class="govuk-grid-row">
-      <!-- Start LH column -->
-      <div class="govuk-grid-column-one-quarter govuk-!-margin-bottom-8">
-      {% include "includes/person-record-nav.njk" %}
-      </div>
-      <!-- End LH column -->
+<!-- Main content row -->
+<div class="govuk-grid-row">
 
-{% if (data['PayabilityScenario'] == "Stays added") %}
-<div class="govuk-grid-column-three-quarters">
-      <h1 class="govuk-heading-l">Temporary accomodation</h1>
-      <p class="govuk-body"><a href="/payability/v1/stay/type">Add a stay</a></p>
-     <h2 class="govuk-heading-m">Open stays</h2>
-      {{ govukSummaryList({
-        card: {
-          title: {
-            text: "Freeman Hospital"
-          },
-          actions: {
-            items: [
-              {
-                href: "#",
-                text: "View",
-                visuallyHiddenText: "of Freeman Hospital"
-              },
-              {
-                href: "#",
-                text: "Delete",
-                visuallyHiddenText: "of Freeman Hospital"
-              }
-            ]
-          }
-        },
-        rows: [
-          {
-            key: {
-              text: "Status"
-            },
-            value: {
-              html: '<strong class="govuk-tag govuk-tag--yellow">
-                     Current stay
-                     </strong>'
-            }
-          },
-          {
-            key: {
-              text: "Accomodation type"
-            },
-            value: {
-              html: "Hospital"
-            }
-          },
-          {
-            key: {
-              text: "Start date"
-            },
-            value: {
-              html: "20 January 2026"
-            }
-          }
-        ]
+
+  <!-- Left-hand navigation -->
+  <div class="govuk-grid-column-one-quarter">
+    {% include "includes/person-record-nav.njk" %}
+
+    
+  </div>
+
+  <!-- Right-hand content -->
+  <div class="govuk-grid-column-three-quarters">
+
+    <h1 class="govuk-heading-l">
+      Temporary accommodation stay history
+    </h1>
+
+    <form class="form" action="/payability/v1/stay/type" method="post">
+      {{ govukButton({
+        text: "Add a stay"
       }) }}
+    </form>
 
-      <h2 class="govuk-heading-m">Complete stays</h3>
+    
+
+    {% if data['PayabilityScenario'] == "One completed stay" %}
+
+    {% include "includes/open-stay.njk" %}
+
+
+
+      <h2 class="govuk-heading-m">Completed stays</h2>
+    
+
+      
+
+    
+
+
+
+      <p class="govuk-body">5 March 2026 – 4 April 2026</p>
+
       {{ govukSummaryList({
         card: {
           title: {
@@ -105,7 +76,7 @@
           actions: {
             items: [
               {
-                href: "#",
+                href: "/payability/v1/stay/stay-overview",
                 text: "View",
                 visuallyHiddenText: "of Morgan Hospital"
               }
@@ -114,40 +85,33 @@
         },
         rows: [
           {
-            key: {
-              text: "Accomodation type"
-            },
-            value: {
-              html: "Hospital"
-            }
+            key: { text: "Accommodation type" },
+            value: { text: "Hospital" }
           },
           {
-            key: {
-              text: "Start date"
-            },
-            value: {
-              html: "5 September 2025"
-            }
+            key: { text: "Date recorded" },
+            value: { text: "12 April 2026" }
           },
           {
-            key: {
-              text: "End date"
-            },
-            value: {
-              html: "15 September 2025"
-            }
+            key: { text: "Date marked complete" },
+            value: { text: "20 April 2026" }
           }
         ]
       }) }}
-</div>
-  {% else %}
 
-<div class="govuk-grid-column-three-quarters">
-  <h1 class="govuk-heading-l">Temporary accomodation</h1>
-  <p class="govuk-body"><a href="/payability/v1/stay/type">Add a stay</a></p>
-</div>
- {% endif %}
 
-  <!-- Start state with no entries -->
-<!-- End row -->
- {% endblock %}
+
+      {% include "includes/added-linked-stay.njk" %}
+
+    {% else %}
+
+      <p class="govuk-body">
+        No stays in temporary accommodation have been recorded.
+      </p>
+
+    {% endif %}
+
+  </div>
+</div>
+
+{% endblock %}

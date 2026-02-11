@@ -9,28 +9,32 @@
 <div class="govuk-grid-row">
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
-    <form class="form" action="#" method="post">
+      <H1 class="govuk-heading-l">Should this be treated as a hospital stay?</H1>
 
       {{ govukRadios({
-        name: "Change_Me",
+        name: "similar-institution",
         fieldset: {
-          legend: {
-            text: "Change Me",
+          legend: { 
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
         },
         items: [
-          {
-            value: "Default",
-            text: "Default"
+            {
+            value: "Yes",
+            text: "Yes"
+          },
+            {
+            value: "No",
+            text: "No"
           }
         ]
       }) }}
+
       {{ govukButton({
-        text: "Continue"
+        text: "Continue",
+        href: "accomodation-boarder"
       }) }}
-    </form>
   </div>
 </div>
 

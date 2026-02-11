@@ -9,13 +9,12 @@
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
 
-    <form class="form" action="check-answers2" method="post">
-
+    <form class="form" action="repay" method="post"></form>
 
       <fieldset class="govuk-fieldset">
         <h1 class="govuk-label-wrapper">
           <label class="govuk-label govuk-label--l" for="event-name">
-            Funding provider address details
+            Funding provider details
           </label>
         </h1> 
       </fieldset>
@@ -30,7 +29,7 @@
 
         <div class="govuk-form-group">
           <label class="govuk-label" for="funding-address-line-1">
-            Address line 1
+            Address line 1 (optional)
           </label>
           <input class="govuk-input" id="funding-address-line-1" name="funding-address-line-1" type="text" autocomplete="funding-address-line1">
         </div>
@@ -58,14 +57,14 @@
 
         <div class="govuk-form-group">
           <label class="govuk-label" for="funding-address-postcode">
-            Postcode
+            Postcode (optional)
           </label>
           <input class="govuk-input govuk-input--width-10" id="funding-address-postcode" name="funding-address-postcode" type="text" autocomplete="postal-code">
         </div>
 
          <div class="govuk-form-group">
           <label class="govuk-label" for="funding-primary-contact">
-            Primary contact name
+            Primary contact name (optional)
           </label>
           <input class="govuk-input" id="funding-primary-contact" name="funding-primary-contact" type="text" autocomplete="funding-primary-contact">
         </div>
@@ -73,7 +72,7 @@
 
         <div class="govuk-form-group">
           <label class="govuk-label" for="funding-email">
-            Funding email address
+            Funding email address (optional)
           </label>
           <input class="govuk-input" id="funding-email" name="funding-email" type="text" autocomplete="funding-email">
         </div>
@@ -85,11 +84,6 @@
         </button>
 
     </form>
-
-
-
-
-
 
 <!-- End row -->
 {% endblock %}

@@ -1,0 +1,261 @@
+{% extends "layouts/payability.html" %}
+{% block beforeContent %}
+{% endblock %}
+
+{% block content %}
+{% include "includes/breadcrumbs.njk" %}
+
+
+
+{% set pipRates = {
+    dailyLiving: {
+      standard: { weekly: 73.90, daily: 10.56 },
+      enhanced: { weekly: 110.40, daily: 15.77 }
+    },
+    mobility: {
+      standard: { weekly: 29.20, daily: 4.17 },
+      enhanced: { weekly: 77.05, daily: 11.01 }
+    }
+  } %}
+
+  {% set dailyBreakdown = [
+    { date: "6 March 2026",  dailyLiving: "Not paid", mobility: "Not paid", location: "Royal Victoria Infirmary" },
+    { date: "7 March 2026",  dailyLiving: "Not paid", mobility: "Not paid", location: "Royal Victoria Infirmary" },
+    { date: "8 March 2026",  dailyLiving: "Not paid", mobility: "Not paid", location: "Royal Victoria Infirmary" },
+    { date: "9 March 2026",  dailyLiving: "Not paid", mobility: "Not paid", location: "Royal Victoria Infirmary" }
+  ] %}
+
+
+
+{% set componentBreakdown = {
+  dailyLiving: {
+    paidDays: 28,
+    notPaidDays: 4,
+    dailyRate: pipRates.dailyLiving.standard.daily
+  },
+  mobility: {
+    paidDays: 28,
+    notPaidDays: 4,
+    dailyRate: pipRates.mobility.standard.daily
+  }
+} %}
+
+
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+
+    <form class="form" action="funding-type" method="post">
+    
+    <h1 class="govuk-heading-l"> Stay payment breakdown </h1>
+
+
+<div>
+  <table class="govuk-table">
+  <caption class="govuk-table__caption govuk-table__caption--m">
+    Dates affected during hospital stay
+  </caption>
+
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Date</th>
+      <th scope="col" class="govuk-table__header">Daily living</th>
+      <th scope="col" class="govuk-table__header">Mobility</th>
+      <th scope="col" class="govuk-table__header">Location</th>
+    </tr>
+  </thead>
+
+  <tbody class="govuk-table__body">
+    {% for day in dailyBreakdown %}
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">
+          {{ day.date }}
+        </th>
+        <td class="govuk-table__cell">
+          {{ day.dailyLiving }}
+        </td>
+        <td class="govuk-table__cell">
+          {{ day.mobility }}
+        </td>
+        <td class="govuk-table__cell">
+          {{ day.location }}
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+ </div>
+
+
+
+<div> 
+<table class="govuk-table">
+  <caption class="govuk-table__caption govuk-table__caption--m">
+    Breakdown by component for affected days
+  </caption>
+
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Component</th>
+      <th scope="col" class="govuk-table__header">Days paid</th>
+      <th scope="col" class="govuk-table__header">Days not paid</th>
+      <th scope="col" class="govuk-table__header">Daily rate</th>
+      <th scope="col" class="govuk-table__header">Amount paid</th>
+      <th scope="col" class="govuk-table__header">Amount not paid</th>
+    </tr>
+  </thead>
+
+  <tbody class="govuk-table__body">
+
+    <!-- daily Living -->
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">
+        Daily Living (Standard)
+      </th>
+      <td class="govuk-table__cell">
+        {{ componentBreakdown.dailyLiving.paidDays }}
+      </td>
+      <td class="govuk-table__cell">
+        {{ componentBreakdown.dailyLiving.notPaidDays }}
+      </td>
+      <td class="govuk-table__cell">
+        £{{ componentBreakdown.dailyLiving.dailyRate | round(2) }}
+      </td>
+      <td class="govuk-table__cell">
+        £{{ (componentBreakdown.dailyLiving.paidDays * componentBreakdown.dailyLiving.dailyRate) | round(2) }}
+      </td>
+      <td class="govuk-table__cell">
+        £{{ (componentBreakdown.dailyLiving.notPaidDays * componentBreakdown.dailyLiving.dailyRate) | round(2) }}
+      </td>
+    </tr>
+
+    <!-- mobility -->
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">
+        Mobility (Standard)
+      </th>
+      <td class="govuk-table__cell">
+        {{ componentBreakdown.mobility.paidDays }}
+      </td>
+      <td class="govuk-table__cell">
+        {{ componentBreakdown.mobility.notPaidDays }}
+      </td>
+      <td class="govuk-table__cell">
+        £{{ componentBreakdown.mobility.dailyRate | round(2) }}
+      </td>
+      <td class="govuk-table__cell">
+        £{{ (componentBreakdown.mobility.paidDays * componentBreakdown.mobility.dailyRate) | round(2) }}
+      </td>
+      <td class="govuk-table__cell">
+        £{{ (componentBreakdown.mobility.notPaidDays * componentBreakdown.dailyLiving.dailyRate) | round(2) }}
+      </td>
+    </tr>
+
+  </tbody>
+</table></div>
+
+
+
+
+<!--payment rates-->
+<details class="govuk-details govuk-!-margin-bottom-4 govuk-!-padding-top-4">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      Payment rates breakdown
+    </span>
+  </summary>
+  <div class="govuk-details__text">
+    
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    <h1 class="govuk-heading-s govuk-!-margin-bottom-2">Rates 2025 - 2026</h1>
+    <p class="govuk-body govuk-!-margin-bottom-2">Effective from: 4 April 2025</p>
+
+    <table class="govuk-table govuk-!-margin-bottom-0">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header govuk-33-percent-percent">Component</th>
+          <th scope="col" class="govuk-table__header govuk-33-percent-percent">Rate</th>
+          <th scope="col" class="govuk-table__header govuk-33-percent-percent">Amount</th>
+          <th scope="col" class="govuk-table__header govuk-33-percent-percent">Per day</th>
+
+        </tr>
+      </thead>
+
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Daily living</td>
+          <td class="govuk-table__cell">Nil</td>
+          <td class="govuk-table__cell">£0</td>
+          <td class="govuk-table__cell">£0</td>
+        </tr>
+      </tbody>
+
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"></td>
+          <td class="govuk-table__cell">Standard</td>
+          <td class="govuk-table__cell">£73.90</td>
+          <td class="govuk-table__cell">£10.56</td>
+        </tr>
+      </tbody>
+
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"></td>
+          <td class="govuk-table__cell">Enhanced</td>
+          <td class="govuk-table__cell">£110.40</td>
+          <td class="govuk-table__cell">£15.77</td>
+        </tr>
+      </tbody>
+
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Mobility</td>
+          <td class="govuk-table__cell">Nil</td>
+          <td class="govuk-table__cell">£0</td>
+          <td class="govuk-table__cell">£0</td>
+        </tr>
+      </tbody>
+
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"></td>
+          <td class="govuk-table__cell">Standard</td>
+          <td class="govuk-table__cell">£29.20</td>
+          <td class="govuk-table__cell">£4.17</td>
+        </tr>
+      </tbody>
+
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"></td>
+          <td class="govuk-table__cell">Standard</td>
+          <td class="govuk-table__cell">£77.05</td>
+          <td class="govuk-table__cell">£11.01</td>
+        </tr>
+      </tbody>
+
+    </table>
+
+
+</div>
+
+
+
+  </div>
+</div></details>
+
+</form>
+
+
+
+
+
+<!-- End row -->
+{% endblock %}

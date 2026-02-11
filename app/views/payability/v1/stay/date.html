@@ -8,16 +8,25 @@
 <div class="govuk-grid-row">
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
-    <form class="form" action="accomodation-details" method="post">
+
+
+    {% if data['type-scenario'] == 'Hospital' %}
+      <form class="form" action="accomodation-details" method="post">
+    {% else %}
+    <form class="form" action="similar-institution" method="post">
+    {% endif %}
+
+    
       {{govukDateInput({
               id: "admission",
               namePrefix: "date-in",
               fieldset: {
                 legend: {
-                  text: "When did the stay begin?",
+                  text: "When did the claimant enter temporary accomodation?",
                   isPageHeading: true,
                   classes: "govuk-fieldset__legend--l"
-                }                }
+                }
+              }
              }) }}
 
       {% set dateOutHtml %}
@@ -26,7 +35,7 @@
           namePrefix: "date-out",
           fieldset: {
             legend: {
-              text: "Date they left",
+              text: "Date the claimant left",
               classes: "govuk-fieldset__legend--m"
             }
           }
@@ -37,7 +46,7 @@
         name: "date-out-check",
         fieldset: {
           legend: {
-            text: "Are they still staying there?",
+            text: "Is the claimant still staying there?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--m"
           }

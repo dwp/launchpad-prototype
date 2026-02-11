@@ -1,0 +1,55 @@
+  <h2 class="govuk-heading-m">Open stay</h2>
+
+
+      <p class="govuk-body">19 January 2026 – Ongoing</p>
+
+
+{{ govukSummaryList({
+        card: {
+          title: {
+            text: "Freeman Hospital"
+          },
+          actions: {
+            items: [
+              {
+                href: "#",
+                text: "View",
+                visuallyHiddenText: "of Freeman Hospital"
+              },
+              {
+                href: "#",
+                text: "Delete",
+                visuallyHiddenText: "of Freeman Hospital"
+              }
+            ]
+          }
+        },
+        rows: [
+          {
+            key: {
+              text: "Status"
+            },
+            value: {
+              html: '<strong class="govuk-tag govuk-tag--yellow">
+                     Awaiting end date
+                     </strong>'
+            }
+          },
+          {
+            key: {
+              text: "Accomodation type"
+            },
+            value: {
+              html: "Hospital"
+            }
+          },
+          {
+            key: {
+              text: "Date recorded"
+            },
+            value: {
+              html: "20 January 2026"
+            }
+          }
+        ]
+      }) }}
