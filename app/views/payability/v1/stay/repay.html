@@ -1,5 +1,9 @@
 {% extends "layouts/payability.html" %}
 {% block beforeContent %}
+{{ govukBackLink({
+        text: "Back",
+        href: "javascript:history.back()"
+        }) }}
 {% endblock %}
 
 {% block content %}
@@ -8,7 +12,7 @@
 <div class="govuk-grid-row">
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
-      <H1 class="govuk-heading-l">Does the claimant have an agreement to pay back any of the costs?</H1>
+      <H1 class="govuk-heading-l">Does the claimant have an agreement with [organisation] to pay back any of the costs?</H1>
 
 
       {{ govukRadios({

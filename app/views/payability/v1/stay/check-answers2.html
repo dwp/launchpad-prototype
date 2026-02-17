@@ -12,8 +12,6 @@
 {% endblock %}
 
 {% block content %}
-{% include "includes/breadcrumbs.njk" %}
-
 <!-- displaying dates -->
 {% set dateIn = (data['date-in-day'] or '') ~ ' ' ~ (data['date-in-month'] or '') ~ ' ' ~ (data['date-in-year'] or '') %}
 {% set dateOut = (data['date-out-day'] or '') ~ ' ' ~ (data['date-out-month'] or '') ~ ' ' ~ (data['date-out-year'] or '') %}

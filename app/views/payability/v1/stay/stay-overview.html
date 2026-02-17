@@ -4,6 +4,7 @@
 Impact of completed stays – {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
+
 {% set pageName = "Agent home" %}
 
 {% set pipRates = {
@@ -99,9 +100,14 @@ Impact of completed stays – {{ serviceName }} – GOV.UK Prototype Kit
     <li>Overpaid to claimant: £{{ overpayment }}</li>
   </ul>
 {% endmacro %}
-
+{% block beforeContent %}
+{{ govukBackLink({
+        text: "Back",
+        href: "javascript:history.back()"
+        }) }}
+{% endblock %}
 {% block content %}
-{% include "includes/breadcrumbs.njk" %}
+
 
 <div class="govuk-grid-row">
 

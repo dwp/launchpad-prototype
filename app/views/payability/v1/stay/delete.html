@@ -1,5 +1,9 @@
 {% extends "layouts/payability.html" %}
 {% block beforeContent %}
+{{ govukBackLink({
+        text: "Back",
+        href: "javascript:history.back()"
+        }) }}
 {% endblock %}
 
 {% block content %}
@@ -45,7 +49,8 @@
        
 {{ govukButton({
   text: "Delete stay",
-  classes: "govuk-button--warning"
+  classes: "govuk-button--warning",
+  href: "../person-record/temporary-accomodation"
 }) }}
 
 <p><a href="javascript:history.back()">I don't want to delete this stay</a> </p>

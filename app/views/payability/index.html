@@ -28,21 +28,26 @@
     <h1 class="govuk-heading-l">Payability prototype</h1>
     <p class="govuk-body">This prototype was created and is maintained by <a href="https://dwpdigital.atlassian.net/wiki/spaces/HPDU/pages/133438865442/Team+Phoenix">Team Phoenix</a>.</p> 
     
-    <p class="govuk-body"> <a href="https://dwpdigital.atlassian.net/wiki/spaces/HPDU/pages/133965218079/UCD_One+Login+Migration">Research and design documentation</a> is published on the team's Confluence page.</p>
+    <p class="govuk-body"> <a href="https://dwpdigital.atlassian.net/wiki/spaces/HPDU/pages/134142987644/Payability+design+decisions+V1">Research and design documentation</a> is published on the team's Confluence page.</p>
 
     <h2 class="govuk-heading-m">Last updated</h2>
         <p class="govuk-body">
         {{govukTag({
-          text: "Version x",
+          text: "Version 1",
           classes: "govuk-tag--green"
         })}}
       </p>
 
-    <p class="govuk-body">January 2026</p>
+    <p class="govuk-body">February 2026</p>
     <h2 class="govuk-heading-m">Date created</h2>
     <p class="govuk-body">January 2026</p>
     <h2 class="govuk-heading-m">What it is</h2>
-    <p class="govuk-body">To come</p>
+    <p class="govuk-body">Version 1 of the payability prototype demonstates a basic journey for agents to:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Locate a claimant's person record</li>
+        <li>Capture the detail of a temporary stay in accomodation</li>
+        <li>View details of stays they've recorded and understand the impact on a claimant's regular PIP payment</li>
+      </ul>
 
 
 {% from "govuk/components/accordion/macro.njk" import govukAccordion %}
@@ -53,21 +58,37 @@
   items: [
     {
       heading: {
-        text: "January 2025"
+        text: "January 2026"
       },
       content: {
         html: '<p class="govuk-body">
             <strong class="govuk-tag govuk-tag--green">
-          Version x</strong>
+          Version 1</strong>
           </p>
          <ul class="govuk-list govuk-list--bullet">
+          <li>Agents will add, view and edit instances of “Temporary” stays from a discrete screen.</li>
+          <li>Agents can view records of individual stays. The view  will show the relationship between a stay in accommodation and the effect, if any,  on related PIP payment periods.</li>
+          <li>Agents must specify which type of accommodation the claimant is/ has stayed in.</li>
+          <li>Agents must specify when the stay began, if it’s ongoing or if it’s ended</li>
+          <li>Agents must specify if the accommodation type is, in effect, a hospital</li>
+          <li>Agents must specify if the claimant stays in the accommodation on a regular basis </li>
+          <li>Agents must provide information to confirm the name, address and, where available, the contact details of the accommodation</li>
+          <li>When not funded by the NHS or the claimant themselves, the agent must capture how the stay is funded</li>
+          <li>Agents must provide information to confirm the name, address and, where available, the contact details of the funding provider</li>
+          <li>If accommodation is not funded by the NHS or the claimant, the agent must record if the claimant has an agreement to repay all or part of the funding costs</li>
+          <li>The “Check your answers” pattern should be used to allow agents to confirm the details they’ve entered</li>
+          <li>If the stay is not an NHS funded hospital stay, then the case must be moved to PIPCS</li>
+          <li>Agents should be able to record notes against the stay to provide context about what they’ve recorded and why</li>
+          <li>Once the data capture is complete, agents should land back on the “temporary stays” screen</li>
+          <li>Agents should be able to delete records of stays which have begun in error</li>
         </ul>'
       }
     }
   ]
 }) }}
+
       {{ govukButton({
-        text: "Start prototype",
+        text: "Start prototype V1",
         href: "v1/scenario"
       }) }}
   </div>

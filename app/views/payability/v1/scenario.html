@@ -27,31 +27,31 @@
         name: "PayabilityScenario",
         fieldset: {
           legend: {
-            text: "Payability: select a scenario",
+            text: "Payability V1: select a scenario",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
         },
         items: [
         {
-            value: "One completed stay",
-            text: "One completed stay"
-          },
-          {
             value: "No stays added",
-            text: "No stays added"
+            text: "No stays have been added"
+          },
+        {
+            value: "One completed stay",
+            text: "An open stay is visible, and completed stays - including linked stays -  are recorded"
           },
           {
             value: "No stay + completed stay",
-            text: "No stay + completed stay"
+            text: "Transitioning from no stays recorded to one completed stay recorded"
           },
             {
             value: "No stay + ongoing stay",
-            text: "No stay + ongoing stay"
+            text: "Transitioning from no stays recorded to one incomplete stay recorded"
           },
             {
             value: "No stay + stay with linked period ",
-            text: "No stay + completed stay"
+            text: "Transitioning from no stays recorded to an instance of linked stays recorded"
           }
         ]
       }) }}

@@ -1,20 +1,23 @@
 {% extends "layouts/payability.html" %}
 {% block beforeContent %}
+{{ govukBackLink({
+        text: "Back",
+        href: "javascript:history.back()"
+        }) }}
 {% endblock %}
 
 {% block content %}
-{% include "includes/breadcrumbs.njk" %}
 <!-- Start row -->
 <div class="govuk-grid-row">
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
 
-    <form class="form" action="repay" method="post"></form>
+    <form class="form" action="repay" method="post">
 
       <fieldset class="govuk-fieldset">
         <h1 class="govuk-label-wrapper">
           <label class="govuk-label govuk-label--l" for="event-name">
-            Funding provider details
+            What is the name and address of the organisation providing the funding?
           </label>
         </h1> 
       </fieldset>
