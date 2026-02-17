@@ -40,7 +40,18 @@
         {
             value: "One completed stay",
             text: "An open stay is visible, and completed stays - including linked stays -  are recorded"
-          },
+          }
+        ]
+      }) }}
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+    </form>
+  </div>
+</div>
+
+<!-- Additional scenarios 
+
           {
             value: "No stay + completed stay",
             text: "Transitioning from no stays recorded to one completed stay recorded"
@@ -53,14 +64,7 @@
             value: "No stay + stay with linked period ",
             text: "Transitioning from no stays recorded to an instance of linked stays recorded"
           }
-        ]
-      }) }}
-      {{ govukButton({
-        text: "Continue"
-      }) }}
-    </form>
-  </div>
-</div>
+-->
 
 <!-- End row -->
 {% endblock %}
