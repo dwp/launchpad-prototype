@@ -1,0 +1,53 @@
+{% extends "layouts/payability.html" %}
+{% block beforeContent %}
+  {{ govukBackLink({
+          text: "Back",
+          href: "javascript:history.back()"
+  }) }}
+{% endblock %}
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+      <form class="form" action="date-left" method="post">
+
+      {{ govukRadios({
+        name: "date-out-check",
+        fieldset: {
+          legend: {
+            text: "Is the claimant still staying there?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          {
+            value: "Yes",
+            text: "Yes"
+          },
+          {
+            value: "No",
+            text: "No",
+            conditional: {
+              html: dateOutHtml
+            }
+          }
+        ]
+      }) }}
+
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+
+    </form>
+  </div>
+</div>
+
+<!-- End row -->
+{% endblock %}
+
+

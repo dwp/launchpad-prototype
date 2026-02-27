@@ -1,0 +1,71 @@
+{% extends "layouts/payability.html" %}
+{% block beforeContent %}
+{{ govukBackLink({
+        text: "Back",
+        href: "javascript:history.back()"
+        }) }}
+
+{% endblock %}
+
+{% block content %}
+
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+    <form class="form" action="date-in" method="post">
+
+      {{ govukRadios({
+        name: "type-scenario",
+        fieldset: {
+          legend: {
+            text: "Where did the stay take place?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          {
+            value: "Hospital",
+            text: "Hospital"
+          },
+          {
+            value: "Hospice",
+            text: "Hospice"
+          },
+          {
+            value: "Detention in Legal Custody",
+            text: "Detention in Legal Custody"
+          },
+          {
+            value: "Care home",
+            text: "Care home"
+          },
+          {
+            value: "Sheltered accomodation",
+            text: "Sheltered accomodation"
+          },
+          {
+            value: "Residential college",
+            text: "Residential college"
+          },
+          {
+            value: "Supported accomodation",
+            text: "Supported accomodation"
+          },
+          {
+            value: "Other",
+            text: "Other"
+          }
+        ]
+      }) }}
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+    </form>
+  </div>
+</div>
+
+<!-- End row -->
+{% endblock %}

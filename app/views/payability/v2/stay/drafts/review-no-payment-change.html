@@ -1,0 +1,216 @@
+{% extends "layouts/payability.html" %}
+
+{% block pageTitle %}
+Impact of completed stays – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set pageName = "Agent home" %}
+
+{% set pipRates = {
+  dailyLiving: {
+    standard: { weekly: 73.90, daily: 10.56 },
+    enhanced: { weekly: 110.40, daily: 15.77 }
+  },
+  mobility: {
+    standard: { weekly: 29.20, daily: 4.17 },
+    enhanced: { weekly: 77.05, daily: 11.01 }
+  }
+} %}
+
+{% set dailyRate = pipRates.dailyLiving.enhanced.daily %}
+
+<!-- SHARED "HOW THIS WORKS – Change in payment" MACRO--> 
+{% macro howThisWorks(totalDays, payableDays, nonPayableDays, overpayment, stayLabel) %}
+<details class="govuk-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">How this works</span>
+  </summary>
+  <div class="govuk-details__text">
+
+    <p><strong>Rules in brief</strong></p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>PIP is payable for the first 28 days in hospital.</li>
+      <li>From day 29, PIP is not payable.</li>
+    </ul>
+
+    <p><strong>{{ stayLabel }}</strong></p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>Total days in accommodation: {{ totalDays }}</li>
+      <li>Days PIP is payable on: {{ payableDays }}</li>
+      <li>Non‑payable days: {{ nonPayableDays }}</li>
+    </ul>
+
+    <p>
+      <strong>Overpayment calculation</strong><br>
+      {{ nonPayableDays }} non‑payable days × £{{ dailyRate }} per day =
+      <strong>£{{ overpayment }}</strong>
+    </p>
+
+    <p class="govuk-hint">
+      Rate used: PIP Daily Living – Enhanced (£{{ dailyRate }} per day, effective from 4 April 2025)
+    </p>
+
+  </div>
+</details>
+{% endmacro %}
+
+
+<!-- SHARED "HOW THIS WORKS – Linked period" MACRO --> 
+
+{% macro howThisWorksLinked(totalDays, payableDays, nonPayableDays, overpayment, stayLabel) %}
+<details class="govuk-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">How this works</span>
+  </summary>
+  <div class="govuk-details__text">
+
+    <p><strong>Rules in brief</strong></p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>Hospital stays separated by 28 days or less are <strong>linked</strong> and counted together.</li>
+      <li>PIP becomes payable again only after 28 days out of hospital.</li>
+    </ul>
+
+    <p><strong>{{ stayLabel }}</strong></p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>Total days in accommodation: {{ totalDays }}</li>
+      <li>Days PIP is payable on: {{ payableDays }}</li>
+      <li>Non‑payable days: {{ nonPayableDays }}</li>
+    </ul>
+
+    <p>
+      <strong>Overpayment calculation</strong><br>
+      {{ nonPayableDays }} non‑payable days × £{{ dailyRate }} per day =
+      <strong>£{{ overpayment }}</strong>
+    </p>
+
+    <p class="govuk-hint">
+      Rate used: PIP Daily Living – Enhanced (£{{ dailyRate }} per day, effective from 4 April 2025)
+    </p>
+
+  </div>
+</details>
+{% endmacro %}
+
+
+<!-- SHARED "PAYMENT PERIODS AFFECTED" MACRO --> 
+
+{% macro paymentPeriodsAffected(periodLabel, nonPayableDays, overpayment) %}
+  <p>{{ periodLabel }}:</p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>Non‑payable days: {{ nonPayableDays }}</li>
+    <li>Overpaid to claimant: £{{ overpayment }}</li>
+  </ul>
+{% endmacro %}
+
+{% block content %}
+{% include "includes/breadcrumbs.njk" %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+
+    <h1 class="govuk-heading-l">Impact of completed stays</h1>
+
+
+<!--Stay 1 -->
+    <h2 class="govuk-heading-m">6 February – 15th February</h2>
+
+    {% set totalDays = 10 %}
+    {% set payableDays = 10 %}
+    {% set nonPayableDays = 0 %}
+    {% set overpayment = nonPayableDays * dailyRate %}
+
+    {{ govukSummaryList({
+      card: { title: { text: "Royal Victoria Infirmary" } },
+      rows: [
+        { key: { text: "Stay type" }, value: { html: "Hospital" } },
+        { key: { text: "Days in accommodation" }, value: { html: totalDays } },
+        { key: { text: "Non‑payable days" }, value: { text: '0'} },
+        {
+          key: { text: "Payment periods affected" },
+          value: { html: 
+'
+      <p>
+        <a href="daily-breakdown" class="govuk-link">5 March 2026 – 4 April 2026</a>:
+      </p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Non‑payable days: ' + nonPayableDays + '</li>
+        <li>Overpaid to claimant: £' + (overpayment | round(2)) + '</li>
+      </ul>'
+ }
+        },
+        {
+          key: { text: "Total amount overpaid to the claimant" },
+          value: {
+            html: "£" + overpayment + "<br><br>" +
+              howThisWorks(
+                totalDays,
+                payableDays,
+                nonPayableDays,
+                overpayment,
+                "This stay"
+              )
+          }
+        }
+      ]
+    }) }}
+
+    {# ================= STAY 2 ================= #}
+    <h2 class="govuk-heading-m">Linked stays: 2 March - 9 March </h2>
+    <h2 class="govuk-heading-s">Status changed to 'Completed' on 2 April  2025</h2>
+
+    {% set totalDays = 7 %}
+    {% set payableDays = 7 %}
+    {% set nonPayableDays = 0 %}
+    {% set overpayment = nonPayableDays * dailyRate %}
+
+    {{ govukSummaryList({
+      card: { title: { text: "Freeman Hospital" } },
+      rows: [
+        { key: { text: "Stay type" }, value: { html: "Hospital (linked stay)" } },
+        { key: { text: "Days in accommodation" }, value: { html: totalDays } },
+        { key: { text: "Non‑payable days" }, value: { text: '0' } },
+        {
+          key: { text: "Payment periods affected" },
+          value: { html: paymentPeriodsAffected("5 April 2026 – 4 May 2026", nonPayableDays, overpayment) }
+        },
+        {
+          key: { text: "Total amount overpaid to the claimant" },
+          value: {
+            html: "£" + overpayment + "<br><br>" +
+              howThisWorksLinked(
+                totalDays,
+                payableDays,
+                nonPayableDays,
+                overpayment,
+                "This linked stay"
+              )
+          }
+        }
+      ]
+    }) }}
+
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <form class="form" action="notes" method="post">
+      {{ govukButton({ text: "Continue" }) }}
+    </form>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "layouts/payability.html" %}
+
+{% block pageTitle %}
+  Content page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set pageName = "Agent home" %}
+
+<!-- HTML from Starlign prototype-->
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <form action="#" method="post" class="form">
+        <p class="govuk-heading-xl govuk-!-margin-bottom-8">My home page</p>
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-full">
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-full">
+                <div class="govuk-grid-row">
+                  <div class="govuk-grid-column-one-third govuk-!-margin-bottom-6">
+                    <h2 class="govuk-body govuk-!-font-weight-bold">Processing</h2>
+                    <p class="govuk-!-margin-bottom-2"><a class="govuk-body govuk-!-font-size-19" href="entry-home-processing-options">Process an application or claim</a></p>
+                    <p class="govuk-!-margin-bottom-1">
+                      <a class="govuk-body govuk-!-font-size-19" href="system-myopentasks-selector">View my open tasks</a>
+                  </p></div>
+                  <div class="govuk-grid-column-one-third govuk-!-margin-bottom-6">
+                    <h2 class="govuk-body govuk-!-font-weight-bold">Search</h2>
+                    <p class="govuk-!-margin-bottom-2"><a class="govuk-body govuk-!-font-size-19" href="agent/find">Find someone</a></p> 
+                  </div>
+                  <div class="govuk-grid-column-one-third govuk-!-margin-bottom-6">
+                    <h2 class="govuk-body govuk-!-font-weight-bold">Services</h2>
+                    <p class="govuk-!-margin-bottom-2"><a class="govuk-body govuk-!-font-size-19" href="#">View all applications</a></p>
+                    <p class="govuk-!-margin-bottom-2"><a class="govuk-body govuk-!-font-size-19" href="#">View all in payment</a></p>
+                    <p class="govuk-!-margin-bottom-2"><a class="govuk-body govuk-!-font-size-19" href="service-stats">View service statistics</a></p>
+                  </div>
+                </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+</div>
+</div>
+
+<!-- End row -->
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends "layouts/payability.html" %}
+{% block beforeContent %}
+{{ govukBackLink({
+        text: "Back",
+        href: "javascript:history.back()"
+        }) }}
+{% endblock %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+
+    <form class="form" action="/funding-scenario-v2" method="post">
+<!--Hospital funding options -->
+
+{% if (data['type-scenario'] == "Hospital") %}
+      {{ govukRadios({
+        name: "funding-scenario",
+        fieldset: {
+          legend: {
+            text: "Who funded the stay?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+         {
+            value: "Claimant",
+            text: "Claimant"
+          },
+          {
+            value: "Health authority",
+            text: "NHS or Defence Medical Services"
+          },
+          {
+            value: "Not known",
+            text: "Not known"
+          }
+        ]
+      }) }}
+
+
+
+
+     {% else %}
+
+      {{ govukRadios({
+        name: "funding-scenario",
+        fieldset: {
+          legend: {
+            text: "Who funded the " + data['type-scenario'] | lower + " stay",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+         {
+            value: "Claimant",
+            text: "Claimant"
+          },
+          { 
+            value: "Local authority",
+            text: "Local authority"
+          },
+          {
+            value: "Health authority",
+            text: "Health authority"
+          },
+          {
+            value: "Charity",
+            text: "Charity"
+          },
+          {
+            value: "Not known",
+            text: "Not known"
+          }
+        ]
+      }) }}
+
+
+     {% endif %}
+
+<!-- Other funding options-->
+
+
+<button type="submit" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
+  Save and continue
+</button>
+
+  </fieldset>
+
+
+
+
+<!-- End row -->
+{% endblock %}

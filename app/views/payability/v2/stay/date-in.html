@@ -11,20 +11,20 @@
 <div class="govuk-grid-row">
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
-      <form class="form" action="accomodation-address" method="post">
+      <form class="form" action="date-still-there" method="post">
 
-      {{ govukDateInput({
-          id: "date-out",
-          namePrefix: "date-out",
-          fieldset: {
-            legend: {
-              text: "When did the claimant leave the temporary accomodation?",
-              classes: "govuk-fieldset__legend--l",
-              isPageHeading: true
-            }
-          }
-        }) }}
-
+    
+      {{govukDateInput({
+              id: "admission",
+              namePrefix: "date-in",
+              fieldset: {
+                legend: {
+                  text: "When did the claimant enter temporary accomodation?",
+                  isPageHeading: true,
+                  classes: "govuk-fieldset__legend--l"
+                }
+              }
+      }) }}
 
 
       {{ govukButton({
