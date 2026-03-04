@@ -17,6 +17,17 @@ router.post('/add-another-stay', function(request, response) {
 })
 
 
+router.post('/persona-selection', function(request, response) {
+ 
+  var personaSelection = request.session.data['PayabilityPersona'];
+  if (personaSelection === "Agent handling an ongoing claim") {
+      response.redirect("payability/v2/scenario")
+  } else {
+    response.redirect("payability/v2/stay/type")
+}
+})
+
+
 router.post('/funding-scenario-v2', function(request, response) {
  var fundingSkip = request.session.data['funding-scenario'];
   if (fundingSkip === "Health authority" || fundingSkip === "Claimant" ) {
