@@ -1,5 +1,4 @@
-{% extends "layouts/payability2.html" %}
-
+{% extends "layouts/payability.html" %}
 {% block beforeContent %}
 {{ govukBreadcrumbs({
   items: [
@@ -22,13 +21,16 @@
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
     {% include "includes/banner.njk" %}
+    {% include "includes/agent-header.njk" %}
     <form class="form" action="agent" method="post">
+
+
 
       {{ govukRadios({
         name: "PayabilityScenario",
         fieldset: {
           legend: {
-            text: "Payability V1: select a scenario",
+            text: "Payability V2: select a scenario",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
