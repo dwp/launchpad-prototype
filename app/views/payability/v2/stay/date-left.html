@@ -11,15 +11,11 @@
 <div class="govuk-grid-row">
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
-<<<<<<< HEAD
-      <form class="form" action="accomodation-address" method="post">
-=======
       {% if data['type-scenario'] == 'Hospital' %}
       <form class="form" action="accomodation-address" method="post">
     {% else %}
     <form class="form" action="similar-institution" method="post">
     {% endif %}
->>>>>>> 53bdfa3 (new changes)
 
       {{ govukDateInput({
           id: "date-out",
