@@ -19,7 +19,7 @@
 
             
 <!-- { Read type-scenario and normalise } -->
-  {% set ts = (data['type-scenario'] or '') | trim | lower%}
+  {% set ts = (data['type-scenario'] or '') | trim %}
 
   {# If None or empty, use 'accommodation'; otherwise use the original value #}
   {% if not ts == 'none' %}
@@ -44,12 +44,12 @@
 
   
 <div class="govuk-form-group">
-  <label class="govuk-label" for="searchString">
-    Hospital name (optional)
+  <label class="govuk-label" for="address-name">
+    {{entity}} name 
   </label>
 
 
-  <input class="govuk-input govuk-!-width-two-thirds" id="searchString" name="searchString" type="text">
+  <input class="govuk-input govuk-!-width-two-thirds" id="address-line-1" name="address-line-1" type="text">
 
 </div>
 
@@ -61,11 +61,11 @@
   
 <div class="govuk-form-group">
   <label class="govuk-label" for="postcode">
-    Postcode
+    Postcode (optional)
   </label>
 
 
-  <input class="govuk-input govuk-!-width-two-thirds" id="postcode" name="postcode" type="text">
+  <input class="govuk-input govuk-!-width-two-thirds" id="address-postcode" name="address-postcode" type="text">
 
 </div>
 

@@ -135,21 +135,23 @@
   }]) %}
 {% endif %}
 
-<!-- accomodation contact -->
-<!-- {% if data['primary-contact'] or data['accomodation-email'] %}
-  {% set contactHtml = (data['primary-contact'] or 'No named contact') ~ "<br>" ~ (data['accomodation-email'] or 'No email address') %}
+<!-- accomodation contact  -->
+
+{% if data['primary-contact'] or data['email'] or data['phone-number'] %}
+  {% set contactHtml = (data['primary-contact'] or 'No named contact') ~ "<br>" ~ (data['email'] or 'No email address') ~ "<br>" ~ (data['phone-number'] or 'No phone number')  %}
   {% set summaryRows = summaryRows.concat([{
     key: { text: (data['type-scenario'] or 'Accommodation') ~ " contact" },
     value: { html: contactHtml },
     actions: {
-      items: [{
-        href: "accomodation-address",
+      items: [
+      {
+        href: "primary-contact",
         text: "Change",
-        visuallyHiddenText: "accommodation contact"
+        visuallyHiddenText: "Accomodation contact details"
       }]
     }
   }]) %}
-{% endif %} -->
+{% endif %}
 
 <!-- boarder question -->
 {% if data['boarder-scenario'] %}
@@ -206,6 +208,10 @@
     {% set fundingAddressHtml = fundingAddressHtml + data['funding-address-postcode'] + "<br>" %}
   {% endif %}
 
+  {% if data['select-an-address'] %}
+    {% set fundingAddressHtml = data['select-an-address'] %}
+  {% endif %}
+
   {% set summaryRows = summaryRows.concat([{
     key: { text: "Funding address" },
     value: { html: fundingAddressHtml },
@@ -218,8 +224,9 @@
     }
   }]) %}
 {% endif %}
+
 <!-- funding contact -->
-<!-- {% if data['funding-primary-contact'] or data['funding-email'] %}
+{% if data['funding-primary-contact'] or data['funding-email'] %}
   {% set fundingContactHtml = (data['funding-primary-contact'] or 'No named contact') ~ "<br>" ~ (data['funding-email'] or 'No email address') %}
   {% set summaryRows = summaryRows.concat([{
     key: { text: "Funding contact" },
@@ -232,7 +239,7 @@
       }]
     }
   }]) %}
-{% endif %} -->
+{% endif %}
 
 <!-- agreement to repay -->
 {% if data['repayment-scenario'] %}
