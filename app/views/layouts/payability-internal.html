@@ -1,0 +1,57 @@
+{% extends "govuk-prototype-kit/layouts/govuk-branded.njk" %}
+
+{% from "internal-service-header/macro.njk" import dwpHeader %}
+
+{% block pageTitle %}
+  Applicant address lookup – Personal Independence Payment – GOV.UK
+{% endblock %}
+
+{% block header %}
+  {% if isDeclarationPre == true %}
+    {{ dwpHeader({
+      name: "Personal Independence Payment",
+      serviceHref: '',
+      action: "Delete application data",
+      actionHref: "../stop-app-pre.html",
+      container: true
+    }) }}
+  {% else %}
+    {{ dwpHeader({
+      name: "Personal Independence Payment",
+      serviceHref: '',
+      action: "Delete application data",
+      actionHref: "../stop-app.html",
+      container: true
+    }) }}
+  {% endif %}
+{% endblock %}
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+
+
+{% block content %}
+
+{% endblock %}
+
+
+{% from "internal-service-footer/macro.njk" import dwpFooter %}
+{% block footer %}
+  {{ dwpFooter({
+    meta: {
+      visuallyHiddenTitle: "Meta links",
+      items: [
+        { href: "#", text: "Accessibility statement" },
+        { href: "#", text: "Privacy statement" },
+        { href: "/manage-prototype", text: "Manage prototype" },
+        { href: "/manage-prototype/clear-data", text: "Clear data" }
+      ]
+    }
+  }) }}
+{% endblock %}

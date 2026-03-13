@@ -10,13 +10,70 @@
 
 <!-- Start row -->
 <div class="govuk-grid-row">
-  <!-- Start column -->
-  <div class="govuk-grid-column-two-thirds">
+<!-- Start column -->  
+<div class="govuk-grid-column-two-thirds">
 
+<!-- For ongoing claims -->
+{% if (data['PayabilityPersona'] == "Agent starting a new claim") %}
+
+  <form class="form" action="/funding-scenario-v2" method="post">
+
+      {{ govukRadios({
+        name: "funding-scenario",
+        fieldset: {
+          legend: {
+            text: "Are any of the costs for you to live there paid by a local authority, NHS or charity?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        hint: {
+    text: " A local authority is an organisation such as a local council."
+        },
+        items: [
+        {
+            value: "No, none of these",
+            text: "No, none of these"
+          },
+          {
+            value: "I don't know",
+            text: "I don't know"
+          },
+          {
+            divider: "or"
+          },
+          {
+            value: "Local authority",
+            text: "Local authority"
+          },
+          {
+            value: "Charity",
+            text: "Charity"
+          },
+          {
+            value: "Health authority",
+            text: "NHS"
+          }
+        ]
+      }) }}
+
+      <button type="submit" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
+  Save and continue
+</button>
+
+
+      </form>
+
+
+
+
+
+
+     <!-- For new claims -->
+    {% else %}
+  
     <form class="form" action="/funding-scenario-v2" method="post">
-<!--Hospital funding options -->
 
-{% if (data['type-scenario'] == "Hospital") %}
       {{ govukRadios({
         name: "funding-scenario",
         fieldset: {
@@ -27,37 +84,7 @@
           }
         },
         items: [
-         {
-            value: "Claimant",
-            text: "Claimant"
-          },
-          {
-            value: "Health authority",
-            text: "NHS or Defence Medical Services"
-          },
-          {
-            value: "Not known",
-            text: "Not known"
-          }
-        ]
-      }) }}
-
-
-
-
-     {% else %}
-
-      {{ govukRadios({
-        name: "funding-scenario",
-        fieldset: {
-          legend: {
-            text: "Who funded the " + data['type-scenario'] | lower + " stay",
-            isPageHeading: true,
-            classes: "govuk-fieldset__legend--l"
-          }
-        },
-        items: [
-         {
+          { 
             value: "Claimant",
             text: "Claimant"
           },
@@ -66,31 +93,34 @@
             text: "Local authority"
           },
           {
-            value: "Health authority",
-            text: "Health authority"
+            value: "NHS",
+            text: "NHS"
           },
           {
             value: "Charity",
             text: "Charity"
           },
-          {
-            value: "Not known",
-            text: "Not known"
+          { 
+            value: "I don't know",
+            text: "I don't know"
           }
         ]
       }) }}
 
 
+        {{ govukButton({ text: "Save and continue" }) }}
+
+
      {% endif %}
 
+  
+     </form>
+
+
+<!-- " + data['type-scenario'] | lower to embed accom type-->
 <!-- Other funding options-->
+  
 
-
-<button type="submit" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
-  Save and continue
-</button>
-
-  </fieldset>
 
 
 

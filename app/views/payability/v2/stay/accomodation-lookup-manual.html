@@ -1,0 +1,434 @@
+{% extends "layouts/payability.html" %}
+{% block beforeContent %}
+{{ govukBackLink({
+        text: "Back",
+        href: "javascript:history.back()"
+        }) }}
+{% endblock %}
+{% block content %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <!-- error summary on top of the page -->
+    {% if errors %}
+      {{ govukErrorSummary({
+        titleText: "There is a problem",
+        errorList: [
+          { text: errors["accomodation-name"].text, href: "#accomodation-name" } if errors["accomodation-name"],
+          { text: errors["address-town"].text, href: "#address-town" } if errors["address-town"]
+        ] | reject("undefined")
+      }) }}
+    {% endif %}
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+  
+<!-- { Read type-scenario and normalise } -->
+  {% set ts = (data['type-scenario'] or '') | trim | lower%}
+
+  {# If None or empty, use 'accommodation'; otherwise use the original value #}
+  {% if not ts == 'none' %}
+    {% set entity = 'accommodation' %}
+  {% else %}
+    {% set entity = ts %}
+  {% endif %}
+
+<h1 class="govuk-heading-l">
+  What is the {{ entity | lower }}'s full address?
+</h1>
+    <form class="form" action="accomodation-contact-check" method="post">
+
+
+
+
+
+  <fieldset class="govuk-fieldset">
+  
+
+
+  
+
+
+<div class="govuk-form-group">
+  <label class="govuk-label" for="address-line-1">
+    Address line 1
+  </label>
+
+
+  <input class="govuk-input" id="address-line-1" name="address-line-1" type="text" autocomplete="address-line1">
+
+</div>
+
+
+  
+
+
+<div class="govuk-form-group">
+  <label class="govuk-label" for="address-line-2">
+    Address line 2 (optional)
+  </label>
+
+
+  <input class="govuk-input" id="address-line-2" name="address-line-2" type="text" autocomplete="address-line2">
+
+</div>
+
+
+  
+
+
+
+  
+<div class="govuk-form-group">
+  <label class="govuk-label" for="address-town">
+    Town or city
+  </label>
+
+
+  <input class="govuk-input govuk-!-width-two-thirds" id="address-town" name="address-town" type="text" autocomplete="address-level2">
+
+</div>
+
+
+  
+
+
+
+  
+<div class="govuk-form-group">
+  <label class="govuk-label" for="address-county">
+    County (optional)
+  </label>
+
+
+  <input class="govuk-input govuk-!-width-two-thirds" id="address-county" name="address-county" type="text">
+
+</div>
+
+
+  
+
+
+
+  
+<div class="govuk-form-group">
+  <label class="govuk-label" for="address-postcode">
+    Postcode
+  </label>
+
+
+  <input class="govuk-input govuk-input--width-10" id="address-postcode" name="address-postcode" type="text" autocomplete="postal-code">
+
+</div>
+
+
+
+ 
+<div class="govuk-form-group">
+  <label class="govuk-label" for="sort">
+    Country
+  </label>
+  <div id="country-hint" class="govuk-hint">
+   Enter country and select it from the list.
+  </div>
+  <select id="country" class="govuk-select" name="another-nationality" aria-describedby="country-hint">
+
+    <option value=""></option>
+    <option value="Afghanistan">Afghan</option>
+    <option value="Albania">Albanian</option>
+    <option value="Algeria">Algerian</option>
+    <option value="American">American</option>
+    <option value="Andorran">Andorran</option>
+    <option value="Angolan">Angolan</option>
+    <option value="Anguillan">Anguillan</option>
+    <option value="Antigua and Barbuda">Citizen of Antigua and Barbuda</option>
+    <option value="Argentina">Argentine</option>
+    <option value="Armenia">Armenian</option>
+    <option value="Australia">Australian</option>
+    <option value="Austria">Austrian</option>
+    <option value="Azerbaijan">Azerbaijani</option>
+
+
+
+            <option value="Bahamas">Bahamaian</option>
+            <option value="Bahrain">Bahraini</option>
+            <option value="Bangladesh">Bangladeshi</option>
+            <option value="Barbados">Barbadian</option>
+            <option value="Belarus">Belarusian</option>
+            <option value="Belgium">Belgian</option>
+            <option value="Belize">Belizean</option>
+            <option value="Benin">Beninese</option>
+            <option value="Bermuda">Bermudian</option>
+            <option value="Bhutan">Bhutanese</option>
+            <option value="Bolivia">Bolivian</option>
+            <option value="Bosnia and Herzegovina">Citizen of Bosnia and Herzegovina</option>
+            <option value="Botswana">Botswanan</option>
+            <option value="Brazil">Brazilian</option>
+            <option value="British Indian Ocean Territory">British	British Virgin Islander</option>
+            <option value="Brunei Darussalam">Bruneian</option>
+            <option value="Bulgaria">Bulgarian</option>
+            <option value="Burkina Faso">Burkinan</option>
+            <option value="Burmese">Burmese</option>
+            <option value="Burundi">Burundian</option>
+
+            <option value="Cambodia">Cambodian</option>
+            <option value="Cameroon">Cameroonian</option>
+            <option value="Canada">Canadian</option>
+            <option value="Cape Verde">Cape Verdean</option>
+            <option value="Cayman Islands">Cayman Islander</option>
+            <option value="Central African Republic">Central African</option>
+            <option value="Chad">Chadian</option>
+            <option value="Chile">Chilean</option>
+            <option value="China">Chinese</option>
+            <option value="Colombia">Colombian</option>
+            <option value="Comoros">Comoroan</option>
+            <option value="Congo">Congolese (Congo)</option>
+            <option value="Congo, The Democratic Republic of The">Congolese (DRC)</option>
+            <option value="Cook Islands">Cook Islander</option>
+            <option value="Costa Rica">Costa Rican</option>
+            <option value="Croatia">Croatian</option>
+            <option value="Cuba">Cuban</option>
+            <option value="Cyprus">Cymraes</option>
+            <option value="Cyprus">Cymro</option>
+            <option value="Cyprus">Cypriot</option>
+            <option value="Czech Republic">Czech</option>
+
+
+            <option value="Denmark">Danish</option>
+            <option value="Djibouti">Djiboutian</option>
+            <option value="Dominica">Dominican Citizen of the Dominican Republic</option>
+            <option value="dutch">Dutch</option>
+
+
+            <option value="East Timorese">East Timorese</option>
+            <option value="Ecuador">Ecuadorean</option>
+            <option value="Egypt">Egyptian</option>
+            <option value="Emirati">Emirati</option>
+            <option value="English">English</option>
+            <option value="Equatorial Guinean">Equatorial Guinean</option>
+            <option value="Eritrea">Eritrean</option>
+            <option value="Estonia">Estonian</option>
+            <option value="Ethiopia">Ethiopian</option>
+
+
+            Faroese	Fijian	Filipino	Finnish
+
+            <option value="Faroe Islands">Faroese</option>
+            <option value="Fiji">	Fijian</option>
+            <option value="Finland">Finnish</option>
+            <option value="France">French</option>
+
+
+            <option value="Gabon">Gabonese</option>
+            <option value="Gambia">Gambian</option>
+            <option value="Georgia">Georgian</option>
+            <option value="Germany">German</option>
+            <option value="Ghana">Ghanaian</option>
+            <option value="Gibraltar">Gibraltarian</option>
+            <option value="Greece">Greek</option>
+            <option value="Greenland">Greenlandic</option>
+            <option value="Grenada">Grenadaian</option>
+            <option value="Guam">Guamanian</option>
+            <option value="Guatemala">Guatemalan</option>
+            <option value="Guernsey">Citizen of Guinea-Bissau</option>
+            <option value="Guinea-bissau">Guinea-bissau</option>
+            <option value="Guyana">Guinean</option>
+            <option value="Guyana">Guyanese</option>
+
+
+            <option value="Haiti">Haitian</option>
+            <option value="Honduras">Honduran</option>
+            <option value="Hong Kong">Hong Konger</option>
+            <option value="Hungary">Hungarian</option>
+
+            <option value="Iceland">Icelandic</option>
+            <option value="India">Indian</option>
+            <option value="Indonesia">Indonesin</option>
+            <option value="Iran, Islamic Republic of">Iranian</option>
+            <option value="Iraq">Iraqi</option>
+            <option value="Ireland">Iridh</option>
+            <option value="Israel">Israeli</option>
+            <option value="Italy">Italian</option>
+            <option value="Ivorian">Ivorian</option>
+
+            <option value="Jamaica">Jamaican</option>
+            <option value="Japan">Japanese</option>
+            <option value="Jordan">Jordanian</option>
+
+            <option value="Kazakhstan">Kazakh</option>
+            <option value="Kenya">Kenyn</option>
+            <option value="Kiribati">Kittitian</option>
+            <option value="Kiribati">Citizen of Kiribati</option>
+            <option value="Korea, Democratic People's Republic of">Kosovan</option>
+            <option value="Korea, Republic of">Korea, Republic of</option>
+            <option value="Kuwait">Kuwaiti</option>
+            <option value="Kyrgyzstan">Kyrgyz</option>
+
+            <option value="Lao People's Democratic Republic">Lao</option>
+            <option value="Latvia">Latvian</option>
+            <option value="Lebanon">Lebanese</option>
+            <option value="Lesotho">Lesotho</option>
+            <option value="Liberia">Liberian</option>
+            <option value="Libyan Arab Jamahiriya">Libyan</option>
+            <option value="Liechtenstein">Liechtenstein citizen</option>
+            <option value="Lithuania">Lithuanian</option>
+            <option value="Luxembourg">Luxembourger</option>
+
+
+            <option value="Macao">Macanese</option>
+            <option value="Macedonia, The Former Yugoslav Republic of">Macedonian</option>
+            <option value="Madagascar">Malagasy</option>
+            <option value="Malawi">Malawi</option>
+            <option value="Malaysia">Malawian</option>
+            <option value="Malaysia">Malaysian</option>
+            <option value="Maldives">Maldivian</option>
+            <option value="Mali">Malian</option>
+            <option value="Malta">Maltese</option>
+            <option value="Marshall Islands">Marshallese</option>
+            <option value="Martinique">Martiniquais</option>
+            <option value="Mauritania">Mauritanian</option>
+            <option value="Mauritius">Mauritian</option>
+            <option value="Mexico">Mexican</option>
+            <option value="Micronesia, Federated States of">Micronesian</option>
+            <option value="Moldova, Republic of">Moldovan</option>
+            <option value="Moldova, Republic of">Monegasque</option>
+            <option value="Mongolian">Mongolian</option>
+            <option value="Montenegro">Montenegrin</option>
+            <option value="Montserrat">Montserratian</option>
+            <option value="Morocco">Moroccan</option>
+            <option value="Myanmar"> Mosotho</option>
+            <option value="Mozambique">Mozambican</option>
+
+
+            <option value="Namibia">Namibian</option>
+            <option value="Nauru">Naurun</option>
+            <option value="Nepal">Nepalese</option>
+            <option value="New Zealand">New Zealander</option>
+            <option value="Nicaragua">Nicaraguan</option>
+            <option value="Niger">Nigerian</option>
+            <option value="Nigeria">Nigerien</option>
+            <option value="Niue">Niuean</option>
+            <option value="Northern Irish">Northern Irish</option>
+            <option value="Norway">Norwegian</option>
+
+            <option value="Oman">Omani</option>
+
+            <option value="Pakistan">Pakistani</option>
+            <option value="Palau">Palauan</option>
+            <option value="Palestinian Territory, Occupied">Palestinian</option>
+            <option value="Panama">Panamanaian</option>
+            <option value="Papua New Guinea">Papua New Guinean</option>
+            <option value="Paraguay">Paraguayan</option>
+            <option value="Peru">Peruvian</option>
+            <option value="Pitcairn">Pitcairn Islander</option>
+            <option value="Poland">Polish</option>
+            <option value="Portugal">Portuguese</option>
+            <option value="Prydeinig">Prydeinig</option>
+            <option value="Puerto Rico">Puerto Rican</option>
+
+            <option value="Qatar">Qatari</option>
+
+            <option value="Romania">Romanian</option>
+            <option value="Russian Federation">Russian</option>
+            <option value="Rwanda">Rwandan</option>
+
+
+            <option value="Salvadorean">Salvadorean</option>
+            <option value="Saint Helena">Sammarinese</option>
+            <option value="Saint Kitts and Nevis">Samoan</option>
+            <option value="Saint Lucia">	Sao Tomean</option>
+            <option value="Saudi Arabia">Saudi Arabian</option>
+            <option value="Scottish">Scottish</option>
+            <option value="Senegalesea">Senegalese</option>
+            <option value="Serbia">Serbian</option>
+            <option value="Seychelles">Citizen of Seychelles</option>
+            <option value="Sierra Leone">Sierra Leonean</option>
+            <option value="Singapore">Singaporean</option>
+            <option value="Slovakia">Slovak</option>
+            <option value="Slovenia">Slovenian</option>
+            <option value="Solomon Islands">Solomond Islander</option>
+            <option value="Somalia">Somali</option>
+            <option value="South Africa">South African</option>
+            <option value="South Georgia and The South Sandwich Islands">South Korean</option>
+            <option value="South Sudanese">South Sudanese</option>
+            <option value="Spain">Spanish</option>
+            <option value="Sri Lanka">Sri Lankan</option>
+            <option value="St Helenian"> St Helenian</option>
+            <option value="St Lucian"> St Lucian</option>
+            <option value="Statelss"> Stateless</option>
+            <option value="Sudan">Sudanese</option>
+            <option value="Suriname">Surinamese</option>
+            <option value="Swaziland">Swazi</option>
+            <option value="Sweden">Swedish </option>
+            <option value="Switzerland">Swiss</option>
+            <option value="Syrian Arab Republic">Syrian</option>
+
+            <option value="Taiwan">Taiwanese</option>
+            <option value="Tajikistan">Tajik</option>
+            <option value="Tanzania, United Republic of">Tanzanian</option>
+            <option value="Thailand">Thai</option>
+            <option value="Togo">Togolese</option>
+
+            <option value="Tonga">Tongan</option>
+            <option value="Trinidad and Tobago">Tristanian</option>
+            <option value="Trinidad and Tobago">Trinidadian</option>
+            <option value="Tunisia">Tunisian</option>
+            <option value="Turkey">Turkish</option>
+            <option value="Turkmenistan">Turkmen</option>
+            <option value="Turks and Caicos Islands">Turks and Caicos Islander</option>
+            <option value="Tuvalu">Tuvaluan</option>
+
+
+            <option value="Uganda">Ugandan</option>
+            <option value="Ukraine">Ukrainian</option>
+            <option value="Uruguay">Uruguayan</option>
+            <option value="Uzbekistan">Uzbek</option>
+
+
+            <option value="Vatican citizen">Vatican citizen</option>
+            <option value="Citizen of Vanuatu">Citizen of Vanuatu</option>
+            <option value="Venezuelan">Venezuelan</option>
+            <option value="Vietnamese">Vietnamese</option>
+            <option value="Vincentian">Vincentian</option>
+
+            <option value="Wallis and Futuna">Wallisian</option>
+            <option value="Western Sahara">Welsh</option>
+
+            <option value="Yemen">Yemeni</option>
+
+            <option value="Zambia">Zambiam</option>
+            <option value="Zimbabwe">Zimbabwean</option>
+          </select>
+        </div>
+
+
+    
+  
+    
+  
+
+<button type="submit" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
+  Use this address
+</button>
+
+
+
+  <div class="govuk-body">
+    <a href="accomodation-lookup-name">Search by postcode</a>
+  </div>
+  <p><a href="#">Go to task list</a></p>
+ 
+
+
+</fieldset>
+
+
+        </form></div></div> 
+  </div>
+</div>
+
+{% endblock %}

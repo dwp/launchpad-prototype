@@ -1,0 +1,162 @@
+{% extends "layouts/payability.html" %}
+{% block beforeContent %}
+{{ govukBackLink({
+        text: "Back",
+        href: "javascript:history.back()"
+        }) }}
+{% endblock %}
+
+{% block content %}
+<!-- Start row -->
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      
+  
+<!-- { Read type-scenario and normalise } -->
+  {% set ts = (data['funding-scenario'] or '') | trim | lower%}
+
+  {# If None or empty, use 'accommodation'; otherwise use the original value #}
+  {% if not ts == 'none' %}
+    {% set entity = 'accommodation' %}
+  {% else %}
+    {% set entity = ts %}
+  {% endif %}
+
+<h1 class="govuk-heading-l">
+  Can you confirm the {{ entity | lower }}'s address?
+</h1>
+      <form class="form" action="#" method="post">
+        <div class="govuk-width-container">
+
+
+          <p>6 addresses found for <b>wr11nl</b> and <b>1</b>. <a href="funding-lookup-name">Search again</a></p>
+
+        
+
+
+
+<div class="govuk-form-group">
+
+  <div class="govuk-radios" data-module="govuk-radios" data-govuk-radios-init="">
+    
+    
+      
+  
+    
+    
+    
+    <div class="govuk-radios__item">
+      <input class="govuk-radios__input" id="select-an-address" name="select-an-address" type="radio" value="1 Washington Street, Worcester, WR1 1NL">
+      <label class="govuk-label govuk-radios__label" for="select-an-address">
+        1 Washington Street, Worcester, WR1 1NL
+      </label>
+      
+    </div>
+    
+  
+    
+      
+  
+    
+    
+    
+    <div class="govuk-radios__item">
+      <input class="govuk-radios__input" id="select-an-address-2" name="select-an-address" type="radio" value="10 Washington Street, Worcester, WR1 1NL">
+      <label class="govuk-label govuk-radios__label" for="select-an-address-2">
+        10 Washington Street, Worcester, WR1 1NL
+      </label>
+      
+    </div>
+    
+  
+    
+      
+  
+    
+    
+    
+    <div class="govuk-radios__item">
+      <input class="govuk-radios__input" id="select-an-address-3" name="select-an-address" type="radio" value="11 Washington Street, Worcester, WR1 1NL">
+      <label class="govuk-label govuk-radios__label" for="select-an-address-3">
+        11 Washington Street, Worcester, WR1 1NL
+      </label>
+      
+    </div>
+    
+  
+    
+      
+  
+    
+    
+    
+    <div class="govuk-radios__item">
+      <input class="govuk-radios__input" id="select-an-address-4" name="select-an-address" type="radio" value="12 Washington Street, Worcester, WR1 1NL">
+      <label class="govuk-label govuk-radios__label" for="select-an-address-4">
+        12 Washington Street, Worcester, WR1 1NL
+      </label>
+      
+    </div>
+    
+  
+    
+      
+  
+    
+    
+    
+    <div class="govuk-radios__item">
+      <input class="govuk-radios__input" id="select-an-address-5" name="select-an-address" type="radio" value="13 Washington Street, Worcester, WR1 1NL">
+      <label class="govuk-label govuk-radios__label" for="select-an-address-5">
+        13 Washington Street, Worcester, WR1 1NL
+      </label>
+      
+    </div>
+    
+  
+    
+      
+  
+    
+    
+    
+    <div class="govuk-radios__item">
+      <input class="govuk-radios__input" id="select-an-address-6" name="select-an-address" type="radio" value="14 Washington Street, Worcester, WR1 1NL">
+      <label class="govuk-label govuk-radios__label" for="select-an-address-6">
+        14 Washington Street, Worcester, WR1 1NL
+      </label>
+      
+    </div>
+    
+  
+    
+    
+  </div>
+
+</div>
+
+
+      </div>
+
+  
+      
+
+  
+    
+  
+
+<a href="funding-contact-check" role="button" draggable="false" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
+  Use this address
+</a>
+
+
+        <p class="govuk-body govuk-!-margin-bottom-6"><a href="funding-lookup-manual" class="govuk-link">Enter address manually</a></p>
+        <p><a href="/pip-register-v4/task-list-hcp-done">Go to task list</a></p>
+
+      </form>
+
+    </div>
+  </div>
+
+<!-- End row -->
+{% endblock %}

@@ -11,44 +11,25 @@
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
 
-    <form class="form" action="/boarder-check" method="post">
-
-      {%if (data['PayabilityPersona'] == "Agent starting a new claim")%}
+    <form class="form" action="/contact-check" method="post">
 
 
-       {{ govukRadios({
-      name: "boarder-scenario",
-      fieldset: {
-        legend: {
-          text: "Do you stay there regularly?",
-          isPageHeading: true,
-          classes: "govuk-fieldset__legend--l"
-        }
-      },
-      items: [
-        {
-          value: "Yes",
-          text: "Yes"
-        },
-        {
-          value: "No",
-          text: "No"
-        },
-        {
-          value: "Not known",
-          text: "I don't know"
-        }
-      ]}) }}
+    {% set raw = (data['type-scenario'] or '') | trim | lower %}
+
+        {% if raw and raw != 'Other' %}
+          {% set accType = raw %}
+        {% else %}
+          {% set accType = 'accommodation' %}
+        {% endif %}
 
 
-
-      {%else%}
+        {% set legendText = "Is there someone at the " ~ accType ~ " we can contact about the stay?" %}
     
       {{ govukRadios({
-      name: "boarder-scenario",
+      name: "contactCheck",
       fieldset: {
         legend: {
-          text: "Does the claimant stay there regularly?",
+          text: legendText,
           isPageHeading: true,
           classes: "govuk-fieldset__legend--l"
         }
@@ -61,14 +42,8 @@
         {
           value: "No",
           text: "No"
-        },
-        {
-          value: "Not known",
-          text: "I don't know"
         }
       ]}) }}
-
-      {% endif %}
 
     <button type="submit" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
       Save and continue

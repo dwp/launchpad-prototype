@@ -12,7 +12,22 @@
 <div class="govuk-grid-row">
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
-      <H1 class="govuk-heading-l">Does the claimant have an agreement with [organisation] to pay back any of the costs?</H1>
+
+  {% set ts = (data['funding-scenario'] or '') | trim | lower%}
+
+  <!-- { If None or empty, use 'accommodation'; otherwise use the original value } -->
+  {% if not ts == 'none' %}
+    {% set entity = 'accommodation' %}
+  {% else %}
+    {% set entity = ts %}
+  {% endif %}
+
+<h1 class="govuk-heading-l">
+  Do you have an agreement with the {{ entity | lower }} to pay back any of the costs?  
+</h1>
+
+
+
 
 
       {{ govukRadios({
@@ -33,7 +48,7 @@
             },
             {
               value: "Not sure",
-              text: "Not sure"
+              text: "I don't know"
             }
           ]
         }) }}
@@ -41,7 +56,7 @@
 
       {{ govukButton({
         text: "Continue",
-        href: "check-answers2"
+        href: "similar-institution"
       }) }}
   </div>
 </div>

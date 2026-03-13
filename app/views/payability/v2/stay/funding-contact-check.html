@@ -1,0 +1,47 @@
+{% extends "layouts/payability.html" %}
+{% block beforeContent %}
+{{ govukBackLink({
+        text: "Back",
+        href: "javascript:history.back()"
+        }) }}
+{% endblock %}
+{% block content %}
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+
+    <form class="form" action="/funding-contact-check" method="post">
+    
+      {{ govukRadios({
+      name: "fundingContactCheck",
+      fieldset: {
+        legend: {
+          text: "Is there someone at the funding provider we can contact about the stay?",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      items: [
+        {
+          value: "Yes",
+          text: "Yes"
+        },
+        {
+          value: "No",
+          text: "No"
+        }
+      ]}) }}
+
+    <button type="submit" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
+      Save and continue
+    </button>
+
+</form>
+
+
+
+
+
+<!-- End row -->
+{% endblock %}

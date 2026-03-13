@@ -12,9 +12,9 @@
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
       {% if data['type-scenario'] == 'Hospital' %}
-      <form class="form" action="accomodation-address" method="post">
+      <form class="form" action="accomodation-lookup-name" method="post">
     {% else %}
-    <form class="form" action="similar-institution" method="post">
+    <form class="form" action="accomodation-boarder" method="post">
     {% endif %}
 
       {{ govukDateInput({

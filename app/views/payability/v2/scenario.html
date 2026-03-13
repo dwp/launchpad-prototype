@@ -1,4 +1,4 @@
-{% extends "layouts/payability.html" %}
+{% extends "layouts/payability-internal.html" %}
 {% block beforeContent %}
 {{ govukBreadcrumbs({
   items: [
@@ -13,6 +13,10 @@
   ]
 }) }}
 {% endblock %}
+
+
+{% set isDeclarationPre = true %}
+
 
 {% block content %}
 

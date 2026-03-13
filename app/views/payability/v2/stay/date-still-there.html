@@ -11,7 +11,7 @@
 <div class="govuk-grid-row">
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
-      <form class="form" action="date-left" method="post">
+      <form class="form" action="/still-there-check" method="post">
 
       {{ govukRadios({
         name: "date-out-check",
@@ -29,10 +29,11 @@
           },
           {
             value: "No",
-            text: "No",
-            conditional: {
-              html: dateOutHtml
-            }
+            text: "No"
+          },
+          {
+            value: "I don't know",
+            text: "I don't know"
           }
         ]
       }) }}

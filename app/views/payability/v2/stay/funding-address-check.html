@@ -7,48 +7,33 @@
 {% endblock %}
 {% block content %}
 <!-- Start row -->
+
+
 <div class="govuk-grid-row">
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
 
-    <form class="form" action="/boarder-check" method="post">
+    <form class="form" action="/funding-address-check" method="post">
 
-      {%if (data['PayabilityPersona'] == "Agent starting a new claim")%}
+      {% set raw = (data['funding-scenario'] or '') | trim | lower %}
 
-
-       {{ govukRadios({
-      name: "boarder-scenario",
-      fieldset: {
-        legend: {
-          text: "Do you stay there regularly?",
-          isPageHeading: true,
-          classes: "govuk-fieldset__legend--l"
-        }
-      },
-      items: [
-        {
-          value: "Yes",
-          text: "Yes"
-        },
-        {
-          value: "No",
-          text: "No"
-        },
-        {
-          value: "Not known",
-          text: "I don't know"
-        }
-      ]}) }}
+        {% if raw and raw != 'Other' %}
+          {% set accType = raw %}
+        {% else %}
+          {% set accType = 'accommodation' %}
+        {% endif %}
 
 
+        {% set legendText = "Do you know the address of the " ~ accType ~ "?" %}
+    
 
-      {%else%}
+
     
       {{ govukRadios({
-      name: "boarder-scenario",
+      name: "fundingAddressCheck",
       fieldset: {
         legend: {
-          text: "Does the claimant stay there regularly?",
+          text: legendText,
           isPageHeading: true,
           classes: "govuk-fieldset__legend--l"
         }
@@ -61,14 +46,8 @@
         {
           value: "No",
           text: "No"
-        },
-        {
-          value: "Not known",
-          text: "I don't know"
         }
       ]}) }}
-
-      {% endif %}
 
     <button type="submit" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
       Save and continue

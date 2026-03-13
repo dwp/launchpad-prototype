@@ -21,7 +21,7 @@ router.post('/funding-scenario', function(request, response) {
  var fundingSkip = request.session.data['funding-scenario'];
   if (fundingSkip === "Health authority" || fundingSkip === "Claimant" ) {
       response.redirect("payability/v1/stay/check-answers2")
-  } else {
+  } else {  
     response.redirect("payability/v1/stay/funding-address")
 }
 })

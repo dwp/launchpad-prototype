@@ -12,7 +12,10 @@
 <div class="govuk-grid-row">
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
-      <H1 class="govuk-heading-l">Should this be treated as a hospital stay?</H1>
+      <!-- <H1 class="govuk-heading-l">Are the living costs or treatment received  funded by the NHS? </H1> -->
+      <H1 class="govuk-heading-l">  Should this stay be treated as a stay in an NHS hospital? </H1>
+
+      
 
       {{ govukRadios({
         name: "similar-institution",
@@ -22,6 +25,9 @@
             classes: "govuk-fieldset__legend--l"
           }
         },
+  hint: {
+    text: "For example, the claimant is receiving treatment from the NHS"
+  },
         items: [
             {
             value: "Yes",
@@ -32,15 +38,15 @@
             text: "No"
           },
           {
-            value: "Not sure",
-            text: "Not sure"
+            value: "I don't know",
+            text: "I don't know"
           }
         ]
       }) }}
 
       {{ govukButton({
         text: "Continue",
-        href: "accomodation-boarder"
+        href: "check-answers2"
       }) }}
   </div>
 </div>
