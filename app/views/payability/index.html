@@ -83,15 +83,31 @@
           <li>Agents should be able to delete records of stays which have begun in error</li>
         </ul>'
       }
+    },
+
+    {
+      heading: {
+        text: "March 2026"
+      },
+      content: {
+        html: '<p class="govuk-body">
+            <strong class="govuk-tag govuk-tag--green">
+          Version 1</strong>
+          </p>
+         <ul class="govuk-list govuk-list--bullet">
+          <li>Persona types added for new and ongoing claims</li>
+          <li>Content updates showing differences between conversational script used for new claims and data capture for ongoing claims </li>
+          <li>Data model reconciliation between new and ongoing claims</li>
+          <li>Agents can use and address lookup, which requires a postcode </li>
+          <li>Moved "contact details" capture to a discrete screen</li>
+          <li>Deprioritisation of adresss and contact capture with additional check screens</li>
+          <li>Additional data capture for boarder information</li>
+          <li>Similar institution to hospital moved to the end of the journey, assuming that some detail about these stays will be useful to help an agent investigate</li>
+        </ul>'
+      }
     }
   ]
 }) }}
-
-      {{ govukButton({
-        text: "Start prototype V1",
-        href: "v1/scenario"
-      }) }}
-      <br>
 
       {{ govukButton({
         text: "Start prototype V2",
