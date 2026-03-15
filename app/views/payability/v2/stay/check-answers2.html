@@ -60,7 +60,7 @@
     value: { text: dateIn },
     actions: {
       items: [{
-        href: "date",
+        href: "date-in",
         text: "Change",
         visuallyHiddenText: "date of entry"
       }]
@@ -75,7 +75,7 @@
     value: { text: data['date-out-check'] },
     actions: {
       items: [{
-        href: "date",
+        href: "date-still-there",
         text: "Change",
         visuallyHiddenText: "ongoing stay"
       }]
@@ -90,7 +90,7 @@
     value: { text: dateOut },
     actions: {
       items: [{
-        href: "date",
+        href: "date-left",
         text: "Change",
         visuallyHiddenText: "end date"
       }]
@@ -99,8 +99,8 @@
 {% endif %}
 
 <!-- accomodation address -->
-{# Guard if any accommodation detail is present. NOTE: Correct key is "address-town", not "accomodation-town". #}
-{% if data['accomodation-name'] or data['address-line-1'] or data['address-line-2'] or data['address-town'] or data['address-county'] or data['address-postcode'] %}
+
+{% if data['accomodation-name'] or data['address-line-1'] or data['address-line-2'] or data['address-town'] or data['address-county'] or data['address-postcode'] or data['accommodation-select-an-address']%}
   {% set addressHtml = "" %}
 
   {% if data['accomodation-name'] %}
@@ -121,13 +121,16 @@
   {% if data['address-postcode'] %}
     {% set addressHtml = addressHtml + data['address-postcode'] + "<br>" %}
   {% endif %}
+  {% if data['accommodation-select-an-address'] %}
+    {% set addressHtml = data['accommodation-select-an-address'] + "<br>" %}
+  {% endif %}
 
   {% set summaryRows = summaryRows.concat([{
-    key: { text: (data['type-scenario'] or 'Accommodation') ~ " details" },
+    key: { text: (data['type-scenario'] or 'Accommodation') ~ " address" },
     value: { html: addressHtml },
     actions: {
       items: [{
-        href: "accomodation-details",
+        href: "accomodation-lookup-name",
         text: "Change",
         visuallyHiddenText: "accommodation address"
       }]
@@ -137,21 +140,41 @@
 
 <!-- accomodation contact  -->
 
+
 {% if data['primary-contact'] or data['email'] or data['phone-number'] %}
-  {% set contactHtml = (data['primary-contact'] or 'No named contact') ~ "<br>" ~ (data['email'] or 'No email address') ~ "<br>" ~ (data['phone-number'] or 'No phone number')  %}
-  {% set summaryRows = summaryRows.concat([{
+
+  {% set contactHtml = "" %}
+
+  {% if data['primary-contact'] %}
+    {% set contactHtml = contactHtml ~ data['primary-contact'] ~ "<br>" %}
+  {% endif %}
+  {% if data['email'] %}
+    {% set contactHtml = contactHtml ~ data['email'] ~ "<br>" %}
+  {% endif %}
+  {% if data['phone-number'] %}
+    {% set contactHtml = contactHtml ~ data['phone-number'] ~ "<br>" %}
+  {% endif %}
+
+  
+  {% set summaryRows = summaryRows or [] %}
+
+  
+  {% set _ = summaryRows.push({
     key: { text: (data['type-scenario'] or 'Accommodation') ~ " contact" },
-    value: { html: contactHtml },
+    value: { html: contactHtml | safe },
     actions: {
       items: [
-      {
-        href: "primary-contact",
-        text: "Change",
-        visuallyHiddenText: "Accomodation contact details"
-      }]
+        {
+          href: "accomodation-contact",
+          text: "Change",
+          visuallyHiddenText: "accommodation contact details"
+        }
+      ]
     }
-  }]) %}
+  }) %}
+
 {% endif %}
+
 
 <!-- boarder question -->
 {% if data['boarder-scenario'] %}
@@ -185,6 +208,38 @@
   }]) %}
 {% endif %}
 
+{% if data['claimantFunded'] %}
+  {% set summaryRows = summaryRows.concat([{
+    key: { text: "Stay funded by claimant" },
+    value: { text: data['claimantFunded'] },
+    actions: {
+      items: [{
+        href: "funding-claimant-check",
+        text: "Change",
+        visuallyHiddenText: "funding type"
+      }]
+    }
+  }]) %}
+{% endif %}
+
+<!-- Funding provider name -->
+{% if data['funding-primary-contact'] %}
+  {% set summaryRows = summaryRows.concat([{
+    key: { text: "Name of funding provider" },
+    value: { text: data['funding-primary-contact'] },
+    actions: {
+      items: [{
+        href: "funding-name",
+        text: "Change",
+        visuallyHiddenText: "funding name"
+      }]
+    }
+  }]) %}
+{% endif %}
+
+
+
+
 <!-- funding address -->
 {% if data['funding-address-line-1'] or data['funding-name'] or data['funding-address-line-2'] or data['funding-address-town'] or data['funding-address-county'] or data['funding-address-postcode'] %}
   {% set fundingAddressHtml = "" %}
@@ -207,9 +262,8 @@
   {% if data['funding-address-postcode'] %}
     {% set fundingAddressHtml = fundingAddressHtml + data['funding-address-postcode'] + "<br>" %}
   {% endif %}
-
-  {% if data['select-an-address'] %}
-    {% set fundingAddressHtml = data['select-an-address'] %}
+  {% if data['funding-select-an-address'] %}
+    {% set fundingAddressHtml = data['funding-select-an-address'] %}
   {% endif %}
 
   {% set summaryRows = summaryRows.concat([{
@@ -217,7 +271,7 @@
     value: { html: fundingAddressHtml },
     actions: {
       items: [{
-        href: "funding-address",
+        href: "funding-lookup-name",
         text: "Change",
         visuallyHiddenText: "funding address"
       }]
@@ -226,26 +280,43 @@
 {% endif %}
 
 <!-- funding contact -->
-{% if data['funding-primary-contact'] or data['funding-email'] %}
-  {% set fundingContactHtml = (data['funding-primary-contact'] or 'No named contact') ~ "<br>" ~ (data['funding-email'] or 'No email address') %}
-  {% set summaryRows = summaryRows.concat([{
-    key: { text: "Funding contact" },
-    value: { html: fundingContactHtml },
+{% if data['funding-primary-contact'] or data['funding-email'] or data['funding-phone-number'] %}
+  {% set fundingContactHtml = "" %}
+
+  {% if data['funding-primary-contact'] %}
+    {% set fundingContactHtml = fundingContactHtml ~ data['funding-primary-contact'] ~ "<br>" %}
+  {% endif %}
+  {% if data['funding-email'] %}
+    {% set fundingContactHtml = fundingContactHtml ~ data['funding-email'] ~ "<br>" %}
+  {% endif %}
+  {% if data['funding-phone-number'] %}
+    {% set fundingContactHtml = fundingContactHtml ~ data['funding-phone-number'] ~ "<br>" %}
+  {% endif %}
+
+  
+  {% set summaryRows = summaryRows or [] %}
+
+  {% set _ = summaryRows.push({
+    key: { text: (data['funding-type'] or 'Funding') ~ " contact" },
+    value: { html: fundingContactHtml | safe },
     actions: {
-      items: [{
-        href: "funding-contact",
-        text: "Change",
-        visuallyHiddenText: "funding contact"
-      }]
+      items: [
+        {
+          href: "funding-contact",
+          text: "Change",
+          visuallyHiddenText: "funding contact details"
+        }
+      ]
     }
-  }]) %}
+  }) %}
 {% endif %}
+
 
 <!-- agreement to repay -->
 {% if data['repayment-scenario'] %}
   {% set summaryRows = summaryRows.concat([{
     key: { text: "Agreement to Repay" },
-    value: { text: data['boarder-scenario'] },
+    value: { text: data['repayment-scenario'] },
     actions: {
       items: [{
         href: "repay",

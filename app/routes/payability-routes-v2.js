@@ -146,7 +146,7 @@ router.post('/persona-selection', function(request, response) {
   if (personaSelection === "Agent handling an ongoing claim") {
       response.redirect("payability/v2/scenario")
   } else {
-    response.redirect("payability/v2/stay/type")
+    response.redirect("payability/v2/stay/accomodation-hospital-check")
 }
 })
 
