@@ -241,7 +241,7 @@
 
 
 <!-- funding address -->
-{% if data['funding-address-line-1'] or data['funding-name'] or data['funding-address-line-2'] or data['funding-address-town'] or data['funding-address-county'] or data['funding-address-postcode'] %}
+{% if data['funding-address-line-1'] or data['funding-name'] or data['funding-address-line-2'] or data['funding-address-town'] or data['funding-address-county'] or data['funding-address-postcode'] or data['funding-select-an-address']%}
   {% set fundingAddressHtml = "" %}
 
   {% if data['funding-name'] %}
