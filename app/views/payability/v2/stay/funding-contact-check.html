@@ -6,6 +6,15 @@
         }) }}
 {% endblock %}
 {% block content %}
+
+{% set ts = (data['funding-scenario'] or '') | trim | lower %}
+{% if not ts or ts == 'none' %}
+{% set entity = 'funding provider' %}
+{% else %}
+{% set entity = ts %}
+{% endif %} 
+
+
 <!-- Start row -->
 <div class="govuk-grid-row">
   <!-- Start column -->
@@ -17,7 +26,7 @@
       name: "fundingContactCheck",
       fieldset: {
         legend: {
-          text: "Is there someone at the funding provider we can contact about the stay?",
+          text: "Is there someone at the " ~ entity ~  " we can contact about the stay?",
           isPageHeading: true,
           classes: "govuk-fieldset__legend--l"
         }
