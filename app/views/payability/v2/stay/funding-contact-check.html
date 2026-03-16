@@ -10,6 +10,7 @@
 {% set ts = (data['funding-scenario'] or '') | trim | lower %}
 {% if not ts or ts == 'none' %}
 {% set entity = 'funding provider' %}
+
 {% else %}
 {% set entity = ts %}
 {% endif %} 

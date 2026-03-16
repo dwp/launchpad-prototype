@@ -12,6 +12,8 @@
   {% set ts = (data['type-scenario'] or '') | trim | lower %}
   {% if not ts or ts == 'none' %}
     {% set entity = 'accommodation' %}
+  {% elif ts == 'detention in legal custody' %}
+    {% set entity = 'place of custody' %}
   {% else %}
     {% set entity = ts %}
   {% endif %}

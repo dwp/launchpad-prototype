@@ -28,6 +28,9 @@
   {# If None or empty, use 'accommodation'; otherwise use the original value #}
   {% if not ts == 'none' %}
     {% set entity = 'accommodation' %}
+  {% elif ts == 'Detention in Legal Custody' %}
+          {% set entity = 'Prison' %}
+
   {% else %}
     {% set entity = ts %}
   {% endif %}

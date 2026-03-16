@@ -12,7 +12,17 @@
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
 
-    <form class="form" action="/funding-check" method="post">
+        {% if (data['type-scenario'] == "Detention in Legal Custody") %}
+    <form class="form" action="check-answers" method="post">
+{% else %}
+      <form class="form" action="/funding-check" method="post">
+         {% endif %}
+
+     
+      
+
+
+
       <fieldset class="govuk-fieldset">
         <h1 class="govuk-label-wrapper">
           <label class="govuk-label govuk-label--l" for="event-name">
@@ -49,6 +59,8 @@
         </button>
 
       </fieldset>
+
+      
 </form>
 
 <!-- End row -->

@@ -77,6 +77,7 @@ router.post('/still-there-check', function (req, res) {
 
   const stillThere = data['date-out-check'];        // Yes / No / Unknown
   const typeScenario = data['type-scenario'];       // Hospital / Hostel / Care Home / etc.
+  
 
   // 1. If claimant is NOT still there → ask date they left
   if (stillThere === "No") {
@@ -84,12 +85,20 @@ router.post('/still-there-check', function (req, res) {
   }
 
   // 2. If still there OR unknown → check accommodation type
-  if (typeScenario === "Hospital") {
+  if (typeScenario === "Hospital" ) {
+    return res.redirect("payability/v2/stay/accommodation-lookup-name");
+  }
+
+   // 4. If the stay is in a prison- skip boarder question
+  if (typeScenario === "Detention in Legal Custody") {
     return res.redirect("payability/v2/stay/accommodation-lookup-name");
   }
 
   // 3. Not a hospital → continue to next accommodation screen
   return res.redirect("payability/v2/stay/accommodation-boarder");
+
+ 
+
 });
 
 
@@ -124,8 +133,15 @@ router.post('/address-check', function(request, response) {
 router.post('/contact-check', function(request, response) {
  
   var addressCheck = request.session.data['contactCheck'];
+  var prisonCheck = request.session.data['type-scenario']
+
+
   if (addressCheck === "Yes") {
       response.redirect("payability/v2/stay/accommodation-contact")
+  
+  } else if (prisonCheck === 'Detention in Legal Custody') {
+    return response.redirect('payability/v2/stay/check-answers');
+
   } else {
     response.redirect("payability/v2/stay/funding-type")
 }

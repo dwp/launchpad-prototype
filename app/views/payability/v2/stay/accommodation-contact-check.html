@@ -14,16 +14,20 @@
     <form class="form" action="/contact-check" method="post">
 
 
-    {% set raw = (data['type-scenario'] or '') | trim | lower %}
+    {% set raw = (data['type-scenario'] or '') | trim %}
 
-        {% if raw and raw != 'Other' %}
-          {% set accType = raw %}
-        {% else %}
-          {% set accType = 'accommodation' %}
-        {% endif %}
+    {% if not raw == 'none' %}
+      {% set accType = 'accommodation' %}
+
+    {% elif raw == 'Detention in Legal Custody' %}
+      {% set accType = 'place of custody' %}
+
+    {% else %}
+      {% set accType = 'accommodation' %}
+    {% endif %}
 
 
-        {% set legendText = "Is there someone at the " ~ accType ~ " we can contact about the stay?" %}
+    {% set legendText = "Is there someone at the " ~ accType | lower ~ " we can contact about the stay?" %}
     
       {{ govukRadios({
       name: "contactCheck",
