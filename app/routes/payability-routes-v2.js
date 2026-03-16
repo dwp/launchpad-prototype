@@ -180,7 +180,7 @@ router.post('/funding-scenario-v2', function(request, response) {
  var fundingSkip = request.session.data['funding-scenario'];
  
  
-  if (fundingSkip === "No, none of these" || fundingSkip === "I don't know" || fundingSkip === "Claimant" ) {
+  if (fundingSkip === "No, none of these" || fundingSkip === "I don't know" || fundingSkip === "Claimant" || fundingSkip === "Health authority" || fundingSkip === "NHS" ) {
       response.redirect("payability/v2/stay/check-answers")
     } else {  
     response.redirect("payability/v2/stay/funding-name")
