@@ -98,13 +98,13 @@
   }]) %}
 {% endif %}
 
-<!-- accomodation address -->
-{# Guard if any accommodation detail is present. NOTE: Correct key is "address-town", not "accomodation-town". #}
-{% if data['accomodation-name'] or data['address-line-1'] or data['address-line-2'] or data['address-town'] or data['address-county'] or data['address-postcode'] %}
+<!-- accommodation address -->
+{# Guard if any accommodation detail is present. NOTE: Correct key is "address-town", not "accommodation-town". #}
+{% if data['accommodation-name'] or data['address-line-1'] or data['address-line-2'] or data['address-town'] or data['address-county'] or data['address-postcode'] %}
   {% set addressHtml = "" %}
 
-  {% if data['accomodation-name'] %}
-    {% set addressHtml = addressHtml + data['accomodation-name'] + "<br>" %}
+  {% if data['accommodation-name'] %}
+    {% set addressHtml = addressHtml + data['accommodation-name'] + "<br>" %}
   {% endif %}
   {% if data['address-line-1'] %}
     {% set addressHtml = addressHtml + data['address-line-1'] + "<br>" %}
@@ -127,7 +127,7 @@
     value: { html: addressHtml },
     actions: {
       items: [{
-        href: "accomodation-details",
+        href: "accommodation-details",
         text: "Change",
         visuallyHiddenText: "accommodation address"
       }]
@@ -135,15 +135,15 @@
   }]) %}
 {% endif %}
 
-<!-- accomodation contact -->
-<!-- {% if data['primary-contact'] or data['accomodation-email'] %}
-  {% set contactHtml = (data['primary-contact'] or 'No named contact') ~ "<br>" ~ (data['accomodation-email'] or 'No email address') %}
+<!-- accommodation contact -->
+<!-- {% if data['primary-contact'] or data['accommodation-email'] %}
+  {% set contactHtml = (data['primary-contact'] or 'No named contact') ~ "<br>" ~ (data['accommodation-email'] or 'No email address') %}
   {% set summaryRows = summaryRows.concat([{
     key: { text: (data['type-scenario'] or 'Accommodation') ~ " contact" },
     value: { html: contactHtml },
     actions: {
       items: [{
-        href: "accomodation-address",
+        href: "accommodation-address",
         text: "Change",
         visuallyHiddenText: "accommodation contact"
       }]
@@ -158,7 +158,7 @@
     value: { text: data['boarder-scenario'] },
     actions: {
       items: [{
-        href: "accomodation-boarder",
+        href: "accommodation-boarder",
         text: "Change",
         visuallyHiddenText: "boarder status"
       }]
@@ -255,7 +255,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     {% if data['type-scenario'] == "Other" %}
-      <h1 class="govuk-heading-xl">Accomodation summary</h1>
+      <h1 class="govuk-heading-xl">accommodation summary</h1>
     {% else %}
       <h1 class="govuk-heading-xl">{{ (data['type-scenario'] or 'Accommodation') }} summary</h1>
     {% endif %}

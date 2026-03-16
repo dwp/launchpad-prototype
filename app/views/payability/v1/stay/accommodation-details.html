@@ -15,7 +15,7 @@
       {{ govukErrorSummary({
         titleText: "There is a problem",
         errorList: [
-          { text: errors["accomodation-name"].text, href: "#accomodation-name" } if errors["accomodation-name"],
+          { text: errors["accommodation-name"].text, href: "#accommodation-name" } if errors["accommodation-name"],
           { text: errors["address-town"].text, href: "#address-town" } if errors["address-town"]
         ] | reject("undefined")
       }) }}
@@ -28,14 +28,14 @@
           <h1 class="govuk-fieldset__heading">What is the name and address of the [accommodation]?</h1>
         </legend>
 
-        <!-- Accomodation name -->
+        <!-- accommodation name -->
         {{ govukInput({
-          id: "accomodation-name",
-          name: "accomodation-name",
-          label: { text: "Accomodation name" },
-          autocomplete: "accomodation-name",
-          value: data["accomodation-name"],
-          errorMessage: errors["accomodation-name"]
+          id: "accommodation-name",
+          name: "accommodation-name",
+          label: { text: "accommodation name" },
+          autocomplete: "accommodation-name",
+          value: data["accommodation-name"],
+          errorMessage: errors["accommodation-name"]
         }) }}
 
         <!-- Address line 1 -->
@@ -96,11 +96,11 @@
 
         <!-- email of contact -->
         {{ govukInput({
-          id: "accomodation-email",
-          name: "accomodation-email",
+          id: "accommodation-email",
+          name: "accommodation-email",
           label: { text: "Contact email address (optional)" },
-          autocomplete: "accomodation-email",
-          value: data["accomodation-email"]
+          autocomplete: "accommodation-email",
+          value: data["accommodation-email"]
         }) }}
 
       </fieldset>

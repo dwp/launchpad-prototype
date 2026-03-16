@@ -16,7 +16,7 @@
       {{ govukErrorSummary({
         titleText: "There is a problem",
         errorList: [
-          { text: errors["accomodation-name"].text, href: "#accomodation-name" } if errors["accomodation-name"],
+          { text: errors["accommodation-name"].text, href: "#accommodation-name" } if errors["accommodation-name"],
           { text: errors["address-town"].text, href: "#address-town" } if errors["address-town"]
         ] | reject("undefined")
       }) }}
@@ -40,7 +40,7 @@
 <h1 class="govuk-heading-l">
   What is the {{ entity | lower }}'s full address?
 </h1>
-    <form class="form" action="/accomodation-lookup-manual/clear" method="post">
+    <form class="form" action="/accommodation-lookup-manual/clear" method="post">
 
 
 
@@ -418,7 +418,7 @@
 
 
   <div class="govuk-body">
-    <a href="accomodation-lookup-name">Search by postcode</a>
+    <a href="accommodation-lookup-name">Search by postcode</a>
   </div>
   <p><a href="#">Go to task list</a></p>
  

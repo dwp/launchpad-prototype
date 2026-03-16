@@ -45,7 +45,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <form class="form" action="accomodation-contact-check" method="post">
+      <form class="form" action="accommodation-contact-check" method="post">
         <div class="govuk-width-container">
 
           <h1 class="govuk-heading-l">Can you confirm the {{(entity | lower)}}’s address?</h1>
@@ -53,7 +53,7 @@
           <p>
             {{ count }} address{% if count != 1 %}es{% endif %} found
             for <b>{{ postcode | lower }}</b> and <b>{{ buildingRef }}</b>.
-            <a class="govuk-link" href="accomodation-lookup-name">Search again</a>
+            <a class="govuk-link" href="accommodation-lookup-name">Search again</a>
           </p>
 
           {{ govukRadios({
@@ -68,7 +68,7 @@
           }) }}
 
           <p class="govuk-body govuk-!-margin-bottom-6">
-            <a class="govuk-link" href="accomodation-lookup-manual">Enter address manually</a>
+            <a class="govuk-link" href="accommodation-lookup-manual">Enter address manually</a>
           </p>
 
           <p>

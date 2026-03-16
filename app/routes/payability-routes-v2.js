@@ -21,7 +21,7 @@ router.post('/hospital-check', function(request, response) {
  
   var hospitalCheck = request.session.data['PayabilityPersona'];
   if (hospitalCheck === "Agent starting a new claim") {
-      response.redirect("payability/v2/stay/accomodation-hospital-check")
+      response.redirect("payability/v2/stay/accommodation-hospital-check")
   } else {
     response.redirect("payability/v2/stay/type")
 }
@@ -41,13 +41,13 @@ router.post('/hospital-or-hospice', function(request, response) {
 
 
 
-router.post('/in-accomodation-check', function (req, res) {
+router.post('/in-accommodation-check', function (req, res) {
   const data = (req.session && req.session.data) || {};
   const personaSelection = data['PayabilityPersona'];
   const inAccommodation = data['type-scenario']; 
 
   if (inAccommodation === 'None of these') {
-    return res.redirect('payability/v2/stay/check-answers2');
+    return res.redirect('payability/v2/stay/check-answers');
   } else if (personaSelection === 'Agent starting a new claim') {
     return res.redirect('payability/v2/stay/date-yesterday-check');
   } else {
@@ -61,9 +61,9 @@ router.post('/yesterday-check', function(request, response) {
  
   var yesterdayCheck = request.session.data['type-scenario'];
   if (yesterdayCheck === "Hospital") {
-      response.redirect("payability/v2/stay/accomodation-lookup-name")
+      response.redirect("payability/v2/stay/accommodation-lookup-name")
   } else {
-    response.redirect("payability/v2/stay/accomodation-boarder")
+    response.redirect("payability/v2/stay/accommodation-boarder")
 }
 })
 
@@ -85,11 +85,11 @@ router.post('/still-there-check', function (req, res) {
 
   // 2. If still there OR unknown → check accommodation type
   if (typeScenario === "Hospital") {
-    return res.redirect("payability/v2/stay/accomodation-lookup-name");
+    return res.redirect("payability/v2/stay/accommodation-lookup-name");
   }
 
   // 3. Not a hospital → continue to next accommodation screen
-  return res.redirect("payability/v2/stay/accomodation-boarder");
+  return res.redirect("payability/v2/stay/accommodation-boarder");
 });
 
 
@@ -101,9 +101,9 @@ router.post('/boarder-check', function(request, response) {
  
   var boarderCheck = request.session.data['boarder-scenario'];
   if (boarderCheck === "Yes") {
-      response.redirect("payability/v2/stay/accomodation-boarder-detail")
+      response.redirect("payability/v2/stay/accommodation-boarder-detail")
   } else {
-    response.redirect("payability/v2/stay/accomodation-lookup-name")
+    response.redirect("payability/v2/stay/accommodation-lookup-name")
 }
 })
 
@@ -114,9 +114,9 @@ router.post('/address-check', function(request, response) {
  
   var addressCheck = request.session.data['addressCheck'];
   if (addressCheck === "Yes") {
-      response.redirect("payability/v2/stay/accomodation-lookup-start")
+      response.redirect("payability/v2/stay/accommodation-lookup-start")
   } else {
-    response.redirect("payability/v2/stay/accomodation-contact-check")
+    response.redirect("payability/v2/stay/accommodation-contact-check")
 }
 })
 
@@ -125,7 +125,7 @@ router.post('/contact-check', function(request, response) {
  
   var addressCheck = request.session.data['contactCheck'];
   if (addressCheck === "Yes") {
-      response.redirect("payability/v2/stay/accomodation-contact")
+      response.redirect("payability/v2/stay/accommodation-contact")
   } else {
     response.redirect("payability/v2/stay/funding-type")
 }
@@ -146,7 +146,7 @@ router.post('/persona-selection', function(request, response) {
   if (personaSelection === "Agent handling an ongoing claim") {
       response.redirect("payability/v2/scenario")
   } else {
-    response.redirect("payability/v2/stay/accomodation-hospital-check")
+    response.redirect("payability/v2/stay/accommodation-hospital-check")
 }
 })
 
@@ -168,7 +168,7 @@ router.post('/claimant-funded-check', function(request, response) {
   if (selfFunded === "No") {
       response.redirect("payability/v2/stay/funding-type")
   } else {
-    response.redirect("payability/v2/stay/check-answers2")
+    response.redirect("payability/v2/stay/check-answers")
 }
 })
 
@@ -181,7 +181,7 @@ router.post('/funding-scenario-v2', function(request, response) {
  
  
   if (fundingSkip === "No, none of these" || fundingSkip === "I don't know" || fundingSkip === "Claimant" ) {
-      response.redirect("payability/v2/stay/check-answers2")
+      response.redirect("payability/v2/stay/check-answers")
     } else {  
     response.redirect("payability/v2/stay/funding-name")
 }
@@ -218,8 +218,8 @@ router.post('/funding-contact-check', function(request, response) {
 //   const data = req.body;
 //   const errors = {};
 
-//   if (!data['accomodation-name']) {
-//     errors['accomodation-name'] = { text: "Enter the accomodation name" };
+//   if (!data['accommodation-name']) {
+//     errors['accommodation-name'] = { text: "Enter the accommodation name" };
 //   }
 
 //   if (!data['address-town']) {
@@ -227,11 +227,11 @@ router.post('/funding-contact-check', function(request, response) {
 //   }
 
 //   if (Object.keys(errors).length) {
-//     return res.render('payability/v2/stay/accomodation-address.html', { data, errors });
+//     return res.render('payability/v2/stay/accommodation-address.html', { data, errors });
 //   }
   
 
-//   res.redirect('payability/v2/stay/accomodation-contact-check');
+//   res.redirect('payability/v2/stay/accommodation-contact-check');
 // });
 
 

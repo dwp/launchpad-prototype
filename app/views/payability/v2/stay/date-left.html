@@ -12,9 +12,9 @@
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
       {% if data['type-scenario'] == 'Hospital' %}
-      <form class="form" action="accomodation-lookup-name" method="post">
+      <form class="form" action="accommodation-lookup-name" method="post">
     {% else %}
-    <form class="form" action="accomodation-boarder" method="post">
+    <form class="form" action="accommodation-boarder" method="post">
     {% endif %}
 
       {{ govukDateInput({
@@ -22,7 +22,7 @@
           namePrefix: "date-out",
           fieldset: {
             legend: {
-              text: "When did the claimant leave the temporary accomodation?",
+              text: "When did the claimant leave the temporary accommodation?",
               classes: "govuk-fieldset__legend--l",
               isPageHeading: true
             }

@@ -20,7 +20,7 @@ router.post('/add-another-stay', function(request, response) {
 router.post('/funding-scenario', function(request, response) {
  var fundingSkip = request.session.data['funding-scenario'];
   if (fundingSkip === "Health authority" || fundingSkip === "Claimant" ) {
-      response.redirect("payability/v1/stay/check-answers2")
+      response.redirect("payability/v1/stay/check-answers")
   } else {  
     response.redirect("payability/v1/stay/funding-address")
 }
@@ -32,8 +32,8 @@ router.post('/accommodation-details', function (req, res) {
   const data = req.body;
   const errors = {};
 
-  if (!data['accomodation-name']) {
-    errors['accomodation-name'] = { text: "Enter the accomodation name" };
+  if (!data['accommodation-name']) {
+    errors['accommodation-name'] = { text: "Enter the accommodation name" };
   }
 
   if (!data['address-town']) {
@@ -41,7 +41,7 @@ router.post('/accommodation-details', function (req, res) {
   }
 
   if (Object.keys(errors).length) {
-    return res.render('payability/v1/stay/accomodation-details.html', { data, errors });
+    return res.render('payability/v1/stay/accommodation-details.html', { data, errors });
   }
 
   res.redirect('payability/v1/stay/funding-type');

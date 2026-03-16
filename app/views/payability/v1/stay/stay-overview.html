@@ -114,7 +114,7 @@ Impact of completed stays – {{ serviceName }} – GOV.UK Prototype Kit
 {% if data['funding-scenario'] == 'Health Authority' or data['funding-scenario'] == 'Not known' %}
   <form class="form" action="notes" method="post">
 {% else %}
-  <form class="form" action="/payability/v1/person-record/temporary-accomodation" method="post">
+  <form class="form" action="/payability/v1/person-record/temporary-accommodation" method="post">
 {% endif %}
 
 <div class="govuk-grid-column-three-quarters">
@@ -155,11 +155,11 @@ Impact of completed stays – {{ serviceName }} – GOV.UK Prototype Kit
         value: { html: "NHS" }
       },
       {
-        key: { text: "Accomodation address" },
+        key: { text: "accommodation address" },
         value: { html: "72 Guild Street<br>London<br>SE23 6FH" }
       },
       {
-        key: { text: "Accomodation contact" },
+        key: { text: "accommodation contact" },
         value: { html: "Sarah Philips<br>sarah.philips@example.com" }
       },
       { key: { text: "Days in accommodation" }, value: { html: totalDays } },

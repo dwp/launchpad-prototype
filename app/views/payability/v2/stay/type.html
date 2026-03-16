@@ -9,7 +9,7 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form class="form" action="/in-accomodation-check" method="post">
+      <form class="form" action="/in-accommodation-check" method="post">
 
     
         {% set ts = (data['type-scenario'] or '') | trim %}
@@ -36,9 +36,9 @@
               { value: "Hospice", text: "Hospice" },
               { value: "Detention in Legal Custody", text: "Detention in Legal Custody" },
               { value: "Care home", text: "Care home" },
-              { value: "Sheltered accomodation", text: "Sheltered accomodation" },
+              { value: "Sheltered accommodation", text: "Sheltered accommodation" },
               { value: "Residential college", text: "Residential college" },
-              { value: "Supported accomodation", text: "Supported accomodation" },
+              { value: "Supported accommodation", text: "Supported accommodation" },
               { value: "Other", text: "Other" }
             ]
           }) }}
@@ -58,9 +58,9 @@
               { value: "None", text: "No, none of these" },
               { divider: "or," },
               { value: "Care home", text: "Care home" },
-              { value: "Sheltered accomodation", text: "Sheltered accomodation" },
+              { value: "Sheltered accommodation", text: "Sheltered accommodation" },
               { value: "Residential college", text: "Residential college" },
-              { value: "Supported accomodation", text: "Supported accomodation" }
+              { value: "Supported accommodation", text: "Supported accommodation" }
             ]
           }) }}
 

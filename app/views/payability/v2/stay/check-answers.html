@@ -98,13 +98,13 @@
   }]) %}
 {% endif %}
 
-<!-- accomodation address -->
+<!-- accommodation address -->
 
-{% if data['accomodation-name'] or data['address-line-1'] or data['address-line-2'] or data['address-town'] or data['address-county'] or data['address-postcode'] or data['accommodation-select-an-address']%}
+{% if data['accommodation-name'] or data['address-line-1'] or data['address-line-2'] or data['address-town'] or data['address-county'] or data['address-postcode'] or data['accommodation-select-an-address']%}
   {% set addressHtml = "" %}
 
-  {% if data['accomodation-name'] %}
-    {% set addressHtml = addressHtml + data['accomodation-name'] + "<br>" %}
+  {% if data['accommodation-name'] %}
+    {% set addressHtml = addressHtml + data['accommodation-name'] + "<br>" %}
   {% endif %}
   {% if data['address-line-1'] %}
     {% set addressHtml = addressHtml + data['address-line-1'] + "<br>" %}
@@ -130,7 +130,7 @@
     value: { html: addressHtml },
     actions: {
       items: [{
-        href: "accomodation-lookup-name",
+        href: "accommodation-lookup-name",
         text: "Change",
         visuallyHiddenText: "accommodation address"
       }]
@@ -138,7 +138,7 @@
   }]) %}
 {% endif %}
 
-<!-- accomodation contact  -->
+<!-- accommodation contact  -->
 
 
 {% if data['primary-contact'] or data['email'] or data['phone-number'] %}
@@ -165,7 +165,7 @@
     actions: {
       items: [
         {
-          href: "accomodation-contact",
+          href: "accommodation-contact",
           text: "Change",
           visuallyHiddenText: "accommodation contact details"
         }
@@ -183,7 +183,7 @@
     value: { text: data['boarder-scenario'] },
     actions: {
       items: [{
-        href: "accomodation-boarder",
+        href: "accommodation-boarder",
         text: "Change",
         visuallyHiddenText: "boarder status"
       }]
@@ -333,7 +333,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     {% if data['type-scenario'] == "Other" %}
-      <h1 class="govuk-heading-xl">Accomodation summary</h1>
+      <h1 class="govuk-heading-xl">accommodation summary</h1>
     {% else %}
       <h1 class="govuk-heading-xl">{{ (data['type-scenario'] or 'Accommodation') }} summary</h1>
     {% endif %}

@@ -16,7 +16,7 @@
       {{ govukErrorSummary({
         titleText: "There is a problem",
         errorList: [
-          { text: errors["accomodation-name"].text, href: "#accomodation-name" } if errors["accomodation-name"],
+          { text: errors["accommodation-name"].text, href: "#accommodation-name" } if errors["accommodation-name"],
           { text: errors["address-town"].text, href: "#address-town" } if errors["address-town"]
         ] | reject("undefined")
       }) }}
