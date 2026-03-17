@@ -21,7 +21,7 @@
   {% else %}
     {% set entity = ts %}
   {% endif %}
-
+ <form class="form" action="check-answers" method="post">
 <h1 class="govuk-heading-l">
   Do you have an agreement with the {{ entity | lower }} to pay back any of the costs?  
 </h1>
@@ -50,9 +50,10 @@
 
 
       {{ govukButton({
-        text: "Continue",
-        href: "check-answers"
+        text: "Continue"
       }) }}
+
+      </form>
   </div>
 </div>
 

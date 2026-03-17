@@ -4,7 +4,22 @@ const router = govukPrototypeKit.requests.setupRouter()
 
 //Routes go here
 
+router.post('/agent', function (req, res) {
 
+  
+const chosenScenario = req.body['PayabilityScenario'];
+  const chosenPersona  = req.session.data['PayabilityPersona'];
+
+  // Reset the entire session...
+  req.session.data = {};
+
+  // ...but keep scenario + persona
+  req.session.data['PayabilityScenario'] = chosenScenario;
+  req.session.data['PayabilityPersona']  = chosenPersona;
+
+
+  res.redirect('/payability/v2/agent');
+});
 
 router.post('/add-another-stay', function(request, response) {
  
@@ -17,15 +32,17 @@ router.post('/add-another-stay', function(request, response) {
 })
 
 
-router.post('/hospital-check', function(request, response) {
- 
-  var hospitalCheck = request.session.data['PayabilityPersona'];
+router.post('/hospital-check', function (req, res) {
+  req.session.data.isAddingStay = true;   // ⭐ Mark this as a NEW stay
+  var hospitalCheck = req.session.data['PayabilityPersona'];
+
   if (hospitalCheck === "Agent starting a new claim") {
-      response.redirect("payability/v2/stay/accommodation-hospital-check")
+    return res.redirect("payability/v2/stay/accommodation-hospital-check");
   } else {
-    response.redirect("payability/v2/stay/type")
-}
-})
+    return res.redirect("payability/v2/stay/type");
+  }
+});
+
 
 router.post('/hospital-or-hospice', function(request, response) {
  
@@ -250,8 +267,43 @@ router.post('/funding-contact-check', function(request, response) {
 //   res.redirect('payability/v2/stay/accommodation-contact-check');
 // });
 
+router.post('/save-stay', (req, res) => {
+  const d = req.session.data;
 
+  // Ensure array exists
+  d.stays = d.stays || [];
 
+  // Determine if the stay is open
+  const ongoing = d['date-out-check'] === 'Yes';
 
+  const stay = {
+    name: d['accommodation-name'] || d['accomodation-name'] || 'Accommodation',
+    type: d['type-scenario'] || 'Accommodation',
+    startDate: {
+      day: d['date-in-day'],
+      month: d['date-in-month'],
+      year: d['date-in-year']
+    },
+    endDate: ongoing ? null : {
+      day: d['date-out-day'],
+      month: d['date-out-month'],
+      year: d['date-out-year']
+    },
+    dateRecorded: new Date().toLocaleDateString('en-GB')
+  };
+
+  // Only increment stayCount if user is creating a brand new stay
+  if (d.isAddingStay) {
+    d.stayCount = (d.stayCount || 0) + 1;   // Increment counter
+    d.isAddingStay = false;                 // Reset flag
+    d.stays.push(stay);                     // Save as new stay
+  } else {
+    // If editing, DO NOT increment counter
+    // Instead, replace existing stay, or ignore depending on your design
+    // Here we assume editing does NOT overwrite stays
+  }
+
+  res.redirect('/payability/v2/stay/notes');
+});
 //export routes
 module.exports = router;

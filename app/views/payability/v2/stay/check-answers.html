@@ -315,13 +315,13 @@
 <!-- agreement to repay -->
 {% if data['repayment-scenario'] %}
   {% set summaryRows = summaryRows.concat([{
-    key: { text: "Agreement to Repay" },
+    key: { text: "Agreement to repay" },
     value: { text: data['repayment-scenario'] },
     actions: {
       items: [{
         href: "repay",
         text: "Change",
-        visuallyHiddenText: "Agreement to Repay"
+        visuallyHiddenText: "Agreement to repay"
       }]
     }
   }]) %}
@@ -332,20 +332,24 @@
 <!-- page heading and summarylist -->
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    {% if data['type-scenario'] == "Other" %}
+   
+    <form action="/save-stay" method="post">
+       {% if data['type-scenario'] == "Other" %}
       <h1 class="govuk-heading-xl">accommodation summary</h1>
     {% else %}
       <h1 class="govuk-heading-xl">{{ (data['type-scenario'] or 'Accommodation') }} summary</h1>
     {% endif %}
 
-    {{ govukSummaryList({
-      rows: summaryRows
-    }) }}
+  <div id="completed-stay">
+    {{ govukSummaryList({ rows: summaryRows }) }}
+  </div>
 
-    {{ govukButton({
-      text: "Continue",
-      href: "notes"
-    }) }}
+  {{ govukButton({
+    text: "Continue",
+    id: "completed-entry"
+  }) }}
+
+</form>
   </div>
 </div>
 

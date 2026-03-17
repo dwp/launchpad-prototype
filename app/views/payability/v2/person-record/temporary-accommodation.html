@@ -7,6 +7,9 @@
 {% set pageName = "Agent home" %}
 
 {% block content %}
+{% set stays = data.stays or [] %}
+{% set stay = stays | last %}
+{% set ongoing = stay and (stay.endDate == null) %}
 
 <!-- Case header -->
 <div class="govuk-grid-row">
@@ -28,12 +31,9 @@
 <!-- Main content row -->
 <div class="govuk-grid-row">
 
-
   <!-- Left-hand navigation -->
   <div class="govuk-grid-column-one-quarter">
     {% include "includes/person-record-nav.njk" %}
-
-    
   </div>
 
   <!-- Right-hand content -->
@@ -49,22 +49,26 @@
       }) }}
     </form>
 
-    
+    {# ---------------------------------------------------------
+       SCENARIO: ONE COMPLETED STAY
+       (SHOW DEMO CONTENT + ANY USER ADDED STAY)
+       --------------------------------------------------------- #}
 
     {% if data['PayabilityScenario'] == "One completed stay" %}
 
-    {% include "includes/open-stay.njk" %}
+      <h2 class="govuk-heading-m">Open stay</h2>
 
+      {% if stay and ongoing %}
+        {% include "includes/saved-open-stay.njk" %}
+      {% endif %}
 
+      {% include "includes/open-stay.njk" %}
 
       <h2 class="govuk-heading-m">Completed stays</h2>
-    
 
-      
-
-    
-
-
+      {% if stay and not ongoing %}
+        {% include "includes/saved-completed-stay.njk" %}
+      {% endif %}
 
       <p class="govuk-body">5 March 2026 – 4 April 2026</p>
 
@@ -99,15 +103,36 @@
         ]
       }) }}
 
+      {% include "includes/static-linked-stay.njk" %}
+
+    {% endif %}
 
 
-      {% include "includes/added-linked-stay.njk" %}
 
-    {% else %}
+    {# ---------------------------------------------------------
+       SCENARIO: NO STAYS ADDED
+       (If a stay exists → show it, else → show message)
+       --------------------------------------------------------- #}
 
-      <p class="govuk-body">
-        No stays in temporary accommodation have been recorded.
-      </p>
+    {% if data['PayabilityScenario'] == "No stays added" %}
+
+      {% if stay %}
+
+        {% if ongoing %}
+          <h2 class="govuk-heading-m">Open stay</h2>
+          {% include "includes/saved-open-stay.njk" %}
+        {% else %}
+          <h2 class="govuk-heading-m">Completed stays</h2>
+          {% include "includes/saved-completed-stay.njk" %}
+        {% endif %}
+
+      {% else %}
+
+        <p class="govuk-body">
+          No stays in temporary accommodation have been recorded.
+        </p>
+
+      {% endif %}
 
     {% endif %}
 

@@ -1,0 +1,84 @@
+{% set monthNames = {
+  "01":"January","1":"January",
+  "02":"February","2":"February",
+  "03":"March","3":"March",
+  "04":"April","4":"April",
+  "05":"May","5":"May",
+  "06":"June","6":"June",
+  "07":"July","7":"July",
+  "08":"August","8":"August",
+  "09":"September","9":"September",
+  "10":"October",
+  "11":"November",
+  "12":"December"
+} %}
+
+
+
+{% set dateIn = 
+  (data['date-in-day'] or "") ~ " " ~
+  (monthNames[data['date-in-month']] or data['date-in-month']) ~ " " ~
+  (data['date-in-year'] or "")
+%}
+
+
+{% if data['date-out-check'] == "Yes" %}
+  {% set dateOut = "Ongoing" %}
+{% else %}
+  {% set dateOut =
+    (data['date-out-day'] or "") ~ " " ~
+    (monthNames[data['date-out-month']] or data['date-out-month']) ~ " " ~
+    (data['date-out-year'] or "")
+  %}
+{% endif %}
+
+
+
+{% if data['accommodation-select-an-address'] %}
+  {% set accomName = data['address-name'] or "Accommodation" %}
+{% else %}
+  {% set accomName = data['address-name'] or data['accomodation-name'] or "Accommodation" %}
+{% endif %}
+
+
+<p class="govuk-body">{{ dateIn }} – {{ dateOut }}</p>
+
+{{ govukSummaryList({
+  card: {
+    title: { text: accomName },
+    actions: {
+      items: [
+        {
+          href: "/payability/v2/stay/stay-overview",
+          text: "View",
+          visuallyHiddenText: "of " ~ accomName
+        },
+        {
+                href: "../stay/delete",
+                text: "Delete",
+                visuallyHiddenText: "of Freeman Hospital"
+              }
+      ]
+    }
+  },
+  rows: [
+    {
+            key: {
+              text: "Status"
+            },
+            value: {
+              html: '<strong class="govuk-tag govuk-tag--yellow">
+                     Awaiting end date
+                     </strong>'
+            }
+          },
+    {
+      key: { text: "Accommodation type" },
+      value: { text: data['type-scenario'] }
+    },
+    {
+      key: { text: "Date recorded" },
+      value: { text: "17 March 2026" }
+    }
+  ]
+}) }}
