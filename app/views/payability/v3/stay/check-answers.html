@@ -16,11 +16,11 @@
 {% set dateIn = (data['date-in-day'] or '') ~ ' ' ~ (data['date-in-month'] or '') ~ ' ' ~ (data['date-in-year'] or '') %}
 {% set dateOut = (data['date-out-day'] or '') ~ ' ' ~ (data['date-out-month'] or '') ~ ' ' ~ (data['date-out-year'] or '') %}
 
-<!-- Booleans to avoid showing empty spaced strings -->
+<!-- Helper booleans to avoid showing empty spaced strings  -->
 {% set hasDateIn = data['date-in-day'] and data['date-in-month'] and data['date-in-year'] %}
 {% set hasDateOut = data['date-out-day'] and data['date-out-month'] and data['date-out-year'] %}
 
-{# Start rows #}
+<!-- Start rows  -->
 {% set summaryRows = [] %}
 
 <!-- type of stay -->
@@ -348,6 +348,7 @@
     text: "Continue",
     id: "completed-entry"
   }) }}
+  {% include "includes/aar-task-list.html" %}
 
 </form>
   </div>

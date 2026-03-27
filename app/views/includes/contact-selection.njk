@@ -1,0 +1,53 @@
+{% macro ContactDetails(selected = [], prefix = "") %}
+
+{# Force selected to always be a list #}
+{% if selected is not iterable %}
+  {% set selected = [] %}
+{% endif %}
+
+{% set p = prefix ~ "-" if prefix else "" %}
+
+<fieldset class="govuk-fieldset">
+  <h1 class="govuk-label-wrapper">
+    <label class="govuk-label govuk-label--l">
+      What are their contact details?
+    </label>
+  </h1>
+
+  {% if "Name" in selected %}
+    <div class="govuk-form-group">
+      <label class="govuk-label" for="{{ p }}primary-contact">Name</label>
+      <input class="govuk-input"
+             id="{{ p }}primary-contact"
+             name="{{ p }}primary-contact"
+             type="text">
+    </div>
+  {% endif %}
+
+  {% if "Email address" in selected %}
+    <div class="govuk-form-group">
+      <label class="govuk-label" for="{{ p }}email">Email address</label>
+      <input class="govuk-input"
+             id="{{ p }}email"
+             name="{{ p }}email"
+             type="text">
+    </div>
+  {% endif %}
+
+  {% if "Phone number" in selected %}
+    <div class="govuk-form-group">
+      <label class="govuk-label" for="{{ p }}phone-number">Phone number</label>
+      <input class="govuk-input"
+             id="{{ p }}phone-number"
+             name="{{ p }}phone-number"
+             type="text">
+    </div>
+  {% endif %}
+
+  <button type="submit" class="govuk-button" data-module="govuk-button">
+    Save and continue
+  </button>
+
+</fieldset>
+
+{% endmacro %}

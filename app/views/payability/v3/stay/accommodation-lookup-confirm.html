@@ -1,0 +1,83 @@
+{% extends "layouts/payability.html" %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <!-- --- Normalise the entity from type-scenario ---  -->
+  {% set ts = (data['type-scenario'] or '') | trim | lower %}
+  {% if not ts or ts == 'none' %}
+    {% set entity = 'accommodation' %}
+  {% elif ts == 'detention in legal custody' %}
+    {% set entity = 'place of custody' %}
+  {% else %}
+    {% set entity = ts %}
+  {% endif %}
+
+   <!-- --- These can come from your controller; hard-coded to match your example --- -->
+  {% set postcode = "WR1 1NL" %}
+  {% set buildingRef = "1" %}
+  {% set addresses = [
+    "1 Washington Street, Worcester, WR1 1NL",
+    "10 Washington Street, Worcester, WR1 1NL",
+    "11 Washington Street, Worcester, WR1 1NL",
+    "12 Washington Street, Worcester, WR1 1NL",
+    "13 Washington Street, Worcester, WR1 1NL",
+    "14 Washington Street, Worcester, WR1 1NL"
+  ] %}
+
+  {% set count = addresses | length %}
+  {% set selected = data['accommodation-select-an-address'] or data['select-an-address'] %}
+
+ <!-- Build items array for govukRadios  -->
+  {% set items = [] %}
+  {% for addr in addresses %}
+    {% set items = (items.push({
+      value: addr,
+      text: addr,
+      id: 'select-an-address-' ~ loop.index,
+      checked: selected and selected == addr
+    }), items) %}
+  {% endfor %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <form class="form" action="funding-type" method="post">
+        <div class="govuk-width-container">
+
+          <h1 class="govuk-heading-l">Can you confirm the {{(entity | lower)}}’s address?</h1>
+
+          <p>
+            {{ count }} address{% if count != 1 %}es{% endif %} found
+            for <b>{{ postcode | lower }}</b> and <b>{{ buildingRef }}</b>.
+            <a class="govuk-link" href="accommodation-lookup-name">Search again</a>
+          </p>
+
+          {{ govukRadios({
+            idPrefix: "select-an-address",
+            name: "accommodation-select-an-address",
+            items: items
+          }) }}
+
+          {{ govukButton({
+            text: "Use this address",
+            type: "submit"
+          }) }}
+
+          <p class="govuk-body govuk-!-margin-bottom-6">
+            <a class="govuk-link" href="accommodation-lookup-manual">Enter address manually</a>
+          </p>
+
+          {% include "includes/aar-task-list.html" %}
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+{% endblock %}

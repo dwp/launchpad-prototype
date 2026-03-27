@@ -1,0 +1,82 @@
+{% extends "layouts/payability.html" %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+  {% set ts = (data['funding-scenario'] or '') | trim | lower %}
+  {% if not ts or ts == 'none' %}
+    {% set entity = 'accommodation' %}
+       {% elif ts == 'Detention in Legal Custody' %}
+          {% set entity = 'Prison' %}
+
+  {% else %}
+    {% set entity = ts %}
+  {% endif %}
+
+  {% set addresses = [
+    "1 Washington Street, Worcester, WR1 1NL",
+    "10 Washington Street, Worcester, WR1 1NL",
+    "11 Washington Street, Worcester, WR1 1NL",
+    "12 Washington Street, Worcester, WR1 1NL",
+    "13 Washington Street, Worcester, WR1 1NL",
+    "14 Washington Street, Worcester, WR1 1NL"
+  ] %}
+
+  {% set fundingSelected = data['select-an-address'] %}
+
+   <!-- --- Radios items from addresses --- -->
+  {% set items = [] %}
+  {% for addr in addresses %}
+    {% set items = (items.push({
+      value: addr,
+      text: addr,
+      id: 'select-an-address-' ~ loop.index,
+      checked: fundingSelected and fundingSelected == addr
+    }), items) %}
+  {% endfor %}
+
+  {% set count = addresses | length %}
+  {% set postcode = "WR1 1NL" %}
+  {% set buildingRef = "1" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <form class="form" action="funding-contact-check" method="post" novalidate>
+        
+        <h1 class="govuk-heading-l">Can you confirm the {{(entity | lower)}}’s address?</h1>
+
+        <p>
+          {{ count }} address{% if count != 1 %}es{% endif %} found
+          for <b>{{ postcode | lower }}</b> and <b>{{ buildingRef }}</b>.
+          <a href="funding-lookup-name">Search again</a>
+        </p>
+
+        {{ govukRadios({
+          idPrefix: "select-an-address",
+          name: "funding-select-an-address",
+          items: items
+        }) }}
+
+        {{ govukButton({
+          text: "Use this address",
+          type: "submit"
+        }) }}
+
+        <p class="govuk-body govuk-!-margin-bottom-6">
+          <a href="funding-lookup-manual" class="govuk-link">Enter address manually</a>
+        </p>
+
+        {% include "includes/aar-task-list.html" %}
+
+      </form>
+
+    </div>
+  </div>
+{% endblock %}

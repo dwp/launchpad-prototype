@@ -1,0 +1,76 @@
+{% extends "layouts/payability.html" %}
+{% block beforeContent %}
+  {{ govukBackLink({
+          text: "Back",
+          href: "javascript:history.back()"
+  }) }}
+{% endblock %}
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+      <form class="form" action="date-still-there" method="post">
+
+          {% set ts = (data['type-scenario'] or 'Accomodation') | trim %}
+          {% if not ts == 'none' %}
+            {% set entity = 'accommodation' %}
+          {% elif ts == 'Detention in Legal Custody' %}
+            {% set entity = 'Place of Custody' %}
+          {% else %}
+            {% set entity = ts %}
+          {% endif %}
+
+<h1 class="govuk-heading-l">
+  When did they enter the {{ entity | lower }}?
+</h1>
+
+
+
+
+
+      {% if (data['PayabilityPersona'] == "Agent handling an ongoing claim") %}
+
+    
+      {{govukDateInput({
+              id: "admission",
+              namePrefix: "date-in",
+              fieldset: {
+                legend: {
+                  classes: "govuk-fieldset__legend--l"
+                }
+              }
+      }) }}
+
+      {% else %}
+
+         {{govukDateInput({
+              id: "admission",
+              namePrefix: "date-in",
+              fieldset: {
+                legend: {
+                  text: "When did they enter the accommodation?",
+                  isPageHeading: true,
+                  classes: "govuk-fieldset__legend--l"
+                }
+              }
+      }) }}
+
+      {% endif %}
+
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+      {% include "includes/aar-task-list.html" %}
+
+    </form>
+  </div>
+</div>
+
+<!-- End row -->
+{% endblock %}
+
+

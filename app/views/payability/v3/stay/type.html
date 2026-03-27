@@ -1,0 +1,75 @@
+{% extends "layouts/payability.html" %}
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form class="form" action="/in-accommodation-check" method="post">
+
+    
+        {% set ts = (data['type-scenario'] or '') | trim %}
+        {% set tsLower = ts | lower %}
+        {% if tsLower == 'hospital' or tsLower == 'hospice' %}
+          {% set x = 'hospital check' %}
+        {% else %}
+          {% set x = ts %}
+        {% endif %}
+
+        {% if (data['PayabilityPersona'] == "Agent handling an ongoing claim") %}
+
+          {{ govukRadios({
+            name: "type-scenario",
+            fieldset: {
+              legend: {
+                text: "Where did the stay take place?",
+                isPageHeading: true,
+                classes: "govuk-fieldset__legend--l"
+              }
+            },
+            items: [
+              { value: "Hospital", text: "Hospital" },
+              { value: "Hospice", text: "Hospice" },
+              { value: "Detention in Legal Custody", text: "Detention in legal custody" },
+              { value: "Care home", text: "Care home" },
+              { value: "Sheltered accommodation", text: "Sheltered accommodation" },
+              { value: "Residential college", text: "Residential college" },
+              { value: "Supported accommodation", text: "Supported accommodation" },
+              { value: "Similar institution to hospital", text: "Similar institution to hospital" }
+            ]
+          }) }}
+
+        {% else %}
+
+          {{ govukRadios({
+            name: "type-scenario",
+            fieldset: {
+              legend: {
+                text: "Are you living in a care home, sheltered housing, residential college, or supported accommodation today?",
+                isPageHeading: true,
+                classes: "govuk-fieldset__legend--l"
+              }
+            },
+            items: [
+              { value: "None", text: "No, none of these" },
+              { divider: "or," },
+              { value: "Care home", text: "Care home" },
+              { value: "Sheltered accommodation", text: "Sheltered accommodation" },
+              { value: "Residential college", text: "Residential college" },
+              { value: "Supported accommodation", text: "Supported accommodation" }
+            ]
+          }) }}
+
+        {% endif %}
+
+        {{ govukButton({ text: "Continue" }) }}
+        {% include "includes/aar-task-list.html" %}
+        
+      </form>
+    </div>
+  </div>
+{% endblock %}

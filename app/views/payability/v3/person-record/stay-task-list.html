@@ -1,0 +1,172 @@
+{% extends "layouts/payability.html" %}
+
+{% block pageTitle %}
+  Stay task list – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set pageName = "Agent home" %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+      text: "Back",
+      href: "/payability/v3/person-record/stay-overview?stayIndex=" ~ stay.id
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+{% from "govuk/components/task-list/macro.njk" import govukTaskList %}
+
+{% set stays = data.stays or [] %}
+{% set stayIndex = data.stayIndex %}
+{% set stay = stays[stayIndex] %}
+
+<!-- CASE HEADER -->
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <section class="dwp-quick-reference govuk-!-margin-bottom-8">
+      <dl class="dwp-quick-reference__block">
+        <dt class="govuk-visually-hidden">Name:</dt>
+        <dd class="dwp-quick-reference__primary">Jeff Bridges</dd>
+
+        <dt class="govuk-visually-hidden">National Insurance number:</dt>
+        <dd class="dwp-quick-reference__secondary">NA 11 22 33 C</dd>
+      </dl>
+    </section>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+
+    <h1 class="govuk-heading-l">Stay in {{ stay.name or "accommodation" }}</h1>
+
+
+<!-- reusable status tags -->
+{% macro statusTag(completed) %}
+  {% if completed %}
+    {% set tag = '<strong class="govuk-tag govuk-tag--green">Completed</strong>' %}
+  {% elseif answer == "I don't know" %}
+    {% set tag = '<strong class="govuk-tag govuk-tag--yellow">Review</strong>' %} 
+  {% else %}
+    {% set tag = '<strong class="govuk-tag govuk-tag--blue">Incomplete</strong>' %}
+  {% endif %}
+  {{ tag | safe }}
+{% endmacro %}
+
+<!-- read completion values -->
+
+{% set typeCompleted = stay.completed.type %}
+{% set startCompleted = stay.completed.startDate %}
+
+{% if ongoing %}
+{% set endCompleted = stay.completed.endDate %}
+{% else %}  
+{% set endCompleted = ongoing%}
+{% endif %}
+
+{% set addressCompleted = stay.completed.address %}
+{% set fundingCompleted =  stay.completed.fundingType %} 
+{% set boarderCompleted = stay.completed.boarder %}
+{% set contactCompleted = stay.completed.contact %}
+{% set repayCompleted = stay.completed.repay %}
+{% set hospitalCheckCompleted = stay.completed.similarInstitution %}
+{% set fundingAddressCompleted = stay.completed.fundingAddress %}
+{% set fundingContactCompleted = stay.completed.fundingContact %}
+
+<!-- set status for each row -->
+
+{% set typeStatus = { html: statusTag(typeCompleted) } %}
+{% set startStatus = { html: statusTag(startCompleted) } %}
+{% set endStatus = { html: statusTag(endCompleted) } %}
+{% set addressStatus = { html: statusTag(addressCompleted) } %}
+{% set fundingStatus = { html: statusTag(fundingCompleted) } %}
+{% set boarderStatus = { html: statusTag(boarderCompleted) } %}
+{% set contactStatus = { html: statusTag(contactCompleted) } %}
+{% set repayStatus = { html: statusTag(repayCompleted) } %}
+{% set hospitalCheckStatus = { html: statusTag(hospitalCheckCompleted) } %}
+{% set fundingAddressStatus = { html: statusTag(fundingAddressCompleted) } %}
+{% set fundingContactStatus = { html: statusTag(fundingContactCompleted) } %}
+
+
+
+   <!-- MAIN TASK LIST -->
+    
+{{ govukTaskList({
+  idPrefix: "stay-details",
+  items: [
+    {
+      title: { text: "Accommodation type" },
+      href: "/payability/v3/stay/type",
+      status: typeStatus
+    },
+    {
+      title: { text: "Start date" },
+      href: "/payability/v3/stay/date-in",
+      status: startStatus
+    },
+    {
+      title: { text: "Exit date" },
+      href: "/payability/v3/stay/date-left",
+      status: endStatus
+    },
+    {
+      title: { text: "Accommodation address" },
+      href: "/payability/v3/stay/accommodation-lookup-name",
+      status: addressStatus
+    },
+    {
+      title: { text: "Funding source" },
+      href: "/payability/v3/stay/funding-type",
+      status: fundingStatus
+    },
+    {
+      title: { text: "Agreement to repay" },
+      href: "/payability/v3/stay/repay",
+      status: repayStatus
+    }
+  ]
+}) }}
+
+
+
+<h2 class="govuk-heading-m">Additional details</h2>
+
+
+{{ govukTaskList({
+  idPrefix: "stay-additional",
+  items: [
+    {
+      title: { text: "Boarder status" },
+      href: "/payability/v3/stay/accommodation-boarder",
+      status: boarderStatus
+    },
+    {
+      title: { text: "Similar institution to hospital" },
+      href: "/payability/v3/stay/similar-institution",
+      status: hospitalCheckStatus
+    },
+    {
+      title: { text: "Accommodation contact" },
+      href: "/payability/v3/stay/accommodation-contact-check",
+      status: contactStatus
+    },
+    {
+      title: { text: "Funding address" },
+      href: "/payability/v3/stay/funding-address-check",
+      status: fundingAddressStatus
+    },
+    {
+      title: { text: "Funding contact" },
+      href: "/payability/v3/stay/funding-contact-check",
+      status: fundingContactStatus
+    }
+  ]
+}) }}
+
+{{ govukButton({ text: "Continue" }) }}
+
+  </div>
+</div>
+
+{% endblock %}

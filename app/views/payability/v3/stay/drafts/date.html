@@ -1,0 +1,83 @@
+{% extends "layouts/payability.html" %}
+{% block beforeContent %}
+  {{ govukBackLink({
+          text: "Back",
+          href: "javascript:history.back()"
+  }) }}
+{% endblock %}
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+    {% if data['type-scenario'] == 'Hospital' %}
+      <form class="form" action="accommodation-address" method="post">
+    {% else %}
+    <form class="form" action="similar-institution" method="post">
+    {% endif %}
+
+    
+      {{govukDateInput({
+              id: "admission",
+              namePrefix: "date-in",
+              fieldset: {
+                legend: {
+                  text: "When did the claimant enter temporary accommodation?",
+                  isPageHeading: true,
+                  classes: "govuk-fieldset__legend--l"
+                }
+              }
+             }) }}
+
+      {% set dateOutHtml %}
+        {{ govukDateInput({
+          id: "date-out",
+          namePrefix: "date-out",
+          fieldset: {
+            legend: {
+              text: "Date the claimant left",
+              classes: "govuk-fieldset__legend--m"
+            }
+          }
+        }) }}
+      {% endset %}
+
+      {{ govukRadios({
+        name: "date-out-check",
+        fieldset: {
+          legend: {
+            text: "Is the claimant still staying there?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          {
+            value: "Yes",
+            text: "Yes"
+          },
+          {
+            value: "No",
+            text: "No",
+            conditional: {
+              html: dateOutHtml
+            }
+          }
+        ]
+      }) }}
+
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+
+    </form>
+  </div>
+</div>
+
+<!-- End row -->
+{% endblock %}
+
+

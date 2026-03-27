@@ -1,0 +1,78 @@
+{% extends "layouts/payability.html" %}
+{% block beforeContent %}
+{{ govukBackLink({
+        text: "Back",
+        href: "javascript:history.back()"
+        }) }}
+{% endblock %}
+{% block content %}
+<!-- Start row -->
+
+<div class="govuk-grid-row">
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+
+    <form class="form" action="/yesterday-check" method="post">
+
+    {% set raw = (data['type-scenario'] or '') | trim | lower %}
+
+        {% if raw and raw != 'Other' %}
+          {% set accType = raw %}
+        {% else %}
+          {% set accType = 'accommodation' %}
+        {% endif %}
+
+
+        {% set legendText = "Were you in the " ~ accType ~ " yesterday?" %}
+
+        {{ govukRadios({
+          name: "yesterdayCheck",
+          fieldset: {
+            legend: {
+              text: legendText,
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          items: [
+            { value: "Yes", text: "Yes" },
+            { value: "No",  text: "No"  }
+          ]
+        }) }}
+
+
+<!--     
+      {{ govukRadios({
+      name: "yesterdayCheck",
+      fieldset: {
+        legend: {
+          text: "Were you in the [accommodation type] yesterday?",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      items: [
+        {
+          value: "Yes",
+          text: "Yes"
+        },
+        {
+          value: "No",
+          text: "No"
+        }
+      ]}) }} -->
+
+    <button type="submit" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
+      Save and continue
+    </button>
+
+    {% include "includes/aar-task-list.html" %}
+
+</form>
+
+
+
+
+
+<!-- End row -->
+{% endblock %}

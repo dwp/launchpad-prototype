@@ -9,7 +9,7 @@ const router = govukPrototypeKit.requests.setupRouter()
 //Routes go here
 
 //Import from routes folder
-const payabilityRoutes = require('./routes/payability-routes-v2');
+const payabilityRoutes = require('./routes/payability-routes-v3');
 
 //Use routes
 router.use('/', payabilityRoutes);

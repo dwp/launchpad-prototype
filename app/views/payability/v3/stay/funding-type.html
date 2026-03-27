@@ -1,0 +1,130 @@
+{% extends "layouts/payability.html" %}
+{% block beforeContent %}
+{{ govukBackLink({
+        text: "Back",
+        href: "javascript:history.back()"
+        }) }}
+{% endblock %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+<!-- Start column -->  
+<div class="govuk-grid-column-two-thirds">
+
+<!-- For ongoing claims -->
+{% if (data['PayabilityPersona'] == "Agent starting a new claim") %}
+
+  <form class="form" action="/funding-scenario-v3" method="post">
+
+      {{ govukRadios({
+        name: "funding-scenario",
+        fieldset: {
+          legend: {
+            text: "Are any of the costs for you to live there paid by a local authority, NHS or charity?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        hint: {
+    text: " A local authority is an organisation such as a local council."
+        },
+        items: [
+        {
+            value: "No, none of these",
+            text: "No, none of these"
+          },
+          {
+            value: "I don't know",
+            text: "I don't know"
+          },
+          {
+            divider: "or"
+          },
+          {
+            value: "Local authority",
+            text: "Local authority"
+          },
+          {
+            value: "Charity",
+            text: "Charity"
+          },
+          {
+            value: "Health authority",
+            text: "NHS"
+          }
+        ]
+      }) }}
+
+      <button type="submit" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
+  Save and continue
+</button>
+
+
+      </form>
+
+
+
+
+
+
+     <!-- For new claims -->
+    {% else %}
+  
+    <form class="form" action="/funding-scenario-v3" method="post">
+
+      {{ govukRadios({
+        name: "funding-scenario",
+        fieldset: {
+          legend: {
+            text: "Who paid for the stay?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          { 
+            value: "Claimant",
+            text: "Claimant"
+          },
+          { 
+            value: "Local authority",
+            text: "Local authority"
+          },
+          {
+            value: "NHS",
+            text: "NHS"
+          },
+          {
+            value: "Charity",
+            text: "Charity"
+          },
+          { 
+            value: "I don't know",
+            text: "I don't know"
+          }
+        ]
+      }) }}
+
+
+        {{ govukButton({ text: "Save and continue" }) }}
+
+
+     {% endif %}
+     {% include "includes/aar-task-list.html" %}
+
+  
+     </form>
+
+
+<!-- " + data['type-scenario'] | lower to embed accom type-->
+<!-- Other funding options-->
+  
+
+
+
+
+
+<!-- End row -->
+{% endblock %}

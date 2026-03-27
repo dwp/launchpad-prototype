@@ -1,0 +1,61 @@
+  {% extends "layouts/payability.html" %}
+  {% block beforeContent %}
+  {{ govukBackLink({
+          text: "Back",
+          href: "javascript:history.back()"
+          }) }}
+  {% endblock %}
+  {% block content %}
+  <!-- Start row -->
+  <div class="govuk-grid-row">
+    <!-- Start column -->
+    <div class="govuk-grid-column-two-thirds">
+
+      <form class="form" action="similar-institution" method="post">
+
+        {%if (data['PayabilityPersona'] == "Agent starting a new claim")%}
+
+                  <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">When do you stay there?</h1>
+
+                  {% else %}
+
+                  <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">When does the claimant stay there?</h1>
+
+
+
+                  {% endif %}
+
+                  <div id="event-name-hint" class="govuk-hint">For example, on the same nights each week or each month. </div>
+
+                  <!------------H1 LEGEND------------>
+                  <!------------Legend--------------->
+                  <div class="govuk-form-group">
+                  <h1 class="govuk-label-wrapper">
+                  <label class="govuk-label govuk-label--s" for="record-1-event-history-reason-other-detail">
+                  </label>
+                  </h1>
+                  
+            
+                  <div id="record-1-event-history-reason-other-detail-hint" class="govuk-hint">
+                  </div>
+                  
+                  
+                  <textarea class="govuk-textarea  govukTextarea--overwrite" id="record-1-event-history-reason-other-detail" name="record-1-event-history-reason-other-detail" rows="5" aria-describedby="record-1-event-history-reason-other-detail-hint">erewqrwer</textarea>
+                  
+
+  
+
+      <button type="submit" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
+        Save and continue
+      </button>
+
+      {% include "includes/aar-task-list.html" %}
+
+  </form>
+
+
+
+
+
+  <!-- End row -->
+  {% endblock %}

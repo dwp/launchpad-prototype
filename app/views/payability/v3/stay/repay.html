@@ -1,0 +1,62 @@
+{% extends "layouts/payability.html" %}
+{% block beforeContent %}
+{{ govukBackLink({
+        text: "Back",
+        href: "javascript:history.back()"
+        }) }}
+{% endblock %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+
+  {% set ts = (data['funding-scenario'] or '') | trim | lower%}
+
+  <!-- { If None or empty, use 'accommodation'; otherwise use the original value } -->
+  {% if not ts == 'none' %}
+    {% set entity = 'accommodation' %}
+  {% else %}
+    {% set entity = ts %}
+  {% endif %}
+ <form class="form" action="check-answers" method="post">
+<h1 class="govuk-heading-l">
+  Do you have an agreement with the {{ entity | lower }} to pay back any of the costs?  
+</h1>
+      {{ govukRadios({
+          name: "repayment-scenario",
+          fieldset: {
+            legend: {
+              classes: "govuk-fieldset__legend--m"
+            }
+          },
+          items: [
+            {
+              value: "Yes",
+              text: "Yes"
+            },
+            {
+              value: "No",
+              text: "No"
+            },
+            {
+              value: "Not sure",
+              text: "I don't know"
+            }
+          ]
+        }) }}
+
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+      {% include "includes/aar-task-list.html" %}
+
+      </form>
+  </div>
+</div>
+
+<!-- End row -->
+{% endblock %}

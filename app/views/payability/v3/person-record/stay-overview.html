@@ -1,0 +1,177 @@
+{% extends "layouts/payability.html" %}
+
+{% block pageTitle %}
+  Stay overview – {{ serviceName }}
+{% endblock %}
+
+{% set pageName = "Agent home" %}
+
+
+{% block beforeContent %}
+  {{ govukBackLink({
+      text: "Back",
+      href: "/payability/v3/person-record/accommodation-history"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+{% set stays = data.stays or [] %}
+{% set stayIndex = data.stayIndex %}
+{% set stay = stays[stayIndex] %}
+
+<!-- If no stay was found  -->
+{% if not stay %}
+  <h1 class="govuk-heading-l">Stay not found</h1>
+  <p class="govuk-body">We couldn't find this stay.</p>
+{% endif %}
+
+{% if stay %}
+
+<!-- Case header -->
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+
+    <h1 class="govuk-heading-l">
+      Stay in {{ stay.name or "Accommodation" }}
+    </h1>
+
+    {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+    {% set rows = [] %}
+
+    {% if stay.endDate %}
+      {% set rows = rows.concat([
+        {
+          key: { text: "Status" },
+          value: { html: '<strong class="govuk-tag govuk-tag--green">Complete</strong>' }
+        }
+      ]) %}
+    {% else %}
+      {% set rows = rows.concat([
+        {
+          key: { text: "Status" },
+          value: { html: '<strong class="govuk-tag govuk-tag--yellow">Awaiting end date</strong>' }
+        }
+      ]) %}
+    {% endif %}
+
+
+    {% if stay.dateRecorded %}
+      {% set rows = rows.concat([
+        {
+          key: { text: "Recorded on" },
+          value: { text: stay.dateRecorded }
+        }
+      ]) %}
+    {% endif %}
+
+
+    {% if stay.startDate.day %}
+      {% set start = stay.startDate.day ~ "/" ~ stay.startDate.month ~ "/" ~ stay.startDate.year %}
+      {% set rows = rows.concat([
+        {
+          key: { text: "Start date" },
+          value: { text: start }
+        }
+      ]) %}
+    {% endif %}
+
+
+    {% if stay.endDate %}
+      {% set end = stay.endDate.day ~ "/" ~ stay.endDate.month ~ "/" ~ stay.endDate.year %}
+      {% set rows = rows.concat([
+        {
+          key: { text: "End date" },
+          value: { text: end }
+        }
+      ]) %}
+    {% endif %}
+
+    {% if stay.type %}
+      {% set rows = rows.concat([
+        {
+          key: { text: "Accommodation type" },
+          value: { text: stay.type }
+        }
+      ]) %}
+    {% endif %}
+
+
+
+
+    {% if stay.address.name or stay.address.line1 or stay.address.town or stay.address.postcode %}
+      {% set addressHtml =
+        (stay.address.name or "") ~ "<br>" ~
+        (stay.address.line1 or "") ~ "<br>" ~
+        (stay.address.town or "") ~ "<br>" ~
+        (stay.address.postcode or "")
+      %}
+
+
+    {% if data['accommodation-select-an-address'] %}
+      {% set addressHtml = data['accommodation-select-an-address'] + "<br>" %}
+      {% endif %}
+
+      {% set rows = rows.concat([
+        {
+          key: { text: "Address" },
+          value: { html: addressHtml }
+        }
+      ]) %}
+    {% endif %}
+
+
+
+
+    {% if stay.boarderStatus %}
+      {% set rows = rows.concat([
+        {
+          key: { text: "Boarder status" },
+          value: { text: stay.boarderStatus }
+        }
+      ]) %}
+    {% endif %}
+
+
+    {% if stay.fundingType %}
+      {% set rows = rows.concat([
+        {
+          key: { text: "Funding type" },
+          value: { text: stay.fundingType }
+        }
+      ]) %}
+    {% endif %}
+
+
+    {% if stay.contactDetails.name or stay.contactDetails.email or stay.contactDetails.phone %}
+      {% set contactHtml =
+        (stay.contactDetails.name or "") ~ "<br>" ~
+        (stay.contactDetails.email or "") ~ "<br>" ~
+        (stay.contactDetails.phone or "")
+      %}
+      {% set rows = rows.concat([
+        {
+          key: { text: "Contact details" },
+          value: { html: contactHtml }
+        }
+      ]) %}
+    {% endif %}
+
+    
+    {{ govukSummaryList({
+      rows: rows
+    }) }}
+
+
+    {{ govukButton({
+      text: "Continue",
+      href: "/payability/v3/stay/task-list"
+    }) }}
+
+  </div>
+</div>
+
+{% endif %}
+
+{% endblock %}

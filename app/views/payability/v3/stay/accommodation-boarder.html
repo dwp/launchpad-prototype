@@ -1,0 +1,81 @@
+{% extends "layouts/payability.html" %}
+{% block beforeContent %}
+{{ govukBackLink({
+        text: "Back",
+        href: "javascript:history.back()"
+        }) }}
+{% endblock %}
+{% block content %}
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+
+    <form class="form" action="/boarder-check" method="post">
+
+    {%if (data['PayabilityPersona'] == "Agent starting a new claim")%}
+
+
+       {{ govukRadios({
+      name: "boarder-scenario",
+      fieldset: {
+        legend: {
+          text: "Were you a boarder at this accommodation?",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      items: [
+        {
+          value: "Yes",
+          text: "Yes"
+        },
+        {
+          value: "No",
+          text: "No"
+        },
+        {
+          value: "Not known",
+          text: "I don't know"
+        }
+      ]}) }}
+
+
+
+      {%else%}
+    
+      {{ govukRadios({
+      name: "boarder-scenario",
+      fieldset: {
+        legend: {
+          text: "Were they a boarder at this accommodation?",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      items: [
+        {
+          value: "Yes",
+          text: "Yes"
+        },
+        {
+          value: "No",
+          text: "No"
+        }
+      ]}) }}
+
+      {% endif %}
+
+    <button type="submit" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
+      Save and continue
+    </button>
+    {% include "includes/aar-task-list.html" %}
+
+</form>
+
+
+
+
+
+<!-- End row -->
+{% endblock %}

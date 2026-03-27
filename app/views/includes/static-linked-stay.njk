@@ -1,10 +1,32 @@
+<p class="govuk-body">5 March 2026 – 4 April 2026</p>
+
+{{ govukSummaryList({
+  card: {
+    title: { text: "Hospital" },
+    actions: {
+      items: [
+        {
+          href: "/payability/v3/stay/" + s.id + "/overview",
+          text: "View",
+          visuallyHiddenText: "of Morgan Hospital"
+        }
+      ]
+    }
+  },
+  rows: [
+    { key: { text: "Accommodation name" }, value: { text: "Morgan Hospital" } },
+    { key: { text: "Date recorded" }, value: { text: "12 April 2026" } },
+    { key: { text: "Date marked complete" }, value: { text: "20 April 2026" } }
+  ]
+}) }}
+
+
+
 <p class="govuk-body">Linked stay: 5 September – 20 September 2025</p>
 
 {{ govukSummaryList({
   card: {
-    title: {
-      text: "Morgan Hospital"
-    },
+    title: { text: "Hospital" },
     actions: {
       items: [
         {
@@ -16,31 +38,24 @@
     }
   },
   rows: [
-    {
-      key: { text: "Accommodation type" },
-      value: { text: "Hospital" }
-    },
-    {
-      key: { text: "Date recorded" },
-      value: { text: "7 September 2025" }
-    },
-    {
-      key: { text: "Date marked complete" },
-      value: { text: "21 September 2025" }
-    }
+    { key: { text: "Accommodation name" }, value: { text: "Morgan Hospital" } },
+    { key: { text: "Date recorded" }, value: { text: "7 September 2025" } },
+    { key: { text: "Date marked complete" }, value: { text: "21 September 2025" } }
   ]
 }) }}
 
 
+
+
+
+
 {{ govukSummaryList({
   card: {
-    title: {
-      text: "Freeman Hospital"
-    },
+    title: { text: "Hospital" },
     actions: {
       items: [
         {
-          href: "#",
+          href: "/payability/v3/person-record/stay-overview",
           text: "View",
           visuallyHiddenText: "of Freeman Hospital"
         }
@@ -48,30 +63,9 @@
     }
   },
   rows: [
-    {
-      key: { text: "Accommodation type" },
-      value: { text: "Hospital" }
-    },
-    {
-      key: { text: "Date recorded" },
-      value: { text: "12 September 2025" }
-    },
-    {
-      key: { text: "Date marked complete" },
-      value: { text: "26 September 2025" }
-    }
+    { key: { text: "Accommodation name" }, value: { text: "Freeman Hospital" } },
+    { key: { text: "Date recorded" }, value: { text: "12 September 2025" } },
+    { key: { text: "Date marked complete" }, value: { text: "26 September 2025" } }
   ]
 }) }}
-
-{% from "govuk/components/pagination/macro.njk" import govukPagination %}
-
-{{ govukPagination({
-  next: {
-    href: "#"
-  },
-  items: [
-    { number: 1, current: true, href: "#" },
-    { number: 2, href: "#" },
-    { number: 3, href: "#" }
-  ]
-}) }}
+``

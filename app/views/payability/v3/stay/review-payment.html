@@ -1,0 +1,127 @@
+{% extends "layouts/payability.html" %}
+
+{% block pageTitle %}
+  Content page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set pageName = "Agent home" %}
+
+{% block content %}
+{% include "includes/breadcrumbs.njk" %}
+
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+
+<!-- Start row -->
+  <!-- Start state with entries-->
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <h1 class="govuk-heading-l">Payment overview</h1>
+            
+       {{ govukSummaryList({
+        card: {
+          title: {
+            text: "Freeman Hospital"
+          }
+        },
+
+        rows: [
+          {
+            key: {
+              text: "Status"
+            },
+            value: {
+              html: '<strong class="govuk-tag govuk-tag--green">
+                     Complete
+                     </strong>'
+            }
+          },
+          {
+            key: {
+              text: "Stay type"
+            },
+            value: {
+              html: "Hospital"
+            }
+          },
+          {
+            key: {
+              text: "Entered"
+            },
+            value: {
+              html: "15 January 2026"
+            }
+          },
+          {
+            key: {
+              text: "Left"
+            },
+            value: {
+              html: "14 March 2026"
+            }
+          },
+          {
+            key: {
+              text: "Days in accommodation"
+            },
+            value: {
+              html: "60"
+            }
+          },
+          {
+            key: {
+              text: "Days affecting payment"
+            },
+            value: {
+              html: '32<br><br>
+              <details class="govuk-details">
+              <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">
+                 How this is calculated
+                </span>
+              </summary>
+              <div class="govuk-details__text">
+                Days in accommodation: 60<br>
+                Days PIP is payable on: 28<br>
+                Remaining days: 32
+              </div>
+            </details>'
+            }
+          },
+          {
+            key: {
+              text: "Payment periods affected"
+            },
+            value: {
+              html: '<p>5 January 2026 - 4 February 2026:</p>
+                <ul class="govuk-list govuk-list--bullet">
+                  <li>Days affecting payment: 2</li>
+                  <li>Owed for this period: £20</li>
+                </ul>
+                <p>5 January 2026 - 4 February 2026:</p>
+                <ul class="govuk-list govuk-list--bullet">
+                  <li>Days affecting payment: 30</li>
+                  <li>Owed for this period: £1300</li>
+                </ul>'
+            }
+          }
+        ]
+      }) }}
+
+
+    </div>
+  </div>
+<!-- End row -->
+<!-- Start row -->
+ <div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <form class="form" action="notes" method="post">
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+    </div>
+  </div>
+<!-- End row -->
+{% endblock %}

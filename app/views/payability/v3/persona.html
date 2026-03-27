@@ -1,0 +1,78 @@
+{% extends "layouts/payability.html" %}
+{% block beforeContent %}
+{{ govukBreadcrumbs({
+  items: [
+    {
+      text: "Prototype index",
+      href: "../index"
+    },
+    {
+      text: "Payability",
+      href: "index"
+    }
+  ]
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+    {% include "includes/banner.njk" %}
+    <form class="form" action="/persona-selection" method="post">
+
+      <!-- /payability/v2/stay/type for new claims nd self serve -->
+
+      {{ govukRadios({
+        name: "PayabilityPersona",
+        fieldset: {
+          legend: {
+            text: "Payability V3: select a user persona",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+        {
+            value: "Agent starting a new claim",
+            text: "Agent starting a new claim",  
+            hint: {
+              text: "You are an AAR agent guiding a claimant over the phone, recording a payability stay at the start of a claim"
+            }
+          },
+        {
+            value: "Agent handling an ongoing claim",
+            text: "Agent handling an ongoing claim",
+            hint: {
+              text: "You are an agent modifying/viewing a payability stay in a open claim"
+            }
+          }
+        ]
+      }) }}
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+    </form>
+  </div>
+</div>
+
+<!-- Additional scenarios 
+
+          {
+            value: "No stay + completed stay",
+            text: "Transitioning from no stays recorded to one completed stay recorded"
+          },
+            {
+            value: "No stay + ongoing stay",
+            text: "Transitioning from no stays recorded to one incomplete stay recorded"
+          },
+            {
+            value: "No stay + stay with linked period ",
+            text: "Transitioning from no stays recorded to an instance of linked stays recorded"
+          }
+-->
+
+<!-- End row -->
+{% endblock %}

@@ -1,3 +1,5 @@
+{% macro SaveCompletedStay(stay) %}
+
 {% set monthNames = {
   "01":"January","1":"January",
   "02":"February","2":"February",
@@ -13,63 +15,42 @@
   "12":"December"
 } %}
 
-{% set dateIn = 
-  (data['date-in-day'] or "") ~ " " ~
-  (monthNames[data['date-in-month']] or data['date-in-month']) ~ " " ~
-  (data['date-in-year'] or "")
-%}
+{% set start = stay.startDate.day ~ " " ~ monthNames[stay.startDate.month] ~ " " ~ stay.startDate.year %}
+{% set end = stay.endDate.day ~ " " ~ monthNames[stay.endDate.month] ~ " " ~ stay.endDate.year %}
 
+<p class="govuk-body">{{ start }} – {{ end }}</p>
 
-{% if data['date-out-check'] == "Yes" %}
-  {% set dateOut = "Ongoing" %}
-{% else %}
-  {% set dateOut =
-    (data['date-out-day'] or "") ~ " " ~
-    (monthNames[data['date-out-month']] or data['date-out-month']) ~ " " ~
-    (data['date-out-year'] or "")
-  %}
-{% endif %}
-
-
-{% if data['accommodation-select-an-address'] %}
-  {% set accomName = data['address-name'] or "Accommodation" %}
-{% else %}
-  {% set accomName = data['address-name'] or data['accomodation-name'] or "Accommodation" %}
-{% endif %}
-
-
-
-{% if data['date-out-check'] != "Yes" %}
-  {{ govukSummaryList({
-    card: {
-      title: { text: accomName  }
-    },
+{{ govukSummaryList({
+  card: {
+    title: { text: stay.name },
     actions: {
       items: [
         {
-          href: "/payability/v2/stay/stay-overview",
+          href: "/payability/v3/person-record/stay-overview?stayIndex=" ~ stay.id,
           text: "View",
-          visuallyHiddenText: "of " ~ accomName
+          visuallyHiddenText: "of " ~ stay.name
         },
         {
-                href: "../stay/delete",
-                text: "Delete",
-                visuallyHiddenText: "of Freeman Hospital"
-              }
-      ]
-    },
-    rows: [
-      {
-        key: { text: "Date recorded" },
-        value: { text: today or "17 March 2026" }
-      },
-      {
-        key: { text: "Marked complete" },
-        value: { 
-          text:
-            today or "30  March 2026" 
+          href: "/payability/v3/stay/delete?stayIndex=" ~ stay.id,
+          text: "Delete",
+          visuallyHiddenText: "of " ~ stay.name
         }
-      }
-    ]
-  }) }}
-{% endif %}
+      ]
+    }
+  },
+  rows: [
+    {
+      key: { text: "Accommodation type" },
+      value: { text: stay.type or "Not provided" }
+    },{
+      key: { text: "Date recorded" },
+      value: { text: stay.dateRecorded }
+    },
+    {
+      key: { text: "Marked complete" },
+      value: { text: stay.dateCompleted or "Not available" }
+    }
+  ]
+}) }}
+
+{% endmacro %}

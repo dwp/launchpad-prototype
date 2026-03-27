@@ -1,0 +1,80 @@
+{% extends "layouts/payability.html" %}
+{% block beforeContent %}
+  {{ govukBackLink({
+          text: "Back",
+          href: "javascript:history.back()"
+  }) }}
+{% endblock %}
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+      <form class="form" action="/still-there-check" method="post">
+
+         {% if (data['PayabilityPersona'] == "Agent handling an ongoing claim") %}
+
+      {{ govukRadios({
+        name: "date-out-check",
+        fieldset: {
+          legend: {
+            text: "Are they still staying there?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          {
+            value: "Yes",
+            text: "Yes"
+          },
+          {
+            value: "No",
+            text: "No"
+          }
+        ]
+      }) }}
+
+      {% else %}
+
+          {{ govukRadios({
+        name: "date-out-check",
+        fieldset: {
+          legend: {
+            text: "Are you still staying there?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          {
+            value: "Yes",
+            text: "Yes"
+          },
+          {
+            value: "No",
+            text: "No"
+          }
+        ]
+      }) }}
+
+         {% endif %}
+
+
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+      {% include "includes/aar-task-list.html" %}
+
+
+    </form>
+  </div>
+</div>
+
+<!-- End row -->
+{% endblock %}
+
+

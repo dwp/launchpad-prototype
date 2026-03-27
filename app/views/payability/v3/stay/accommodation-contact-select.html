@@ -1,0 +1,73 @@
+{% extends "layouts/payability.html" %}
+{% block beforeContent %}
+{{ govukBackLink({
+        text: "Back",
+        href: "javascript:history.back()"
+        }) }}
+{% endblock %}
+{% block content %}
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+
+    <form class="form" action="accommodation-contact" method="post">
+
+
+    {% set raw = (data['type-scenario'] or '') | trim %}
+
+    {% if not raw == 'none' %}
+      {% set accType = 'accommodation' %}
+
+    <!-- {% elif raw == 'Detention in Legal Custody' %}
+      {% set accType = 'place of custody' %} -->
+
+    {% else %}
+      {% set accType = 'accommodation' %}
+    {% endif %}
+
+
+    {% set legendText = "What contact details do you want to add?" %}
+    
+      {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+
+{{ govukCheckboxes({
+  name: "contact-options",
+  fieldset: {
+    legend: {
+      text: legendText,
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  hint: {
+    text: "Select all that apply"
+  },
+  items: [
+    {
+      value: "Name",
+      text: "Name"
+    },
+    {
+      value: "Phone number",
+      text: "Phone number"
+    },
+    {
+      value: "Email address",
+      text: "Email address"
+    }
+  ]
+}) }}
+    <button type="submit" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
+      Save and continue
+    </button>
+    {% include "includes/aar-task-list.html" %}
+
+</form>
+
+
+
+
+
+<!-- End row -->
+{% endblock %}

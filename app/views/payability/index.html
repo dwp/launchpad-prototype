@@ -33,7 +33,7 @@
     <h2 class="govuk-heading-m">Last updated</h2>
         <p class="govuk-body">
         {{govukTag({
-          text: "Version 2",
+          text: "Version 3",
           classes: "govuk-tag--green"
         })}}
       </p>
@@ -105,13 +105,28 @@
           <li>Similar institution to hospital moved to the end of the journey, assuming that some detail about these stays will be useful to help an agent investigate</li>
         </ul>'
       }
+    },
+    {
+      heading: {
+        text: "April 2026"
+      },
+      content: {
+        html: '<p class="govuk-body">
+            <strong class="govuk-tag govuk-tag--green">
+          Version 3</strong>
+          </p>
+         <ul class="govuk-list govuk-list--bullet">
+          <li>Development of new edit a payability stay journey</li>
+          <li>Addition of task list and status refinement </li>
+           </ul>'
+      }
     }
   ]
-}) }}
+}) }},
 
       {{ govukButton({
-        text: "Start prototype V2",
-        href: "v2/persona"
+        text: "Start prototype V3",
+        href: "v3/persona"
       }) }}
   </div>
   <!-- End column -->

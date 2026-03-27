@@ -1,0 +1,101 @@
+{% extends "layouts/payability.html" %}
+{% block beforeContent %}
+{{ govukBackLink({
+        text: "Back",
+        href: "javascript:history.back()"
+        }) }}
+{% endblock %}
+
+{% block content %}
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form class="form" action="accommodation-lookup-confirm" method="post">
+        <div class="govuk-width-container">
+
+
+            
+<!-- { Read type-scenario and normalise } -->
+  {% set ts = (data['type-scenario'] or 'Accomodation') | trim %}
+  {% if not ts == 'none' %}
+    {% set entity = 'accommodation' %}
+  {% elif ts == 'Detention in Legal Custody' %}
+    {% set entity = 'Place of Custody' %}
+  {% else %}
+    {% set entity = ts %}
+  {% endif %}
+
+<h1 class="govuk-heading-l">
+  What is the name and postcode of the {{ entity | lower }}?
+</h1>
+
+
+
+          <fieldset class="govuk-fieldset">
+  
+
+
+          
+
+
+
+  
+<div class="govuk-form-group">
+  <label class="govuk-label" for="address-name">
+    {{entity}}  name (optional)
+  </label>
+
+
+  <input class="govuk-input govuk-!-width-two-thirds" id="address-name" name="address-name" type="text">
+
+</div>
+
+
+          
+
+
+
+  
+<div class="govuk-form-group">
+  <label class="govuk-label" for="postcode">
+    Postcode 
+  </label>
+
+
+  <input class="govuk-input govuk-!-width-two-thirds" id="address-postcode" name="address-postcode" type="text">
+
+</div>
+
+
+          
+
+</fieldset>
+
+
+            
+  
+    
+  
+
+<button type="submit" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
+  Find address
+</button>
+
+
+
+          <p class="govuk-body govuk-!-margin-bottom-6"><a id="accommodation-manual-link" href="accommodation-lookup-manual" class="govuk-link">Enter address manually</a></p>
+
+               <p class="govuk-body govuk-!-margin-bottom-6"><a href="accommodation-contact-check" class="govuk-link">Applicant does not know the address</a></p>
+
+          {% include "includes/aar-task-list.html" %}
+
+        </div>
+      </form>
+    </div>
+  </div>
+
+<!-- End row -->
+{% endblock %}
