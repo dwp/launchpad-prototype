@@ -1,0 +1,19 @@
+{% extends "layouts/payability.html" %}
+
+{% block pageTitle %}
+  Check all answers – {{ serviceName }}
+{% endblock %}
+
+{% block content %}
+<h1 class="govuk-heading-l">Check all answers</h1>
+
+<p class="govuk-body">
+  This page will show a summary of all stay details before submission.
+</p>
+
+{{ govukButton({
+  text: "Confirm and continue",
+  href: "/payability/v3/stay/summary" 
+}) }}
+
+{% endblock %}

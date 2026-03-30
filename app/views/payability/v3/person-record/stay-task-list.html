@@ -9,7 +9,7 @@
 {% block beforeContent %}
   {{ govukBackLink({
       text: "Back",
-      href: "/payability/v3/person-record/stay-overview?stayIndex=" ~ stay.id
+      href: "javascript:history.back()"
   }) }}
 {% endblock %}
 
@@ -20,8 +20,8 @@
 {% set stays = data.stays or [] %}
 {% set stayIndex = data.stayIndex %}
 {% set stay = stays[stayIndex] %}
+{% set ongoing = stay and stay.endDate == null %}
 
-<!-- CASE HEADER -->
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
     <section class="dwp-quick-reference govuk-!-margin-bottom-8">
@@ -41,57 +41,49 @@
 
     <h1 class="govuk-heading-l">Stay in {{ stay.name or "accommodation" }}</h1>
 
-
-<!-- reusable status tags -->
 {% macro statusTag(completed) %}
   {% if completed %}
     {% set tag = '<strong class="govuk-tag govuk-tag--green">Completed</strong>' %}
-  {% elseif answer == "I don't know" %}
-    {% set tag = '<strong class="govuk-tag govuk-tag--yellow">Review</strong>' %} 
   {% else %}
     {% set tag = '<strong class="govuk-tag govuk-tag--blue">Incomplete</strong>' %}
   {% endif %}
   {{ tag | safe }}
 {% endmacro %}
 
-<!-- read completion values -->
+{# --- Correctly mapped variables from routing --- #}
 
-{% set typeCompleted = stay.completed.type %}
-{% set startCompleted = stay.completed.startDate %}
+{% set typeCompleted             = stay.completed.type %}
+{% set startCompleted            = stay.completed.startDate %}
 
-{% if ongoing %}
-{% set endCompleted = stay.completed.endDate %}
-{% else %}  
-{% set endCompleted = ongoing%}
+{% if stay.open %}
+  {% set endCompleted = true %}
+{% else %}
+  {% set endCompleted = stay.completed.endDate %}
 {% endif %}
 
-{% set addressCompleted = stay.completed.address %}
-{% set fundingCompleted =  stay.completed.fundingType %} 
-{% set boarderCompleted = stay.completed.boarder %}
-{% set contactCompleted = stay.completed.contact %}
-{% set repayCompleted = stay.completed.repay %}
-{% set hospitalCheckCompleted = stay.completed.similarInstitution %}
-{% set fundingAddressCompleted = stay.completed.fundingAddress %}
-{% set fundingContactCompleted = stay.completed.fundingContact %}
+{% set addressCompleted          = stay.completed.address %}
+{% set fundingCompleted          = stay.completed.funding %}
+{% set repayCompleted            = stay.completed.repay %}
+{% set boarderCompleted          = stay.completed.boarder %}
+{% set hospitalCheckCompleted    = stay.completed.similarInstitution %}
+{% set contactCompleted          = stay.completed.contact %}
+{% set fundingAddressCompleted   = stay.completed.fundingAddress %}
+{% set fundingContactCompleted   = stay.completed.fundingContact %}
 
-<!-- set status for each row -->
+{# --- Status tags --- #}
 
-{% set typeStatus = { html: statusTag(typeCompleted) } %}
-{% set startStatus = { html: statusTag(startCompleted) } %}
-{% set endStatus = { html: statusTag(endCompleted) } %}
-{% set addressStatus = { html: statusTag(addressCompleted) } %}
-{% set fundingStatus = { html: statusTag(fundingCompleted) } %}
-{% set boarderStatus = { html: statusTag(boarderCompleted) } %}
-{% set contactStatus = { html: statusTag(contactCompleted) } %}
-{% set repayStatus = { html: statusTag(repayCompleted) } %}
-{% set hospitalCheckStatus = { html: statusTag(hospitalCheckCompleted) } %}
-{% set fundingAddressStatus = { html: statusTag(fundingAddressCompleted) } %}
-{% set fundingContactStatus = { html: statusTag(fundingContactCompleted) } %}
+{% set typeStatus              = { html: statusTag(typeCompleted) } %}
+{% set startStatus             = { html: statusTag(startCompleted) } %}
+{% set endStatus               = { html: statusTag(endCompleted) } %}
+{% set addressStatus           = { html: statusTag(addressCompleted) } %}
+{% set fundingStatus           = { html: statusTag(fundingCompleted) } %}
+{% set repayStatus             = { html: statusTag(repayCompleted) } %}
+{% set boarderStatus           = { html: statusTag(boarderCompleted) } %}
+{% set hospitalCheckStatus     = { html: statusTag(hospitalCheckCompleted) } %}
+{% set contactStatus           = { html: statusTag(contactCompleted) } %}
+{% set fundingAddressStatus    = { html: statusTag(fundingAddressCompleted) } %}
+{% set fundingContactStatus    = { html: statusTag(fundingContactCompleted) } %}
 
-
-
-   <!-- MAIN TASK LIST -->
-    
 {{ govukTaskList({
   idPrefix: "stay-details",
   items: [
@@ -128,10 +120,7 @@
   ]
 }) }}
 
-
-
 <h2 class="govuk-heading-m">Additional details</h2>
-
 
 {{ govukTaskList({
   idPrefix: "stay-additional",
@@ -164,7 +153,14 @@
   ]
 }) }}
 
-{{ govukButton({ text: "Continue" }) }}
+{{ govukButton({
+  text: "Continue",
+  href: "/payability/v3/stay/continue"
+}) }}
+
+<p class="govuk-body govuk-!-margin-bottom-6">
+  <a href="/payability/v3/person-record/accommodation-history" class="govuk-link">Return to accommodation stay history</a>
+</p>
 
   </div>
 </div>

@@ -46,153 +46,142 @@
     <h1 class="govuk-heading-l">
       Accommodation stay history
     </h1>
-
-    <form class="form" action="/hospital-check" method="post">
-      {{ govukButton({
-        text: "Add a stay"
-      }) }}
+    
+    <form class="form" action="/payability/v3/stay/start" method="get">
+      {{ govukButton({ text: "Add a stay" }) }}
     </form>
-
 
 {% set stays = data.stays or [] %}
 {% set ongoingStays = [] %}
 {% set completedStays = [] %}
-
 {% for s in stays %}
 
-  <!-- A stay is 'completed' only if ALL answers are completed -->
+  {% set comp = s.completed or {} %}
+
+  <!-- Setting all the conditions for a card to change to a completed on 
+   - currently all qquestions have to be answered to be marked as complete-->
   {% set allQuestionsCompleted = (
-    s.type and s.type != "I don't know" and
-    s.startDateStatus == "Completed" and
-    s.endDateStatus == "Completed" and
-    s.addressStatus == "Completed" and
-    s.fundingStatus == "Completed" and
-    s.boarderStatus == "Completed" and
-    s.repayStatus == "Completed" and
-    s.hospitalStatus == "Completed" and
-    s.contactStatus == "Completed" and
-    s.fundingAddressStatus == "Completed" and
-    s.fundingContactStatus == "Completed"
-) %}
+    comp.type and
+    comp.startDate and
+    comp.endDate and
+    comp.address and
+    comp.funding and
+    comp.repay and
+    comp.boarder and
+    comp.similarInstitution and
+    comp.contact and
+    comp.fundingAddress and
+    comp.fundingContact
+  ) %}
 
   {% if allQuestionsCompleted %}
-      {% set completedStays = completedStays.concat([s]) %}
+    {% set completedStays = completedStays.concat([s]) %}
   {% else %}
-      {% set ongoingStays = ongoingStays.concat([s]) %}
+    {% set ongoingStays = ongoingStays.concat([s]) %}
   {% endif %}
 
 {% endfor %}
 
+<!-- SCENARIO: ONE COMPLETED STAY (SHOW DEMO CONTENT + ANY USER ADDED STAY) -->
 
+{% if data['PayabilityScenario'] == "One completed stay" %}
+<h2 class="govuk-heading-m">Open stay</h2>
 
+{% if ongoingStays.length %}
+{% for s in ongoingStays %}
 
-       <!-- SCENARIO: ONE COMPLETED STAY (SHOW DEMO CONTENT + ANY USER ADDED STAY) -->
+{% set start = s.startDate.day + " " + s.startDate.month + " " + s.startDate.year %}
 
-    {% if data['PayabilityScenario'] == "One completed stay" %}
-    <h2 class="govuk-heading-m">Open stay</h2>
-
-    <!-- Add an ongoing stay to the list of stays -->
-
-    {% if ongoingStays.length %}
-    {% for s in ongoingStays %}
-
-    {% set start = s.startDate.day + " " + s.startDate.month + " " + s.startDate.year %}
-
-    {{ govukSummaryList({
-      card: {
-        title: { text: s.name or "Accommodation" },
-        actions: {
-          items: [
-            {
-              href: "/payability/v3/stay/" + s.id + "/overview",
-              text: "Edit",
-              visuallyHiddenText: "of " + (s.name or "accommodation")
-            }
-          ]
-        }
-      },
-      rows: [
+{{ govukSummaryList({
+  card: {
+    title: { text: s.name or "Accommodation" },
+    actions: {
+      items: [
         {
-          key: { text: "Accommodation type" },
-          value: { text: s.type or "Not provided" }
-        },
-        {
-          key: { text: "Start date" },
-          value: { text: start }
-        },
-        {
-          key: { text: "Date recorded" },
-          value: { text: s.dateRecorded }
+          href: "/payability/v3/stay/" + s.id + "/overview",
+          text: "Edit",
+          visuallyHiddenText: "of " + (s.name or "accommodation")
         }
       ]
-    }) }}
+    }
+  },
+  rows: [
+    {
+      key: { text: "Accommodation type" },
+      value: { text: s.type or "Not provided" }
+    },
+    {
+      key: { text: "Start date" },
+      value: { text: start }
+    },
+    {
+      key: { text: "Date recorded" },
+      value: { text: s.dateRecorded }
+    }
+  ]
+}) }}
 
-  {% endfor %}
+{% endfor %}
 {% endif %}
 {% include "includes/open-stay.njk" %}
 
-
-
 <!-- Add a closed stay to the list of stays -->
-      <h2 class="govuk-heading-m">Completed stays</h2>
+<h2 class="govuk-heading-m">Completed stays</h2>
 
-     {% if completedStays.length %}
+{% if completedStays.length %}
 
-  {% for s in completedStays %}
+{% for s in completedStays %}
 
-    {% set start = s.startDate.day + " " + s.startDate.month + " " + s.startDate.year %}
-    {% set end = s.endDate.day + " " + s.endDate.month + " " + s.endDate.year %}
+{% set start = s.startDate.day + " " + s.startDate.month + " " + s.startDate.year %}
+{% set end = s.endDate.day + " " + s.endDate.month + " " + s.endDate.year %}
 
-    {{ govukSummaryList({
-      card: {
-        title: { text: s.type or "Accommodation" },
-        actions: {
-          items: [
-            {
-              href: "/payability/v3/stay/" + s.id + "/overview",
-              text: "Edit",
-              visuallyHiddenText: "of " + (s.name or "accommodation")
-            }
-          ]
-        }
-      },
-      rows: [
+{{ govukSummaryList({
+  card: {
+    title: { text: s.type or "Accommodation" },
+    actions: {
+      items: [
         {
-          key: { text: "Accommodation name" },
-          value: { text: s.name or "Not provided" }
-        },
-        {
-          key: { text: "Dates" },
-          value: { text: start + " – " + end }
-        },
-        {
-          key: { text: "Date recorded" },
-          value: { text: s.dateRecorded }
+          href: "/payability/v3/stay/" + s.id + "/overview",
+          text: "Edit",
+          visuallyHiddenText: "of " + (s.name or "accommodation")
         }
       ]
-    }) }}
+    }
+  },
+  rows: [
+    {
+      key: { text: "Accommodation name" },
+      value: { text: s.name or "Not provided" }
+    },
+    {
+      key: { text: "Dates" },
+      value: { text: start + " – " + end }
+    },
+    {
+      key: { text: "Date recorded" },
+      value: { text: s.dateRecorded }
+    }
+  ]
+}) }}
 
-  {% endfor %}
+{% endfor %}
 {% endif %}
 
 {% include "includes/static-linked-stay.njk" %}
-  {% endif %}
+{% endif %}
 
 
 
-
-
-    <!-- SCENARIO: NO STAYS ADDED (If a stay exists → show it, else → show message) -->
+<!-- SCENARIO: NO STAYS ADDED (If a stay exists → show it, else → show message) -->
 {% if data['PayabilityScenario'] == "No stays added" %}
 
- <!-- If no stays saved at all -->
+<!-- If no stays saved at all -->
   {% if not stays.length %}
     <p class="govuk-body">No stays in temporary accommodation have been recorded.</p>
 
   {% else %}
 
-
-   <!-- add an open stay starting from no stays added -->
+<!-- add an open stay starting from no stays added -->
     {% if ongoingStays.length %}
       <h2 class="govuk-heading-m">Open stays</h2>
 
@@ -218,8 +207,8 @@
               value: { text: s.name or "Not provided" }
             },
             {
-              key: { text: "Status" },
-              value: { html: '<strong class="govuk-tag govuk-tag--yellow">Awaiting end date</strong>' }
+              key: { text: "End date" },
+              value: { html: '<strong class="govuk-tag govuk-tag--blue">Incomplete</strong>' }
             },
             {
               key: { text: "Start date" },
@@ -234,9 +223,8 @@
       {% endfor %}
     {% endif %}
 
+<!-- add a completed stay from no stays added -->
 
-    
-    <!-- add a completed stay from no stays added -->
     {% if completedStays.length %}
       <h2 class="govuk-heading-m">Completed stays</h2>
 
@@ -273,7 +261,6 @@
           ]
         }) }}
 
-        
       {% endfor %}
     {% endif %}
 
@@ -284,5 +271,4 @@
 </div>
 
 {% endblock %}
-
-
+``

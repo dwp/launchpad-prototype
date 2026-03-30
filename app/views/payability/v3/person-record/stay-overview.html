@@ -6,7 +6,6 @@
 
 {% set pageName = "Agent home" %}
 
-
 {% block beforeContent %}
   {{ govukBackLink({
       text: "Back",
@@ -20,7 +19,6 @@
 {% set stayIndex = data.stayIndex %}
 {% set stay = stays[stayIndex] %}
 
-<!-- If no stay was found  -->
 {% if not stay %}
   <h1 class="govuk-heading-l">Stay not found</h1>
   <p class="govuk-body">We couldn't find this stay.</p>
@@ -28,146 +26,196 @@
 
 {% if stay %}
 
-<!-- Case header -->
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
 
-    <h1 class="govuk-heading-l">
-      Stay in {{ stay.name or "Accommodation" }}
-    </h1>
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
-    {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{# SIMPLE show() helper #}
+{% macro show(val) %}
+  {% if val %}
+    {{ val }}
+  {% else %}
+    <span class="govuk-tag govuk-tag--blue">Incomplete</span>
+  {% endif %}
+{% endmacro %}
 
-    {% set rows = [] %}
+{# START DATE #}
+{% if stay.startDate and stay.startDate.day %}
+  {% set start = stay.startDate.day ~ "/" ~ stay.startDate.month ~ "/" ~ stay.startDate.year %}
+{% else %}
+  {% set start = "Incomplete" %}
+{% endif %}
 
-    {% if stay.endDate %}
-      {% set rows = rows.concat([
-        {
-          key: { text: "Status" },
-          value: { html: '<strong class="govuk-tag govuk-tag--green">Complete</strong>' }
-        }
-      ]) %}
-    {% else %}
-      {% set rows = rows.concat([
-        {
-          key: { text: "Status" },
-          value: { html: '<strong class="govuk-tag govuk-tag--yellow">Awaiting end date</strong>' }
-        }
-      ]) %}
-    {% endif %}
+{# END DATE #}
+{% if stay.endDate and stay.endDate.day %}
+  {% set end = stay.endDate.day ~ "/" ~ stay.endDate.month ~ "/" ~ stay.endDate.year %}
+{% else %}
+  {% if stay.open %}
+    {% set end = "Ongoing stay" %}
+  {% else %}
+    {% set end = "Incomplete" %}
+  {% endif %}
+{% endif %}
 
+<h1 class="govuk-heading-l">
+  Stay in 
+  {% if stay.type %}
+    {{ stay.type | capitalize }}
+  {% else %}
+    Accommodation
+  {% endif %}
+  on {{ start }}
+</h1>
 
-    {% if stay.dateRecorded %}
-      {% set rows = rows.concat([
-        {
-          key: { text: "Recorded on" },
-          value: { text: stay.dateRecorded }
-        }
-      ]) %}
-    {% endif %}
+{# BUILD SUMMARY ROWS #}
 
-
-    {% if stay.startDate.day %}
-      {% set start = stay.startDate.day ~ "/" ~ stay.startDate.month ~ "/" ~ stay.startDate.year %}
-      {% set rows = rows.concat([
-        {
-          key: { text: "Start date" },
-          value: { text: start }
-        }
-      ]) %}
-    {% endif %}
+{% set rows = [] %}
 
 
-    {% if stay.endDate %}
-      {% set end = stay.endDate.day ~ "/" ~ stay.endDate.month ~ "/" ~ stay.endDate.year %}
-      {% set rows = rows.concat([
-        {
-          key: { text: "End date" },
-          value: { text: end }
-        }
-      ]) %}
-    {% endif %}
+{# Date recorded #}
+{% set rows = rows.concat([{ 
+  key:{text:"Recorded on"},
+  value:{ text: stay.dateRecorded or "Incomplete" }
+}]) %}
 
-    {% if stay.type %}
-      {% set rows = rows.concat([
-        {
-          key: { text: "Accommodation type" },
-          value: { text: stay.type }
-        }
-      ]) %}
-    {% endif %}
+{# Start date #}
+{% set rows = rows.concat([{ 
+  key:{text:"Start date"},
+  value:{ html: show(start) }
+}]) %}
 
+{# End date #}
+{% set rows = rows.concat([{ 
+  key:{text:"End date"},
+  value:{ html: show(end) }
+}]) %}
 
+{# Accommodation type #}
+{% set rows = rows.concat([{ 
+  key:{text:"Accommodation type"},
+  value:{ html: show(stay.type) }
+}]) %}
 
+{# Address #}
+{% set addressHtml = "" %}
+{% if stay.address %}
+  {% if stay.address.name %}
+    {% set addressHtml = addressHtml ~ stay.address.name ~ "<br>" %}
+  {% endif %}
+  {% if stay.address.line1 %}
+    {% set addressHtml = addressHtml ~ stay.address.line1 ~ "<br>" %}
+  {% endif %}
+  {% if stay.address.town %}
+    {% set addressHtml = addressHtml ~ stay.address.town ~ "<br>" %}
+  {% endif %}
+  {% if stay.address.postcode %}
+    {% set addressHtml = addressHtml ~ stay.address.postcode %}
+  {% endif %}
+{% endif %}
 
-    {% if stay.address.name or stay.address.line1 or stay.address.town or stay.address.postcode %}
-      {% set addressHtml =
-        (stay.address.name or "") ~ "<br>" ~
-        (stay.address.line1 or "") ~ "<br>" ~
-        (stay.address.town or "") ~ "<br>" ~
-        (stay.address.postcode or "")
-      %}
+{% if addressHtml == "" %}
+  {% set addressHtml = "<span class='govuk-tag govuk-tag--blue'>Incomplete</span>" %}
+{% endif %}
 
+{% set rows = rows.concat([{ 
+  key:{text:"Accommodation address"},
+  value:{ html: addressHtml }
+}]) %}
 
-    {% if data['accommodation-select-an-address'] %}
-      {% set addressHtml = data['accommodation-select-an-address'] + "<br>" %}
-      {% endif %}
+{# Funding source #}
+{% if stay.fundingType %}
+  {% set fundingDisplay = stay.fundingType %}
+{% else %}
+  {% set fundingDisplay = "" %}
+{% endif %}
 
-      {% set rows = rows.concat([
-        {
-          key: { text: "Address" },
-          value: { html: addressHtml }
-        }
-      ]) %}
-    {% endif %}
+{% set rows = rows.concat([{ 
+  key:{text:"Funding source"},
+  value:{ html: show(fundingDisplay) }
+}]) %}
 
+{# Agreement to repay #}
+{% if stay.repaymentAgreement %}
+  {% set repayDisplay = stay.repaymentAgreement %}
+{% else %}
+  {% set repayDisplay = "" %}
+{% endif %}
 
+{% set rows = rows.concat([{ 
+  key:{text:"Agreement to repay"},
+  value:{ html: show(repayDisplay) }
+}]) %}
 
+{# Boarder status #}
+{% set rows = rows.concat([{ 
+  key:{text:"Boarder status"},
+  value:{ html: show(stay.boarderStatus) }
+}]) %}
 
-    {% if stay.boarderStatus %}
-      {% set rows = rows.concat([
-        {
-          key: { text: "Boarder status" },
-          value: { text: stay.boarderStatus }
-        }
-      ]) %}
-    {% endif %}
+{# Similar institution #}
+{% if stay.completed.similarInstitution %}
+  {% set simInst = "Yes" %}
+{% else %}
+  {% set simInst = "" %}
+{% endif %}
 
+{% set rows = rows.concat([{ 
+  key:{text:"Similar institution to hospital"},
+  value:{ html: show(simInst) }
+}]) %}
 
-    {% if stay.fundingType %}
-      {% set rows = rows.concat([
-        {
-          key: { text: "Funding type" },
-          value: { text: stay.fundingType }
-        }
-      ]) %}
-    {% endif %}
+{# Contact details #}
+{% set contactHtml = "" %}
+{% if stay.contactDetails %}
+  {% if stay.contactDetails.name %}
+    {% set contactHtml = contactHtml ~ stay.contactDetails.name ~ "<br>" %}
+  {% endif %}
+  {% if stay.contactDetails.email %}
+    {% set contactHtml = contactHtml ~ stay.contactDetails.email ~ "<br>" %}
+  {% endif %}
+  {% if stay.contactDetails.phone %}
+    {% set contactHtml = contactHtml ~ stay.contactDetails.phone %}
+  {% endif %}
+{% endif %}
 
+{% if contactHtml == "" %}
+  {% set contactHtml = "<span class='govuk-tag govuk-tag--blue'>Incomplete</span>" %}
+{% endif %}
 
-    {% if stay.contactDetails.name or stay.contactDetails.email or stay.contactDetails.phone %}
-      {% set contactHtml =
-        (stay.contactDetails.name or "") ~ "<br>" ~
-        (stay.contactDetails.email or "") ~ "<br>" ~
-        (stay.contactDetails.phone or "")
-      %}
-      {% set rows = rows.concat([
-        {
-          key: { text: "Contact details" },
-          value: { html: contactHtml }
-        }
-      ]) %}
-    {% endif %}
+{% set rows = rows.concat([{ 
+  key:{text:"Accommodation contact"},
+  value:{ html: contactHtml }
+}]) %}
 
-    
-    {{ govukSummaryList({
-      rows: rows
-    }) }}
+{# Funding address #}
+{% if stay.completed.fundingAddress %}
+  {% set fundAddr = "Yes" %}
+{% else %}
+  {% set fundAddr = "" %}
+{% endif %}
+{% set rows = rows.concat([{ 
+  key:{text:"Funding address"},
+  value:{ html: show(fundAddr) }
+}]) %}
 
+{# Funding contact #}
+{% if stay.completed.fundingContact %}
+  {% set fundContact = "Yes" %}
+{% else %}
+  {% set fundContact = "" %}
+{% endif %}
+{% set rows = rows.concat([{ 
+  key:{text:"Funding contact"},
+  value:{ html: show(fundContact) }
+}]) %}
 
-    {{ govukButton({
-      text: "Continue",
-      href: "/payability/v3/stay/task-list"
-    }) }}
+{{ govukSummaryList({ rows: rows }) }}
+
+{{ govukButton({
+  text: "Continue",
+  href: "/payability/v3/stay/task-list"
+}) }}
 
   </div>
 </div>

@@ -1,10 +1,49 @@
-//Set up
-const govukPrototypeKit = require('govuk-prototype-kit')
-const router = govukPrototypeKit.requests.setupRouter()
+// --------------------------------------------------------
+// SETUP
+// --------------------------------------------------------
+const govukPrototypeKit = require('govuk-prototype-kit');
+const router = govukPrototypeKit.requests.setupRouter();
 
-// ---------------------------------------------
-// Update stay completion values
-// ---------------------------------------------
+
+// --------------------------------------------------------
+// HELPERS
+// --------------------------------------------------------
+
+// Used for any field where "completed" means: has value AND not "I don't know"
+function completed(val) {
+  return val && val !== "I don't know" && val !== "";
+}
+
+
+// Auto-determine the NEXT incomplete task (wizard mode Continue)
+function getNextIncompleteTask(stay) {
+  if (!stay || !stay.completed) return null;
+
+  const order = [
+    { key: "type", url: "/payability/v3/stay/type" },
+    { key: "startDate", url: "/payability/v3/stay/date-in" },
+    { key: "endDate", url: "/payability/v3/stay/date-left" },
+    { key: "address", url: "/payability/v3/stay/accommodation-lookup-name" },
+    { key: "funding", url: "/payability/v3/stay/funding-type" },
+    { key: "repay", url: "/payability/v3/stay/repay" },
+    { key: "boarder", url: "/payability/v3/stay/accommodation-boarder" },
+    { key: "similarInstitution", url: "/payability/v3/stay/similar-institution" },
+    { key: "contact", url: "/payability/v3/stay/accommodation-contact-check" },
+    { key: "fundingAddress", url: "/payability/v3/stay/funding-address-check" },
+    { key: "fundingContact", url: "/payability/v3/stay/funding-contact-check" }
+  ];
+
+  for (const item of order) {
+    if (!stay.completed[item.key]) {
+      return item.url;
+    }
+  }
+
+  return null;
+}
+
+
+// Main updater: updates the stay.completed fields whenever interacting with task screens
 function updateStayObject(req) {
   const d = req.session.data;
   if (!d.stays || d.stayIndex === undefined) return;
@@ -12,18 +51,9 @@ function updateStayObject(req) {
   const stay = d.stays[d.stayIndex];
   if (!stay) return;
 
-  // Update core values
-  stay.type = d['type-scenario'] || stay.type;
-  stay.name = d['accommodation-name'] || d['address-name'] || stay.name;
-
-  // Completion rules (Not null, not empty, not “I don't know”)
-  function completed(val) {
-    return val && val !== "I don't know" && val !== "";
-  }
-
   stay.completed = stay.completed || {};
 
-  // --- Main questions ---
+  // MAIN FIELDS
   stay.completed.type = completed(d['type-scenario']);
 
   stay.completed.startDate =
@@ -34,270 +64,361 @@ function updateStayObject(req) {
   stay.completed.endDate = stay.open
     ? true
     : (
-        completed(d['date-out-day']) &&
-        completed(d['date-out-month']) &&
-        completed(d['date-out-year'])
-      );
+      completed(d['date-out-day']) &&
+      completed(d['date-out-month']) &&
+      completed(d['date-out-year'])
+    );
 
   stay.completed.address =
-    completed(d['accommodation-select-an-address']);
+    completed(d['accommodation-select-an-address']) ||
+    completed(d['address-line-1']) ||
+    completed(d['address-name']);
 
-  stay.completed.fundingType = completed(d['funding-scenario']);
+  stay.completed.funding =
+    completed(d['funding-type']) ||
+    completed(d['funding-scenario']) ||
+    completed(d['claimantFunded']);
 
   stay.completed.repay = completed(d['repayment-scenario']);
 
-  
-      // --- Additional details ---
-  stay.completed.boarder = completed(d['boarder-scenario']);
 
+  // ADDITIONAL DETAILS
+  stay.completed.boarder = completed(d['boarder-scenario']);
   stay.completed.similarInstitution = completed(d['similar-institution']);
 
   stay.completed.contact =
-    completed(d['contactCheck']) 
+    completed(d['funding-primary-contact']) ||
+    completed(d['contactCheck']) ||
+    completed(d['funding-email']) ||
+    completed(d['funding-phone-number']) ||
+    (d['contact-options'] && d['contact-options'].length > 0);
 
-  stay.completed.fundingAddress = completed(d['fundingAddressCheck']);
+  stay.completed.fundingAddress = 
+  completed(d['funding-select-an-address']) ||
+  completed(d['funding-contact-check']) ||
+  completed(d['fundingAddressCheck']);
 
-  stay.completed.fundingContact = completed(d['fundingContactCheck']);
-
-
+  stay.completed.fundingContact = completed(d['funding-contact-check']);
 }
 
-// ---------------------------------------------
-// Existing routes (your full file, unchanged except update calls)
-// ---------------------------------------------
 
-const stayTaskOrder = [
-  { key: 'type', url: '/payability/v3/stay/type' },
-  { key: 'startDate', url: '/payability/v3/stay/date-in' },
-  { key: 'endDate', url: '/payability/v3/stay/date-left' },
-  { key: 'address', url: '/payability/v3/stay/accommodation-lookup-name' },
-  { key: 'funding', url: '/payability/v3/stay/funding-type' },
-  { key: 'boarder', url: '/payability/v3/stay/accommodation-boarder' },
-  { key: 'repay', url: '/payability/v3/stay/repay' },
-  { key: 'hospitalCheck', url: '/payability/v3/stay/similar-institution' },
-  { key: 'contact', url: '/payability/v3/stay/accommodation-contact-check' }
-];
+// --------------------------------------------------------
+// CREATE BLANK STAY INSTANCE — ENTRY POINT FOR ADDING A STAY
+// --------------------------------------------------------
+
+// Clicking "Add a stay" should land HERE — always start in task list.
+router.get('/payability/v3/stay/start', function (req, res) {
+  const d = req.session.data;
+  d.stays = d.stays || [];
+
+  // Only mark that we intend to create a new stay.
+  d.isAddingStay = true;
+
+  // Reset active stay index to null until save
+  d.stayIndex = null;
+
+  return res.redirect('/payability/v3/stay/task-list');
+});
+
+// --------------------------------------------------------
+// AGENT ENTRY ROUTES (UNCHANGED EXCEPT CLEAN-UP)
+// --------------------------------------------------------
 
 router.post('/agent', function (req, res) {
   const chosenScenario = req.body['PayabilityScenario'];
-  const chosenPersona  = req.session.data['PayabilityPersona'];
+  const chosenPersona = req.session.data['PayabilityPersona'];
 
+  // Reset
   req.session.data = {};
   req.session.data['PayabilityScenario'] = chosenScenario;
-  req.session.data['PayabilityPersona']  = chosenPersona;
+  req.session.data['PayabilityPersona'] = chosenPersona;
 
-  res.redirect('/payability/v3/agent');
+  return res.redirect('/payability/v3/agent');
 });
 
-router.post('/add-another-stay', function(req, res) {
-  updateStayObject(req);
-  var addAnotherStay = req.session.data['add-another-stay'];
-  if (addAnotherStay === "Yes") {
-      res.redirect("payability/v3/stay/type")
-  } else {
-    res.redirect("payability/v3/stay/review-payment")
-  }
-});
+
+// --------------------------------------------------------
+// REPLACES OLD hospital-check LOGIC
+// ALWAYS start a stay instance
+// --------------------------------------------------------
 
 router.post('/hospital-check', function (req, res) {
-  req.session.data.isAddingStay = true;
-  delete req.session.data.stayIndex;
-  delete req.session.data.editIndex;
-
-  const persona = req.session.data['PayabilityPersona'];
-
-  if (persona === "Agent starting a new claim") {
-    return res.redirect("payability/v3/stay/accommodation-hospital-check");
-  } else {
-    return res.redirect("payability/v3/stay/type");
-  }
+  // Go to blank stay creation
+  return res.redirect('/payability/v3/stay/start');
 });
 
+
+// --------------------------------------------------------
+// REUSABLE CONTINUE LOGIC: jump to next incomplete task
+// Used when user presses Continue from task list
+// --------------------------------------------------------
+
+router.get('/payability/v3/stay/task-list-continue', function (req, res) {
+  const d = req.session.data;
+  const stay = d.stays[d.stayIndex];
+
+  updateStayObject(req);
+
+  const next = getNextIncompleteTask(stay);
+  if (next) return res.redirect(next);
+
+  return res.redirect('/payability/v3/stay/check-answers');
+});
+
+// --------------------------------------------------------
+// TASK FLOW ROUTES (Manual edit allowed)
+// --------------------------------------------------------
+
+// --- Hospital / hospice logic ---
 router.post('/hospital-or-hospice', function(req, res) {
   updateStayObject(req);
-  var hospitalOrHospice = req.session.data['type-scenario'];
-  if (hospitalOrHospice === "No") {
-      res.redirect("payability/v3/stay/type")
-  } else {
-    res.redirect("payability/v3/stay/date-yesterday-check")
+  const v = req.session.data['type-scenario'];
+
+  if (v === "No") {
+    return res.redirect("/payability/v3/stay/type");
   }
+  return res.redirect("/payability/v3/stay/date-yesterday-check");
 });
 
-router.post('/in-accommodation-check', function (req, res) {
+
+// --- In accommodation check ---
+router.post('/in-accommodation-check', function(req, res) {
   updateStayObject(req);
-  const data = (req.session && req.session.data) || {};
-  const personaSelection = data['PayabilityPersona'];
-  const inAccommodation = data['type-scenario']; 
 
-  if (inAccommodation === 'None of these') {
-    return res.redirect('payability/v3/stay/check-answers');
-  } else if (personaSelection === 'Agent starting a new claim') {
-    return res.redirect('payability/v3/stay/date-yesterday-check');
-  } else {
-    return res.redirect('payability/v3/stay/date-in');
+  const d = req.session.data;
+  const persona = d['PayabilityPersona'];
+  const typeScenario = d['type-scenario'];
+
+  if (typeScenario === 'None of these') {
+    return res.redirect('/payability/v3/stay/check-answers');
   }
+
+  if (persona === 'Agent starting a new claim') {
+    return res.redirect('/payability/v3/stay/date-yesterday-check');
+  }
+
+  return res.redirect('/payability/v3/stay/date-in');
 });
 
+
+// --- Yesterday check ---
 router.post('/yesterday-check', function(req, res) {
   updateStayObject(req);
-  var yesterdayCheck = req.session.data['type-scenario'];
-  if (yesterdayCheck === "Hospital") {
-      res.redirect("payability/v3/stay/accommodation-lookup-name")
-  } else {
-    res.redirect("payability/v3/stay/accommodation-boarder")
+  const t = req.session.data['type-scenario'];
+
+  if (t === "Hospital") {
+    return res.redirect("payability/v3/stay/accommodation-lookup-name");
   }
+  return res.redirect("payability/v3/stay/accommodation-boarder");
 });
 
-router.post('/still-there-check', function (req, res) {
-  updateStayObject(req);
-  const data = req.session.data || {};
 
-  const stillThere = data['date-out-check'];
-  const typeScenario = data['type-scenario'];
+// --- Still there? ---
+router.post('/still-there-check', function(req, res) {
+  updateStayObject(req);
+  const d = req.session.data;
+
+  const stillThere = d['date-out-check'];
 
   if (stillThere === "No") {
     return res.redirect("payability/v3/stay/date-left");
   }
+
   return res.redirect("payability/v3/stay/accommodation-lookup-name");
 });
 
+
+// --- Boarder check ---
 router.post('/boarder-check', function(req, res) {
   updateStayObject(req);
-  var boarderCheck = req.session.data['boarder-scenario'];
-  if (boarderCheck === "Yes") {
-      res.redirect("payability/v3/stay/accommodation-boarder-detail")
-  } else {
-    res.redirect("payability/v3/stay/repay")
+
+  const v = req.session.data['boarder-scenario'];
+
+  if (v === "Yes") {
+    return res.redirect("payability/v3/stay/accommodation-boarder-detail");
   }
+
+  return res.redirect("payability/v3/stay/similar-institution");
 });
 
+
+// --- Address check ---
 router.post('/address-check', function(req, res) {
   updateStayObject(req);
-  var addressCheck = req.session.data['addressCheck'];
-  if (addressCheck === "Yes") {
-      res.redirect("payability/v3/stay/accommodation-lookup-start")
-  } else {
-    res.redirect("payability/v3/stay/accommodation-contact-check")
+
+  const v = req.session.data['addressCheck'];
+
+  if (v === "Yes") {
+    return res.redirect("payability/v3/stay/accommodation-lookup-start");
   }
+
+  return res.redirect("payability/v3/stay/accommodation-contact-check");
 });
 
+
+// --- Contact check ---
 router.post('/contact-check', function(req, res) {
   updateStayObject(req);
-  var addressCheck = req.session.data['contactCheck'];
-  var prisonCheck = req.session.data['type-scenario']
 
-  if (addressCheck === "Yes") {
-      res.redirect("payability/v3/stay/accommodation-contact-select")
-  } else if (prisonCheck === 'Detention in Legal Custody') {
-    return res.redirect('payability/v3/stay/check-answers');
-  } else {
-    res.redirect("payability/v3/stay/accommodation-lookup-name")
+  const v = req.session.data['contactCheck'];
+  const scenario = req.session.data['type-scenario'];
+
+  if (v === "Yes") {
+    return res.redirect("payability/v3/stay/accommodation-contact-select");
   }
+
+  return res.redirect("payability/v3/stay/funding-address-check");
 });
 
+
+// --- Persona selection ---
 router.post('/persona-selection', function(req, res) {
   updateStayObject(req);
-  var personaSelection = req.session.data['PayabilityPersona'];
-  if (personaSelection === "Agent handling an ongoing claim") {
-      res.redirect("payability/v3/scenario")
-  } else {
-    res.redirect("payability/v3/stay/accommodation-hospital-check")
+
+  const v = req.session.data['PayabilityPersona'];
+
+  if (v === "Agent handling an ongoing claim") {
+    return res.redirect("payability/v3/scenario");
   }
+
+  return res.redirect("payability/v3/stay/accommodation-hospital-check");
 });
 
+
+// --- Funding check ---
 router.post('/funding-check', function(req, res) {
   updateStayObject(req);
-  var fundingCheck = req.session.data['PayabilityPersona'];
-  if (fundingCheck === "Agent handling an ongoing claim") {
-      res.redirect("payability/v3/stay/funding-lookup-name")
-  } else {
-    res.redirect("payability/v3/stay/funding-claimant-check")
+
+  const persona = req.session.data['PayabilityPersona'];
+
+  if (persona === "Agent handling an ongoing claim") {
+    return res.redirect("payability/v3/stay/funding-lookup-name");
   }
+
+  return res.redirect("payability/v3/stay/funding-claimant-check");
 });
 
+
+// --- Claimant funded? ---
 router.post('/claimant-funded-check', function(req, res) {
   updateStayObject(req);
-  var selfFunded = req.session.data['claimantFunded'];
-  if (selfFunded === "No") {
-      res.redirect("payability/v3/stay/funding-type")
-  } else {
-    res.redirect("payability/v3/stay/check-answers")
+
+  const v = req.session.data['claimantFunded'];
+
+  if (v === "No") {
+    return res.redirect("payability/v3/stay/funding-type");
   }
+
+  return res.redirect("payability/v3/stay/check-answers");
 });
 
+
+// --- Funding scenario ---
 router.post('/funding-scenario-v3', function(req, res) {
   updateStayObject(req);
-  var fundingSkip = req.session.data['funding-scenario'];
-  if (fundingSkip === "No, none of these" || fundingSkip === "I don't know" || fundingSkip === "Claimant" || fundingSkip === "Health authority" || fundingSkip === "NHS" ) {
-      res.redirect("payability/v3/stay/check-answers")
-    } else {  
-    res.redirect("payability/v3/stay/funding-name")
+
+  const v = req.session.data['funding-scenario'];
+
+  const autoEnd = [
+    "No, none of these",
+    "I don't know",
+    "Claimant",
+    "Health authority",
+    "NHS"
+  ];
+
+  if (autoEnd.includes(v)) {
+    return res.redirect("payability/v3/stay/check-answers");
   }
+
+  return res.redirect("payability/v3/stay/funding-name");
 });
 
+
+// --- Funding address check ---
 router.post('/funding-address-check', function(req, res) {
   updateStayObject(req);
-  var fundingSkip = req.session.data['fundingAddressCheck'];
-  if (fundingSkip === "Yes" ) {
-      res.redirect("payability/v3/stay/funding-lookup-name")
-    } else {  
-    res.redirect("payability/v3/stay/funding-contact-check")
+
+  const v = req.session.data['fundingAddressCheck'];
+
+  if (v === "Yes") {
+    return res.redirect("payability/v3/stay/funding-lookup-name");
   }
+
+  return res.redirect("payability/v3/stay/funding-contact-check");
 });
 
+
+// --- Funding contact check ---
 router.post('/funding-contact-check', function(req, res) {
   updateStayObject(req);
-  var fundingContactCheck = req.session.data['fundingContactCheck'];
-  if (fundingContactCheck === "Yes" ) {
-      res.redirect("payability/v3/stay/funding-contact-select")
-    } else {  
-    res.redirect("payability/v3/stay/accommodation-boarder")
+
+  const v = req.session.data['funding-contact-check'];
+
+  if (v === "Yes") {
+    return res.redirect("payability/v3/stay/funding-contact-select");
   }
+
+  return res.redirect("payability/v3/person-record/stay-task-list");
 });
 
-// ---- SAVE STAY (unchanged except stays get updated) ----
+// --------------------------------------------------------
+// SAVE STAY — updates the stay + ensures card only appears
+// when at least one task is completed
+// --------------------------------------------------------
 
 router.post('/save-stay', (req, res) => {
   const d = req.session.data;
-
   d.stays = d.stays || [];
 
   const ongoing = d['date-out-check'] === 'Yes';
 
+  // If creating new stay
   const stay = {
     id: d.isAddingStay ? d.stays.length : d.stayIndex,
-    name: d['accommodation-name'] || d['address-name'] || 'Accommodation',
+    name: d['accommodation-name'] || d['address-name'] || null,
     type: d['type-scenario'] || null,
+
     startDate: {
       day: d['date-in-day'],
       month: d['date-in-month'],
       year: d['date-in-year']
     },
+
     endDate: ongoing ? null : {
       day: d['date-out-day'],
       month: d['date-out-month'],
       year: d['date-out-year']
     },
+
     open: ongoing,
+
     boarderStatus: d['boarder-scenario'] || null,
     fundingType: d['funding-type'] || null,
     claimantFunded: d['claimantFunded'] || null,
+
     contactDetails: {
       name: d['funding-primary-contact'] || null,
       email: d['funding-email'] || null,
       phone: d['funding-phone-number'] || null
     },
+
     address: {
-      name: d['address-name'],
-      line1: d['address-line-1'],
-      town: d['address-town'],
-      postcode: d['address-postcode']
+      name: d['address-name'] || null,
+      line1: d['address-line-1'] || null,
+      town: d['address-town'] || null,
+      postcode: d['address-postcode'] || null
     },
+
+    // recorded the first time a stay is created
     dateRecorded: d.dateRecorded || new Date().toLocaleDateString('en-GB'),
     dateCompleted: ongoing ? null : new Date().toLocaleDateString('en-GB'),
-    completed: {} // updated by helper
+
+    // this gets updated by updateStayObject()
+    completed: {}
   };
 
+  // Save (new or edited)
   if (d.isAddingStay) {
     d.stays.push(stay);
     d.isAddingStay = false;
@@ -306,27 +427,39 @@ router.post('/save-stay', (req, res) => {
     d.stays[d.stayIndex] = stay;
   }
 
-  updateStayObject(req); // ← makes task list update immediately
+  // Run completion logic
+  updateStayObject(req);
 
-  res.render('payability/v3/person-record/stay-task-list', {
-    stay,
-    stays: d.stays
-  });
+  // After saving, always return to task list
+  res.redirect('/payability/v3/stay/task-list');
 });
+
+
+// --------------------------------------------------------
+// STAY OVERVIEW PAGE (when user clicks card on homepage)
+// --------------------------------------------------------
 
 router.get('/payability/v3/stay/:id/overview', function (req, res) {
   const d = req.session.data;
   const id = Number(req.params.id);
 
   d.stayIndex = id;
-  d.isAddingStay = false;
+  d.isAddingStay = false; // editing mode
 
   res.render('payability/v3/person-record/stay-overview');
 });
 
+
+// --------------------------------------------------------
+// TASK LIST PAGE
+// --------------------------------------------------------
+
 router.get('/payability/v3/stay/task-list', function (req, res) {
   const d = req.session.data;
   const stay = d.stays[d.stayIndex];
+
+  // ensure the completion state is fresh
+  updateStayObject(req);
 
   res.render('payability/v3/person-record/stay-task-list', {
     stay,
@@ -334,5 +467,31 @@ router.get('/payability/v3/stay/task-list', function (req, res) {
   });
 });
 
-//export routes
+
+
+// --------------------------------------------------------
+// CYCLE THROUGH QUESTIONS, WHEN COMPLETE, GO TO MASTER
+// --------------------------------------------------------
+
+router.get('/payability/v3/stay/continue', function (req, res) {
+  const d = req.session.data;
+  const stay = d.stays[d.stayIndex];
+
+  // Always refresh completion values first
+  updateStayObject(req);
+
+  // Determine next incomplete task
+  const next = getNextIncompleteTask(stay);
+
+  if (next) {
+    return res.redirect(next);        // 🚀 send user to next incomplete question
+  } else {
+    return res.redirect('/payability/v3/stay/check-all-answers');  // 🎉 everything complete
+  }
+});
+
+
+// --------------------------------------------------------
+// EXPORT ROUTER
+// --------------------------------------------------------
 module.exports = router;
