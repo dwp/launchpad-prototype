@@ -1,0 +1,145 @@
+{% extends "layouts/payability.html" %}
+
+{% block pageTitle %}
+  Stay task list – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set pageName = "Agent home" %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+      text: "Back",
+      href: "javascript:history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+{% from "govuk/components/task-list/macro.njk" import govukTaskList %}
+
+{% set stays = data.stays or [] %}
+{% set stayIndex = data.stayIndex %}
+{% set stay = stays[stayIndex] %}
+{% set ongoing = stay and stay.endDate == null %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <section class="dwp-quick-reference govuk-!-margin-bottom-8">
+      <dl class="dwp-quick-reference__block">
+        <dt class="govuk-visually-hidden">Name:</dt>
+        <dd class="dwp-quick-reference__primary">Jeff Bridges</dd>
+
+        <dt class="govuk-visually-hidden">National Insurance number:</dt>
+        <dd class="dwp-quick-reference__secondary">NA 11 22 33 C</dd>
+      </dl>
+    </section>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+
+    <!-- Default state for new stay -->
+     <!--<h1 class="govuk-heading-l">Stay in {{ stay.name or "hospital" }}</h1>-->
+     <h1 class="govuk-heading-l">Stay in [make dynamic]</h1>
+  <!--<h1 class="govuk-heading-l">Add stay details</h1>-->
+  <table class="govuk-table">
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Status</th>
+        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Complete</strong></td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Recorded during</th>
+        <td class="govuk-table__cell">PIP award</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Outcome</th>
+        <td class="govuk-table__cell">Overpayment<br><a href="#" class="govuk-!-margin-top-2" style="display: inline-block;">View outcome details</a></td>
+      </tr>
+      
+    </tbody>
+  </table>
+
+   
+  <h2 class="govuk-heading-m">Basic details</h2>
+    <table class="govuk-table">
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Accommodation type</th>
+        <td class="govuk-table__cell">[Make dynamic]</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Start date</th>
+        <td class="govuk-table__cell">[Make dynamic]</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">End date</th>
+        <td class="govuk-table__cell">[Make dynamic]</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Start date</th>
+        <td class="govuk-table__cell">[Make dynamic]</td>
+      </tr>
+        <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Funding source</th>
+        <td class="govuk-table__cell">[Make dynamic]</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Agreement to repay</th>
+        <td class="govuk-table__cell">[Make dynamic]</td>
+      </tr>
+    </tbody>
+  </table>
+
+  {% if data['PayabilityPersona'] != "Agent completing new claim stay end date" %}
+  <h2 class="govuk-heading-m">More details</h2>
+    <table class="govuk-table">
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Accommodation contact details</th>
+        <td class="govuk-table__cell">[Make dynamic]</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Funder address</th>
+        <td class="govuk-table__cell">[Make dynamic]</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Funder contact details</th>
+        <td class="govuk-table__cell">[Make dynamic]</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Boarder status</th>
+        <td class="govuk-table__cell">[Make dynamic]</td>
+      </tr>
+        <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Similiar institution</th>
+        <td class="govuk-table__cell">[Make dynamic]</td>
+      </tr>
+    </tbody>
+  </table>
+  {% from "govuk/components/button/macro.njk" import govukButton %}
+
+{{ govukButton({
+  text: "Edit stay",
+  classes: "govuk-button--secondary"
+}) }}
+
+  <h2 class="govuk-heading-m govuk-!-margin-top-5">Linked stays</h2>
+  <p>This stay is linked to:</p>
+  <ul class="govuk-list govuk-list--bullet ">
+    <li><a href="#">Stay in hospital: 13 January 2023 - 15 January 2023</a></li>
+    <li><a href="#">Stay in hospital: 17 January 2023 - 22 January 2023</a></li>
+    <li><a href="#">Stay in hospital: 22 January 2023 - 25 January 2023</a></li>
+  </ul>
+  {% endif %}
+ 
+
+<p class="govuk-body govuk-!-margin-bottom-6 govuk-!-margin-top-9">
+  <a href="/payability/v3/person-record/accommodation-history-complete" class="govuk-link">Return to accommodation stay history</a>
+</p>
+
+  </div>
+</div>
+
+{% endblock %}

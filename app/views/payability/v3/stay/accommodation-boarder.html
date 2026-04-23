@@ -11,7 +11,7 @@
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
 
-    <form class="form" action="/boarder-check" method="post">
+    <form class="form" action="similar-institution" method="post">
 
     {%if (data['PayabilityPersona'] == "Agent starting a new claim")%}
 
@@ -48,7 +48,7 @@
       name: "boarder-scenario",
       fieldset: {
         legend: {
-          text: "Were they a boarder at this accommodation?",
+          text: "Were they boarding at this accommodation?",
           isPageHeading: true,
           classes: "govuk-fieldset__legend--l"
         }

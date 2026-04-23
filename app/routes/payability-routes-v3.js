@@ -255,6 +255,17 @@ router.post('/address-check', function(req, res) {
   return res.redirect("payability/v3/stay/accommodation-contact-check");
 });
 
+//address routing for prison
+
+router.post('/accommodation-lookup-confirm', function(req, res) {
+  var addressRoute = req.session.data['type-scenario'];
+
+  if (addressRoute === "Detention in Legal Custody") {
+    return res.redirect("payability/v3/stay/stay-task-list");
+  }
+  return res.redirect("payability/v3/stay/accommodation-lookup-confirm");
+});
+
 
 // --- Contact check ---
 router.post('/contact-check', function(req, res) {
@@ -281,6 +292,10 @@ router.post('/persona-selection', function(req, res) {
     return res.redirect("payability/v3/scenario");
   }
 
+  else if (v === "Agent completing new claim stay end date") {
+    return res.redirect("payability/v3/agent/index");
+  }
+
   return res.redirect("payability/v3/stay/accommodation-hospital-check");
 });
 
@@ -292,10 +307,10 @@ router.post('/funding-check', function(req, res) {
   const persona = req.session.data['PayabilityPersona'];
 
   if (persona === "Agent handling an ongoing claim") {
-    return res.redirect("payability/v3/stay/funding-lookup-name");
+    return res.redirect("payability/v3/stay/funding-address-check");
   }
 
-  return res.redirect("payability/v3/stay/funding-claimant-check");
+  return res.redirect("payability/v3/stay/funding-address-check");
 });
 
 
@@ -362,77 +377,7 @@ router.post('/funding-contact-check', function(req, res) {
   return res.redirect("payability/v3/person-record/stay-task-list");
 });
 
-// --------------------------------------------------------
-// SAVE STAY — updates the stay + ensures card only appears
-// when at least one task is completed
-// --------------------------------------------------------
 
-router.post('/save-stay', (req, res) => {
-  const d = req.session.data;
-  d.stays = d.stays || [];
-
-  const ongoing = d['date-out-check'] === 'Yes';
-
-  // If creating new stay
-  const stay = {
-    id: d.isAddingStay ? d.stays.length : d.stayIndex,
-    name: d['accommodation-name'] || d['address-name'] || null,
-    type: d['type-scenario'] || null,
-
-    startDate: {
-      day: d['date-in-day'],
-      month: d['date-in-month'],
-      year: d['date-in-year']
-    },
-
-    endDate: ongoing ? null : {
-      day: d['date-out-day'],
-      month: d['date-out-month'],
-      year: d['date-out-year']
-    },
-
-    open: ongoing,
-
-    boarderStatus: d['boarder-scenario'] || null,
-    fundingType: d['funding-type'] || null,
-    claimantFunded: d['claimantFunded'] || null,
-
-    contactDetails: {
-      name: d['funding-primary-contact'] || null,
-      email: d['funding-email'] || null,
-      phone: d['funding-phone-number'] || null
-    },
-
-    address: {
-      name: d['address-name'] || null,
-      line1: d['address-line-1'] || null,
-      town: d['address-town'] || null,
-      postcode: d['address-postcode'] || null
-    },
-
-    // recorded the first time a stay is created
-    dateRecorded: d.dateRecorded || new Date().toLocaleDateString('en-GB'),
-    dateCompleted: ongoing ? null : new Date().toLocaleDateString('en-GB'),
-
-    // this gets updated by updateStayObject()
-    completed: {}
-  };
-
-  // Save (new or edited)
-  if (d.isAddingStay) {
-    d.stays.push(stay);
-    d.isAddingStay = false;
-    d.stayIndex = stay.id;
-  } else {
-    d.stays[d.stayIndex] = stay;
-  }
-
-  // Run completion logic
-  updateStayObject(req);
-
-  // After saving, always return to task list
-  res.redirect('/payability/v3/stay/task-list');
-});
 
 
 // --------------------------------------------------------
@@ -489,6 +434,29 @@ router.get('/payability/v3/stay/continue', function (req, res) {
     return res.redirect('/payability/v3/stay/check-all-answers');  // 🎉 everything complete
   }
 });
+
+//QUESTION FLOW
+
+//Date left accommodation
+router.post('/date-left', function(req, res) {
+  var persona = req.session.data['PayabilityPersona'];
+  if (persona === "Agent completing new claim stay end date") {
+    return res.redirect('/payability/v3/stay/pip-reg-stay-task-list-complete');
+  } else {
+    return res.redirect('/payability/v3/stay/accommodation-lookup-name');
+  }
+});
+
+
+// Check your answers 
+router.post('/save-stay', function(req, res) {
+  var persona = req.session.data['PayabilityPersona'];
+  if (persona === "Agent completing new claim stay end date") {
+  return res.redirect('/payability/v3/stay/pip-reg-stay-task-list-complete');
+ } else {
+    return res.redirect('/payability/v3/stay/accommodation-lookup-name');
+  }
+})
 
 
 // --------------------------------------------------------

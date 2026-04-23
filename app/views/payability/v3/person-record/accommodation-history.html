@@ -47,228 +47,231 @@
       Accommodation stay history
     </h1>
     
-    <form class="form" action="/payability/v3/stay/start" method="get">
+    <form class="form" action="../stay/type" method="post">
       {{ govukButton({ text: "Add a stay" }) }}
     </form>
 
-{% set stays = data.stays or [] %}
-{% set ongoingStays = [] %}
-{% set completedStays = [] %}
-{% for s in stays %}
+    <!-- SCENARIO: NO STAYS ADDED (If a stay exists → show it, else → show message) -->
+    {% if data['PayabilityPersona'] == "Agent handling an ongoing claim" %}
+  
 
-  {% set comp = s.completed or {} %}
+    <!-- If no stays saved at all -->
+      <!--<p class="govuk-body">No accommodation stays have been recorded.</p>-->
 
-  <!-- Setting all the conditions for a card to change to a completed on 
-   - currently all qquestions have to be answered to be marked as complete-->
-  {% set allQuestionsCompleted = (
-    comp.type and
-    comp.startDate and
-    comp.endDate and
-    comp.address and
-    comp.funding and
-    comp.repay and
-    comp.boarder and
-    comp.similarInstitution and
-    comp.contact and
-    comp.fundingAddress and
-    comp.fundingContact
-  ) %}
+    {% endif %}
 
-  {% if allQuestionsCompleted %}
-    {% set completedStays = completedStays.concat([s]) %}
-  {% else %}
-    {% set ongoingStays = ongoingStays.concat([s]) %}
-  {% endif %}
-
-{% endfor %}
-
-<!-- SCENARIO: ONE COMPLETED STAY (SHOW DEMO CONTENT + ANY USER ADDED STAY) -->
-
-{% if data['PayabilityScenario'] == "One completed stay" %}
-<h2 class="govuk-heading-m">Open stay</h2>
-
-{% if ongoingStays.length %}
-{% for s in ongoingStays %}
-
-{% set start = s.startDate.day + " " + s.startDate.month + " " + s.startDate.year %}
-
-{{ govukSummaryList({
-  card: {
-    title: { text: s.name or "Accommodation" },
-    actions: {
-      items: [
-        {
-          href: "/payability/v3/stay/" + s.id + "/overview",
-          text: "Edit",
-          visuallyHiddenText: "of " + (s.name or "accommodation")
-        }
-      ]
-    }
-  },
-  rows: [
-    {
-      key: { text: "Accommodation type" },
-      value: { text: s.type or "Not provided" }
-    },
-    {
-      key: { text: "Start date" },
-      value: { text: start }
-    },
-    {
-      key: { text: "Date recorded" },
-      value: { text: s.dateRecorded }
-    }
-  ]
-}) }}
-
-{% endfor %}
-{% endif %}
-{% include "includes/open-stay.njk" %}
-
-<!-- Add a closed stay to the list of stays -->
-<h2 class="govuk-heading-m">Completed stays</h2>
-
-{% if completedStays.length %}
-
-{% for s in completedStays %}
-
-{% set start = s.startDate.day + " " + s.startDate.month + " " + s.startDate.year %}
-{% set end = s.endDate.day + " " + s.endDate.month + " " + s.endDate.year %}
-
-{{ govukSummaryList({
-  card: {
-    title: { text: s.type or "Accommodation" },
-    actions: {
-      items: [
-        {
-          href: "/payability/v3/stay/" + s.id + "/overview",
-          text: "Edit",
-          visuallyHiddenText: "of " + (s.name or "accommodation")
-        }
-      ]
-    }
-  },
-  rows: [
-    {
-      key: { text: "Accommodation name" },
-      value: { text: s.name or "Not provided" }
-    },
-    {
-      key: { text: "Dates" },
-      value: { text: start + " – " + end }
-    },
-    {
-      key: { text: "Date recorded" },
-      value: { text: s.dateRecorded }
-    }
-  ]
-}) }}
-
-{% endfor %}
-{% endif %}
-
-{% include "includes/static-linked-stay.njk" %}
-{% endif %}
-
-
-
-<!-- SCENARIO: NO STAYS ADDED (If a stay exists → show it, else → show message) -->
-{% if data['PayabilityScenario'] == "No stays added" %}
-
-<!-- If no stays saved at all -->
-  {% if not stays.length %}
-    <p class="govuk-body">No stays in temporary accommodation have been recorded.</p>
-
-  {% else %}
-
-<!-- add an open stay starting from no stays added -->
-    {% if ongoingStays.length %}
+    {% if data['PayabilityPersona'] == "Agent completing new claim stay end date" %}
       <h2 class="govuk-heading-m">Open stays</h2>
+      <p class="govuk-body">Stays that are ongoing or need more information.</p>
+      <h3 class="govuk-heading-s">19 January 2026 - ongoing</h3>
 
-      {% for s in ongoingStays %}
-        {% set start = s.startDate.day + "/" + s.startDate.month + "/" + s.startDate.year %}
+  {% set start = s.startDate.day + " " + s.startDate.month + " " + s.startDate.year %}
 
-        {{ govukSummaryList({
-          card: {
-            title: { text: s.type or "Accommodation" },
-            actions: {
-              items: [
-                {
-                  href: "/payability/v3/stay/" + s.id + "/overview",
-                  text: "Edit",
-                  visuallyHiddenText: "of " + (s.name or "accommodation")
-                }
-              ]
-            }
+      {{ govukSummaryList({
+        card: {
+          title: { text: s.name or "Hospital" },
+          actions: {
+            items: [
+              {
+                href: "/payability/v3/stay/pip-reg-stay-task-list",
+                text: "View",
+                visuallyHiddenText: "of " + (s.name or "accommodation")
+              }
+            ]
+          }
+        },
+        rows: [
+          {
+            key: { text: "Start date" },
+            value: { text: "19 January 2026" }
           },
-          rows: [
-            {
-              key: { text: "Accommodation name" },
-              value: { text: s.name or "Not provided" }
-            },
-            {
-              key: { text: "End date" },
-              value: { html: '<strong class="govuk-tag govuk-tag--blue">Incomplete</strong>' }
-            },
-            {
-              key: { text: "Start date" },
-              value: { text: start }
-            },
-            {
-              key: { text: "Recorded during" },
-              value: { text: "Ongoing claim" }
-            }
-          ]
-        }) }}
-      {% endfor %}
+           {
+            key: { text: "Recorded during" },
+            value: { text: "PIP registration" }
+          },         
+          {
+            key: { text: "Status" },
+            value: {  html: '<strong class="govuk-tag govuk-tag--blue">Incomplete</strong>' }
+          }
+        ]
+      }) }}
     {% endif %}
 
-<!-- add a completed stay from no stays added -->
+{% if data['PayabilityPersona'] == "Agent handling an ongoing claim"
+   and data['PayabilityScenario'] == "No stays added" %}
+   {% else %}
+    <h2 class="govuk-heading-m">Closed stays</h2>
+      <p class="govuk-body">Stays that have all the information recorded and have been submitted.</p>
+      <h3 class="govuk-heading-s">19 January 2026 - 25 February</h3>
 
-    {% if completedStays.length %}
-      <h2 class="govuk-heading-m">Completed stays</h2>
+      {% set start = s.startDate.day + " " + s.startDate.month + " " + s.startDate.year %}
 
-      {% for s in completedStays %}
-        {% set start = s.startDate.day + "/" + s.startDate.month + "/" + s.startDate.year %}
-        {% set end = s.endDate.day + " " + s.endDate.month + " " + s.endDate.year %}
-
-        {{ govukSummaryList({
-          card: {
-            title: { text: s.type or "Accommodation" },
-            actions: {
-              items: [
-                {
-                  href: "/payability/v3/stay/" + s.id + "/overview",
-                  text: "Edit",
-                  visuallyHiddenText: "of " + (s.name or "accommodation")
-                }
-              ]
-            }
+      {{ govukSummaryList({
+        card: {
+          title: { text: s.name or "Hospital" },
+          actions: {
+            items: [
+              {
+                href: "/payability/v3/stay/pip-reg-stay-task-list",
+                text: "View",
+                visuallyHiddenText: "of " + (s.name or "accommodation")
+              }
+            ]
+          }
+        },
+        rows: [
+          {
+            key: { text: "Start date" },
+            value: { text: "19 January 2026" }
           },
-          rows: [
-            {
-              key: { text: "Accommodation name" },
-              value: { text: s.name or "Not provided" }
-            },
-            {
-              key: { text: "Date recorded" },
-              value: { text: start }
-            },
-            {
-              key: { text: "Date marked completed " },
-              value: { text: s.dateRecorded }
-            }
-          ]
-        }) }}
+           {
+            key: { text: "End date" },
+            value: { text: "25 February" }
+          }
+        ]
+      }) }}
 
-      {% endfor %}
-    {% endif %}
+ <h3 class="govuk-heading-s">19 January 2026 - 25 February</h3>
 
-  {% endif %}
+      {% set start = s.startDate.day + " " + s.startDate.month + " " + s.startDate.year %}
 
-{% endif %}
+      {{ govukSummaryList({
+        card: {
+          title: { text: s.name or "Hospital" },
+          actions: {
+            items: [
+              {
+                href: "/payability/v3/stay/pip-reg-stay-task-list",
+                text: "View",
+                visuallyHiddenText: "of " + (s.name or "accommodation")
+              }
+            ]
+          }
+        },
+        rows: [
+          {
+            key: { text: "Start date" },
+            value: { text: "19 January 2026" }
+          },
+           {
+            key: { text: "End date" },
+            value: { text: "25 February" }
+          }
+        ]
+      }) }}
+
+ <h3 class="govuk-heading-s">19 January 2026 - 25 February</h3>
+
+      {% set start = s.startDate.day + " " + s.startDate.month + " " + s.startDate.year %}
+
+      {{ govukSummaryList({
+        card: {
+          title: { text: s.name or "Hospital" },
+          actions: {
+            items: [
+              {
+                href: "/payability/v3/stay/pip-reg-stay-task-list",
+                text: "View",
+                visuallyHiddenText: "of " + (s.name or "accommodation")
+              }
+            ]
+          }
+        },
+        rows: [
+          {
+            key: { text: "Start date" },
+            value: { text: "19 January 2026" }
+          },
+           {
+            key: { text: "End date" },
+            value: { text: "25 February" }
+          }
+        ]
+      }) }}
+
+ <h3 class="govuk-heading-s">19 January 2026 - 25 February</h3>
+
+      {% set start = s.startDate.day + " " + s.startDate.month + " " + s.startDate.year %}
+
+      {{ govukSummaryList({
+        card: {
+          title: { text: s.name or "Hospital" },
+          actions: {
+            items: [
+              {
+                href: "/payability/v3/stay/pip-reg-stay-task-list",
+                text: "View",
+                visuallyHiddenText: "of " + (s.name or "accommodation")
+              }
+            ]
+          }
+        },
+        rows: [
+          {
+            key: { text: "Start date" },
+            value: { text: "19 January 2026" }
+          },
+           {
+            key: { text: "End date" },
+            value: { text: "25 February" }
+          }
+        ]
+      }) }}
+
+ <h3 class="govuk-heading-s">19 January 2026 - 25 February</h3>
+
+      {% set start = s.startDate.day + " " + s.startDate.month + " " + s.startDate.year %}
+
+      {{ govukSummaryList({
+        card: {
+          title: { text: s.name or "Hospital" },
+          actions: {
+            items: [
+              {
+                href: "/payability/v3/stay/pip-reg-stay-task-list",
+                text: "View",
+                visuallyHiddenText: "of " + (s.name or "accommodation")
+              }
+            ]
+          }
+        },
+        rows: [
+          {
+            key: { text: "Start date" },
+            value: { text: "19 January 2026" }
+          },
+           {
+            key: { text: "End date" },
+            value: { text: "25 February" }
+          }
+        ]
+      }) }}
+
+      {% from "govuk/components/pagination/macro.njk" import govukPagination %}
+
+      {{ govukPagination({
+        next: {
+          href: "#"
+        },
+        items: [
+          {
+            number: 1,
+            current: true,
+            href: "#"
+          },
+          {
+            number: 2,
+            href: "#"
+          },
+          {
+            number: 3,
+            href: "#"
+          }
+        ]
+      }) }}
+      {% endif %}
+
   </div>
 </div>
 
 {% endblock %}
-``

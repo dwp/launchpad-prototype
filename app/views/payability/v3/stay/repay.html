@@ -37,9 +37,13 @@
               value: "Yes",
               text: "Yes"
             },
+            
             {
               value: "No",
               text: "No"
+            },
+            {
+              divider: "or"
             },
             {
               value: "Not sure",
@@ -50,7 +54,7 @@
 
 
       {{ govukButton({
-        text: "Continue"
+        text: "Save and continue"
       }) }}
       {% include "includes/aar-task-list.html" %}
 

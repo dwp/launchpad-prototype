@@ -1,22 +1,17 @@
 
-      <p class="govuk-body">19 January 2026 – Ongoing</p>
+      <h3 class="govuk-heading-s">19 January 2026 – Ongoing</h3>
 
 
 {{ govukSummaryList({
         card: {
           title: {
-            text: "Freeman Hospital"
+            text: "Hospital"
           },
           actions: {
             items: [
               {
                 href: "/payability/v3/person-record/stay-overview",
                 text: "View",
-                visuallyHiddenText: "of Freeman Hospital"
-              },
-              {
-                href: "../stay/delete",
-                text: "Delete",
                 visuallyHiddenText: "of Freeman Hospital"
               }
             ]
@@ -25,28 +20,28 @@
         rows: [
           {
             key: {
+              text: "Accommodation name"
+            },
+            value: {
+              html: "Hospital name goes here"
+            }
+          },
+          {
+            key: {
+              text: "Start date"
+            },
+            value: {
+              html: "19 January 2026"
+            }
+          },
+          {
+            key: {
               text: "Status"
             },
             value: {
-              html: '<strong class="govuk-tag govuk-tag--yellow">
-                     Awaiting end date
+              html: '<strong class="govuk-tag govuk-tag--blue">
+                     Incomplete
                      </strong>'
-            }
-          },
-          {
-            key: {
-              text: "Accommodation type"
-            },
-            value: {
-              html: "Hospital"
-            }
-          },
-          {
-            key: {
-              text: "Date recorded"
-            },
-            value: {
-              html: "20 January 2026"
             }
           }
         ]

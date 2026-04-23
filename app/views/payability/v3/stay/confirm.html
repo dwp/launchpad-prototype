@@ -1,0 +1,35 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Check your answers template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+<!-- displaying dates -->
+
+
+
+<!-- page heading and summarylist -->
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+   
+    <form action="/confirmation" method="post">
+      {{ govukPanel({
+            titleText: "Stay submitted"
+          }) }}
+
+      <p class="govuk-body">View the <a href="pip-reg-stay-complete">completed stay details</a> or the full <a href="../person-record/accomodation-history-complete">accommodation history</a>.</p>
+
+
+    </form>
+  </div>
+</div>
+
+{% endblock %}

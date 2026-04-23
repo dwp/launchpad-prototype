@@ -24,6 +24,16 @@
     <form class="form" action="/persona-selection" method="post">
 
       <!-- /payability/v2/stay/type for new claims nd self serve -->
+       <!-- AAR removed -->
+        <!--
+               {
+            value: "Agent starting a new claim",
+            text: "Agent starting a new claim",  
+            hint: {
+              text: "You are an AAR agent guiding a claimant over the phone, recording a payability stay at the start of a claim"
+            }
+          },
+        -->
 
       {{ govukRadios({
         name: "PayabilityPersona",
@@ -35,18 +45,19 @@
           }
         },
         items: [
+
         {
-            value: "Agent starting a new claim",
-            text: "Agent starting a new claim",  
+            value: "Agent completing new claim stay end date",
+            text: "Agent adding stay end date to new claim payability event",  
             hint: {
-              text: "You are an AAR agent guiding a claimant over the phone, recording a payability stay at the start of a claim"
+              text: "You are an agent picking up the task of completing the end date for a payability stay recorded during PIP registration"
             }
           },
-        {
+          {
             value: "Agent handling an ongoing claim",
-            text: "Agent handling an ongoing claim",
+            text: "Agent adding a stay during PIP award ",
             hint: {
-              text: "You are an agent modifying/viewing a payability stay in a open claim"
+              text: "You are an agent adding, editing or closing a payability stay for an existing claim, either during a PIP award or during a Mandatory Reconsideration"
             }
           }
         ]

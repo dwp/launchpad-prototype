@@ -1,0 +1,139 @@
+{% extends "layouts/payability.html" %}
+
+{% block pageTitle %}
+  Stay task list – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set pageName = "Agent home" %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+      text: "Back",
+      href: "javascript:history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+{% from "govuk/components/task-list/macro.njk" import govukTaskList %}
+
+{% set stays = data.stays or [] %}
+{% set stayIndex = data.stayIndex %}
+{% set stay = stays[stayIndex] %}
+{% set ongoing = stay and stay.endDate == null %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <section class="dwp-quick-reference govuk-!-margin-bottom-8">
+      <dl class="dwp-quick-reference__block">
+        <dt class="govuk-visually-hidden">Name:</dt>
+        <dd class="dwp-quick-reference__primary">Jeff Bridges</dd>
+
+        <dt class="govuk-visually-hidden">National Insurance number:</dt>
+        <dd class="dwp-quick-reference__secondary">NA 11 22 33 C</dd>
+      </dl>
+    </section>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <!-- Default state for new stay -->
+     <!--<h1 class="govuk-heading-l">Stay in {{ stay.name or "hospital" }}</h1>-->
+     <h1 class="govuk-heading-l">Stay in hospital</h1>
+  <!--<h1 class="govuk-heading-l">Add stay details</h1>-->
+  <table class="govuk-table">
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Status</th>
+        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow">Ready to submit</strong></td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Recorded during</th>
+        <td class="govuk-table__cell">PIP registration</td>
+      </tr>
+    </tbody>
+  </table>
+
+   
+  <h2 class="govuk-heading-m">Basic details</h2>
+ 
+{{ govukTaskList({
+  idPrefix: "stay-details",
+  items: [
+    {
+      title: { text: "Accommodation type" },
+      href: "/payability/v3/stay/type",
+      status: {
+        tag: {
+          text: "Complete",
+          classes: "govuk-tag--green"
+        }
+      }
+    },
+    {
+      title: { text: "Start date" },
+      href: "/payability/v3/stay/date-in",
+      status: {
+        tag: {
+          text: "Complete",
+          classes: "govuk-tag--green"
+        }
+      }
+    },
+    {
+      title: { text: "Exit date" },
+      href: "/payability/v3/stay/date-left",
+      status: {
+        tag: {
+          text: "Complete",
+          classes: "govuk-tag--green"
+        }
+      }
+    },
+    {
+      title: { text: "Accommodation address" },
+      href: "/payability/v3/stay/accommodation-lookup-name",
+      status: {
+        tag: {
+          text: "Complete",
+          classes: "govuk-tag--green"
+        }
+      }
+    },
+    {
+      title: { text: "Funding source" },
+      href: "/payability/v3/stay/funding-type",
+      status: {
+        tag: {
+          text: "Complete",
+          classes: "govuk-tag--green"
+        }
+      }
+    },
+    {
+      title: { text: "Agreement to repay" },
+      href: "/payability/v3/stay/repay",
+      status: {
+        tag: {
+          text: "Complete",
+          classes: "govuk-tag--green"
+        }
+      }
+    }
+  ]
+}) }}
+
+{{ govukButton({
+  text: "Continue",
+  href: "final-check-answers"
+}) }}
+
+<p class="govuk-body govuk-!-margin-bottom-6">
+  <a href="/payability/v3/person-record/accommodation-history" class="govuk-link">Return to accommodation stay history</a>
+</p>
+
+  </div>
+</div>
+
+{% endblock %}

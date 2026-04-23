@@ -8,26 +8,36 @@
 {% block content %}
 
 <!-- Start row -->
-          {% set ts = (data['type-scenario'] or 'Accomodation') | trim %}
-          {% if not ts == 'none' %}
-            {% set entity = 'accommodation' %}
-          {% elif ts == 'Detention in Legal Custody' %}
-            {% set entity = 'Place of Custody' %}
-          {% else %}
-            {% set entity = ts %}
-          {% endif %}
+{% set ts = (data['type-scenario'] or 'Accommodation') | trim %}
+
+{% if ts == 'Detention in Legal Custody' %}
+  {% set article = '' %}
+  {% set entity = 'detention in legal custody' %}
+{% elif ts == 'none' %}
+  {% set article = 'the ' %}
+  {% set entity = 'accommodation' %}
+{% else %}
+  {% set article = 'the ' %}
+  {% set entity = ts | lower %}
+{% endif %}
 
 
 <div class="govuk-grid-row">
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
-    <form class="form" action="accommodation-lookup-name" method="post">
+    <form class="form" action="/date-left" method="post">
 
-    {% if (data['PayabilityPersona'] == "Agent handling an ongoing claim") %}
+      {% if data['PayabilityPersona'] != "Agent handling an ongoing claim" %}
+      <h1 class="govuk-heading-l">
+      When did you leave the hospital?
+    </h1>
+      {% else %}
 
      <h1 class="govuk-heading-l">
-      When did they leave the {{ entity | lower }}?
+      When did you leave {{ article }}{{ entity }}?
     </h1>
+
+    {% endif %}
 
       {{ govukDateInput({
           id: "date-out",
@@ -41,33 +51,11 @@
         }) }}
 
 
-      {% else %}
-
-
-
-    <h1 class="govuk-heading-l">
-        When did you leave the {{ entity | lower }}?
-      </h1>
-
-      {{ govukDateInput({
-          id: "date-out",
-          namePrefix: "date-out",
-          fieldset: {
-            legend: {
-              classes: "govuk-fieldset__legend--l"
-            }
-          }
-        }) }}
-
-       {% endif %}
-
-
-
       {{ govukButton({
-        text: "Continue"
+        text: "Save and continue"
       }) }}
 
-{% include "includes/aar-task-list.html" %}
+    {% include "includes/aar-task-list.html" %}
     </form>
   </div>
 </div>

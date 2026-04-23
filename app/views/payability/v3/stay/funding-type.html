@@ -78,15 +78,16 @@
         name: "funding-scenario",
         fieldset: {
           legend: {
-            text: "Who paid for the stay?",
+            text: "Who funded the stay?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
         },
+        value: data['funding-scenario'],
         items: [
-          { 
-            value: "Claimant",
-            text: "Claimant"
+          {
+            value: "Charity",
+            text: "Charity"
           },
           { 
             value: "Local authority",
@@ -96,10 +97,13 @@
             value: "NHS",
             text: "NHS"
           },
-          {
-            value: "Charity",
-            text: "Charity"
+          { 
+            value: "Claimant",
+            text: "You (claimant)"
           },
+              {
+      divider: "or"
+    },
           { 
             value: "I don't know",
             text: "I don't know"

@@ -1,0 +1,241 @@
+{% extends "layouts/payability.html" %}
+
+{% block pageTitle %}
+  Content page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set pageName = "Agent home" %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+      text: "Back",
+      href: "/payability/v3/agent"
+  }) }}
+{% endblock %}
+
+{% block content %}
+{% set stays = data.stays or [] %}
+{% set stay = stays | last %}
+{% set ongoing = stay and (stay.endDate == null) %}
+
+<!-- Case header -->
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <form action="login-router" method="post" class="form">
+      <section class="dwp-quick-reference govuk-!-margin-bottom-8" aria-label="Case information">
+        <dl class="dwp-quick-reference__block">
+          <dt class="govuk-visually-hidden">Name</dt>
+          <dd class="dwp-quick-reference__primary">Jeff Bridges</dd>
+
+          <dt class="govuk-visually-hidden">National Insurance number</dt>
+          <dd class="dwp-quick-reference__secondary">NA 11 22 33 C</dd>
+        </dl>
+      </section>
+    </form>
+  </div>
+</div>
+
+<!-- Main content row -->
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-quarter">
+    {% include "includes/person-record-nav.njk" %}
+  </div>
+
+  <div class="govuk-grid-column-three-quarters">
+
+    <h1 class="govuk-heading-l">
+      Accommodation stay history
+    </h1>
+    
+    <form class="form" action="../stay/type" method="post">
+      {{ govukButton({ text: "Add a stay" }) }}
+    </form>
+
+    <!-- SCENARIO: NO STAYS ADDED (If a stay exists → show it, else → show message) -->
+    {% if data['PayabilityPersona'] == "Agent handling an ongoing claim" %}
+  
+
+    <!-- If no stays saved at all -->
+      <!--<p class="govuk-body">No accommodation stays have been recorded.</p>-->
+
+    {% endif %}
+
+    {% if data['PayabilityPersona'] == "Agent completing new claim stay end date" %}
+      <h2 class="govuk-heading-m">Open stays</h2>
+      <p class="govuk-body">Stays that are ongoing or need more information.</p>
+      <h3 class="govuk-heading-s">19 January 2026 - Ongoing</h3>
+
+  {% set start = s.startDate.day + " " + s.startDate.month + " " + s.startDate.year %}
+
+      {{ govukSummaryList({
+        card: {
+          title: { text: s.name or "Hospital" },
+          actions: {
+            items: [
+              {
+                href: "/payability/v3/stay/pip-reg-stay-task-list",
+                text: "View",
+                visuallyHiddenText: "of " + (s.name or "accommodation")
+              }
+            ]
+          }
+        },
+        rows: [
+          {
+            key: { text: "Start date" },
+            value: { text: "19 January 2026" }
+          },
+           {
+            key: { text: "Recorded during" },
+            value: { text: "PIP registration" }
+          },         
+          {
+            key: { text: "Status" },
+            value: {  html: '<strong class="govuk-tag govuk-tag--blue">Incomplete</strong>' }
+          }
+        ]
+      }) }}
+    {% endif %}
+
+      <h3 class="govuk-heading-s">Linked stay: 19 May 2025 - 25 August 2025</h3>
+
+      {% set start = s.startDate.day + " " + s.startDate.month + " " + s.startDate.year %}
+
+      {{ govukSummaryList({
+        card: {
+          title: { text: s.name or "Hospital" },
+          actions: {
+            items: [
+              {
+                href: "/payability/v3/stay/pip-stay-complete-linked-stay.html",
+                text: "View",
+                visuallyHiddenText: "of " + (s.name or "accommodation")
+              }
+            ]
+          }
+        },
+        rows: [
+          {
+            key: { text: "Start date" },
+            value: { text: "19 January 2026" }
+          },
+           {
+            key: { text: "End date" },
+            value: { text: "25 February" }
+          }
+        ]
+      }) }}
+
+
+
+      {% set start = s.startDate.day + " " + s.startDate.month + " " + s.startDate.year %}
+
+      {{ govukSummaryList({
+        card: {
+          title: { text: s.name or "Hospital" },
+          actions: {
+            items: [
+              {
+                href: "/payability/v3/stay/pip-reg-stay-task-list",
+                text: "View",
+                visuallyHiddenText: "of " + (s.name or "accommodation")
+              }
+            ]
+          }
+        },
+        rows: [
+          {
+            key: { text: "Start date" },
+            value: { text: "19 January 2026" }
+          },
+           {
+            key: { text: "End date" },
+            value: { text: "25 February" }
+          }
+        ]
+      }) }}
+
+
+      {% set start = s.startDate.day + " " + s.startDate.month + " " + s.startDate.year %}
+
+      {{ govukSummaryList({
+        card: {
+          title: { text: s.name or "Hospital" },
+          actions: {
+            items: [
+              {
+                href: "/payability/v3/stay/pip-reg-stay-task-list",
+                text: "View",
+                visuallyHiddenText: "of " + (s.name or "accommodation")
+              }
+            ]
+          }
+        },
+        rows: [
+          {
+            key: { text: "Start date" },
+            value: { text: "19 January 2026" }
+          },
+           {
+            key: { text: "End date" },
+            value: { text: "25 February" }
+          }
+        ]
+      }) }}
+
+
+      {% set start = s.startDate.day + " " + s.startDate.month + " " + s.startDate.year %}
+
+      {{ govukSummaryList({
+        card: {
+          title: { text: s.name or "Hospital" },
+          actions: {
+            items: [
+              {
+                href: "/payability/v3/stay/pip-reg-stay-task-list",
+                text: "View",
+                visuallyHiddenText: "of " + (s.name or "accommodation")
+              }
+            ]
+          }
+        },
+        rows: [
+          {
+            key: { text: "Start date" },
+            value: { text: "19 January 2026" }
+          },
+           {
+            key: { text: "End date" },
+            value: { text: "25 February" }
+          }
+        ]
+      }) }}
+
+
+      {% from "govuk/components/pagination/macro.njk" import govukPagination %}
+
+      {{ govukPagination({
+        next: {
+          href: "#"
+        },
+        items: [
+          {
+            number: 1,
+            href: "#"
+          },
+          {
+            number: 2,
+            current: true,
+            href: "#"
+          },
+          {
+            number: 3,
+            href: "#"
+          }
+        ]
+      }) }}
+
+  </div>
+</div>
+
+{% endblock %}

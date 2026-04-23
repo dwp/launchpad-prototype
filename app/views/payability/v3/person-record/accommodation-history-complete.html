@@ -1,0 +1,133 @@
+{% extends "layouts/payability.html" %}
+
+{% block pageTitle %}
+  Content page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set pageName = "Agent home" %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+      text: "Back",
+      href: "/payability/v3/agent"
+  }) }}
+{% endblock %}
+
+{% block content %}
+{% set stays = data.stays or [] %}
+{% set stay = stays | last %}
+{% set ongoing = stay and (stay.endDate == null) %}
+
+<!-- Case header -->
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <form action="login-router" method="post" class="form">
+      <section class="dwp-quick-reference govuk-!-margin-bottom-8" aria-label="Case information">
+        <dl class="dwp-quick-reference__block">
+          <dt class="govuk-visually-hidden">Name</dt>
+          <dd class="dwp-quick-reference__primary">Jeff Bridges</dd>
+
+          <dt class="govuk-visually-hidden">National Insurance number</dt>
+          <dd class="dwp-quick-reference__secondary">NA 11 22 33 C</dd>
+        </dl>
+      </section>
+    </form>
+  </div>
+</div>
+
+<!-- Main content row -->
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-quarter">
+    {% include "includes/person-record-nav.njk" %}
+  </div>
+
+  <div class="govuk-grid-column-three-quarters">
+
+    <h1 class="govuk-heading-l">
+      Accommodation stay history
+    </h1>
+    
+    <form class="form" action="/payability/v3/stay/start" method="get">
+      {{ govukButton({ text: "Add a stay" }) }}
+    </form>
+
+    <!-- SCENARIO: NO STAYS ADDED (If a stay exists → show it, else → show message) -->
+    {% if data['PayabilityScenario'] == "No stays added" %}
+
+    <!-- If no stays saved at all -->
+      <!--<p class="govuk-body">No accommodation stays have been recorded.</p>-->
+
+    {% endif %}
+
+    {% if data['PayabilityPersona'] == "Agent completing new claim stay end date" %}
+      <h2 class="govuk-heading-m">Closed stays</h2>
+      <p class="govuk-body">Stays that have all the information recorded and have been submitted.</p>
+      <h3 class="govuk-heading-s">19 January 2026 - 25 February 2026</h3>
+
+{% set start = s.startDate.day + " " + s.startDate.month + " " + s.startDate.year %}
+
+      {{ govukSummaryList({
+        card: {
+          title: { text: s.name or "Hospital" },
+          actions: {
+            items: [
+              {
+                href: "/payability/v3/stay/pip-stay-complete",
+                text: "View",
+                visuallyHiddenText: "of " + (s.name or "accommodation")
+              }
+            ]
+          }
+        },
+        rows: [
+          {
+            key: { text: "Start date" },
+            value: { text: "19 January 2026" }
+          },
+           {
+            key: { text: "End date" },
+            value: { text: "25 February 2026" }
+          }
+        ]
+      }) }}
+
+    {% endif %}
+    {% if data['PayabilityPersona'] != "Agent completing new claim stay end date" %}
+      <h2 class="govuk-heading-m">Closed stays</h2>
+      <p class="govuk-body">Stays that have all the information recorded and have been submitted.</p>
+      <h3 class="govuk-heading-s">19 January 2026 - 25 February 2026</h3>
+
+{% set start = s.startDate.day + " " + s.startDate.month + " " + s.startDate.year %}
+
+      {{ govukSummaryList({
+        card: {
+          title: { text: s.name or "Hospital" },
+          actions: {
+            items: [
+              {
+                href: "/payability/v3/stay/pip-reg-stay-task-list-complete",
+                text: "View",
+                visuallyHiddenText: "of " + (s.name or "accommodation")
+              }
+            ]
+          }
+        },
+        rows: [
+          {
+            key: { text: "Start date" },
+            value: { text: "19 January 2026" }
+          },
+           {
+            key: { text: "End date" },
+            value: { text: "25 February 2026" }
+          }
+        ]
+      }) }}
+     {% endif %}
+
+
+  </div>
+</div>
+
+{% endblock %}
+``

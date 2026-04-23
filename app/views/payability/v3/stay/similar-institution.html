@@ -14,9 +14,9 @@
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
 
-    <h1 class="govuk-heading-l">Should this stay be treated as a stay in an NHS hospital?</h1>
+    <h1 class="govuk-heading-l">Should this accommodation be treated as a similar institution to an NHS hospital?</h1>
 
-    <form action="accommodation-contact-check" method="post">
+    <form action="pip-award-stay-task-list-complete" method="post">
 
       {{ govukRadios({
         name: "similar-institution",
@@ -26,18 +26,18 @@
             classes: "govuk-fieldset__legend--l"
           }
         },
-        hint: {
-          text: "A stay counts as a hospital/similar institution only if it employs qualified medical professionals, and the claimant gets treatment from or supervised by those professionals"
-        },
         items: [
           { value: "Yes", text: "Yes" },
           { value: "No", text: "No" },
+          {
+            divider: "or"
+          },
           { value: "I don't know", text: "I don't know" }
         ]
       }) }}
 
       {{ govukButton({
-        text: "Continue",
+        text: "Save and continue",
         type: "submit"
       }) }}
 

@@ -38,9 +38,68 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
-
-    <h1 class="govuk-heading-l">Stay in {{ stay.name or "accommodation" }}</h1>
-
+    <!-- Default state for new stay -->
+     <!--<h1 class="govuk-heading-l">Stay in {{ stay.name or "hospital" }}</h1>-->
+     <h1 class="govuk-heading-l">Stay in hospital</h1>
+  <!--<h1 class="govuk-heading-l">Add stay details</h1>-->
+  <table class="govuk-table">
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Status</th>
+        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--blue">Incomplete</strong></td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Recorded during</th>
+        <td class="govuk-table__cell">PIP registration</td>
+      </tr>
+    </tbody>
+  </table>
+  <!--
+    <table class="govuk-table">
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Status</th>
+        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Complete</strong></td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Recorded during</th>
+        <td class="govuk-table__cell">PIP registration</td>
+      </tr>
+    </tbody>
+  </table>
+  -->
+  <!-- Appears when first task list is complete -->
+   
+  <h2 class="govuk-heading-m">Basic details</h2>
+  <!--
+  <table class="govuk-table">
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Accommodation type</th>
+        <td class="govuk-table__cell">Hospital</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Start date</th>
+        <td class="govuk-table__cell">19 January 2026</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">End date</th>
+        <td class="govuk-table__cell">19 January 2026</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Accommodation address</th>
+        <td class="govuk-table__cell">Royal Liverpool University Hospital<br>Mount Vernon St<br>Liverpool<br>L7 8YE</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Paid by</th>
+        <td class="govuk-table__cell">NHS</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Agreement to repay</th>
+        <td class="govuk-table__cell">No</td>
+      </tr>
+    </tbody>
+  </table>
 {% macro statusTag(completed) %}
   {% if completed %}
     {% set tag = '<strong class="govuk-tag govuk-tag--green">Completed</strong>' %}
@@ -49,6 +108,8 @@
   {% endif %}
   {{ tag | safe }}
 {% endmacro %}
+-->
+
 
 {# --- Correctly mapped variables from routing --- #}
 
@@ -119,8 +180,32 @@
     }
   ]
 }) }}
-
+<!--
 <h2 class="govuk-heading-m">Additional details</h2>
+  <table class="govuk-table">
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Accommodation name</th>
+        <td class="govuk-table__cell">Example name goes here</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Start date</th>
+        <td class="govuk-table__cell">19 January 2026</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">End date</th>
+        <td class="govuk-table__cell">19 January 2026</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Status</th>
+        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--blue">Incomplete</strong></td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Recorded during</th>
+        <td class="govuk-table__cell">PIP registration</td>
+      </tr>
+    </tbody>
+  </table>
 
 {{ govukTaskList({
   idPrefix: "stay-additional",
@@ -154,9 +239,10 @@
 }) }}
 
 {{ govukButton({
-  text: "Continue",
+  text: "Save and continue",
   href: "/payability/v3/stay/continue"
 }) }}
+  -->
 
 <p class="govuk-body govuk-!-margin-bottom-6">
   <a href="/payability/v3/person-record/accommodation-history" class="govuk-link">Return to accommodation stay history</a>

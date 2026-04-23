@@ -13,55 +13,41 @@
   <div class="govuk-grid-column-two-thirds">
       <form class="form" action="date-still-there" method="post">
 
-          {% set ts = (data['type-scenario'] or 'Accomodation') | trim %}
-          {% if not ts == 'none' %}
-            {% set entity = 'accommodation' %}
-          {% elif ts == 'Detention in Legal Custody' %}
-            {% set entity = 'Place of Custody' %}
-          {% else %}
-            {% set entity = ts %}
-          {% endif %}
 
-<h1 class="govuk-heading-l">
-  When did they enter the {{ entity | lower }}?
-</h1>
+{% set ts = (data['type-scenario'] or 'Accommodation') | trim %}
 
-
-
+{% if ts == 'Detention in Legal Custody' %}
+  {% set article = '' %}
+  {% set entity = 'detention in legal custody' %}
+{% elif ts == 'none' %}
+  {% set article = 'the ' %}
+  {% set entity = 'accommodation' %}
+{% else %}
+  {% set article = 'the ' %}
+  {% set entity = ts | lower %}
+{% endif %}
 
 
-      {% if (data['PayabilityPersona'] == "Agent handling an ongoing claim") %}
 
-    
+    <h1 class="govuk-heading-l">
+      When did you enter {{ article }}{{ entity }}?
+    </h1>
+
       {{govukDateInput({
+              name: "date-in",
               id: "admission",
               namePrefix: "date-in",
               fieldset: {
                 legend: {
                   classes: "govuk-fieldset__legend--l"
                 }
-              }
+              },
+            value: data['date-in']
       }) }}
-
-      {% else %}
-
-         {{govukDateInput({
-              id: "admission",
-              namePrefix: "date-in",
-              fieldset: {
-                legend: {
-                  text: "When did they enter the accommodation?",
-                  isPageHeading: true,
-                  classes: "govuk-fieldset__legend--l"
-                }
-              }
-      }) }}
-
-      {% endif %}
 
 
       {{ govukButton({
-        text: "Continue"
+        text: "Save and continue"
       }) }}
 
       {% include "includes/aar-task-list.html" %}

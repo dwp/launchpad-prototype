@@ -20,7 +20,7 @@
           {% set x = ts %}
         {% endif %}
 
-        {% if (data['PayabilityPersona'] == "Agent handling an ongoing claim") %}
+
 
           {{ govukRadios({
             name: "type-scenario",
@@ -31,19 +31,19 @@
                 classes: "govuk-fieldset__legend--l"
               }
             },
+            value: data['type-scenario'],
             items: [
-              { value: "Hospital", text: "Hospital" },
-              { value: "Hospice", text: "Hospice" },
               { value: "Care home", text: "Care home" },
               { value: "Detention in Legal Custody", text: "Detention in legal custody" },
-              { value: "Sheltered accommodation", text: "Sheltered accommodation" },
+              { value: "Hospice", text: "Hospice" },
+              { value: "Hospital", text: "Hospital" },
               { value: "Residential college", text: "Residential college" },
-              { value: "Supported accommodation", text: "Supported accommodation" },
-              { value: "Other", text: "Other" }
+              { value: "Sheltered accommodation", text: "Sheltered accommodation" },
+              { value: "Supported accommodation", text: "Supported accommodation" }
             ]
           }) }}
 
-        {% else %}
+          <!--
 
           {{ govukRadios({
             name: "type-scenario",
@@ -63,11 +63,11 @@
               { value: "Supported accommodation", text: "Supported accommodation" }
             ]
           }) }}
+          -->
+  
 
-        {% endif %}
-
-        {{ govukButton({ text: "Continue" }) }}
-        {% include "includes/aar-task-list.html" %}
+        {{ govukButton({ text: "Save and continue" }) }}
+        <!--{% include "includes/aar-task-list.html" %}-->
         
       </form>
     </div>
