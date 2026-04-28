@@ -335,6 +335,8 @@
    
     <form action="pip-stay-complete" method="post">
 <h1 class="govuk-heading-l">Check the completed stay details</h1>
+  <h2 class="govuk-heading-m">Claimant information</h2>
+  <p>Information provided by the claimant.</p>
       {{ govukSummaryList({
         classes: "govuk-!-margin-bottom-9",
         rows: [
@@ -360,14 +362,14 @@
               text: "Start date"
             },
             value: {
-              text: "[Make dynamic]"
+              text: (data['date-in-day'] or '') ~ ' ' ~ (data['date-in-month'] or '') ~ ' ' ~ (data['date-in-year'] or '')
             },
             actions: {
               items: [
                 {
-                  href: "#",
+                  href: "date-in",
                   text: "Change",
-                  visuallyHiddenText: "date of birth"
+                  visuallyHiddenText: "start date"
                 }
               ]
             }
@@ -376,15 +378,21 @@
             key: {
               text: "End date"
             },
-            value: {
-              text: "[Make dynamic]"
-            },
+            
+value: {
+  text: (
+    "Ongoing" if data['date-out-check'] == "Yes"
+    else (data['date-out-day'] or '') ~ ' ' ~
+         (data['date-out-month'] or '') ~ ' ' ~
+         (data['date-out-year'] or '')
+  )
+},
             actions: {
               items: [
                 {
-                  href: "#",
+                  href: "date-left",
                   text: "Change",
-                  visuallyHiddenText: "customer reference"
+                  visuallyHiddenText: "end date"
                 }
               ]
             }
@@ -393,15 +401,21 @@
             key: {
               text: "Accommodation address"
             },
-            value: {
-              html: "[Make dynamic]"
-            },
+           
+value: {
+  html: (data['accommodation-name'] or '') ~
+        (' ' if data['accommodation-name'] and
+               (data['address-line-1'] or data['accommodation-select-an-address'])
+         else '') ~
+        (data['address-line-1'] or data['accommodation-select-an-address'] or '')
+}
+,
             actions: {
               items: [
                 {
-                  href: "#",
+                  href: "accommodation-lookup-name",
                   text: "Change",
-                  visuallyHiddenText: "address"
+                  visuallyHiddenText: "accommodation address"
                 }
               ]
             }
@@ -411,14 +425,48 @@
               text: "Funding source"
             },
             value: {
-              html: '[Make dynamic]'
+              html: data['funding-scenario'] or data['funding-type'] or 'Not specified'
             },
             actions: {
               items: [
                 {
-                  href: "#",
+                  href: "funding-type",
                   text: "Change",
-                  visuallyHiddenText: "contact details"
+                  visuallyHiddenText: "funding source"
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Funder name"
+            },
+            value: {
+              html: data['funding-primary-contact'] or 'Not specified'
+            },
+            actions: {
+              items: [
+                {
+                  href: "funding-name",
+                  text: "Change",
+                  visuallyHiddenText: "funding name"
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Agreement to repay"
+            },
+            value: {
+              html: data['repayment-scenario'] or 'Not specified'
+            },
+            actions: {
+              items: [
+                {
+                  href: "repayment-scenario",
+                  text: "Change",
+                  visuallyHiddenText: "agreement to repay"
                 }
               ]
             }
@@ -426,7 +474,8 @@
         ]
       }) }}
 {% if data['PayabilityPersona'] != "Agent completing new claim stay end date" %}
-      <h2 class="govuk-heading-m">More details</h2>
+        <h2 class="govuk-heading-m">Caseworker information</h2>
+  <p>Information collected by the caseworker.</p>
 
       {{ govukSummaryList({
         classes: "govuk-!-margin-bottom-9",
@@ -436,14 +485,22 @@
               text: "Accommodation contact details"
             },
             value: {
-              text: "[Make dyanmic]"
+              text:
+                (
+                  (data['primary-contact'] or '') ~
+                  (' / ' if data['primary-contact'] and (data['email'] or data['phone-number']) else '') ~
+                  (data['email'] or '') ~
+                  (' / ' if data['email'] and data['phone-number'] else '') ~
+                  (data['phone-number'] or '')
+                )
+                or 'Not provided'
             },
             actions: {
               items: [
                 {
-                  href: "#",
+                  href: "accommodation-contact-check",
                   text: "Change",
-                  visuallyHiddenText: "previous application number"
+                  visuallyHiddenText: "accommodation contact details"
                 }
               ]
             }
@@ -453,14 +510,14 @@
               text: "Funder address"
             },
             value: {
-              text: "[Make dynamic]"
+              text: data['funding-select-an-address'] or data['funding-address-line-1'] or 'Not provided'
             },
             actions: {
               items: [
                 {
-                  href: "#",
+                  href: "funding-address-check",
                   text: "Change",
-                  visuallyHiddenText: "licence type"
+                  visuallyHiddenText: "funder address"
                 }
               ]
             }
@@ -469,15 +526,28 @@
             key: {
               text: "Funder contact details"
             },
-            value: {
-              html: "[Make dynamic]"
-            },
+
+value: {
+  html:
+    (
+      (data['funding-primary-contact'] or '') ~
+      ('&lt;br&gt;' if data['funding-primary-contact'] and
+                      (data['funding-email'] or data['funding-phone-number'])
+       else '') ~
+      (data['funding-email'] or '') ~
+      ('&lt;br&gt;' if data['funding-email'] and data['funding-phone-number']
+       else '') ~
+      (data['funding-phone-number'] or '')
+    )
+    or 'Not provided'
+}
+,
             actions: {
               items: [
                 {
-                  href: "#",
+                  href: "funding-contact-check",
                   text: "Change",
-                  visuallyHiddenText: "home address"
+                  visuallyHiddenText: "funder contact details"
                 }
               ]
             }
@@ -487,31 +557,31 @@
               text: "Boarder status"
             },
             value: {
-              text: "[Make dynamic]"
+              text: data['boarder-scenario'] or 'Not provided'
             },
             actions: {
               items: [
                 {
-                  href: "#",
+                  href: "accommodation-boarder",
                   text: "Change",
-                  visuallyHiddenText: "licence period"
+                  visuallyHiddenText: "boarder status"
                 }
               ]
             }
           },
           {
             key: {
-              text: "Similiar institution"
+              text: "Similar institution"
             },
             value: {
-              text: "[Make dynamic]"
+              text: data['similar-institution'] or 'Not provided'
             },
             actions: {
               items: [
                 {
-                  href: "#",
+                  href: "similar-institution",
                   text: "Change",
-                  visuallyHiddenText: "licence period"
+                  visuallyHiddenText: "similar institution"
                 }
               ]
             }

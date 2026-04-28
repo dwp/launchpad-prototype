@@ -7,20 +7,78 @@
 {% set pageName = "Agent home" %}
 
 {% block beforeContent %}
+  <!--
   {{ govukBackLink({
       text: "Back",
       href: "javascript:history.back()"
   }) }}
+  -->
 {% endblock %}
 
 {% block content %}
 
+
+{% macro taskStatus(answer) %}
+  {% if answer and answer != "I don't know" %}
+    {{
+      govukTag({
+        text: "Complete",
+        classes: "govuk-tag--green"
+      })
+    }}
+  {% else %}
+    {{
+      govukTag({
+        text: "To do",
+        classes: "govuk-tag--yellow"
+      })
+    }}
+  {% endif %}
+{% endmacro %}
+
 {% from "govuk/components/task-list/macro.njk" import govukTaskList %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% set stays = data.stays or [] %}
 {% set stayIndex = data.stayIndex %}
 {% set stay = stays[stayIndex] %}
 {% set ongoing = stay and stay.endDate == null %}
+
+{% set basicReady =
+  data['type-scenario'] and
+  data['date-in-day'] and
+  data['date-in-month'] and
+  data['date-in-year'] and
+  (
+    data['date-out-check'] == "No" and
+    data['date-out-day'] and
+    data['date-out-month'] and
+    data['date-out-year']
+  ) and
+  ((data['accommodation-name'] or data['address-name']) and
+   (data['address-line-1'] or data['accommodation-select-an-address'])) and
+  (data['type-scenario'] == "Detention in Legal Custody" or (data['funding-scenario'] and data['funding-scenario'] != "I don't know")) and
+  (data['type-scenario'] == "Detention in Legal Custody" or (data['funding-primary-contact'] and data['funding-primary-contact'] != "I don't know")) and
+  (data['type-scenario'] == "Detention in Legal Custody" or (data['repayment-scenario'] and data['repayment-scenario'] != "I don't know"))
+%}
+
+{% if data['type-scenario'] == "Detention in Legal Custody" %}
+  {% set moreReady = true %}
+{% elseif data['type-scenario'] == "Hospital" and data['funding-scenario'] == "Claimant" %}
+  {% set moreReady = true %}
+{% elseif data['type-scenario'] == "Hospital" and data['funding-scenario'] == "NHS" %}
+  {% set moreReady = data['boarder-scenario'] %}
+{% else %}
+  {% set moreReady =
+    data['boarder-scenario'] and
+    (data['contactCheck'] and data['contactCheck'] != "I don't know") and
+    (data['funding-address-line-1'] or data['funding-select-an-address']) and
+    (data['funding-primary-contact'] and data['funding-primary-contact'] != "I don't know") and
+    (data['similar-institution'] and data['similar-institution'] != "I don't know")
+  %}
+{% endif %}
+
+{% set readyToSubmit = basicReady and moreReady %}
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
@@ -52,213 +110,203 @@
     <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Status</th>
-        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--blue">Incomplete</strong></td>
+        <td class="govuk-table__cell">
+          {% if readyToSubmit %}
+            <strong class="govuk-tag govuk-tag--yellow">Ready to submit</strong>
+          {% else %}
+            <strong class="govuk-tag govuk-tag--blue">Incomplete</strong>
+          {% endif %}
+        </td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Recorded during</th>
-        <td class="govuk-table__cell">PIP award</td>
+        <td class="govuk-table__cell">
+          {% if data['PayabilityPersona'] == "Agent handling an ongoing claim" %}
+            PIP award
+          {% else %}
+            PIP registration
+          {% endif %}
+        </td>
       </tr>
     </tbody>
   </table>
 
    
-  <h2 class="govuk-heading-m">Basic details</h2>
- {% if data['type-scenario'] != "Detention in Legal Custody" %}
-  {{ govukTaskList({
-    idPrefix: "stay-details",
-    items: [
-      {
-        title: { text: "Accommodation type" },
-        href: "/payability/v3/stay/type",
-        status: {
-          tag: {
-            text: "Complete",
-            classes: "govuk-tag--green"
-          }
-        }
-      },
-      {
-        title: { text: "Start date" },
-        href: "/payability/v3/stay/date-in",
-        status: {
-          tag: {
-            text: "Complete",
-            classes: "govuk-tag--green"
-          }
-        }
-      },
-      {
-        title: { text: "Exit date" },
-        href: "/payability/v3/stay/date-still-there",
-        status: {
-          tag: {
-            text: "Complete",
-            classes: "govuk-tag--green"
-          }
-        }
-      },
-      {
-        title: { text: "Accommodation address" },
-        href: "/payability/v3/stay/accommodation-lookup-name",
-        status: {
-          tag: {
-            text: "Complete",
-            classes: "govuk-tag--green"
-          }
-        }
-      },
-      {
-        title: { text: "Funding source" },
-        href: "/payability/v3/stay/funding-type",
-        status: {
-          tag: {
-            text: "Complete",
-            classes: "govuk-tag--green"
-          }
-        }
-      },
-      {
-        title: { text: "Agreement to repay" },
-        href: "/payability/v3/stay/repay",
-        status: {
-          tag: {
-            text: "Complete",
-            classes: "govuk-tag--green"
-          }
-        }
-      }
-    ]
-  }) }}
+  <h2 class="govuk-heading-m">Claimant information</h2>
+  <p>Information provided by the claimant.</p>
+ 
+{% set basicItems = [] %}
 
-  {% else %}
-    {{ govukTaskList({
-    idPrefix: "stay-details",
-    items: [
-      {
-        title: { text: "Accommodation type" },
-        href: "/payability/v3/stay/type",
-        status: {
-          tag: {
-            text: "Complete",
-            classes: "govuk-tag--green"
-          }
-        }
-      },
-      {
-        title: { text: "Start date" },
-        href: "/payability/v3/stay/date-in",
-        status: {
-          tag: {
-            text: "Complete",
-            classes: "govuk-tag--green"
-          }
-        }
-      },
-      {
-        title: { text: "Exit date" },
-        href: "/payability/v3/stay/date-still-there",
-        status: {
-          tag: {
-            text: "Complete",
-            classes: "govuk-tag--green"
-          }
-        }
-      },
-      {
-        title: { text: "Accommodation address" },
-        href: "/payability/v3/stay/accommodation-lookup-name",
-        status: {
-          tag: {
-            text: "Complete",
-            classes: "govuk-tag--green"
-          }
-        }
-      }
-    ]
-  }) }}
+{% set _ = basicItems.push({
+  title: { text: "Accommodation type" },
+  href: "/payability/v3/stay/type",
+  status: { html: taskStatus(data['type-scenario']) }
+}) %}
+
+{% set _ = basicItems.push({
+  title: { text: "Start date" },
+  href: "/payability/v3/stay/date-in",
+  status: {
+    html: taskStatus(
+      data['date-in-day'] and
+      data['date-in-month'] and
+      data['date-in-year']
+    )
+  }
+}) %}
+
+{% set _ = basicItems.push({
+  title: { text: "Exit date" },
+  href: "/payability/v3/stay/date-still-there",
+  status: {
+    html: taskStatus(
+      data['date-out-check'] == "No"
+      and (
+        data['date-out-day'] and
+        data['date-out-month'] and
+        data['date-out-year']
+      )
+    )
+  }
+}) %}
+
+{% set _ = basicItems.push({
+  title: { text: "Accommodation address" },
+  href: "/payability/v3/stay/accommodation-lookup-name",
+  status: {
+    html: taskStatus(
+      (data['accommodation-name'] or data['address-name'])
+      and (data['address-line-1'] or data['accommodation-select-an-address'])
+    )
+  }
+}) %}
+
+{% if data['type-scenario'] != "Detention in Legal Custody" %}
+  {% set _ = basicItems.push({
+    title: { text: "Funding source" },
+    href: "/payability/v3/stay/funding-type",
+    status: { html: taskStatus(data['funding-scenario']) }
+  }) %}
+
+  {% set _ = basicItems.push({
+    title: { text: "Funder name" },
+    href: "/payability/v3/stay/funding-name",
+    status: { html: taskStatus(data['funding-primary-contact']) }
+  }) %}
+
+  {% set _ = basicItems.push({
+    title: { text: "Agreement to repay" },
+    href: "/payability/v3/stay/repay",
+    status: { html: taskStatus(data['repayment-scenario']) }
+  }) %}
 {% endif %}
 
- <h2 class="govuk-heading-m">More details</h2>
-  
-{% if data['type-scenario'] != "Detention in Legal Custody" and data['type-scenario'] != "Hospital" %}
-    {{ govukTaskList({
-      idPrefix: "stay-details",
-      items: [
-        {
-          title: { text: "Accommodation contact details" },
-          href: "accommodation-contact-check",
-          status: {
-            tag: {
-              text: "To do",
-              classes: "govuk-tag--yellow"
-            }
-          }
-        },
-        {
-          title: { text: "Funder address" },
-          href: "funding-address-check",
-          status: {
-            tag: {
-              text: "To do",
-              classes: "govuk-tag--yellow"
-            }
-          }
-        },
-        {
-          title: { text: "Funder contact details" },
-          href: "funding-contact-check",
-          status: {
-            tag: {
-              text: "To do",
-              classes: "govuk-tag--yellow"
-            }
-          }
-        },
-        {
-          title: { text: "Boarder status" },
-          href: "accommodation-boarder",
-          status: {
-            tag: {
-              text: "To do",
-              classes: "govuk-tag--yellow"
-            }
-          }
-        },
-        {
-          title: { text: "Similar institution" },
-          href: "similiar-insitution",
-          status: {
-            tag: {
-              text: "To do",
-              classes: "govuk-tag--yellow"
-            }
-          }
-        }
-      ]
-    }) }}
+{{ govukTaskList({
+  idPrefix: "stay-basic",
+  items: basicItems
+}) }}
 
-    
-    {% elseif data['type-scenario'] == "Hospital" %}  
-      {{ govukTaskList({
-        idPrefix: "stay-details",
-        items: [
-          {
-            title: { text: "Boarder status" },
-            href: "accommodation-boarder",
-            status: {
-              tag: {
-                text: "To do",
-                classes: "govuk-tag--yellow"
-              }
-            }
-          }
-        ]
-      }) }}
+ 
+
+{% set showMoreDetails = false %}
+{% set onlyBoarderStatus = false %}
+
+{# Rule 1: Detention in Legal Custody → never show #}
+{% if data['type-scenario'] == "Detention in Legal Custody" %}
+  {% set showMoreDetails = false %}
+
+{# Hospital rules #}
+{% elseif data['type-scenario'] == "Hospital" %}
+
+  {% if data['funding-scenario'] == "NHS" %}
+    {% set showMoreDetails = true %}
+    {% set onlyBoarderStatus = true %}
+
+  {% elseif data['funding-scenario'] == "Claimant" %}
+    {% set showMoreDetails = false %}
+
+  {% elseif
+      data['funding-scenario'] == "Charity"
+      or data['funding-scenario'] == "Local authority"
+  %}
+    {% set showMoreDetails = true %}
   {% endif %}
 
+{# All other scenarios #}
+{% else %}
+  {% set showMoreDetails = true %}
+{% endif %}
+
+
+{% if showMoreDetails %}
+
+  <h2 class="govuk-heading-m">Caseworker information</h2>
+  <p>Information collected by the caseworker.</p>
+
+  {% set moreItems = [] %}
+
+  {# If NOT restricted to Boarder status only, add the rest #}
+  {% if not onlyBoarderStatus %}
+
+    {% set _ = moreItems.push({
+      title: { text: "Accommodation contact details" },
+      href: "accommodation-contact-check",
+      status: { html: taskStatus(data['contactCheck']) }
+    }) %}
+
+    {% set _ = moreItems.push({
+      title: { text: "Funder address" },
+      href: "funding-address-check",
+      status: {
+        html: taskStatus(
+          data['funding-address-line-1']
+          or data['funding-select-an-address']
+        )
+      }
+    }) %}
+
+    {% set _ = moreItems.push({
+      title: { text: "Funder contact details" },
+      href: "funding-contact-check",
+      status: { html: taskStatus(data['funding-contact-check']) }
+    }) %}
+
+  {% endif %}
+
+  {# Boarder status appears whenever More details is shown #}
+  {% set _ = moreItems.push({
+    title: { text: "Boarder status" },
+    href: "accommodation-boarder",
+    status: { html: taskStatus(data['boarder-scenario']) }
+  }) %}
+
+  {% if not onlyBoarderStatus %}
+    {% set _ = moreItems.push({
+      title: { text: "Similar institution" },
+      href: "similar-institution",
+      status: { html: taskStatus(data['similar-institution']) }
+    }) %}
+  {% endif %}
+
+  {% if moreItems.length %}
+    {{ govukTaskList({
+      idPrefix: "stay-more",
+      items: moreItems
+    }) }}
+  {% endif %}
+ {% endif %}
+
+{% if readyToSubmit %}
+  <div class="govuk-!-margin-bottom-6">
+    {{ govukButton({
+      text: "Save and continue",
+      href: "/payability/v3/stay/final-check-answers"
+    }) }}
+  </div>
+{% endif %}
 
 <p class="govuk-body govuk-!-margin-bottom-6">
-  <a href="/payability/v3/person-record/accommodation-history-open-stay" class="govuk-link">Return to accommodation stay history</a>
+  <a href="/payability/v3/person-record/accommodation-history-open-stay" class="govuk-link">View accommodation stay history</a>
 </p>
 
   </div>

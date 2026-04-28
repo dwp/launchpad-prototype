@@ -33,17 +33,34 @@
       When did you enter {{ article }}{{ entity }}?
     </h1>
 
-      {{govukDateInput({
-              name: "date-in",
-              id: "admission",
-              namePrefix: "date-in",
-              fieldset: {
-                legend: {
-                  classes: "govuk-fieldset__legend--l"
-                }
-              },
-            value: data['date-in']
-      }) }}
+
+{{ govukDateInput({
+  id: "admission",
+  namePrefix: "date-in",
+  fieldset: {
+    legend: {
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  items: [
+    {
+      classes: "govuk-input--width-2",
+      name: "day",
+      value: data['date-in-day']
+    },
+    {
+      classes: "govuk-input--width-2",
+      name: "month",
+      value: data['date-in-month']
+    },
+    {
+      classes: "govuk-input--width-4",
+      name: "year",
+      value: data['date-in-year']
+    }
+  ]
+}) }}
+
 
 
       {{ govukButton({

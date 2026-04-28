@@ -95,7 +95,7 @@
     {% if data['PayabilityPersona'] != "Agent completing new claim stay end date" %}
       <h2 class="govuk-heading-m">Closed stays</h2>
       <p class="govuk-body">Stays that have all the information recorded and have been submitted.</p>
-      <h3 class="govuk-heading-s">19 January 2026 - 25 February 2026</h3>
+      <h3 class="govuk-heading-s">{{ data['date-in-day'] }} {{ data['date-in-month'] }} {{ data['date-in-year'] }} - {{ data['date-out-day'] }} {{ data['date-out-month'] }} {{ data['date-out-year'] }} 2026</h3>
 
 {% set start = s.startDate.day + " " + s.startDate.month + " " + s.startDate.year %}
 
@@ -105,7 +105,7 @@
           actions: {
             items: [
               {
-                href: "/payability/v3/stay/pip-reg-stay-task-list-complete",
+                href: "/payability/v3/stay/pip-stay-complete",
                 text: "View",
                 visuallyHiddenText: "of " + (s.name or "accommodation")
               }
@@ -115,11 +115,20 @@
         rows: [
           {
             key: { text: "Start date" },
-            value: { text: "19 January 2026" }
+            value: {
+              text: (data['date-in-day'] or '') ~ ' ' ~ (data['date-in-month'] or '') ~ ' ' ~ (data['date-in-year'] or '')
+            }
           },
            {
             key: { text: "End date" },
-            value: { text: "25 February 2026" }
+            value: {
+            text: (
+              "Ongoing" if data['date-out-check'] == "Yes"
+              else (data['date-out-day'] or '') ~ ' ' ~
+                  (data['date-out-month'] or '') ~ ' ' ~
+                  (data['date-out-year'] or '')
+            )
+          }
           }
         ]
       }) }}

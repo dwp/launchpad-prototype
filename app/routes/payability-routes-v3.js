@@ -448,9 +448,22 @@ router.post('/date-left', function(req, res) {
 });
 
 
+// Serve pip-stay-complete page and manage banner display
+router.get('/payability/v3/stay/pip-stay-complete', function(req, res) {
+  // Banner displays only on first visit (when flag is set)
+  // After rendering, clear the flag so banner won't show on subsequent visits
+  const showBanner = req.session.data['stayJustSubmitted'];
+  if (showBanner) {
+    delete req.session.data['stayJustSubmitted'];
+  }
+  res.render('payability/v3/stay/pip-stay-complete');
+});
+
 // Check your answers 
 router.post('/save-stay', function(req, res) {
   var persona = req.session.data['PayabilityPersona'];
+  // Set flag so banner displays on page load
+  req.session.data['stayJustSubmitted'] = true;
   if (persona === "Agent completing new claim stay end date") {
   return res.redirect('/payability/v3/stay/pip-reg-stay-task-list-complete');
  } else {

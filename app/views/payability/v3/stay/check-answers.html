@@ -320,7 +320,7 @@
     actions: {
       items: [{
         href: "repay",
-        text: "Change",
+        text: data['repayment-scenario'],
         visuallyHiddenText: "Agreement to repay"
       }]
     }
@@ -333,7 +333,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
    
-    <form action="pip-award-stay-task-list-half-complete" method="post">
+    <form action="stay-task-list" method="post">
 <h1 class="govuk-heading-l">Check the stay details</h1>
 
       {{ govukSummaryList({
@@ -361,7 +361,7 @@
               text: "Start date"
             },
             value: {
-              text: data['date-in']
+              text: data['date-in-day'] + '/' + data['date-in-month'] + '/' + data['date-in-year']
             },
             actions: {
               items: [
@@ -378,7 +378,7 @@
               text: "End date"
             },
             value: {
-              text: data['change']
+              text: data['date-out-day'] + '/' + data['date-out-month'] + '/' + data['date-out-year']
             },
             actions: {
               items: [
@@ -395,7 +395,7 @@
               text: "Accommodation address"
             },
             value: {
-              text: data['change']
+              text: data['accommodation-select-an-address']
             },
             actions: {
               items: [
@@ -429,7 +429,7 @@
               text: "Funder name"
             },
             value: {
-              text: data['CHANGE']
+              text: data['funding-primary-contact']
             },
             actions: {
               items: [
@@ -446,7 +446,7 @@
               text: "Agreement to repay"
             },
             value: {
-              text: data['CHANGE']
+              text: data['repayment-scenario']
             },
             actions: {
               items: [

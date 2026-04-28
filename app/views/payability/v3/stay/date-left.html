@@ -47,7 +47,23 @@
               classes: "govuk-fieldset__legend--l",
               isPageHeading: true
             }
-          }
+          },  items: [
+              {
+                classes: "govuk-input--width-2",
+                name: "day",
+                value: data['date-out-day']
+              },
+              {
+                classes: "govuk-input--width-2",
+                name: "month",
+                value: data['date-out-month']
+              },
+              {
+                classes: "govuk-input--width-4",
+                name: "year",
+                value: data['date-out-year']
+              }
+            ]
         }) }}
 
 

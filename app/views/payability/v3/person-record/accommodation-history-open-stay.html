@@ -54,41 +54,95 @@
     <!-- SCENARIO: NO STAYS ADDED (If a stay exists → show it, else → show message) -->
     {% if data['PayabilityPersona'] == "Agent handling an ongoing claim" %}
       <h2 class="govuk-heading-m">Open stays</h2>
-      <p class="govuk-body">Stays that are ongoing or need more information.</p>
-      <h3 class="govuk-heading-s">19 January 2026 - Ongoing</h3>
+      <p class="govuk-body">
+        Stays that are ongoing or need more information.
+      </p>
 
-  {% set start = s.startDate.day + " " + s.startDate.month + " " + s.startDate.year %}
+      {% for s in data.stays %}
+        {% if not s.endDate %}
 
-      {{ govukSummaryList({
-        card: {
-          title: { text: s.name or "Hospital" },
-          actions: {
-            items: [
+          {# Format dates #}
+          {% set startDate =
+            (s.startDate.day or '') ~ ' ' ~
+            (s.startDate.month or '') ~ ' ' ~
+            (s.startDate.year or '')
+          %}
+          {% set endDateText =
+            'Ongoing'
+            if not s.endDate
+            else (
+              (s.endDate.day or '') ~ ' ' ~
+              (s.endDate.month or '') ~ ' ' ~
+              (s.endDate.year or '')
+            )
+          %}
+
+          <h3 class="govuk-heading-s">
+            {{ startDate }} – {{ endDateText }}
+          </h3>
+
+          {# Determine status #}
+          {% set stayComplete =
+            s.completed and
+            s.completed.type and
+            s.completed.startDate and
+            s.completed.endDate and
+            s.completed.address and
+            (s.completed.funding or s.completed.repay)
+          %}
+          {% set statusClass = 'govuk-tag--green' if stayComplete else 'govuk-tag--blue' %}
+          {% set statusText = 'Complete' if stayComplete else 'Incomplete' %}
+
+          {# Recorded during based on persona #}
+          {% set recordedDuring =
+            "PIP registration"
+            if data['PayabilityPersona'] == "Agent handling an ongoing claim"
+            else "PIP award"
+          %}
+
+          {{ govukSummaryList({
+            card: {
+              title: {
+                text: data['type-scenario'] or s.name or "Hospital"
+              },
+              actions: {
+                items: [
+                  {
+                    href: "/payability/v3/stay/stay-task-list",
+                    text: "View",
+                    visuallyHiddenText:
+                      "of " + (data['type-scenario'] or s.name or "accommodation")
+                  }
+                ]
+              }
+            },
+            rows: [
               {
-                href: "/payability/v3/stay/pip-award-stay-task-list-half-complete",
-                text: "View",
-                visuallyHiddenText: "of " + (s.name or "accommodation")
+                key: { text: "Start date" },
+                value: { text: startDate }
+              },
+              {
+                key: { text: "Recorded during" },
+                value: { text: recordedDuring }
+              },
+              {
+                key: { text: "Status" },
+                value: {
+                  html:
+                    '<strong class="govuk-tag ' +
+                    statusClass +
+                    '">' +
+                    statusText +
+                    '</strong>'
+                }
               }
             ]
-          }
-        },
-        rows: [
-          {
-            key: { text: "Start date" },
-            value: { text: "19 January 2026" }
-          },
-           {
-            key: { text: "Recorded during" },
-            value: { text: "PIP registration" }
-          },         
-          {
-            key: { text: "Status" },
-            value: {  html: '<strong class="govuk-tag govuk-tag--blue">Incomplete</strong>' }
-          }
-        ]
-      }) }}
-    {% endif %}
+          }) }}
 
+        {% endif %}
+      {% endfor %}
+
+    {% endif %}
 
   </div>
 </div>

@@ -1,0 +1,143 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Check your answers template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+<!-- page heading and summarylist -->
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+   
+    <form action="stay-task-list" method="post">
+<h1 class="govuk-heading-l">Check the addtional details</h1>
+
+      {% set accommodationContactHtml = '' %}
+      {% if data['primary-contact'] %}
+        {% set accommodationContactHtml = data['primary-contact'] %}
+      {% endif %}
+      {% if data['email'] %}
+        {% if accommodationContactHtml %}
+          {% set accommodationContactHtml = accommodationContactHtml ~ '<br>' ~ data['email'] %}
+        {% else %}
+          {% set accommodationContactHtml = data['email'] %}
+        {% endif %}
+      {% endif %}
+      {% if data['phone-number'] %}
+        {% if accommodationContactHtml %}
+          {% set accommodationContactHtml = accommodationContactHtml ~ '<br>' ~ data['phone-number'] %}
+        {% else %}
+          {% set accommodationContactHtml = data['phone-number'] %}
+        {% endif %}
+      {% endif %}
+      {% if not accommodationContactHtml %}
+        {% set accommodationContactHtml = "No contact details provided" %}
+      {% endif %}
+
+      {{ govukSummaryList({
+        classes: "govuk-!-margin-bottom-9",
+        rows: [
+          {
+            key: {
+              text: "Accommodation contact details"
+            },
+            value: {
+              html: accommodationContactHtml
+            },
+            actions: {
+              items: [
+                {
+                  href: "accommodation-contact-check",
+                  text: "Change",
+                  visuallyHiddenText: "accommodation type"
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Funder address"
+            },
+            value: {
+              text: data['funding-select-an-address']
+            },
+            actions: {
+              items: [
+                {
+                  href: "funding address check",
+                  text: "Change",
+                  visuallyHiddenText: "Funder address"
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Funder contact details"
+            },
+            value: {
+              html: data['funding-primary-contact'] + '<br>' + data['funding-email'] + '<br>' + data['funding-phone-number']
+            },
+            actions: {
+              items: [
+                {
+                  href: "funding-contact-check",
+                  text: "Change",
+                  visuallyHiddenText: "Funder contact details"
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Boarder status"
+            },
+            value: {
+              text: data['boarder-scenario']
+            },
+            actions: {
+              items: [
+                {
+                  href: "accommodation-boarder",
+                  text: "Change",
+                  visuallyHiddenText: "Boarder status"
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Similar institution"
+            },
+            value: {
+              text: data['similar-institution']
+            },
+            actions: {
+              items: [
+                {
+                  href: "similar-institution",
+                  text: "Change",
+                  visuallyHiddenText: "Similar institution"
+                }
+              ]
+            }
+          }
+        ]
+      }) }}
+   
+        {{ govukButton({
+          text: "Save and continue"
+        }) }}
+</form>
+  </div>
+</div>
+
+{% endblock %}

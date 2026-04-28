@@ -41,7 +41,7 @@
 
     <!-- Default state for new stay -->
      <!--<h1 class="govuk-heading-l">Stay in {{ stay.name or "hospital" }}</h1>-->
-     <h1 class="govuk-heading-l">Stay in [make dynamic]</h1>
+     <h1 class="govuk-heading-l">Stay in {{ data['type-scenario'] or 'hospital' }}</h1>
   <!--<h1 class="govuk-heading-l">Add stay details</h1>-->
   <table class="govuk-table">
     <tbody class="govuk-table__body">
@@ -67,27 +67,27 @@
     <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Accommodation type</th>
-        <td class="govuk-table__cell">[Make dynamic]</td>
+        <td class="govuk-table__cell">{{ data['type-scenario'] or 'Not specified' }}</td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Start date</th>
-        <td class="govuk-table__cell">[Make dynamic]</td>
+        <td class="govuk-table__cell">{{ (data['date-in-day'] or '') ~ ' ' ~ (data['date-in-month'] or '') ~ ' ' ~ (data['date-in-year'] or '') }}</td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">End date</th>
-        <td class="govuk-table__cell">[Make dynamic]</td>
+        <td class="govuk-table__cell">{% if data['date-out-check'] == "Yes" %}Ongoing{% else %}{{ (data['date-out-day'] or '') ~ ' ' ~ (data['date-out-month'] or '') ~ ' ' ~ (data['date-out-year'] or '') }}{% endif %}</td>
       </tr>
       <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__header">Start date</th>
-        <td class="govuk-table__cell">[Make dynamic]</td>
+        <th scope="row" class="govuk-table__header">Location</th>
+        <td class="govuk-table__cell">{{ data['accommodation-select-an-address'] or data['accommodation-name'] or 'Not specified' }}</td>
       </tr>
         <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Funding source</th>
-        <td class="govuk-table__cell">[Make dynamic]</td>
+        <td class="govuk-table__cell">{{ data['funding-scenario'] or data['funding-type'] or 'Not specified' }}</td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Agreement to repay</th>
-        <td class="govuk-table__cell">[Make dynamic]</td>
+        <td class="govuk-table__cell">{{ data['repayment-scenario'] or 'Not specified' }}</td>
       </tr>
     </tbody>
   </table>
@@ -98,23 +98,23 @@
     <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Accommodation contact details</th>
-        <td class="govuk-table__cell">[Make dynamic]</td>
+        <td class="govuk-table__cell">{% if data['primary-contact'] or data['email'] or data['phone-number'] %}{{ (data['primary-contact'] or '') }}{% if data['primary-contact'] and (data['email'] or data['phone-number']) %} / {% endif %}{{ (data['email'] or '') }}{% if data['email'] and data['phone-number'] %} / {% endif %}{{ (data['phone-number'] or '') }}{% else %}Not provided{% endif %}</td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Funder address</th>
-        <td class="govuk-table__cell">[Make dynamic]</td>
+        <td class="govuk-table__cell">{{ data['funding-select-an-address'] or data['funding-address-line-1'] or 'Not provided' }}</td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Funder contact details</th>
-        <td class="govuk-table__cell">[Make dynamic]</td>
+        <td class="govuk-table__cell">{% if data['funding-primary-contact'] or data['funding-email'] or data['funding-phone-number'] %}{{ (data['funding-primary-contact'] or '') }}{% if data['funding-primary-contact'] and (data['funding-email'] or data['funding-phone-number']) %} / {% endif %}{{ (data['funding-email'] or '') }}{% if data['funding-email'] and data['funding-phone-number'] %} / {% endif %}{{ (data['funding-phone-number'] or '') }}{% else %}Not provided{% endif %}</td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Boarder status</th>
-        <td class="govuk-table__cell">[Make dynamic]</td>
-      </tr>
+        <td class="govuk-table__cell">{{ data['boarder-scenario'] or 'Not provided' }}</td>
+        </tr>
         <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__header">Similiar institution</th>
-        <td class="govuk-table__cell">[Make dynamic]</td>
+        <th scope="row" class="govuk-table__header">Similar institution</th>
+        <td class="govuk-table__cell">{{ data['similar-institution'] or 'Not provided' }}</td>
       </tr>
     </tbody>
   </table>
