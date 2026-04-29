@@ -1,4 +1,4 @@
-{% extends "layouts/main.html" %}
+{% extends "layouts/payability.html" %}
 
 {% block pageTitle %}
   Check your answers template – {{ serviceName }} – GOV.UK Prototype Kit
@@ -18,7 +18,7 @@
   <div class="govuk-grid-column-two-thirds-from-desktop">
    
     <form action="stay-task-list" method="post">
-<h1 class="govuk-heading-l">Check the addtional details</h1>
+<h1 class="govuk-heading-l">Check your answers</h1>
 
       {% set accommodationContactHtml = '' %}
       {% if data['primary-contact'] %}

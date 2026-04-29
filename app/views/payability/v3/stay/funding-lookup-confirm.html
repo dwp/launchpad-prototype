@@ -20,13 +20,19 @@
   {% endif %}
 
   {% set addresses = [
-    "1 Washington Street, Worcester, WR1 1NL",
+    "Municipal Buildings, Corporation Street, Blackpool, FY1 1NF"
+  ] %}
+
+
+  <!--
+
+  ,
     "10 Washington Street, Worcester, WR1 1NL",
     "11 Washington Street, Worcester, WR1 1NL",
     "12 Washington Street, Worcester, WR1 1NL",
     "13 Washington Street, Worcester, WR1 1NL",
     "14 Washington Street, Worcester, WR1 1NL"
-  ] %}
+  -->
 
   {% set fundingSelected = data['select-an-address'] %}
 
@@ -42,7 +48,7 @@
   {% endfor %}
 
   {% set count = addresses | length %}
-  {% set postcode = "WR1 1NL" %}
+  {% set postcode = "FY1 1NF" %}
   {% set buildingRef = "1" %}
 
   <div class="govuk-grid-row">

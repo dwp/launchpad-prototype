@@ -19,16 +19,20 @@
   {% endif %}
 
    <!-- --- These can come from your controller; hard-coded to match your example --- -->
-  {% set postcode = "WR1 1NL" %}
+  {% set postcode = "FY1 6RN" %}
   {% set buildingRef = "1" %}
   {% set addresses = [
-    "1 Washington Street, Worcester, WR1 1NL",
+    "The Phoenix Centre, Stratford Place, Blackpool , FY1 6RN"
+  ] %}
+
+  <!--
+  ,
     "10 Washington Street, Worcester, WR1 1NL",
     "11 Washington Street, Worcester, WR1 1NL",
     "12 Washington Street, Worcester, WR1 1NL",
     "13 Washington Street, Worcester, WR1 1NL",
     "14 Washington Street, Worcester, WR1 1NL"
-  ] %}
+  -->
 
   {% set count = addresses | length %}
   {% set selected = data['accommodation-select-an-address'] or data['select-an-address'] %}
