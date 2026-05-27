@@ -1,0 +1,52 @@
+{% extends "layouts/payability.html" %}
+{% block beforeContent %}
+  {{ govukBackLink({
+          text: "Back",
+          href: "javascript:history.back()"
+  }) }}
+{% endblock %}
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+      <form class="form" action="/still-there-check" method="post">
+
+        <h1 class="govuk-heading-l">Are you still staying there?</h1>
+
+        {{ govukInsetText({
+        text: "Payments will be automatically suspended if you have been there for more than 28 days from the start date."
+      }) }}
+
+
+      {{ govukRadios({
+        name: "date-out-check",
+        items: [
+          {
+            value: "Yes",
+            text: "Yes"
+          },
+          {
+            value: "No",
+            text: "No"
+          }
+        ]
+      }) }}
+
+      
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+      {% include "includes/aar-task-list.html" %}
+
+
+    </form>
+  </div>
+</div>
+
+<!-- End row -->
+{% endblock %}
+
+

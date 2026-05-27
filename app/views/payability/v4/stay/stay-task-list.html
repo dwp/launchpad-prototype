@@ -1,0 +1,581 @@
+
+
+{% extends "layouts/payability.html" %}
+
+{% block pageTitle %}
+  Stay task list – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set pageName = "Agent home" %}
+
+{% block content %}
+
+{% from "govuk/components/task-list/macro.njk" import govukTaskList %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% macro taskStatus(isComplete, isPaused) %}
+  {% if isPaused %}
+    {{ govukTag({ text: "Paused", classes: "govuk-tag--yellow" }) }}
+  {% elseif isComplete %}
+    {{ govukTag({ text: "Done", classes: "govuk-tag--green" }) }}
+  {% else %}
+    {{ govukTag({ text: "To do", classes: "govuk-tag--grey" }) }}
+  {% endif %}
+{% endmacro %}
+
+{# =========================
+   FIELD COMPLETION (FIXED)
+   ========================= #}
+
+{% set typeComplete = data['type-scenario'] %}
+
+{% set startDateComplete =
+  data['date-in-day'] and
+  data['date-in-month'] and
+  data['date-in-year']
+%}
+
+{% set stillThereComplete = data['date-out-check'] %}
+
+{% set endDateComplete =
+  data['date-out-check'] == "No" and
+  data['date-out-day'] and
+  data['date-out-month'] and
+  data['date-out-year']
+%}
+
+{% set endDateHasValues =
+  data['date-out-day'] and
+  data['date-out-month'] and
+  data['date-out-year']
+%}
+
+{% set addressComplete =
+  (data['accommodation-name'] or data['address-name']) and
+  (data['address-line-1'] or data['accommodation-select-an-address'])
+%}
+
+
+{% set fundingComplete =
+  data['type-scenario'] == "Detention in Legal Custody"
+  or (data['funding-scenario'] and data['funding-scenario'] not in ["", "I don't know"])
+%}
+
+{% set funderNameComplete =
+  data['type-scenario'] == "Detention in Legal Custody"
+  or (data['funding-primary-contact'] and data['funding-primary-contact'] not in ["", "I don't know"])
+%}
+
+{% set repaymentComplete =
+  data['type-scenario'] == "Detention in Legal Custody"
+  or (data['repayment-scenario'] and data['repayment-scenario'] not in ["", "I don't know"])
+%}
+
+{% set contactComplete = data['contactCheck'] %}
+
+{% set fundingAddressComplete =
+  data['funding-address-line-1']
+  or data['funding-select-an-address']
+%}
+
+{% set fundingContactComplete =
+  data['funding-contact-check'] and
+  data['funding-contact-check'] not in ["", "I don't know"]
+%}
+
+{% set boarderComplete =
+  data['boarder-scenario'] and
+  data['boarder-scenario'] not in ["", "I don't know"]
+%}
+
+{% set similarInstitutionComplete =
+  data['similar-institution'] and
+  data['similar-institution'] not in ["", "I don't know"]
+%}
+
+{% set fundingEvidenceComplete = data['fundingCheck'] %}
+
+{# =========================
+   PAUSE LOGIC
+   ========================= #}
+
+{% set fundingCheckPaused =
+  data['fundingCheck'] == "No, I'm waiting for a response"
+%}
+
+{% set endDatePaused =
+  data['date-out-check'] == "Yes"
+%}
+
+{% set stillTherePaused =
+  data['date-out-check'] == "Yes"
+%}
+
+{% set fundingPaused =
+  data['funding-scenario'] == "I don't know"
+%}
+
+{% set repaymentPaused =
+  data['repayment-scenario'] == "I don't know"
+%}
+
+{% set similarInstitutionPaused =
+  data['similar-institution'] == "I don't know"
+%}
+
+{% set contactPaused = 
+  data['contactCheck'] == "No, I need to send one" or
+  data['contactCheck'] == "No, I'm waiting for a response"
+%}
+
+{% set fundingContactPaused =
+  data['funding-contact-check'] == "No, I need to send one" or
+  data['funding-contact-check'] == "No, I'm waiting for a response"
+%}
+
+{# =========================
+   SHOW MORE DETAILS
+   ========================= #}
+
+{% set showMoreDetails = false %}
+{% set onlyBoarderStatus = false %}
+
+{% if data['type-scenario'] == "Detention in Legal Custody" %}
+  {% set showMoreDetails = false %}
+
+{% elseif data['type-scenario'] == "Hospital" %}
+
+  {% if data['funding-scenario'] == "NHS" %}
+    {% set showMoreDetails = true %}
+    {% set onlyBoarderStatus = true %}
+
+  {% elseif data['funding-scenario'] == "Claimant" %}
+    {% set showMoreDetails = false %}
+
+  {% else %}
+    {% set showMoreDetails = true %}
+  {% endif %}
+
+{% else %}
+  {% set showMoreDetails = true %}
+{% endif %}
+
+{# =========================
+   READY TO SUBMIT
+   ========================= #}
+
+{% set basicReady =
+  typeComplete and
+  startDateComplete and
+  stillThereComplete and
+  (data['date-out-check'] == "Yes" or endDateComplete) and
+  addressComplete and
+  fundingComplete and
+  funderNameComplete and
+  repaymentComplete
+%}
+
+{% set moreReady = true %}
+
+{% if showMoreDetails %}
+  {% if onlyBoarderStatus %}
+    {% set moreReady = boarderComplete %}
+  {% else %}
+    {% set moreReady =
+      contactComplete and
+      fundingAddressComplete and
+      fundingContactComplete and
+      boarderComplete and
+      similarInstitutionComplete and
+      fundingEvidenceComplete
+    %}
+  {% endif %}
+{% endif %}
+
+{% set readyToSubmit = basicReady and moreReady %}
+
+{% set isPaused =
+  (
+    endDatePaused or 
+    fundingPaused or 
+    repaymentPaused or 
+    similarInstitutionPaused or 
+    contactPaused or 
+    fundingCheckPaused or
+    fundingContactPaused
+  )
+  and not
+readyToSubmit
+%}
+
+
+
+
+{# =========================
+   PAGE UI
+   ========================= #}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+
+    <section class="dwp-quick-reference govuk-!-margin-bottom-8">
+      <dl class="dwp-quick-reference__block">
+        <dt class="govuk-visually-hidden">Name:</dt>
+        <dd class="dwp-quick-reference__primary">
+          <a href="#">Jeff Bridges</a>
+        </dd>
+
+        <dt class="govuk-visually-hidden">National Insurance number:</dt>
+        <dd class="dwp-quick-reference__secondary">
+          NA 11 22 33 C
+        </dd>
+      </dl>
+    </section>
+
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <!-- Start new claim UI -->
+    {% if data['PayabilityPersona'] == "Agent completing new claim stay end date" %}
+      <h1 class="govuk-heading-l">Stay in hospital</h1>
+
+      <table class="govuk-table">
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Status</th>
+            <td class="govuk-table__cell">
+              {% if readyToSubmit %}
+                <strong class="govuk-tag govuk-tag--yellow">Ready to submit</strong>
+              {% elseif isPaused %}
+                <strong class="govuk-tag govuk-tag--yellow">Paused</strong>
+              {% else %}
+                <strong class="govuk-tag govuk-tag--blue">Incomplete</strong>
+              {% endif %}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 class="govuk-heading-m">Stay details</h2>
+
+      {% set basicItems = [
+        {
+          title: { text: "Accommodation type" },
+          href: "/payability/v4/stay/type",
+          status: {
+                    tag: {
+                    text: "Done",
+                    classes: "govuk-tag--green"
+                    }
+                }
+        },
+        {
+          title: { text: "Start date" },
+          href: "/payability/v4/stay/date-in",
+          status: {
+                    tag: {
+                    text: "Done",
+                    classes: "govuk-tag--green"
+                    }
+                }
+        },
+        {
+          title: { text: "Still in accommodation" },
+          href: "/payability/v4/stay/date-still-there",
+          status: {
+            html: taskStatus(stillThereComplete, stillTherePaused)}
+          },
+        {
+          title: { text: "End date" },
+          href: "/payability/v4/stay/date-left",
+          status: {
+            html: taskStatus(
+              endDateComplete
+              or data['date-out-check'] == "Yes"
+              or endDateHasValues,
+              endDatePaused
+            )
+          }
+        },
+        {
+          title: { text: "Accommodation address" },
+          href: "/payability/v4/stay/accommodation-lookup-name",
+          status: {
+                    tag: {
+                    text: "Done",
+                    classes: "govuk-tag--green"
+                    }
+                }
+        }
+      ] %}
+
+      {% if data['type-scenario'] != "Detention in Legal Custody" %}
+        {% set basicItems = basicItems.concat([
+          {
+            title: { text: "Funding source" },
+            href: "/payability/v4/stay/funding-type",
+            status: { html: taskStatus(fundingComplete, fundingPaused) }
+          },
+          {
+            title: { text: "Funder name" },
+            href: "/payability/v4/stay/funding-name",
+            status: { html: taskStatus(funderNameComplete, false) }
+          },
+          {
+            title: { text: "Agreement to repay" },
+            href: "/payability/v4/stay/repay",
+            status: { html: taskStatus(repaymentComplete, repaymentPaused) }
+          }
+        ]) %}
+      {% endif %}
+
+      {{ govukTaskList({
+        idPrefix: "stay-basic",
+        items: basicItems
+      }) }}
+
+      {% if showMoreDetails %}
+
+        <br>
+        <p>
+          It is unlikely the claimant will be able to give you the below details when they first tell us about a stay.
+          The details can be completed by a caseworker at a later date.
+        </p>
+
+        {% set moreItems = [] %}
+
+        {% if not onlyBoarderStatus %}
+
+          {% set _ = moreItems.push({
+            title: { text: "Accommodation phone number and email address" },
+            href: "accommodation-contact-select",
+            status: { html: taskStatus(contactComplete, contactPaused) }
+          }) %}
+
+          {% set _ = moreItems.push({
+            title: { text: "Funder address" },
+            href: "funding-address-check",
+            status: { html: taskStatus(fundingAddressComplete, false) }
+          }) %}
+
+          {% set _ = moreItems.push({
+            title: { text: "Funder phone number and email address" },
+            href: "funding-contact-select",
+            status: { html: taskStatus(fundingContactComplete, fundingContactPaused) }
+          }) %}
+
+        {% endif %}
+
+        {% set _ = moreItems.push({
+          title: { text: "Boarder status" },
+          href: "accommodation-boarder",
+          status: { html: taskStatus(boarderComplete, false) }
+        }) %}
+
+        {% if not onlyBoarderStatus %}
+
+          {% set _ = moreItems.push({
+            title: { text: "Similar institution" },
+            href: "similar-institution",
+            status: { html: taskStatus(similarInstitutionComplete, similarInstitutionPaused) }
+          }) %}
+
+          {% set _ = moreItems.push({
+            title: { text: "Accommodation evidence form" },
+            href: "accommodation-form-check",
+            status: { html: taskStatus(contactComplete, false) }
+          }) %}
+
+        {% endif %}
+
+        {% set _ = moreItems.push({
+          title: { text: "Funding evidence form" },
+          href: "funding-form-check",
+          status: { html: taskStatus(fundingEvidenceComplete, fundingCheckPaused) }
+        }) %}
+
+        {{ govukTaskList({
+          idPrefix: "stay-more",
+          items: moreItems
+        }) }}
+
+        {% endif %}
+    {% endif %}
+    <!-- End new claim UI -->
+
+    <!-- Start ongoing UI -->
+    {% if data['PayabilityPersona'] == "Agent handling an ongoing claim" %}
+      <h1 class="govuk-heading-l">
+        {% if data['type-scenario'] == "Detention in Legal Custody" %}
+          Detention in Legal Custody
+        {% else %}
+          Stay in {{ data['type-scenario'] | lower }}
+        {% endif %}
+      </h1>
+
+      <table class="govuk-table">
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Status</th>
+            <td class="govuk-table__cell">
+              {% if readyToSubmit %}
+                <strong class="govuk-tag govuk-tag--yellow">Ready to submit</strong>
+              {% elseif isPaused %}
+                <strong class="govuk-tag govuk-tag--yellow">Paused</strong>
+              {% else %}
+                <strong class="govuk-tag govuk-tag--blue">Incomplete</strong>
+              {% endif %}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 class="govuk-heading-m">Stay details</h2>
+
+      {% set basicItems = [
+        {
+          title: { text: "Accommodation type" },
+          href: "/payability/v4/stay/type",
+          status: { html: taskStatus(typeComplete, false) }
+        },
+        {
+          title: { text: "Start date" },
+          href: "/payability/v4/stay/date-in",
+          status: { html: taskStatus(startDateComplete, false) }
+        },
+        {
+          title: { text: "Still in accommodation" },
+          href: "/payability/v4/stay/date-still-there",
+          status: { html: taskStatus(stillThereComplete, stillTherePaused) }
+        },
+        {
+          title: { text: "End date" },
+          href: "/payability/v4/stay/date-left",
+          status: {
+            html: taskStatus(
+              endDateComplete
+              or data['date-out-check'] == "Yes"
+              or endDateHasValues,
+              endDatePaused
+            )
+          }
+        },
+        {
+          title: { text: "Accommodation address" },
+          href: "/payability/v4/stay/accommodation-lookup-name",
+          status: { html: taskStatus(addressComplete, false) }
+        }
+      ] %}
+
+      {% if data['type-scenario'] != "Detention in Legal Custody" %}
+        {% set basicItems = basicItems.concat([
+          {
+            title: { text: "Funding source" },
+            href: "/payability/v4/stay/funding-type",
+            status: { html: taskStatus(fundingComplete, fundingPaused) }
+          },
+          {
+            title: { text: "Funder name" },
+            href: "/payability/v4/stay/funding-name",
+            status: { html: taskStatus(funderNameComplete, false) }
+          },
+          {
+            title: { text: "Agreement to repay" },
+            href: "/payability/v4/stay/repay",
+            status: { html: taskStatus(repaymentComplete, repaymentPaused) }
+          }
+        ]) %}
+      {% endif %}
+
+      {{ govukTaskList({
+        idPrefix: "stay-basic",
+        items: basicItems
+      }) }}
+
+      {% if showMoreDetails %}
+
+        <br>
+        <p>
+          It is unlikely the claimant will be able to give you the below details when they first tell us about a stay.
+          The details can be completed by a caseworker at a later date.
+        </p>
+
+        {% set moreItems = [] %}
+
+        {% if not onlyBoarderStatus %}
+
+          {% set _ = moreItems.push({
+            title: { text: "Accommodation phone number and email address" },
+            href: "accommodation-contact-select",
+            status: { html: taskStatus(contactComplete, contactPaused) }
+          }) %}
+
+          {% set _ = moreItems.push({
+            title: { text: "Funder address" },
+            href: "funding-address-check",
+            status: { html: taskStatus(fundingAddressComplete, false) }
+          }) %}
+
+          {% set _ = moreItems.push({
+            title: { text: "Funder phone number and email address" },
+            href: "funding-contact-select",
+            status: { html: taskStatus(fundingContactComplete, fundingContactPaused) }
+          }) %}
+
+        {% endif %}
+
+        {% set _ = moreItems.push({
+          title: { text: "Boarder status" },
+          href: "accommodation-boarder",
+          status: { html: taskStatus(boarderComplete, false) }
+        }) %}
+
+        {% if not onlyBoarderStatus %}
+
+          {% set _ = moreItems.push({
+            title: { text: "Similar institution" },
+            href: "similar-institution",
+            status: { html: taskStatus(similarInstitutionComplete, similarInstitutionPaused) }
+          }) %}
+
+          {% set _ = moreItems.push({
+            title: { text: "Accommodation evidence form" },
+            href: "accommodation-form-check",
+            status: { html: taskStatus(contactComplete, false) }
+          }) %}
+
+        {% endif %}
+
+        {% set _ = moreItems.push({
+          title: { text: "Funding evidence form" },
+          href: "funding-form-check",
+          status: { html: taskStatus(fundingEvidenceComplete, fundingCheckPaused) }
+        }) %}
+
+        {{ govukTaskList({
+          idPrefix: "stay-more",
+          items: moreItems
+        }) }}
+
+      {% endif %}
+    {% endif %}
+    <!-- End ongoing UI -->
+
+    {% if readyToSubmit %}
+      <div class="govuk-!-margin-bottom-6">
+        {{ govukButton({
+          text: "Continue",
+          href: "/payability/v4/stay/final-check-answers"
+        }) }}
+      </div>
+    {% endif %}
+        <p class="govuk-body govuk-!-margin-bottom-6">
+      <a href="/payability/v4/person-record/accommodation-history-complete" class="govuk-link">Accommodation stay history</a>
+    </p>
+
+  </div>
+</div>
+
+{% endblock %}

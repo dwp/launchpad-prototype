@@ -1,0 +1,59 @@
+{% extends "layouts/payability.html" %}
+
+{% block pageTitle %}
+  Stay task list – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set pageName = "Agent home" %}
+
+{% block beforeContent %}
+{% endblock %}
+
+{% block content %}
+
+{% from "govuk/components/task-list/macro.njk" import govukTaskList %}
+
+{% set stays = data.stays or [] %}
+{% set stayIndex = data.stayIndex %}
+{% set stay = stays[stayIndex] %}
+{% set ongoing = stay and stay.endDate == null %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <section class="dwp-quick-reference govuk-!-margin-bottom-8">
+      <dl class="dwp-quick-reference__block">
+        <dt class="govuk-visually-hidden">Name:</dt>
+        <dd class="dwp-quick-reference__primary">Jeff Bridges</dd>
+
+        <dt class="govuk-visually-hidden">National Insurance number:</dt>
+        <dd class="dwp-quick-reference__secondary">NA 11 22 33 C</dd>
+      </dl>
+    </section>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+
+{% include "includes/stay-record-head.njk" %}
+{{ govukInsetText({
+  text: "This stay is part of a linked stay"
+}) }}
+{% include "includes/stay-record.njk" %}
+
+  <h2 class="govuk-heading-m govuk-!-margin-top-5">Linked stays</h2>
+  <ul class="govuk-list govuk-list--bullet ">
+    <li><a href="#">Stay in hospital: 13 January 2023 - 15 January 2023</a></li>
+    <li><a href="#">Stay in hospital: 17 January 2023 - 22 January 2023</a></li>
+    <li><a href="#">Stay in hospital: 22 January 2023 - 25 January 2023</a></li>
+  </ul>
+ 
+
+<p class="govuk-body govuk-!-margin-bottom-6 govuk-!-margin-top-9">
+  <a href="/payability/v3/person-record/accommodation-history-complete" class="govuk-link">Accommodation stay history</a>
+</p>
+
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,8 @@
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+{% macro accommodationRadios(name, items) %}
+  {{ govukRadios({
+    name: name,
+    items: items
+  }) }}
+{% endmacro %}

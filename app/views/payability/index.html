@@ -33,21 +33,16 @@
     <h2 class="govuk-heading-m">Last updated</h2>
         <p class="govuk-body">
         {{govukTag({
-          text: "Version 3",
+          text: "Version 4",
           classes: "govuk-tag--green"
         })}}
       </p>
 
-    <p class="govuk-body">March 2026</p>
+    <p class="govuk-body">May 2026</p>
     <h2 class="govuk-heading-m">Date created</h2>
     <p class="govuk-body">January 2026</p>
     <h2 class="govuk-heading-m">What it is</h2>
-    <p class="govuk-body">Version 1 of the payability prototype demonstates a basic journey for agents to:</p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>Locate a claimant's person record</li>
-        <li>Capture the detail of a temporary stay in accommodation</li>
-        <li>View details of stays they've recorded and understand the impact on a claimant's regular PIP payment</li>
-      </ul>
+    <p class="govuk-body">This prototype explores how agents can capture and manage accommodation stays that may affect a claimant’s PIP payments. By structuring the experience around discrete records, clear statuses, and flexible data capture, the prototype supports agents in navigating stay histories, tracking incomplete information, and maintaining accurate records.</p>
 
 
 {% from "govuk/components/accordion/macro.njk" import govukAccordion %}
@@ -65,22 +60,20 @@
             <strong class="govuk-tag govuk-tag--green">
           Version 1</strong>
           </p>
+        <p class="govuk-body">
+            Version 1 establishes a basic journey for capturing and viewing temporary accommodation stays and their impact on PIP payments.
+          </p>
+
          <ul class="govuk-list govuk-list--bullet">
-          <li>Agents will add, view and edit instances of “Temporary” stays from a discrete screen.</li>
-          <li>Agents can view records of individual stays. The view  will show the relationship between a stay in accommodation and the effect, if any,  on related PIP payment periods.</li>
-          <li>Agents must specify which type of accommodation the claimant is/ has stayed in.</li>
-          <li>Agents must specify when the stay began, if it’s ongoing or if it’s ended</li>
-          <li>Agents must specify if the accommodation type is, in effect, a hospital</li>
-          <li>Agents must specify if the claimant stays in the accommodation on a regular basis </li>
-          <li>Agents must provide information to confirm the name, address and, where available, the contact details of the accommodation</li>
-          <li>When not funded by the NHS or the claimant themselves, the agent must capture how the stay is funded</li>
-          <li>Agents must provide information to confirm the name, address and, where available, the contact details of the funding provider</li>
-          <li>If accommodation is not funded by the NHS or the claimant, the agent must record if the claimant has an agreement to repay all or part of the funding costs</li>
-          <li>The “Check your answers” pattern should be used to allow agents to confirm the details they’ve entered</li>
-          <li>If the stay is not an NHS funded hospital stay, then the case must be moved to PIPCS</li>
-          <li>Agents should be able to record notes against the stay to provide context about what they’ve recorded and why</li>
-          <li>Once the data capture is complete, agents should land back on the “temporary stays” screen</li>
-          <li>Agents should be able to delete records of stays which have begun in error</li>
+          
+<li>Provide a dedicated screen for adding, viewing and editing temporary accommodation stays.</li>
+    <li>Capture key stay details including accommodation type, start date, duration and status.</li>
+    <li>Capture information about funding sources and claimant repayment agreements.</li>
+    <li>Capture accommodation and funding provider contact details where available.</li>
+    <li>Link accommodation stays to their impact on PIP payment periods.</li>
+    <li>Introduce a “Check your answers” step to review entered information before completion.</li>
+    <li>Allow agents to add notes and delete stays created in error.</li>
+
         </ul>'
       }
     },
@@ -94,15 +87,19 @@
             <strong class="govuk-tag govuk-tag--green">
           Version 2</strong>
           </p>
+        <p class="govuk-body">
+            Version 2 refines the journey to support different claim contexts, improve data capture structure and introduce clearer separation of information.
+          </p>
          <ul class="govuk-list govuk-list--bullet">
-          <li>Persona types added for new and ongoing claims</li>
-          <li>Content updates showing differences between conversational script used for new claims and data capture for ongoing claims </li>
-          <li>Data model reconciliation between new and ongoing claims</li>
-          <li>Agents can use and address lookup, which requires a postcode </li>
-          <li>Moved "contact details" capture to a discrete screen</li>
-          <li>Deprioritisation of adresss and contact capture with additional check screens</li>
-          <li>Additional data capture for boarder information</li>
-          <li>Similar institution to hospital moved to the end of the journey, assuming that some detail about these stays will be useful to help an agent investigate</li>
+      
+          <li>Update content to reflect differences between conversational scripts and structured data capture.</li>
+              <li>Align data capture across new and ongoing claim journeys.</li>
+              <li>Add postcode-based address lookup for accommodation details.</li>
+              <li>Move contact details capture to a dedicated screen.</li>
+              <li>Deprioritise address and contact capture with additional check steps.</li>
+              <li>Introduce additional data capture for boarder-related information.</li>
+              <li>Move “similar institution to hospital” classification later in the journey to support investigation.</li>
+
         </ul>'
       }
     },
@@ -115,18 +112,38 @@
             <strong class="govuk-tag govuk-tag--green">
           Version 3</strong>
           </p>
+          <p class="govuk-body">
+              Version 3 introduces a non-linear, task list-based approach, improving how agents capture, manage and complete payability information over time.
+            </p>
+
          <ul class="govuk-list govuk-list--bullet">
-          <li>Development of new edit a payability stay journey</li>
-          <li>Addition of task list and status refinement </li>
+
+          <li>Display incomplete accommodation stays in an “Open stays” section using summary cards to highlight key information.</li>
+            <li>Introduce a task list pattern to replace a linear flow, enabling non-linear capture of payability information.</li>
+            <li>Reframe key questions as binary “Yes/No” responses written in the first person for claimant confirmation.</li>
+            <li>Standardise all claimant-facing questions to first-person phrasing for consistency and clarity.</li>
+            <li>Require all task list items to be completed before allowing a payability stay to be submitted.</li>
+            <li>Add status indicators (e.g. incomplete, ready to submit, complete) to communicate progress of a stay.</li>
+            <li>Introduce a “Check your answers” step to review and confirm captured information before submission.</li>
+            <li>Create a canonical, discrete record for each submitted accommodation stay.</li>
+            <li>Display submitted stays chronologically in a “Closed stays” section for audit and reference.</li>
+            <li>Remove the “Other” accommodation type option and order remaining options alphabetically.</li>
+            <li>Separate the “I don’t know” option visually from “Yes” and “No” responses.</li>
+            <li>Present additional “More details” task lists for accommodation types requiring further evidence.</li>
+            <li>Amend headings to indicate that adding accommodation contact details is optional.</li>
+            <li>Allow agents to choose which contact details to record for accommodation or funding providers.</li>
+            <li>Update headings to use agent-familiar terminology such as “boarding”.</li>
+            <li>Align wording across the interface with domain-specific language used by agents in existing systems.</li>
+
            </ul>'
       }
     }
   ]
-}) }},
+}) }}
 
       {{ govukButton({
-        text: "Start prototype V3",
-        href: "v3/persona"
+        text: "Start prototype V4",
+        href: "v4/persona"
       }) }}
   </div>
   <!-- End column -->

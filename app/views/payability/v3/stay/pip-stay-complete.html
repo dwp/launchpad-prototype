@@ -56,9 +56,6 @@
 
       <h1 class="govuk-heading-l">Stay in {{ data['type-scenario'] or 'hospital' }}</h1>
     {% endif %}
-  <h2 class="govuk-heading-m">Claimant information</h2>
-  <p>Information provided by the claimant.</p>
-  <!--<h1 class="govuk-heading-l">Add stay details</h1>-->
   <table class="govuk-table">
     <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
@@ -69,6 +66,22 @@
         <th scope="row" class="govuk-table__header">Recorded during</th>
         <td class="govuk-table__cell">{{ data['type-scenario'] or 'Not specified' }}</td>
       </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Outcome</th>
+        <td class="govuk-table__cell"><!--No changes to entitlement<br>-->
+        Entitlement changed<br><br>
+        <a href="pip-stay-breakdown">See entitlement changes</a><br>
+        <!--Entitlement date changed to [date goes here]<br><br>-->
+        
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h2 class="govuk-heading-m">Claimant information</h2>
+  <p>Information provided by the claimant.</p>
+  <!--<h1 class="govuk-heading-l">Add stay details</h1>-->
+  <table class="govuk-table">
+    <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Start date</th>
         <td class="govuk-table__cell">{{ (data['date-in-day'] or '') ~ ' ' ~ (data['date-in-month'] or '') ~ ' ' ~ (data['date-in-year'] or '') }}</td>

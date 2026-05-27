@@ -1,8 +1,15 @@
 {% macro taskStatus(answer) %}
-  {% if answer and answer != "I don't know" %}
+  {% if answer == "I don't know" %}
     {{
       govukTag({
-        text: "Complete",
+        text: "Paused",
+        classes: "govuk-tag--yellow"
+      })
+    }}
+  {% elif answer %}
+    {{
+      govukTag({
+        text: "Done",
         classes: "govuk-tag--green"
       })
     }}
@@ -10,7 +17,7 @@
     {{
       govukTag({
         text: "To do",
-        classes: "govuk-tag--yellow"
+        classes: "govuk-tag--grey"
       })
     }}
   {% endif %}

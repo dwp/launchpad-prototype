@@ -1,0 +1,321 @@
+{% extends "layouts/payability.html" %}
+
+{% block pageTitle %}
+  Stay task list – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set pageName = "Agent home" %}
+
+{% block beforeContent %}
+
+{% endblock %}
+
+{% block content %}
+
+{% from "govuk/components/task-list/macro.njk" import govukTaskList %}
+
+<!--{% set stays = data.stays or [] %}
+{% set stayIndex = data.stayIndex %}
+{% set stay = stays[stayIndex] %}
+{% set ongoing = stay and stay.endDate == null %}-->
+
+<!--
+{# Determine the screen state based on persona #}
+{% set isNewClaimPersona = data['PayabilityPersona'] == "Agent completing new claim stay end date" %}
+{% set isOngoingClaimPersona = data['PayabilityPersona'] == "Agent handling an ongoing claim" %}
+{% set isLinkedStay = data['PayabilityScenario'] == "Linked stay" %}-->
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <section class="dwp-quick-reference govuk-!-margin-bottom-8">
+      <dl class="dwp-quick-reference__block">
+        <dt class="govuk-visually-hidden">Name:</dt>
+        <dd class="dwp-quick-reference__primary"><a href="#">Jeff Bridges</a></dd>
+
+        <dt class="govuk-visually-hidden">National Insurance number:</dt>
+        <dd class="dwp-quick-reference__secondary">NA 11 22 33 C</dd>
+      </dl>
+    </section>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+
+      <h1 class="govuk-heading-l">Accommodation stay outcome</h1>
+
+      <p>View changes to entitlement and how this was calculated.</p>
+      <!-- Show only for linked stays -->
+      {% if data.PayabilityPersona == "Agent handling an ongoing claim" and data.PayabilityScenario == "linked stay" %}
+        {{ govukInsetText({
+          text: "This outcome is from a linked stay."
+        }) }} 
+      {% endif %}
+
+      <!-- Show only for ongoing stays -->
+
+{% if data.PayabilityPersona == "Agent handling an ongoing claim"
+   and (
+       data.PayabilityScenario == "No stays added"
+       or data.PayabilityScenario == "One completed stay"
+   )
+%}
+
+        <table class="govuk-table">
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">Start date</th>
+              <td class="govuk-table__cell">[Change]</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">End date</th>
+            <td class="govuk-table__cell"><!--No changes to entitlement<br>-->
+            [Change]
+            <!--Entitlement date changed to [date goes here]<br><br>-->
+            
+            </td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Total days in accommodation</th>
+            <td class="govuk-table__cell">32</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Total non-payable days</th>
+            <td class="govuk-table__cell">4</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Total reduction of entitlement</th>
+            <td class="govuk-table__cell">£68</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Total overpaid</th>
+            <td class="govuk-table__cell">£68</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Total underpaid</th>
+            <td class="govuk-table__cell">£68</td>
+          </tr>
+        </tbody>
+      </table>
+       {% endif %}
+
+       <!-- Show only for linked stays -->
+         
+      {% if data.PayabilityPersona == "Agent handling an ongoing claim" and data.PayabilityScenario == "linked stay" %}
+        <table class="govuk-table">
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">Start date</th>
+              <td class="govuk-table__cell">[Change]</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">End date</th>
+            <td class="govuk-table__cell"><!--No changes to entitlement<br>-->
+            [Change]
+            <!--Entitlement date changed to [date goes here]<br><br>-->
+            
+            </td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Total days in accommodation</th>
+            <td class="govuk-table__cell">32</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Total non-payable days</th>
+            <td class="govuk-table__cell">4</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Total reduction of entitlement</th>
+            <td class="govuk-table__cell">£68</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Total overpaid</th>
+            <td class="govuk-table__cell">£68</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Total underpaid</th>
+            <td class="govuk-table__cell">£68</td>
+          </tr>
+        </tbody>
+      </table>
+      {% endif %}
+
+      <!-- Show only if new claim -->
+       {% if isNewClaimPersona %}
+      <table class="govuk-table">
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Start date</th>
+            <td class="govuk-table__cell">[Change]</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">End date</th>
+            <td class="govuk-table__cell"><!--No changes to entitlement<br>-->
+            [Change]
+            <!--Entitlement date changed to [date goes here]<br><br>-->
+            
+            </td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Total days in accommodation</th>
+            <td class="govuk-table__cell">32</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Date of claim</th>
+            <td class="govuk-table__cell">[Date goes here]</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Date of entitlement</th>
+            <td class="govuk-table__cell">[Date goes here]</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Total reduction in arrears</th>
+            <td class="govuk-table__cell">£68</td>
+          </tr>
+        </tbody>
+      </table>
+      {% endif %}
+      
+      <h2 class="govuk-heading-m govuk-!-padding-top-6">Breakdown of payment periods</h2>
+
+      <p class="govuk-body">
+       How stays affected payment periods.
+      </p>
+
+      <h3 class="govuk-heading-s govuk-!-padding-top-6">Care home: 1 February 2026 - 26 March 2026</h3>
+
+
+      {{ govukTable({
+        head: [
+          {
+            text: "Payment period"
+          },
+          {
+            text: "Non-payable days"
+          },
+          {
+            text: "Daily living reduction"
+          },
+          {
+            text: "Mobility reduction"
+          },
+          {
+            text: "Total reduction"
+          }
+        ],
+        rows: [
+          [
+            {
+              text: "1 February to 28 February 2026"
+            },
+                  {
+              text: "2"
+            },
+            {
+              text: "£xx"
+            },
+            {
+              text: "£xx"
+            },
+            {
+              text: "£34"
+            }
+          ],
+          [
+            {
+              text: "29 February to 26 March 2026"
+            },
+            {
+              text: "2"
+            },
+            {
+              text: "£xx"
+            },
+            {
+              text: "£xx"
+            },
+            {
+              text: "£34"
+            }
+          ]
+        ]
+      }) }}
+            <p class="govuk-body">
+      <a href="/payability/v4/stay/pip-stay-complete-canonical" class="govuk-link">View stay</a>
+    </p>
+
+    <!-- Show only for linked stays -->
+      {% if data.PayabilityPersona == "Agent handling an ongoing claim" and data.PayabilityScenario == "linked stay" %}
+         
+     <h3 class="govuk-heading-s govuk-!-padding-top-6">Care home: 1 February 2026 - 26 March 2026</h3>
+      {{ govukTable({
+        head: [
+          {
+            text: "Payment period"
+          },
+          {
+            text: "Non-payable days"
+          },
+          {
+            text: "Daily living reduction"
+          },
+          {
+            text: "Mobility reduction"
+          },
+          {
+            text: "Total reduction"
+          }
+        ],
+        rows: [
+          [
+            {
+              text: "1 February to 28 February 2026"
+            },
+                  {
+              text: "2"
+            },
+            {
+              text: "£xx"
+            },
+            {
+              text: "£xx"
+            },
+            {
+              text: "£34"
+            }
+          ],
+          [
+            {
+              text: "29 February to 26 March 2026"
+            },
+            {
+              text: "2"
+            },
+            {
+              text: "£xx"
+            },
+            {
+              text: "£xx"
+            },
+            {
+              text: "£34"
+            }
+          ]
+        ]
+      }) }}
+    <p class="govuk-body govuk-!-padding-bottom-12">
+      <a href="/payability/v4/stay/pip-stay-complete-canonical" class="govuk-link">View stay</a>
+    </p>
+
+    {% endif %}
+
+
+  <p class="govuk-body govuk-!-padding-top-6">
+  <a href="/payability/v4/person-record/accommodation-history-complete" class="govuk-link">Accommodation stay history</a>
+</p>
+
+  </div>
+</div>
+
+{% endblock %}

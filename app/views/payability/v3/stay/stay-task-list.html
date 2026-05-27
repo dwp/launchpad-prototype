@@ -19,10 +19,17 @@
 
 
 {% macro taskStatus(answer) %}
-  {% if answer and answer != "I don't know" %}
+  {% if answer == "I don't know" %}
     {{
       govukTag({
-        text: "Complete",
+        text: "Paused",
+        classes: "govuk-tag--yellow"
+      })
+    }}
+  {% elif answer %}
+    {{
+      govukTag({
+        text: "Done",
         classes: "govuk-tag--green"
       })
     }}
@@ -30,7 +37,7 @@
     {{
       govukTag({
         text: "To do",
-        classes: "govuk-tag--yellow"
+        classes: "govuk-tag--grey"
       })
     }}
   {% endif %}
@@ -279,7 +286,6 @@
     href: "accommodation-boarder",
     status: { html: taskStatus(data['boarder-scenario']) }
   }) %}
-
   {% if not onlyBoarderStatus %}
     {% set _ = moreItems.push({
       title: { text: "Similar institution" },
@@ -287,6 +293,13 @@
       status: { html: taskStatus(data['similar-institution']) }
     }) %}
   {% endif %}
+
+  {# Ensure Test item always appears when More details is shown #}
+  {% set _ = moreItems.push({
+    title: { text: "Test" },
+    href: "test",
+    status: { html: taskStatus(data['test']) }
+  }) %}
 
   {% if moreItems.length %}
     {{ govukTaskList({

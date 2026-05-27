@@ -1,0 +1,17 @@
+ <!-- Default state for new stay -->
+     <!--<h1 class="govuk-heading-l">Stay in {{ stay.name or "hospital" }}</h1>-->
+  {% if data['PayabilityPersona'] != "Agent handling an ongoing claim" %}
+     <h1 class="govuk-heading-l">Stay in hospital</h1>
+
+      {% else %}
+
+      <h1 class="govuk-heading-l">Stay in {{ data['type-scenario'] or 'hospital' }}</h1>
+      {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+      {% if data.PayabilityPersona == "Agent handling an ongoing claim" 
+   and data.PayabilityScenario == "linked stay" %}
+            {{ govukInsetText({
+            text: "This is part of linked stay."
+            }) }}
+         {% endif %}
+
+      {% endif %}

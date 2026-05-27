@@ -1,0 +1,59 @@
+{% extends "layouts/payability.html" %}
+{% block beforeContent %}
+{{ govukBackLink({
+        text: "Back",
+        href: "javascript:history.back()"
+        }) }}
+{% endblock %}
+{% block content %}
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+
+    <form class="form" action="/contact-check" method="post">
+
+
+    {% set raw = (data['type-scenario'] or '') | trim | lower %}
+    {% if not raw or raw == 'none' or raw == "i don't know" %}
+      {% set accType = 'accommodation' %}
+    {% elif raw == 'detention in legal custody' %}
+      {% set accType = 'place of custody' %}
+    {% else %}
+      {% set accType = data['type-scenario'] %}
+    {% endif %}
+
+    {% set legendText = "Do you want to add contact details for the " ~ accType | lower ~ "?" %}
+    
+      {{ govukRadios({
+      name: "contactCheck",
+      fieldset: {
+        legend: {
+          text: legendText,
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      items: [
+        {
+          value: "Yes",
+          text: "Yes"
+        },
+        {
+          value: "No",
+          text: "No"
+        }
+      ]}) }}
+
+    <button type="submit" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
+      Continue
+    </button>
+
+</form>
+
+
+
+
+
+<!-- End row -->
+{% endblock %}

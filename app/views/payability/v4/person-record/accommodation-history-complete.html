@@ -1,0 +1,156 @@
+{% extends "layouts/payability.html" %}
+
+{% block pageTitle %}
+  Accommodation stay history – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set pageName = "Agent home" %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+      text: "Back",
+      href: "/payability/v4/agent"
+  }) }}
+{% endblock %}
+
+{% block content %}
+{% set stays = data.stays or [] %}
+{% set stay = stays | last %}
+{% set ongoing = stay and (stay.endDate == null) %}
+
+{# Determine the screen state based on persona #}
+{% set isNewClaimPersona = data['PayabilityPersona'] == "Agent completing new claim stay end date" %}
+{% set isOngoingClaimPersona = data['PayabilityPersona'] == "Agent handling an ongoing claim" %}
+
+
+
+<!-- Case header -->
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <form action="login-router" method="post" class="form">
+      <section class="dwp-quick-reference govuk-!-margin-bottom-8" aria-label="Case information">
+        <dl class="dwp-quick-reference__block">
+          <dt class="govuk-visually-hidden">Name</dt>
+          <dd class="dwp-quick-reference__primary"><a href="#">Jeff Bridges</a></dd>
+
+          <dt class="govuk-visually-hidden">National Insurance number</dt>
+          <dd class="dwp-quick-reference__secondary">NA 11 22 33 C</dd>
+        </dl>
+      </section>
+    </form>
+  </div>
+</div>
+
+<!-- Main content row -->
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-quarter">
+    {% include "includes/person-record-nav.njk" %}
+  </div>
+
+
+  <div class="govuk-grid-column-three-quarters">
+
+    <h1 class="govuk-heading-l">Accommodation stay history</h1>
+
+    {# ============================================================
+       SCREEN STATE 1: Ongoing Claim Persona with No Stays Added
+       Simple state: heading, message, and Add stay button only
+       ============================================================ #}
+    {% if isOngoingClaimPersona %}
+
+        {{ govukButton({ text: "Add a stay" }) }}
+   <form class="form" action="../stay/type" method="post">
+      </form>
+
+      <h2 class="govuk-heading-m">Closed stays</h2>
+      <p class="govuk-body">Stays that have all the information recorded and have been submitted.</p>
+
+      {{ govukSummaryList({
+        card: {
+          title: { text: "9 November 2025 to 24 December 2025" },
+          actions: {
+            items: [
+              {
+                href: "/payability/v4/stay/pip-stay-complete-canonical",
+                text: "View stay",
+                visuallyHiddenText: "of closed stay"
+              }
+            ]
+          }
+        },
+        rows: [
+          {
+            key: { text: "Accommodation type" },
+            value: { text: "Hospital" }
+          },
+          {
+            key: { text: "Outcome" },
+            value: { html: 'Entitlement changed' }
+          }
+        ]
+      }) }} 
+
+        {% if data.PayabilityPersona == "Agent handling an ongoing claim" and data.PayabilityScenario == "linked stay" %}
+        {{ govukSummaryList({
+              card: {
+                title: { text: "Linked stay: 9 February 2025 to 18 April 2025" },
+                actions: {}
+              },
+              rows: [
+                {
+                  key: { text: "Stay 1" },
+                  value: { html: '<a href="/payability/v4/stay/pip-stay-complete-canonical">Hospital: 9 February 2025 to 27 February 2025</a>' }
+                },
+                {
+                  key: { text: "Stay 2" },
+                  value: { html: '<a href="/payability/v4/stay/pip-stay-complete-canonical">Hospital: 9 February 2025 to 27 February 2025</a>' }
+                }
+              ]
+            }) }} 
+        {%  endif %}
+ 
+
+    {# ============================================================
+       SCREEN STATE 2: New Claim Persona (PIP Registration)
+       Completing end date for a payability stay on a new claim
+       ============================================================ #}
+    {% elif isNewClaimPersona %}
+      <form class="form" action="../stay/type" method="post">
+        {{ govukButton({ text: "Add a stay" }) }}
+      </form>
+ <h2 class="govuk-heading-m">Closed stays</h2>
+      <p class="govuk-body">Stays that have all the information recorded and have been submitted.</p>
+
+      {{ govukSummaryList({
+        card: {
+          title: { text: "9 November 2025 to 24 December 2025" },
+          actions: {
+            items: [
+              {
+                href: "/payability/v4/stay/pip-stay-complete-canonical",
+                text: "View stay",
+                visuallyHiddenText: "of closed stay"
+              }
+            ]
+          }
+        },
+        rows: [
+          {
+            key: { text: "Accommodation type" },
+            value: { text: "Hospital" }
+          },
+          {
+            key: { text: "Outcome" },
+            value: { html: '<a href="/payability/v4/stay/pip-reg-stay-task-list">Entitlement changed</a>' }
+          }
+        ]
+      }) }} 
+
+      {% endif %}
+
+
+  </div>
+
+</div>
+
+{% endblock %}

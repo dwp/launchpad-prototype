@@ -1,0 +1,5 @@
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
+{% macro accommodationInset(html) %}
+  {{ govukInsetText({ html: html }) }}
+{% endmacro %}

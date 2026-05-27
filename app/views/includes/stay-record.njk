@@ -1,0 +1,113 @@
+
+    {{ govukButton({
+        text: "Edit stay",
+        href: "stay-task-list"
+      }) }}
+
+
+{% if data.type-scenario == "Detention in Legal Custody" %}
+ prison
+{% else %}
+  <table class="govuk-table">
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Status</th>
+        <td class="govuk-table__cell">Complete</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Days in accommodation</th>
+        <td class="govuk-table__cell">30<br>
+        <!--Entitlement date changed to [date goes here]<br><br>-->
+        
+        </td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Outcome</th>
+        <td class="govuk-table__cell">
+        Date of entlitlement changed<br><br>
+        Entitlement changed<br>
+        No changes to entitlement<br><br>
+
+        Claimant was overpaid<br>
+        Claimant was underpaid<br><br>
+        <a href="pip-stay-breakdown">View outcome</a><br>
+        <!--Entitlement date changed to [date goes here]<br><br>-->
+        
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+    <h2 class="govuk-heading-m govuk-!-padding-top-6">Stay details</h2>
+      <table class="govuk-table">
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Accommodation type</th>
+            <td class="govuk-table__cell">[print here]</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Start date</th>
+            <td class="govuk-table__cell">{{ (data['date-in-day'] or '') ~ ' ' ~ (data['date-in-month'] or '') ~ ' ' ~ (data['date-in-year'] or '') }}</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">End date</th>
+            <td class="govuk-table__cell">{% if data['date-out-check'] == "Yes" %}Ongoing{% else %}{{ (data['date-out-day'] or '') ~ ' ' ~ (data['date-out-month'] or '') ~ ' ' ~ (data['date-out-year'] or '') }}{% endif %}</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Accommodation address</th>
+            <td class="govuk-table__cell">{{ data['accommodation-select-an-address'] or data['accommodation-name'] or 'Not provided' }}</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Accommodation phone number and email address</th>
+            <td class="govuk-table__cell">{% if data['primary-contact'] or data['email'] or data['phone-number'] %}{{ (data['primary-contact'] or '') }}{% if data['primary-contact'] and (data['email'] or data['phone-number']) %} / {% endif %}{{ (data['email'] or '') }}{% if data['email'] and data['phone-number'] %} / {% endif %}{{ (data['phone-number'] or '') }}{% else %}Not provided{% endif %}</td>
+          </tr>
+            <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Border status</th>
+            <td class="govuk-table__cell">{{ data['boarder-scenario'] or 'Not provided' }}</td>
+          </tr>
+            <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Similar institution</th>
+            <td class="govuk-table__cell">{{ data['similar-institution'] or 'Not provided' }}</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Accommodation evidence form</th>
+            <td class="govuk-table__cell">[print here]</td>
+          </tr>
+          
+
+        </tbody>
+      </table>
+      <h2 class="govuk-heading-m govuk-!-padding-top-6">Funding details</h2>
+        <table class="govuk-table">
+        <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Funding source</th>
+            <td class="govuk-table__cell">{{ data['funding-scenario'] or data['funding-type'] or 'Not provided' }}</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Funder name</th>
+            <td class="govuk-table__cell">{{ data['funding-primary-contact'] or 'Not provided' }}</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Agreement to repay</th>
+            <td class="govuk-table__cell">{{ data['repayment-scenario'] }}</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Funder address</th>
+            <td class="govuk-table__cell">{{ data['funding-select-an-address'] or 'hospital' }}</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Funder phone number and email address</th>
+            <td class="govuk-table__cell">{% if data['funding-primary-contact'] or data['funding-email'] or data['funding-phone-number'] %}{{ (data['funding-primary-contact'] or '') }}{% if data['funding-primary-contact'] and (data['funding-email'] or data['funding-phone-number']) %} / {% endif %}{{ (data['funding-email'] or '') }}{% if data['funding-email'] and data['funding-phone-number'] %} / {% endif %}{{ (data['funding-phone-number'] or '') }}{% else %}Not provided{% endif %}</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Funder evidence form</th>
+            <td class="govuk-table__cell">[print here]</td>
+          </tr>
+          
+
+
+        </tbody>
+      </table>
+ 
+{% endif %}
