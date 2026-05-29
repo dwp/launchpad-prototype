@@ -87,18 +87,21 @@ function updateStayObject(req) {
   stay.completed.similarInstitution = completed(d['similar-institution']);
 
   stay.completed.contact =
-    completed(d['funding-primary-contact']) ||
     completed(d['contactCheck']) ||
-    completed(d['funding-email']) ||
-    completed(d['funding-phone-number']) ||
+    completed(d['email']) ||
+    completed(d['phone-number']) ||
     (d['contact-options'] && d['contact-options'].length > 0);
 
   stay.completed.fundingAddress = 
-  completed(d['funding-select-an-address']) ||
-  completed(d['funding-contact-check']) ||
-  completed(d['fundingAddressCheck']);
+    completed(d['funding-select-an-address']) ||
+    completed(d['funding-contact-check']) ||
+    completed(d['fundingAddressCheck']);
 
-  stay.completed.fundingContact = completed(d['funding-contact-check']);
+  stay.completed.fundingContact =
+    completed(d['funding-contact-check']) ||
+    completed(d['funding-email']) ||
+    completed(d['funding-phone-number']) ||
+    (d['funding-contact-options'] && d['funding-contact-options'].length > 0);
 }
 
 
@@ -125,13 +128,7 @@ router.get('/payability/v4/stay/start', function (req, res) {
 // --------------------------------------------------------
 
 router.post('/agent', function (req, res) {
-  const chosenScenario = req.body['PayabilityScenario'];
-  const chosenPersona = req.session.data['PayabilityPersona'];
 
-  // Reset
-  req.session.data = {};
-  req.session.data['PayabilityScenario'] = chosenScenario;
-  req.session.data['PayabilityPersona'] = chosenPersona;
 
   return res.redirect('/payability/v4/agent');
 });
@@ -349,7 +346,7 @@ router.post('/funding-scenario-v4', function(req, res) {
   ];
 
   if (autoEnd.includes(v)) {
-    return res.redirect("payability/v4/stay/stay-task-list");
+    return res.redirect("payability/v4/stay/repay");
   }
 
   return res.redirect("payability/v4/stay/funding-name");
@@ -407,7 +404,7 @@ router.post('/accommodation-contact-select', function(req, res) {
 router.post('/funding-contact-select', function(req, res) {
   updateStayObject(req);
 
-  const options = req.session.data['contact-options'];
+  const options = req.session.data['funding-contact-options'];
   const selectedNone = Array.isArray(options)
     ? options.includes('none')
     : options === 'none';

@@ -27,7 +27,7 @@
     {% endif %}
 
 
-    {% set legendText = "Has a completed 3006 evidence form been received?" %}
+    {% set legendText = "Has a completed accommodation form been received?" %}
     {% from "includes/accommodation-form-heading.njk" import accommodationHeading %}
     {% from "includes/accommodation-form-inset.njk" import accommodationInset %}
     {% from "includes/accommodation-form-radios.njk" import accommodationRadios %}
@@ -39,7 +39,7 @@
     {{ accommodationRadios("contactCheck", [
       { value: "Yes", text: "Yes" },
       { value: "No", text: "No, I need to send one" },
-      { value: "No", text: "No, I'm waiting for a response" }
+      { value: "Waiting", text: "No, I'm waiting for a response" }
     ]) }}
 
     <button type="submit" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">

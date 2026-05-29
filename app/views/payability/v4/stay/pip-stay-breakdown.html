@@ -45,11 +45,11 @@
 
       <h1 class="govuk-heading-l">Accommodation stay outcome</h1>
 
-      <p>View changes to entitlement and how this was calculated.</p>
+      <p>Changes to payments and how this was calculated after a stay in accommodation.</p>
       <!-- Show only for linked stays -->
       {% if data.PayabilityPersona == "Agent handling an ongoing claim" and data.PayabilityScenario == "linked stay" %}
         {{ govukInsetText({
-          text: "This outcome is from a linked stay."
+          text: "This outcome is for a linked stay."
         }) }} 
       {% endif %}
 
@@ -80,25 +80,55 @@
             <th scope="row" class="govuk-table__header">Total days in accommodation</th>
             <td class="govuk-table__cell">32</td>
           </tr>
+          {% if data.ExtraConditions == "Entitlement changed" %}
           <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">Total non-payable days</th>
             <td class="govuk-table__cell">4</td>
           </tr>
           <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header">Total reduction of entitlement</th>
+            <th scope="row" class="govuk-table__header">Total reduction of payments for this stay</th>
             <td class="govuk-table__cell">£68</td>
+          </tr>
+          {% endif %}
+          {% if data.ExtraConditions == "Entitlement changed overpaymen" %}
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Total non-payable days</th>
+            <td class="govuk-table__cell">4</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Total payment reduction for this stay</th>
+            <td class="govuk-table__cell">£68</td>
+          </tr>
+          {% endif %}
+        {% if data.ExtraConditions == "Entitlement changed overpayment" %}
+         <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Total non-payable days</th>
+            <td class="govuk-table__cell">4</td>
           </tr>
           <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">Total overpaid</th>
             <td class="govuk-table__cell">£68</td>
           </tr>
+           {% endif %}
+           {% if data.ExtraConditions == "Entitlement changed underpayment" %}
           <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">Total underpaid</th>
             <td class="govuk-table__cell">£68</td>
           </tr>
+          {% endif %}
         </tbody>
       </table>
        {% endif %}
+
+        
+
+        
+        
+        {% if data.ExtraConditions == "Entitlement not changed underpayment" %}
+        No changes to entitlement<br><br>
+        Claimant was underpaid<br><br>
+        {% endif %}
+
 
        <!-- Show only for linked stays -->
          
@@ -126,7 +156,7 @@
             <td class="govuk-table__cell">4</td>
           </tr>
           <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header">Total reduction of entitlement</th>
+            <th scope="row" class="govuk-table__header">Total reduction of payments for this stay</th>
             <td class="govuk-table__cell">£68</td>
           </tr>
           <tr class="govuk-table__row">
@@ -177,10 +207,10 @@
       </table>
       {% endif %}
       
-      <h2 class="govuk-heading-m govuk-!-padding-top-6">Breakdown of payment periods</h2>
+      <h2 class="govuk-heading-m govuk-!-padding-top-6">Stays and payment periods</h2>
 
       <p class="govuk-body">
-       How stays affected payment periods.
+       Reductions for payment periods affected by the stay. 
       </p>
 
       <h3 class="govuk-heading-s govuk-!-padding-top-6">Care home: 1 February 2026 - 26 March 2026</h3>

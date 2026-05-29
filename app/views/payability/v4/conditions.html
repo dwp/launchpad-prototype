@@ -25,32 +25,45 @@
   <!-- Start column -->
   <div class="govuk-grid-column-two-thirds">
     {% include "includes/banner.njk" %}
-    <form class="form" action="conditions" method="post">
+    <form class="form" action="/agent" method="post">
 
       
 
 
 
       {{ govukRadios({
-        name: "PayabilityScenario",
+        name: "ExtraConditions",
         fieldset: {
           legend: {
-            text: "Payability V4: select a scenario",
+            text: "Payability V4: select conditions to simulate",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--l"
           }
         },
         items: [
         {
-            value: "No stays added",
-            text: "No stays have been added"
-          },        {
-            value: "linked stay",
-            text: "Recording a linked stay"
-          },
+            value: "No change",
+            text: "Stay has no effect on entitlement"
+          }, 
         {
-            value: "One completed stay",
-            text: "An open stay is visible, and completed stays - including linked stays -  are recorded"
+            value: "Entitlement changed",
+            text: "Reduced PIP entitlement"
+          }, 
+        {
+            value: "Entitlement changed overpayment",
+            text: "Reduced PIP entitlement. Claimant overpaid."
+          }, 
+        {
+            value: "Entitlement changed underpayment",
+            text: "Reduced PIP entitlement. Claimant underpaid."
+          }, 
+        {
+            value: "Entitlement not changed underpayment",
+            text: "Stay has no effect on entitlement. Claimant was underpaid."
+          }, 
+        {
+            value: "Ready to submit",
+            text: "Stay ready to submit or is reopened to edit"
           }
         ]
       }) }}

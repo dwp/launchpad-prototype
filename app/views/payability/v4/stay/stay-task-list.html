@@ -1,5 +1,3 @@
-
-
 {% extends "layouts/payability.html" %}
 
 {% block pageTitle %}
@@ -12,6 +10,7 @@
 
 {% from "govuk/components/task-list/macro.njk" import govukTaskList %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/tag/macro.njk" import govukTag %}
 
 {% macro taskStatus(isComplete, isPaused) %}
   {% if isPaused %}
@@ -24,10 +23,12 @@
 {% endmacro %}
 
 {# =========================
-   FIELD COMPLETION (FIXED)
+   FIELD COMPLETION
    ========================= #}
 
 {% set typeComplete = data['type-scenario'] %}
+
+{% set accommodationEvidenceComplete = data['contactCheck'] in ["Yes", "No"] %}
 
 {% set startDateComplete =
   data['date-in-day'] and
@@ -55,7 +56,6 @@
   (data['address-line-1'] or data['accommodation-select-an-address'])
 %}
 
-
 {% set fundingComplete =
   data['type-scenario'] == "Detention in Legal Custody"
   or (data['funding-scenario'] and data['funding-scenario'] not in ["", "I don't know"])
@@ -71,17 +71,43 @@
   or (data['repayment-scenario'] and data['repayment-scenario'] not in ["", "I don't know"])
 %}
 
-{% set contactComplete = data['contactCheck'] %}
+{% set contactOptions = data['contact-options'] %}
+{% set contactComplete = (
+  data['email'] or
+  data['phone-number'] or
+  data['primary-contact'] or
+  contactOptions == "none" or
+  contactOptions == "Email address" or
+  contactOptions == "Phone number" or
+  (contactOptions and (
+    'Email address' in contactOptions or
+    'Phone number' in contactOptions or
+    'none' in contactOptions
+  ))
+) %}
 
 {% set fundingAddressComplete =
-  data['funding-address-line-1']
-  or data['funding-select-an-address']
+  data['funding-address-line-1'] or
+  data['funding-select-an-address'] or
+  data['fundingAddressCheck'] == "Yes" or
+  data['fundingAddressCheck'] == "No"
 %}
 
-{% set fundingContactComplete =
-  data['funding-contact-check'] and
-  data['funding-contact-check'] not in ["", "I don't know"]
-%}
+{% set fundingContactOptions = data['funding-contact-options'] %}
+{% set fundingContactComplete = (
+  data['funding-email'] or
+  data['funding-phone-number'] or
+  fundingContactOptions == "none" or
+  fundingContactOptions == "Email address" or
+  fundingContactOptions == "Phone number" or
+  (fundingContactOptions and (
+    'Email address' in fundingContactOptions or
+    'Phone number' in fundingContactOptions or
+    'none' in fundingContactOptions
+  )) or
+  data['funding-contact-check'] == "Yes" or
+  data['funding-contact-check'] == "No"
+) %}
 
 {% set boarderComplete =
   data['boarder-scenario'] and
@@ -93,15 +119,13 @@
   data['similar-institution'] not in ["", "I don't know"]
 %}
 
-{% set fundingEvidenceComplete = data['fundingCheck'] %}
+{% set fundingEvidenceComplete = data['fundingCheck'] in ["Yes", "No"] %}
 
 {# =========================
    PAUSE LOGIC
    ========================= #}
 
-{% set fundingCheckPaused =
-  data['fundingCheck'] == "No, I'm waiting for a response"
-%}
+{% set fundingCheckPaused = data['fundingCheck'] == "Waiting" %}
 
 {% set endDatePaused =
   data['date-out-check'] == "Yes"
@@ -123,15 +147,9 @@
   data['similar-institution'] == "I don't know"
 %}
 
-{% set contactPaused = 
-  data['contactCheck'] == "No, I need to send one" or
-  data['contactCheck'] == "No, I'm waiting for a response"
-%}
+{% set contactPaused = data['contactCheck'] == "Waiting" %}
 
-{% set fundingContactPaused =
-  data['funding-contact-check'] == "No, I need to send one" or
-  data['funding-contact-check'] == "No, I'm waiting for a response"
-%}
+{% set fundingContactPaused = data['funding-contact-check'] == "Waiting" %}
 
 {# =========================
    SHOW MORE DETAILS
@@ -142,20 +160,15 @@
 
 {% if data['type-scenario'] == "Detention in Legal Custody" %}
   {% set showMoreDetails = false %}
-
 {% elseif data['type-scenario'] == "Hospital" %}
-
   {% if data['funding-scenario'] == "NHS" %}
     {% set showMoreDetails = true %}
     {% set onlyBoarderStatus = true %}
-
   {% elseif data['funding-scenario'] == "Claimant" %}
     {% set showMoreDetails = false %}
-
   {% else %}
     {% set showMoreDetails = true %}
   {% endif %}
-
 {% else %}
   {% set showMoreDetails = true %}
 {% endif %}
@@ -187,7 +200,8 @@
       fundingContactComplete and
       boarderComplete and
       similarInstitutionComplete and
-      fundingEvidenceComplete
+      fundingEvidenceComplete and
+      accommodationEvidenceComplete
     %}
   {% endif %}
 {% endif %}
@@ -204,8 +218,7 @@
     fundingCheckPaused or
     fundingContactPaused
   )
-  and not
-readyToSubmit
+  and not readyToSubmit
 %}
 
 
@@ -340,8 +353,7 @@ readyToSubmit
 
         <br>
         <p>
-          It is unlikely the claimant will be able to give you the below details when they first tell us about a stay.
-          The details can be completed by a caseworker at a later date.
+        The details below can be completed by a caseworker at a later date. It is unlikely the claimant will be able to give you these details when they first tell us about a stay.
         </p>
 
         {% set moreItems = [] %}
@@ -385,7 +397,7 @@ readyToSubmit
           {% set _ = moreItems.push({
             title: { text: "Accommodation evidence form" },
             href: "accommodation-form-check",
-            status: { html: taskStatus(contactComplete, false) }
+            status: { html: taskStatus(accommodationEvidenceComplete, contactPaused) }
           }) %}
 
         {% endif %}
@@ -543,7 +555,7 @@ readyToSubmit
           {% set _ = moreItems.push({
             title: { text: "Accommodation evidence form" },
             href: "accommodation-form-check",
-            status: { html: taskStatus(contactComplete, false) }
+            status: { html: taskStatus(accommodationEvidenceComplete, contactPaused) }
           }) %}
 
         {% endif %}
@@ -571,10 +583,9 @@ readyToSubmit
         }) }}
       </div>
     {% endif %}
-        <p class="govuk-body govuk-!-margin-bottom-6">
-      <a href="/payability/v4/person-record/accommodation-history-complete" class="govuk-link">Accommodation stay history</a>
+        <p class="govuk-body govuk-!-margin-bottom-6 govuk-!-padding-top-6">
+      <a href="/payability/v4/person-record/accommodation-history-open-stay" class="govuk-link">Accommodation stay history</a>
     </p>
-
   </div>
 </div>
 

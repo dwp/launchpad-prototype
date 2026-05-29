@@ -21,9 +21,18 @@
 {# Determine the screen state based on persona #}
 {% set isNewClaimPersona = data['PayabilityPersona'] == "Agent completing new claim stay end date" %}
 
-{% set isOngoingClaimPersona = data['PayabilityPersona'] == "Agent handling an ongoing claim" %}
 
-{% set isLinkedStay = (data['PayabilityScenario'] or '') | lower == "linked stay" and isOngoingClaimPersona %}
+{% set isOngoingClaimNoStays =
+    data['PayabilityPersona'] == "Agent handling an ongoing claim"
+    and data['PayabilityScenario'] == "No stays added" %}
+
+{% set isOngoingClaimStays =
+    data['PayabilityPersona'] == "Agent handling an ongoing claim"
+    and data['PayabilityScenario'] == "One completed stay" %}
+
+{% set isLinkedStays =
+    data['PayabilityPersona'] == "Agent handling an ongoing claim"
+    and data['PayabilityScenario'] == "linked stay" %}
 
 
 <!-- Case header -->
@@ -54,11 +63,15 @@
 
     <h1 class="govuk-heading-l">Accommodation stay history</h1>
 
+    <!--<p>Persona: {{ data['PayabilityPersona'] }}</p>
+    <p>Scenario: {{ data['PayabilityScenario'] }}</p>-->
+
+
     {# ============================================================
        SCREEN STATE 1: Ongoing Claim Persona with No Stays Added
        Simple state: heading, message, and Add stay button only
        ============================================================ #}
-    {% if isOngoingClaimPersona and data['PayabilityScenario'] == "No stays added" %}
+    {% if isOngoingClaimNoStays %}
       <p class="govuk-body">Stays will appear here as they are added.</p>
       <form class="form" action="../stay/type" method="post">
         {{ govukButton({ text: "Add a stay" }) }}
@@ -104,7 +117,7 @@
     {# ============================================================
        SCREEN STATE 3: Linked stays
        ============================================================ #}
-    {% elif isLinkedStay %}
+    {% elif isLinkedStays %}
       <form class="form" action="../stay/type" method="post">
         {{ govukButton({ text: "Add a stay" }) }}
       </form>
@@ -119,7 +132,7 @@
           actions: {
             items: [
               {
-                href: "/payability/v4/stay/pip-reg-stay-task-list",
+                href: "/payability/v4/stay/stay-task-list",
                 text: "View stay",
                 visuallyHiddenText: "of closed stay"
               }
@@ -133,16 +146,16 @@
           },
           {
             key: { text: "Outcome" },
-            value: { html: '<a href="/payability/v4/stay/pip-reg-stay-task-list">Entitlement changed</a>' }
+            value: { html: '<a href="/payability/v4/stay/stay-task-list">Payments changed</a>' }
           }
         ]
       }) }} 
 
 
     {# ============================================================
-       SCREEN STATE 4: Ongoing Claim Persona with Linked Stays
+       SCREEN STATE 4: Ongoing Claim Persona, no
        ============================================================ #}
-    {% elif isOngoingClaimPersona %}
+    {% elif isOngoingClaimStays %}
       <form class="form" action="../stay/type" method="post">
         {{ govukButton({ text: "Add a stay" }) }}
       </form>
@@ -155,7 +168,7 @@
           actions: {
             items: [
               {
-                href: "/payability/v4/stay/pip-reg-stay-task-list",
+                href: "/payability/v4/stay/stay-task-list",
                 text: "View stay",
                 visuallyHiddenText: "of ongoing stay"
               }
@@ -180,7 +193,7 @@
           actions: {
             items: [
               {
-                href: "/payability/v4/stay/pip-reg-stay-task-list",
+                href: "/payability/v4/stay/stay-task-list",
                 text: "View stay",
                 visuallyHiddenText: "of recent stay"
               }
@@ -208,7 +221,7 @@
           actions: {
             items: [
               {
-                href: "/payability/v4/stay/pip-reg-stay-task-list",
+                href: "/payability/v4/stay/stay-task-list",
                 text: "View stay",
                 visuallyHiddenText: "of closed stay"
               }
@@ -222,7 +235,7 @@
           },
           {
             key: { text: "Outcome" },
-            value: { html: '<a href="/payability/v4/stay/pip-reg-stay-task-list">Entitlement changed</a>' }
+            value: { html: '<a href="/payability/v4/stay/stay-task-list">Payments changed</a>' }
           }
         ]
       }) }} 
@@ -233,7 +246,7 @@
           actions: {
             items: [
               {
-                href: "/payability/v4/stay/pip-reg-stay-task-list",
+                href: "/payability/v4/stay/stay-task-list",
                 text: "View stay",
                 visuallyHiddenText: "of closed stay"
               }
@@ -247,7 +260,7 @@
           },
           {
             key: { text: "Outcome" },
-            value: { text: "No changes to entitlement" }
+            value: { text: "No changes to payments" }
           }
         ]
       }) }} 
@@ -260,19 +273,19 @@
         rows: [
           {
             key: { text: "Stay 1" },
-            value: { html: '<a href="/payability/v4/stay/pip-reg-stay-task-list">Hospital: 9 February 2025 to 27 February 2025</a>' }
+            value: { html: '<a href="/payability/v4/stay/stay-task-list">Hospital: 9 February 2025 to 27 February 2025</a>' }
           },
           {
             key: { text: "Stay 2" },
-            value: { html: '<a href="/payability/v4/stay/pip-reg-stay-task-list">Hospital: 9 February 2025 to 27 February 2025</a>' }
+            value: { html: '<a href="/payability/v4/stay/stay-task-list">Hospital: 9 February 2025 to 27 February 2025</a>' }
           },
           {
             key: { text: "Stay 3" },
-            value: { html: '<a href="/payability/v4/stay/pip-reg-stay-task-list">Hospital: 9 February 2025 to 27 February 2025</a>' }
+            value: { html: '<a href="/payability/v4/stay/stay-task-list">Hospital: 9 February 2025 to 27 February 2025</a>' }
           },
           {
             key: { text: "Outcome" },
-            value: { html: '<a href="/payability/v4/stay/pip-reg-stay-task-list">Entitlement changed</a>' }
+            value: { html: '<a href="/payability/v4/stay/stay-task-list">Payments changed</a>' }
           }
         ]
       }) }} 

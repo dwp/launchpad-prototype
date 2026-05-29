@@ -18,8 +18,15 @@
 {% block content %}
 
 
-{% macro taskStatus(answer) %}
-  {% if answer == "I don't know" %}
+{% macro taskStatus(answer, isPaused=false) %}
+  {% if isPaused %}
+    {{
+      govukTag({
+        text: "Paused",
+        classes: "govuk-tag--yellow"
+      })
+    }}
+  {% elif answer == "I don't know" %}
     {{
       govukTag({
         text: "Paused",
@@ -110,8 +117,8 @@
 {% macro displayFundingContact() %}
   {% if data['funding-contact-check'] == "No" %}
     No contact details
-  {% elif data['contact-options'] %}
-    {{ displayOptions(data['contact-options']) }}
+  {% elif data['funding-contact-options'] %}
+    {{ displayOptions(data['funding-contact-options']) }}
   {% else %}
     Awaiting
   {% endif %}
@@ -126,6 +133,74 @@
     <td class="govuk-table__cell">{{ statusHtml | safe }}</td>
   </tr>
 {% endmacro %}
+
+{% set contactOptions = data['contact-options'] %}
+{% set contactComplete = (
+  data['email'] or
+  data['phone-number'] or
+  data['primary-contact'] or
+  contactOptions == "none" or
+  contactOptions == "Email address" or
+  contactOptions == "Phone number" or
+  (contactOptions and (
+    'Email address' in contactOptions or
+    'Phone number' in contactOptions or
+    'none' in contactOptions
+  ))
+) %}
+
+{% set fundingAddressComplete =
+  data['funding-address-line-1'] or
+  data['funding-select-an-address'] or
+  data['fundingAddressCheck'] == "Yes" or
+  data['fundingAddressCheck'] == "No"
+%}
+
+{% set fundingContactOptions = data['funding-contact-options'] %}
+{% set fundingContactComplete = (
+  data['funding-email'] or
+  data['funding-phone-number'] or
+  fundingContactOptions == "none" or
+  fundingContactOptions == "Email address" or
+  fundingContactOptions == "Phone number" or
+  (fundingContactOptions and (
+    'Email address' in fundingContactOptions or
+    'Phone number' in fundingContactOptions or
+    'none' in fundingContactOptions
+  )) or
+  data['funding-contact-check'] == "Yes" or
+  data['funding-contact-check'] == "No"
+) %}
+
+{% set boarderComplete =
+  data['boarder-scenario'] and
+  data['boarder-scenario'] not in ["", "I don't know"]
+%}
+
+{% set similarInstitutionComplete =
+  data['similar-institution'] and
+  data['similar-institution'] not in ["", "I don't know"]
+%}
+
+{% set accommodationEvidenceComplete = data['contactCheck'] in ["Yes", "No"] %}
+
+{% set fundingEvidenceComplete = data['fundingCheck'] in ["Yes", "No"] %}
+
+{% set fundingCheckPaused = data['fundingCheck'] == "Waiting" %}
+
+{% set endDatePaused = data['date-out-check'] == "Yes" %}
+
+{% set stillTherePaused = data['date-out-check'] == "Yes" %}
+
+{% set fundingPaused = data['funding-scenario'] == "I don't know" %}
+
+{% set repaymentPaused = data['repayment-scenario'] == "I don't know" %}
+
+{% set similarInstitutionPaused = data['similar-institution'] == "I don't know" %}
+
+{% set contactPaused = data['contactCheck'] == "Waiting" %}
+
+{% set fundingContactPaused = data['funding-contact-check'] == "Waiting" %}
 
 {% macro newClaimEndDateStayState() %}
   <h1 class="govuk-heading-l">Stay in hospital</h1>
@@ -346,7 +421,7 @@
       "Still in accommodation",
       "/payability/v4/stay/date-still-there",
       displayValue(data['date-out-check']),
-      taskStatus(data['date-out-check'])
+      taskStatus(data['date-out-check'], stillTherePaused)
     ) }}
 
     {{ taskRow(
@@ -359,7 +434,8 @@
           data['date-out-day'] and
           data['date-out-month'] and
           data['date-out-year']
-        )
+        ),
+        endDatePaused
       )
     ) }}
 
@@ -378,21 +454,32 @@
         "Funding source",
         "/payability/v4/stay/funding-type",
         displayValue(data['funding-scenario']),
-        taskStatus(data['funding-scenario'])
+        taskStatus(
+          data['type-scenario'] == "Detention in Legal Custody"
+          or (data['funding-scenario'] and data['funding-scenario'] not in ["", "I don't know"]),
+          fundingPaused
+        )
       ) }}
 
       {{ taskRow(
         "Funder name",
         "/payability/v4/stay/funding-name",
         displayValue(data['funding-primary-contact']),
-        taskStatus(data['funding-primary-contact'])
+        taskStatus(
+          data['type-scenario'] == "Detention in Legal Custody"
+          or (data['funding-primary-contact'] and data['funding-primary-contact'] not in ["", "I don't know"])
+        )
       ) }}
 
       {{ taskRow(
         "Agreement to repay",
         "/payability/v4/stay/repay",
         displayValue(data['repayment-scenario']),
-        taskStatus(data['repayment-scenario'])
+        taskStatus(
+          data['type-scenario'] == "Detention in Legal Custody"
+          or (data['repayment-scenario'] and data['repayment-scenario'] not in ["", "I don't know"]),
+          repaymentPaused
+        )
       ) }}
     {% endif %}
   </tbody>
@@ -442,24 +529,19 @@
     {% set _ = moreItems.push({
       title: { text: "Accommodation phone number and email address" },
       href: "accommodation-contact-select",
-      status: { html: taskStatus(data['contactCheck']) }
+      status: { html: taskStatus(contactComplete, contactPaused) }
     }) %}
 
     {% set _ = moreItems.push({
       title: { text: "Funder address" },
       href: "funding-address-check",
-      status: {
-        html: taskStatus(
-          data['funding-address-line-1']
-          or data['funding-select-an-address']
-        )
-      }
+      status: { html: taskStatus(fundingAddressComplete, false) }
     }) %}
 
     {% set _ = moreItems.push({
       title: { text: "Funder phone number and email address" },
       href: "funding-contact-select",
-      status: { html: taskStatus(data['funding-contact-check']) }
+      status: { html: taskStatus(fundingContactComplete, fundingContactPaused) }
     }) %}
 
   {% endif %}
@@ -468,13 +550,13 @@
   {% set _ = moreItems.push({
     title: { text: "Boarder status" },
     href: "accommodation-boarder",
-    status: { html: taskStatus(data['boarder-scenario']) }
+    status: { html: taskStatus(boarderComplete, false) }
   }) %}
   {% if not onlyBoarderStatus %}
     {% set _ = moreItems.push({
       title: { text: "Similar institution" },
       href: "similar-institution",
-      status: { html: taskStatus(data['similar-institution']) }
+      status: { html: taskStatus(similarInstitutionComplete, similarInstitutionPaused) }
     }) %}
   {% endif %}
 
@@ -482,12 +564,12 @@
   {% set _ = moreItems.push({
     title: { text: "Accommodation evidence form" },
     href: "accommodation-form-check",
-    status: { html: taskStatus(data['accommodation-form-check']) }
+    status: { html: taskStatus(accommodationEvidenceComplete, contactPaused) }
   }) %}
   {% set _ = moreItems.push({
     title: { text: "Funding evidence form" },
     href: "funding-form-check",
-    status: { html: taskStatus(data['funding-form-check']) }
+    status: { html: taskStatus(fundingEvidenceComplete, fundingCheckPaused) }
   }) %}
 
   {% if moreItems.length %}
@@ -498,24 +580,21 @@
             "Accommodation phone number and email address",
             "accommodation-contact-select",
             displayAccommodationContact(),
-            taskStatus(data['contactCheck'])
+            taskStatus(contactComplete, contactPaused)
           ) }}
 
           {{ taskRow(
             "Funder address",
             "funding-address-check",
             displayValue(data['funding-address-line-1'] or data['funding-select-an-address']),
-            taskStatus(
-              data['funding-address-line-1']
-              or data['funding-select-an-address']
-            )
+            taskStatus(fundingAddressComplete, false)
           ) }}
 
           {{ taskRow(
             "Funder phone number and email address",
             "funding-contact-select",
             displayFundingContact(),
-            taskStatus(data['funding-contact-check'])
+            taskStatus(fundingContactComplete, fundingContactPaused)
           ) }}
         {% endif %}
 
@@ -523,7 +602,7 @@
           "Boarder status",
           "accommodation-boarder",
           displayValue(data['boarder-scenario']),
-          taskStatus(data['boarder-scenario'])
+          taskStatus(boarderComplete, false)
         ) }}
 
         {% if not onlyBoarderStatus %}
@@ -531,22 +610,22 @@
             "Similar institution",
             "similar-institution",
             displayValue(data['similar-institution']),
-            taskStatus(data['similar-institution'])
+            taskStatus(similarInstitutionComplete, similarInstitutionPaused)
           ) }}
         {% endif %}
 
         {{ taskRow(
           "Accommodation evidence form",
           "accommodation-form-check",
-          displayValue(data['accommodation-form-check']),
-          taskStatus(data['accommodation-form-check'])
+          displayValue(data['contactCheck']),
+          taskStatus(accommodationEvidenceComplete, contactPaused)
         ) }}
 
         {{ taskRow(
           "Funding evidence form",
           "funding-form-check",
-          displayValue(data['funding-form-check']),
-          taskStatus(data['funding-form-check'])
+          displayValue(data['fundingCheck']),
+          taskStatus(fundingEvidenceComplete, fundingCheckPaused)
         ) }}
       </tbody>
     </table>
@@ -557,7 +636,7 @@
   <div class="govuk-!-margin-bottom-6">
     {{ govukButton({
       text: "Continue",
-      href: "/payability/v4/stay/final-check-answers"
+      href: "/payability/v4/stay/pip-stay-complete"
     }) }}
   </div>
 {% endif %}

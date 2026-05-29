@@ -4,10 +4,14 @@
         href: "stay-task-list"
       }) }}
 
-
+<!-- Prison -->
 {% if data.type-scenario == "Detention in Legal Custody" %}
- prison
-{% else %}
+ Prison details
+{% endif %}
+
+
+
+<!-- Ongoing claims -->
   <table class="govuk-table">
     <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
@@ -16,22 +20,38 @@
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Days in accommodation</th>
-        <td class="govuk-table__cell">30<br>
-        <!--Entitlement date changed to [date goes here]<br><br>-->
+        <td class="govuk-table__cell">
+            {% if data.ExtraConditions == "No change" %}
+            14
+            {% else %}
+            45
+          {% endif %}
         
         </td>
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Outcome</th>
         <td class="govuk-table__cell">
-        Date of entlitlement changed<br><br>
-        Entitlement changed<br>
-        No changes to entitlement<br><br>
-
-        Claimant was overpaid<br>
+        {% if data.ExtraConditions == "No change" %}
+         No changes to payments
+        {% endif %}
+        {% if data.ExtraConditions == "Entitlement changed" %}
+        Payments changed<br><br>
+        {% endif %}
+        {% if data.ExtraConditions == "Entitlement changed overpayment" %}
+        Claimant was overpaid<br><br>
+        {% endif %}
+        {% if data.ExtraConditions == "Entitlement changed underpayment" %}
         Claimant was underpaid<br><br>
-        <a href="pip-stay-breakdown">View outcome</a><br>
-        <!--Entitlement date changed to [date goes here]<br><br>-->
+        {% endif %}
+        {% if data.ExtraConditions == "Entitlement not changed underpayment" %}
+        No changes to entitlement<br><br>
+        Claimant was underpaid<br><br>
+        {% endif %}
+
+        {% if data.ExtraConditions != "No change" %}
+          <a href="pip-stay-breakdown">View outcome</a>
+        {% endif %}
         
         </td>
       </tr>
@@ -43,7 +63,7 @@
         <tbody class="govuk-table__body">
           <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">Accommodation type</th>
-            <td class="govuk-table__cell">[print here]</td>
+            <td class="govuk-table__cell">{{ data['type-scenario'] or 'Not provided' }}</td>
           </tr>
           <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">Start date</th>
@@ -59,10 +79,10 @@
           </tr>
           <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">Accommodation phone number and email address</th>
-            <td class="govuk-table__cell">{% if data['primary-contact'] or data['email'] or data['phone-number'] %}{{ (data['primary-contact'] or '') }}{% if data['primary-contact'] and (data['email'] or data['phone-number']) %} / {% endif %}{{ (data['email'] or '') }}{% if data['email'] and data['phone-number'] %} / {% endif %}{{ (data['phone-number'] or '') }}{% else %}Not provided{% endif %}</td>
+            <td class="govuk-table__cell">{% if data['primary-contact'] or data['email'] or data['phone-number'] %}{{ (data['primary-contact'] or '') }}{% if data['primary-contact'] and (data['email'] or data['phone-number']) %} <br> {% endif %}{{ (data['email'] or '') }}{% if data['email'] and data['phone-number'] %} <br> {% endif %}{{ (data['phone-number'] or '') }}{% else %}Not provided{% endif %}</td>
           </tr>
             <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header">Border status</th>
+            <th scope="row" class="govuk-table__header">Boarder status</th>
             <td class="govuk-table__cell">{{ data['boarder-scenario'] or 'Not provided' }}</td>
           </tr>
             <tr class="govuk-table__row">
@@ -71,7 +91,7 @@
           </tr>
           <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">Accommodation evidence form</th>
-            <td class="govuk-table__cell">[print here]</td>
+            <td class="govuk-table__cell">{{ data['contactCheck'] or 'Not provided' }}</td>
           </tr>
           
 
@@ -98,16 +118,14 @@
           </tr>
           <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">Funder phone number and email address</th>
-            <td class="govuk-table__cell">{% if data['funding-primary-contact'] or data['funding-email'] or data['funding-phone-number'] %}{{ (data['funding-primary-contact'] or '') }}{% if data['funding-primary-contact'] and (data['funding-email'] or data['funding-phone-number']) %} / {% endif %}{{ (data['funding-email'] or '') }}{% if data['funding-email'] and data['funding-phone-number'] %} / {% endif %}{{ (data['funding-phone-number'] or '') }}{% else %}Not provided{% endif %}</td>
+            <td class="govuk-table__cell">{% if data['funding-primary-contact'] or data['funding-email'] or data['funding-phone-number'] %}{{ (data['funding-primary-contact'] or '') }}{% if data['funding-primary-contact'] and (data['funding-email'] or data['funding-phone-number']) %} <br> {% endif %}{{ (data['funding-email'] or '') }}{% if data['funding-email'] and data['funding-phone-number'] %} <br> {% endif %}{{ (data['funding-phone-number'] or '') }}{% else %}Not provided{% endif %}</td>
           </tr>
           <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">Funder evidence form</th>
-            <td class="govuk-table__cell">[print here]</td>
+            <td class="govuk-table__cell">{{ data['fundingCheck'] or 'Not provided' }}</td>
           </tr>
           
 
 
         </tbody>
       </table>
- 
-{% endif %}

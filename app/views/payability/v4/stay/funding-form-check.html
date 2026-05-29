@@ -27,14 +27,14 @@
     {% endif %}
 
 
-    {% set legendText = "Has a completed [ref goes here] evidence form been received?" %}
+    {% set legendText = "Has a completed funding form been received?" %}
     {% from "includes/accommodation-form-heading.njk" import accommodationHeading %}
     {% from "includes/accommodation-form-inset.njk" import accommodationInset %}
     {% from "includes/accommodation-form-radios.njk" import accommodationRadios %}
 
     {{ accommodationHeading(legendText) }}
 
-    {{ accommodationInset("Contact:<br><br>Phoenix Care Home<br>123 Fake Street<br>Blackpool<br>FY1 1NF<br><br>01253 123456<br>contact@phoenixcarehome.co.uk") }}
+    {{ accommodationInset("Phoenix Care Home<br>123 Fake Street<br>Blackpool<br>FY1 1NF<br><br>01253 123456<br>contact@phoenixcarehome.co.uk") }}
 
     {{ accommodationRadios("fundingCheck", [
       { value: "Yes", text: "Yes" },
@@ -47,7 +47,7 @@
     </button>
 
 </form>
-
+{% include "includes/aar-task-list.html" %}
 
 
 

@@ -57,6 +57,30 @@
       <p class="govuk-body">
         Stays that are ongoing or need more information.
       </p>
+       {{ govukSummaryList({
+        card: {
+          title: { text: " 17 May 2026 – ongoing" },
+          actions: {
+            items: [
+              {
+                href: "/payability/v4/stay/stay-task-list",
+                text: "View stay",
+                visuallyHiddenText: "of recent stay"
+              }
+            ]
+          }
+        },
+        rows: [  
+          {
+            key: { text: "Accommodation type" },
+            value: { text: "Hospital" }
+          },   
+          {
+            key: { text: "Status" },
+            value: { html: '<strong class="govuk-tag govuk-tag--blue">Incomplete</strong>' }
+          }
+        ]
+      }) }}
 
       {% for s in data.stays %}
         {% if not s.endDate %}
