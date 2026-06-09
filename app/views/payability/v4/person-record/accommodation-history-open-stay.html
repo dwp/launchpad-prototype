@@ -59,11 +59,11 @@
       </p>
        {{ govukSummaryList({
         card: {
-          title: { text: " 17 May 2026 – ongoing" },
+          title: { text: "" },
           actions: {
             items: [
               {
-                href: "/payability/v4/stay/stay-task-list",
+                href: "/payability/v4/stay/pip-stay-complete",
                 text: "View stay",
                 visuallyHiddenText: "of recent stay"
               }
@@ -73,11 +73,11 @@
         rows: [  
           {
             key: { text: "Accommodation type" },
-            value: { text: "Hospital" }
+            value: { text: "Care home" }
           },   
           {
             key: { text: "Status" },
-            value: { html: '<strong class="govuk-tag govuk-tag--blue">Incomplete</strong>' }
+            value: { html: '<strong class="govuk-tag govuk-tag--blue">In progress</strong>' }
           }
         ]
       }) }}

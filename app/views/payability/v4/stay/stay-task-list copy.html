@@ -264,7 +264,7 @@
               {% elseif isPaused %}
                 <strong class="govuk-tag govuk-tag--yellow">Paused</strong>
               {% else %}
-                <strong class="govuk-tag govuk-tag--blue">In progress</strong>
+                <strong class="govuk-tag govuk-tag--blue">Incomplete</strong>
               {% endif %}
             </td>
           </tr>
@@ -437,7 +437,7 @@
               {% elseif isPaused %}
                 <strong class="govuk-tag govuk-tag--yellow">Paused</strong>
               {% else %}
-                <strong class="govuk-tag govuk-tag--blue">In progress</strong>
+                <strong class="govuk-tag govuk-tag--blue">Incomplete</strong>
               {% endif %}
             </td>
           </tr>
@@ -575,12 +575,14 @@
     {% endif %}
     <!-- End ongoing UI -->
 
-    <!--{% if readyToSubmit %}--> <!--{% endif %}-->
+    {% if readyToSubmit %}
+      <div class="govuk-!-margin-bottom-6">
         {{ govukButton({
           text: "Continue",
           href: "/payability/v4/stay/final-check-answers"
         }) }}
-   
+      </div>
+    {% endif %}
         <p class="govuk-body govuk-!-margin-bottom-6 govuk-!-padding-top-6">
       <a href="/payability/v4/person-record/accommodation-history-open-stay" class="govuk-link">Accommodation stay history</a>
     </p>

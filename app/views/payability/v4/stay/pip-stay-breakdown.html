@@ -43,9 +43,17 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
 
-      <h1 class="govuk-heading-l">Accommodation stay outcome</h1>
+      <h1 class="govuk-heading-l">Accommodation stay impact</h1>
 
-      <p>Changes to payments and how this was calculated after a stay in accommodation.</p>
+      <p>Payment adjustments for accommodation stays and how they are calculated.</p>
+
+      {% if data.ExtraConditions == "Entitlement changed resume" %}
+            {{ govukWarningText({
+        text: "Due to payment suspension, claimant has been underpaid £221.80.",
+        iconFallbackText: "Warning"
+      }) }}
+      {% endif %}
+
       <!-- Show only for linked stays -->
       {% if data.PayabilityPersona == "Agent handling an ongoing claim" and data.PayabilityScenario == "linked stay" %}
         {{ govukInsetText({
@@ -66,40 +74,48 @@
           <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
               <th scope="row" class="govuk-table__header">Start date</th>
-              <td class="govuk-table__cell">[Change]</td>
+              
+              <td class="govuk-table__cell">26 May 2026</td>
           </tr>
           <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">End date</th>
             <td class="govuk-table__cell"><!--No changes to entitlement<br>-->
-            [Change]
+              {% if data.ExtraConditions == "Entitlement changed resume" %}
+            Ongoing stay
+            {% else %}
+            5 July 2026
+            {% endif %}
+             <!--Entitlement date changed to [date goes here]<br><br>-->
             <!--Entitlement date changed to [date goes here]<br><br>-->
             
             </td>
           </tr>
           <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header">Total days in accommodation</th>
-            <td class="govuk-table__cell">32</td>
-          </tr>
-          {% if data.ExtraConditions == "Entitlement changed" %}
-          <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header">Total non-payable days</th>
-            <td class="govuk-table__cell">4</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header">Total reduction of payments for this stay</th>
-            <td class="govuk-table__cell">£68</td>
-          </tr>
-          {% endif %}
-          {% if data.ExtraConditions == "Entitlement changed overpaymen" %}
-          <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header">Total non-payable days</th>
-            <td class="govuk-table__cell">4</td>
+            <th scope="row" class="govuk-table__header">Days in accommodation</th>
+            <td class="govuk-table__cell">
+              {% if data.ExtraConditions == "Entitlement changed resume" %}
+              33
+              {% else %}
+              40
+              {% endif %}
+            </td>
+              
+
           </tr>
           <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header">Total payment reduction for this stay</th>
-            <td class="govuk-table__cell">£68</td>
+            <th scope="row" class="govuk-table__header">Non-payable days</th>
+            <td class="govuk-table__cell">
+              {% if data.ExtraConditions == "Entitlement changed resume" %}
+              5
+              {% else %}
+              12
+              {% endif %}
+            </td>
           </tr>
-          {% endif %}
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Arrears reduction for this stay</th>
+            <td class="govuk-table__cell">{% if data.ExtraConditions == "Entitlement changed resume" %}£81.80{% else %}£223.40{% endif %}</td>
+          </tr>
         {% if data.ExtraConditions == "Entitlement changed overpayment" %}
          <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">Total non-payable days</th>
@@ -110,12 +126,13 @@
             <td class="govuk-table__cell">£68</td>
           </tr>
            {% endif %}
-           {% if data.ExtraConditions == "Entitlement changed underpayment" %}
+          <!--
           <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header">Total underpaid</th>
-            <td class="govuk-table__cell">£68</td>
+            <th scope="row" class="govuk-table__header">Underpaid</th>
+            <td class="govuk-table__cell">£221.80</td>
           </tr>
-          {% endif %}
+          -->
+
         </tbody>
       </table>
        {% endif %}
@@ -137,7 +154,7 @@
           <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
               <th scope="row" class="govuk-table__header">Start date</th>
-              <td class="govuk-table__cell">[Change]</td>
+              <td class="govuk-table__cell">26 May 2025</td>
           </tr>
           <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">End date</th>
@@ -148,7 +165,7 @@
             </td>
           </tr>
           <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header">Total days in accommodation</th>
+            <th scope="row" class="govuk-table__header">Days in accommodation</th>
             <td class="govuk-table__cell">32</td>
           </tr>
           <tr class="govuk-table__row">
@@ -163,13 +180,17 @@
             <th scope="row" class="govuk-table__header">Total overpaid</th>
             <td class="govuk-table__cell">£68</td>
           </tr>
+          <!--
           <tr class="govuk-table__row">
-            <th scope="row" class="govuk-table__header">Total underpaid</th>
-            <td class="govuk-table__cell">£68</td>
-          </tr>
+            <th scope="row" class="govuk-table__header">Underpaid</th>
+            <td class="govuk-table__cell">£221.80</td>
+          </tr>-->
         </tbody>
       </table>
+
+      
       {% endif %}
+
 
       <!-- Show only if new claim -->
        {% if isNewClaimPersona %}
@@ -201,7 +222,7 @@
           </tr>
           <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">Total reduction in arrears</th>
-            <td class="govuk-table__cell">£68</td>
+            <td class="govuk-table__cell">{% if data.ExtraConditions == "Entitlement changed resume" %}£68{% else %}£0{% endif %}</td>
           </tr>
         </tbody>
       </table>
@@ -213,10 +234,66 @@
        Reductions for payment periods affected by the stay. 
       </p>
 
-      <h3 class="govuk-heading-s govuk-!-padding-top-6">Care home: 1 February 2026 - 26 March 2026</h3>
+      <h3 class="govuk-heading-s govuk-!-padding-top-6">Care home: 26 May 2026 - {% if data.ExtraConditions == "Entitlement changed resume" %}ongoing{% else %}5 July 2026{% endif %}</h3>
 
-
-      {{ govukTable({
+      {% if data.ExtraConditions == "Entitlement changed resume" %}
+        {{ govukTable({
+          head: [
+            {
+              text: "Payment period"
+            },
+            {
+              text: "Non-payable days"
+            },
+            {
+              text: "Daily living reduction"
+            },
+            {
+              text: "Mobility reduction"
+            },
+            {
+              text: "Total reduction"
+            }
+          ],
+          rows: [
+            [
+              {
+                text: "4 May to 31 May 2026"
+              },
+                    {
+                text: "0"
+              },
+              {
+                text: "£0"
+              },
+              {
+                text: "£0"
+              },
+              {
+                text: "£0"
+              }
+            ],
+            [
+              {
+                text: "1 June to 28 June 2026"
+              },
+              {
+                text: "5"
+              },
+              {
+                text: "£81.80"
+              },
+              {
+                text: "£0"
+              },
+              {
+                text: "£81.80"
+              }
+            ]
+          ]
+        }) }}
+      {% else %}
+        {{ govukTable({
         head: [
           {
             text: "Payment period"
@@ -237,40 +314,58 @@
         rows: [
           [
             {
-              text: "1 February to 28 February 2026"
+              text: "4 May to 31 May 2026"
             },
                   {
-              text: "2"
+              text: "0"
             },
             {
-              text: "£xx"
+              text: "£0"
             },
             {
-              text: "£xx"
+              text: "£0"
             },
             {
-              text: "£34"
+              text: "£0"
             }
           ],
           [
             {
-              text: "29 February to 26 March 2026"
+              text: "1 June to 28 June 2026"
             },
             {
-              text: "2"
+              text: "5"
             },
             {
-              text: "£xx"
+              text: "£81.80"
             },
             {
-              text: "£xx"
+              text: "£0"
             },
             {
-              text: "£34"
+              text: "£81.80"
+            }
+          ],
+          [
+            {
+              text: "29 June to 27 July 2026"
+            },
+            {
+              text: "7"
+            },
+            {
+              text: "£141.60"
+            },
+            {
+              text: "£0"
+            },
+            {
+              text: "£141.60"
             }
           ]
         ]
       }) }}
+      {% endif %}
             <p class="govuk-body">
       <a href="/payability/v4/stay/pip-stay-complete-canonical" class="govuk-link">View stay</a>
     </p>
@@ -342,7 +437,11 @@
 
 
   <p class="govuk-body govuk-!-padding-top-6">
+ {% if data.ExtraConditions != "Resume" %}
+  <a href="/payability/v4/person-record/accommodation-history-open-stay" class="govuk-link">Accommodation stay history</a>
+  {% else %}
   <a href="/payability/v4/person-record/accommodation-history-complete" class="govuk-link">Accommodation stay history</a>
+  {% endif %}
 </p>
 
   </div>

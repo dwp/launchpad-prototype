@@ -16,41 +16,45 @@
     <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Status</th>
-        <td class="govuk-table__cell">Complete</td>
+        <td class="govuk-table__cell">
+        {% if data.ExtraConditions != "Resume" %}
+        In progress
+        {% else %}
+        Complete
+        {% endif %}
+        </td>
+        <!--<td class="govuk-table__cell">Complete</td>-->
       </tr>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">Days in accommodation</th>
         <td class="govuk-table__cell">
-            {% if data.ExtraConditions == "No change" %}
+            {% if data.ExtraConditions == "Suspended" %}
             14
-            {% else %}
-            45
+            {% elseif data.ExtraConditions == "Entitlement changed resume" %}
+            33
+            {% elseif data.ExtraConditions == "Resume" %}
+            40
           {% endif %}
         
         </td>
       </tr>
       <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__header">Outcome</th>
+        <th scope="row" class="govuk-table__header">Payment impact</th>
+    
         <td class="govuk-table__cell">
-        {% if data.ExtraConditions == "No change" %}
-         No changes to payments
-        {% endif %}
-        {% if data.ExtraConditions == "Entitlement changed" %}
-        Payments changed<br><br>
-        {% endif %}
-        {% if data.ExtraConditions == "Entitlement changed overpayment" %}
-        Claimant was overpaid<br><br>
-        {% endif %}
-        {% if data.ExtraConditions == "Entitlement changed underpayment" %}
-        Claimant was underpaid<br><br>
-        {% endif %}
-        {% if data.ExtraConditions == "Entitlement not changed underpayment" %}
-        No changes to entitlement<br><br>
-        Claimant was underpaid<br><br>
+        <!--No impact-->
+        {% if data.ExtraConditions == "Suspended" %}
+        Payments suspended
+        {% elseif data.ExtraConditions == "No change" %}
+        No changes to payments
+        {% else %}
+        Payment amount adjusted
         {% endif %}
 
-        {% if data.ExtraConditions != "No change" %}
-          <a href="pip-stay-breakdown">View outcome</a>
+       
+        {% if data.ExtraConditions != "Suspended" %}
+        <br><br>
+          <a href="pip-stay-breakdown">View impact</a>
         {% endif %}
         
         </td>
@@ -114,7 +118,7 @@
           </tr>
           <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">Funder address</th>
-            <td class="govuk-table__cell">{{ data['funding-select-an-address'] or 'hospital' }}</td>
+            <td class="govuk-table__cell">{{ data['funding-select-an-address'] or 'Not provided' }}</td>
           </tr>
           <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">Funder phone number and email address</th>

@@ -42,18 +42,23 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
 
-
+  <!--
   {{ govukNotificationBanner({
     type: "success",
     html: "<h3 class='govuk-notification-banner__heading'>The stay has been submitted</h3>"
   }) }}
+  -->
 
   {% include "includes/stay-record-head.njk" %}
   {% include "includes/stay-record.njk" %}
   {% include "includes/stay-record-linked-stay.njk" %}
 
 <p class="govuk-body govuk-!-padding-top-6">
+ {% if data.ExtraConditions != "Resume" %}
+  <a href="/payability/v4/person-record/accommodation-history-open-stay" class="govuk-link">Accommodation stay history</a>
+  {% else %}
   <a href="/payability/v4/person-record/accommodation-history-complete" class="govuk-link">Accommodation stay history</a>
+  {% endif %}
 </p>
 
   </div>

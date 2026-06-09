@@ -1,0 +1,107 @@
+{% extends "layouts/payability.html" %}
+
+{% block pageTitle %}
+  Check your answers template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+<!-- displaying dates -->
+{% set dateIn = (data['date-in-day'] or '') ~ ' ' ~ (data['date-in-month'] or '') ~ ' ' ~ (data['date-in-year'] or '') %}
+{% set dateOut = (data['date-out-day'] or '') ~ ' ' ~ (data['date-out-month'] or '') ~ ' ' ~ (data['date-out-year'] or '') %}
+
+<!-- Helper booleans to avoid showing empty spaced strings  -->
+{% set hasDateIn = data['date-in-day'] and data['date-in-month'] and data['date-in-year'] %}
+{% set hasDateOut = data['date-out-day'] and data['date-out-month'] and data['date-out-year'] %}
+
+<!-- page heading and summarylist -->
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+   
+    <form action="pip-stay-complete" method="post">
+    <h1 class="govuk-heading-l">Do you want to apply the payability rules?</h1>
+    {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+    {% if data.ExtraConditions == "Suspended" %}
+    <p>Based on the information currently available, payments will be suspended.</p>
+    {% endif %}
+
+    {% if data.ExtraConditions == "Entitlement changed" %}
+    <p>Based on the information currently available, payments will be adjusted after 28 days.</p>
+    {% endif %}
+
+    {% if data.ExtraConditions == "Entitlement changed resume" %}
+    <p>Based on the information currently available, payments will be adjusted and resume.</p>
+    {% endif %}
+
+    {% if data.ExtraConditions == "Resume" %}
+    <p>Based on the information currently available, payments will resume.</p>
+    {% endif %}
+    
+    {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+
+{% set emailHtml %}
+{{ govukInput({
+  id: "contact-by-email",
+  name: "contactByEmail",
+  type: "email",
+  autocomplete: "email",
+  spellcheck: false,
+  classes: "govuk-!-width-one-third",
+  label: {
+    text: "Email address"
+  }
+}) }}
+{% endset -%}
+
+{% set phoneHtml %}
+{{ govukInput({
+  id: "contact-by-phone",
+  name: "contactByPhone",
+  type: "tel",
+  autocomplete: "tel",
+  classes: "govuk-!-width-one-third",
+  label: {
+    text: "Phone number"
+  }
+}) }}
+{% endset -%}
+
+{% set textHtml %}
+{{ govukInput({
+  id: "contact-by-text",
+  name: "contactByText",
+  type: "tel",
+  autocomplete: "tel",
+  classes: "govuk-!-width-one-third",
+  label: {
+    text: "Mobile phone number"
+  }
+}) }}
+{% endset -%}
+
+{{ govukCheckboxes({
+  name: "rules",
+  items: [
+    {
+      value: "farm",
+      text: "I confirm I want to apply the payability rules"
+    }
+  ]
+}) }}
+  
+        {{ govukButton({
+          text: "Submit"
+        }) }}
+</form>
+  </div>
+</div>
+
+{% endblock %}
