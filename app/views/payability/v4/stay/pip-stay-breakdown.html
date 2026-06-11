@@ -45,7 +45,7 @@
 
       <h1 class="govuk-heading-l">Accommodation stay impact</h1>
 
-      <p>Payment adjustments for accommodation stays and how they are calculated.</p>
+      <p>How the accommodation stay has affected the amount of payable days.</p>
 
       {% if data.ExtraConditions == "Entitlement changed resume" %}
             {{ govukWarningText({
@@ -231,7 +231,7 @@
       <h2 class="govuk-heading-m govuk-!-padding-top-6">Stays and payment periods</h2>
 
       <p class="govuk-body">
-       Reductions for payment periods affected by the stay. 
+       Payable days for payment periods affected by the stay. 
       </p>
 
       <h3 class="govuk-heading-s govuk-!-padding-top-6">Care home: 26 May 2026 - {% if data.ExtraConditions == "Entitlement changed resume" %}ongoing{% else %}5 July 2026{% endif %}</h3>
