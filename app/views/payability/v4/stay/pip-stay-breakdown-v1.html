@@ -112,10 +112,10 @@
               {% endif %}
             </td>
           </tr>
-         <!-- <tr class="govuk-table__row">
+          <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">Arrears reduction for this stay</th>
             <td class="govuk-table__cell">{% if data.ExtraConditions == "Entitlement changed resume" %}£81.80{% else %}£223.40{% endif %}</td>
-          </tr>-->
+          </tr>
         {% if data.ExtraConditions == "Entitlement changed overpayment" %}
          <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">Total non-payable days</th>
@@ -243,10 +243,16 @@
               text: "Payment period"
             },
             {
-              text: "Daily living payable days"
+              text: "Non-payable days"
             },
             {
-              text: "Mobility payable days"
+              text: "Daily living reduction"
+            },
+            {
+              text: "Mobility reduction"
+            },
+            {
+              text: "Total reduction"
             }
           ],
           rows: [
@@ -255,10 +261,16 @@
                 text: "4 May to 31 May 2026"
               },
                     {
-                text: "28"
+                text: "0"
               },
               {
-                text: "28"
+                text: "£0"
+              },
+              {
+                text: "£0"
+              },
+              {
+                text: "£0"
               }
             ],
             [
@@ -266,10 +278,16 @@
                 text: "1 June to 28 June 2026"
               },
               {
-                text: "23"
+                text: "5"
               },
               {
-                text: "28"
+                text: "£81.80"
+              },
+              {
+                text: "£0"
+              },
+              {
+                text: "£81.80"
               }
             ]
           ]
