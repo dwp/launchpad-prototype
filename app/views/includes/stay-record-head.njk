@@ -1,11 +1,36 @@
  <!-- Default state for new stay -->
-     <!--<h1 class="govuk-heading-l">Stay in {{ stay.name or "hospital" }}</h1>-->
+     <!--<h1 class="govuk-heading-l">Stay in {{ (data['type-scenario'] or 'hospital') | lower }}</h1>-->
   {% if data['PayabilityPersona'] != "Agent handling an ongoing claim" %}
      <h1 class="govuk-heading-l">Stay in hospital</h1>
+    {% if data['suspend-check'] and (data['suspend-check'] == "Suspend" or 'Suspend' in data['suspend-check']) %}
 
+      {% if data["type-scenario"] == "Care home" %}
+        {{ govukWarningText({
+          text: "Daily living component suspended."
+        }) }}
+      {% else %}
+        {{ govukWarningText({
+          text: "Daily living and mobility components suspended."
+        }) }}
+      {% endif %}
+
+    {% endif %}
       {% else %}
 
-      <h1 class="govuk-heading-l">Stay in {{ data['type-scenario'] or 'hospital' }}</h1>
+      <h1 class="govuk-heading-l">Stay in {{ (data['type-scenario'] or 'hospital') | lower }}</h1>
+          {% if data['suspend-check'] and (data['suspend-check'] == "Suspend" or 'Suspend' in data['suspend-check']) %}
+
+      {% if data["type-scenario"] == "Care home" %}
+        {{ govukWarningText({
+          text: "Daily living component suspended."
+        }) }}
+      {% else %}
+        {{ govukWarningText({
+          text: "Daily living and mobility components suspended."
+        }) }}
+      {% endif %}
+
+    {% endif %}
       {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
       {% if data.PayabilityPersona == "Agent handling an ongoing claim" 
    and data.PayabilityScenario == "linked stay" %}

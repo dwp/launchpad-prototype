@@ -1,0 +1,103 @@
+{% extends "layouts/payability.html" %}
+
+{% block pageTitle %}
+  Stay task list – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set pageName = "Agent home" %}
+
+{% block beforeContent %}
+<!--
+  {{ govukBackLink({
+      text: "Back",
+      href: "javascript:history.back()"
+  }) }}
+      -->
+{% endblock %}
+
+{% block content %}
+{% macro displayDate(day, month, year) %}
+  {% if day and month and year %}
+
+    {% set months = [
+      "January", "February", "March", "April",
+      "May", "June", "July", "August",
+      "September", "October", "November", "December"
+    ] %}
+
+    {{ day }} {{ months[month | int - 1] }} {{ year }}
+
+  {% else %}
+    Awaiting
+  {% endif %}
+{% endmacro %}
+
+
+
+{% macro displayEndDate() %}
+  {% if data['date-out-check'] == "Yes" %}
+    Ongoing
+  {% elif data['date-out-day'] and data['date-out-month'] and data['date-out-year'] %}
+
+    {% set months = [
+      "January", "February", "March", "April",
+      "May", "June", "July", "August",
+      "September", "October", "November", "December"
+    ] %}
+
+    {{ data['date-out-day'] }}
+    {{ months[data['date-out-month'] | int - 1] }}
+    {{ data['date-out-year'] }}
+
+  {% else %}
+    Awaiting
+  {% endif %}
+{% endmacro %}
+
+{% from "govuk/components/task-list/macro.njk" import govukTaskList %}
+
+{% set stays = data.stays or [] %}
+{% set stayIndex = data.stayIndex %}
+{% set stay = stays[stayIndex] %}
+{% set ongoing = stay and stay.endDate == null %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <section class="dwp-quick-reference govuk-!-margin-bottom-8">
+      <dl class="dwp-quick-reference__block">
+        <dt class="govuk-visually-hidden">Name:</dt>
+        <dd class="dwp-quick-reference__primary"><a href="#">Jeff Bridges</a></dd>
+
+        <dt class="govuk-visually-hidden">National Insurance number:</dt>
+        <dd class="dwp-quick-reference__secondary">NA 11 22 33 C</dd>
+      </dl>
+    </section>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+
+  <!--
+  {{ govukNotificationBanner({
+    type: "success",
+    html: "<h3 class='govuk-notification-banner__heading'>The stay has been submitted</h3>"
+  }) }}
+  -->
+{% include "includes/display-date.njk" %}
+  {% include "includes/stay-record-head.njk" %}
+  {% include "includes/stay-record.njk" %}
+  {% include "includes/stay-record-linked-stay.njk" %}
+
+<p class="govuk-body govuk-!-padding-top-6">
+ {% if data.ExtraConditions != "Resume" %}
+  <a href="/payability/v4/person-record/accommodation-history-open-stay" class="govuk-link">Accommodation stay history</a>
+  {% else %}
+  <a href="/payability/v4/person-record/accommodation-history-complete" class="govuk-link">Accommodation stay history</a>
+  {% endif %}
+</p>
+
+  </div>
+</div>
+
+{% endblock %}

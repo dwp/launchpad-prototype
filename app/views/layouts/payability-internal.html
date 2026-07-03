@@ -6,21 +6,23 @@
   Applicant address lookup – Personal Independence Payment – GOV.UK
 {% endblock %}
 
+{% block head %}
+  {{ super() }}
+  <link href="/public/stylesheets/custom.css" rel="stylesheet">
+{% endblock %}
+
+
 {% block header %}
   {% if isDeclarationPre == true %}
     {{ dwpHeader({
       name: "Personal Independence Payment",
       serviceHref: '',
-      action: "Delete application data",
-      actionHref: "../stop-app-pre.html",
       container: true
     }) }}
   {% else %}
     {{ dwpHeader({
       name: "Personal Independence Payment",
       serviceHref: '',
-      action: "Delete application data",
-      actionHref: "../stop-app.html",
       container: true
     }) }}
   {% endif %}
@@ -33,8 +35,6 @@
     href: "javascript:window.history.back()"
   }) }}
 {% endblock %}
-
-
 
 {% block content %}
 

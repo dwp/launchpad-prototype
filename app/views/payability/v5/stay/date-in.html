@@ -1,0 +1,84 @@
+{% extends "layouts/payability-internal.html" %}
+{% block beforeContent %}
+  {{ govukBackLink({
+          text: "Back",
+          href: "javascript:history.back()"
+  }) }}
+{% endblock %}
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+      <form class="form" action="date-still-there" method="post">
+
+
+{% set ts = (data['type-scenario'] or '') | trim | lower %}
+
+{% if ts == 'detention in legal custody' %}
+  {% set article = '' %}
+  {% set entity = 'detention in legal custody' %}
+{% elif not ts or ts == 'none' or ts == "i don't know" %}
+  {% set article = 'the ' %}
+  {% set entity = 'accommodation' %}
+{% else %}
+  {% set article = 'the ' %}
+  {% set entity = ts %}
+{% endif %}
+
+
+
+    <h1 class="govuk-heading-l">
+      When did you enter {{ article }}{{ entity }}?
+    </h1>
+
+
+{{ govukDateInput({
+  id: "admission",
+  namePrefix: "date-in",
+  fieldset: {
+    legend: {
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  items: [
+    {
+      classes: "govuk-input--width-2",
+      name: "day",
+      value: data['date-in-day']
+    },
+    {
+      classes: "govuk-input--width-2",
+      name: "month",
+      value: data['date-in-month']
+    },
+    {
+      classes: "govuk-input--width-4",
+      name: "year",
+      value: data['date-in-year']
+    }
+  ]
+}) }}
+
+
+
+      {{ govukButton({
+        text: "Save and continue"
+      }) }}
+      {% if data['PayabilityPersona'] == "Agent handling an ongoing claim" %}
+       <p><a href="#">Claimant does not know this information</a></p>
+     
+      {% else %}
+      <p><a href="suspend">Applicant does not know this information</a></p>
+      {% endif %}
+      {% include "includes/aar-task-list.html" %}
+
+    </form>
+  </div>
+</div>
+
+<!-- End row -->
+{% endblock %}
+
+

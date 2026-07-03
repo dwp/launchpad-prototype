@@ -1,0 +1,56 @@
+{% extends "layouts/payability-internal.html" %}
+{% block beforeContent %}
+{{ govukBackLink({
+        text: "Back",
+        href: "javascript:history.back()"
+        }) }}
+{% endblock %}
+{% block content %}
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+
+    <form class="form" action="stay-task-list" method="post">
+
+
+    {% set raw = (data['type-scenario'] or '') | trim %}
+
+    {% if not raw == 'none' %}
+      {% set accType = 'accommodation' %}
+
+    <!-- {% elif raw == 'Detention in Legal Custody' %}
+      {% set accType = 'place of custody' %} -->
+
+    {% else %}
+      {% set accType = 'accommodation' %}
+    {% endif %}
+
+
+    {% set legendText = "Have you got evidence of the funding?" %}
+    {% from "includes/accommodation-form-heading.njk" import accommodationHeading %}
+    {% from "includes/accommodation-form-inset.njk" import accommodationInset %}
+    {% from "includes/accommodation-form-radios.njk" import accommodationRadios %}
+
+    {{ accommodationHeading(legendText) }}
+
+
+    {{ accommodationRadios("fundingCheck", [
+      { value: "Yes", text: "Yes, over the phone" },
+      { value: "Yes", text: "Yes, through the form" },
+      { value: "Waiting", text: "No, I'm waiting for a response" },
+      { value: "No", text: "No, I haven't contacted the accommodation yet" }
+    ]) }}
+
+    <button type="submit" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
+      Save and continue
+    </button>
+
+</form>
+{% include "includes/aar-task-list.html" %}
+
+
+
+
+<!-- End row -->
+{% endblock %}

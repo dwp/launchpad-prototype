@@ -1,0 +1,37 @@
+{% macro displayDate(day, month, year) %}
+  {% if day and month and year %}
+
+    {% set months = [
+      "January", "February", "March", "April",
+      "May", "June", "July", "August",
+      "September", "October", "November", "December"
+    ] %}
+
+    {{ day }} {{ months[month | int - 1] }} {{ year }}
+
+  {% else %}
+    Awaiting
+  {% endif %}
+{% endmacro %}
+
+
+
+{% macro displayEndDate() %}
+  {% if data['date-out-check'] == "Yes" %}
+    Ongoing
+  {% elif data['date-out-day'] and data['date-out-month'] and data['date-out-year'] %}
+
+    {% set months = [
+      "January", "February", "March", "April",
+      "May", "June", "July", "August",
+      "September", "October", "November", "December"
+    ] %}
+
+    {{ data['date-out-day'] }}
+    {{ months[data['date-out-month'] | int - 1] }}
+    {{ data['date-out-year'] }}
+
+  {% else %}
+    Awaiting
+  {% endif %}
+{% endmacro %}

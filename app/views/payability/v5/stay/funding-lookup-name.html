@@ -1,0 +1,105 @@
+
+
+
+
+{% extends "layouts/payability-internal.html" %}
+{% block beforeContent %}
+{{ govukBackLink({
+        text: "Back",
+        href: "javascript:history.back()"
+        }) }}
+{% endblock %}
+
+{% block content %}
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form class="form" action="funding-lookup-confirm" method="post">
+        <div class="govuk-width-container">
+
+
+            
+<!-- { Read funding-scenario and normalise } -->
+  {% set ts = (data['funding-scenario'] or '') | trim | lower %}
+
+  {% if ts == 'detention in legal custody' %}
+    {% set entity = 'Prison' %}
+  {% elif not ts or ts == 'none' or ts == "i don't know" %}
+    {% set entity = 'funding provider' %}
+  {% else %}
+    {% set entity = ts %}
+  {% endif %}
+
+<h1 class="govuk-heading-l">
+  Find the address of the {{ entity | lower }}
+</h1>
+
+
+
+          <fieldset class="govuk-fieldset">
+  
+
+
+          
+
+
+
+  
+<div class="govuk-form-group">
+  <label class="govuk-label" for="searchString">
+    {{ entity | capitalize }} name 
+  </label>
+
+
+  <input class="govuk-input govuk-!-width-two-thirds" id="searchString" name="searchString" type="text">
+
+</div>
+
+
+          
+
+
+
+  
+<div class="govuk-form-group">
+  <label class="govuk-label" for="postcode">
+    Postcode (optional)
+  </label>
+
+
+  <input class="govuk-input govuk-!-width-two-thirds" id="postcode" name="postcode" type="text">
+
+</div>
+
+
+          
+
+</fieldset>
+
+
+            
+  
+    
+  
+
+<button type="submit" class="govuk-button" data-module="govuk-button" data-govuk-button-init="">
+  Find address
+</button>
+
+
+
+          <p class="govuk-body govuk-!-margin-bottom-6"><a href="funding-lookup-manual" class="govuk-link">Enter address manually</a></p>
+
+           <p class="govuk-body govuk-!-margin-bottom-6"><a href="stay-task-list" class="govuk-link">Go to task list</a></p>
+ 
+
+        </div>
+      </form>
+    </div>
+  </div>
+
+<!-- End row -->
+{% endblock %}

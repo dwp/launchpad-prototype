@@ -1,0 +1,9 @@
+
+.govuk-template--rebranded .dwp-header {
+  background-color: #000;
+}
+
+.govuk-template--rebranded, .govuk-template--rebranded .govuk-footer{
+  border-top: 1px solid #b1b4b6 !important;
+  background: #f3f2f1;
+}

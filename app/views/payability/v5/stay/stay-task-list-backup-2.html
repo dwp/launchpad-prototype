@@ -1,0 +1,677 @@
+{% extends "layouts/payability-internal.html" %}
+
+{% block pageTitle %}
+  Stay task list – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set pageName = "Agent home" %}
+
+{% block beforeContent %}
+  <!--
+  {{ govukBackLink({
+      text: "Back",
+      href: "javascript:history.back()"
+  }) }}
+  -->
+{% endblock %}
+
+{% block content %}
+
+
+{% macro taskStatus(answer, isPaused=false) %}
+  {% if isPaused %}
+    {{
+      govukTag({
+        text: "In progess",
+        classes: "govuk-tag--yellow"
+      })
+    }}
+  {% elif answer == "I don't know" %}
+    {{
+      govukTag({
+        text: "In progress",
+        classes: "govuk-tag--yellow"
+      })
+    }}
+  {% elif answer %}
+    {{
+      govukTag({
+        text: "Done",
+        classes: "govuk-tag--green"
+      })
+    }}
+  {% else %}
+    {{
+      govukTag({
+        text: "To do",
+        classes: "govuk-tag--grey"
+      })
+    }}
+  {% endif %}
+{% endmacro %}
+
+{% macro displayValue(value) %}
+  {% if value %}
+    {{ value }}
+  {% else %}
+    Awaiting
+  {% endif %}
+{% endmacro %}
+
+{% macro displayDate(day, month, year) %}
+  {% if day and month and year %}
+    {{ day }} {{ month }} {{ year }}
+  {% else %}
+    Awaiting
+  {% endif %}
+{% endmacro %}
+
+{% macro displayEndDate() %}
+  {% if data['date-out-check'] == "Yes" %}
+    Ongoing
+  {% elif data['date-out-day'] and data['date-out-month'] and data['date-out-year'] %}
+    {{ data['date-out-day'] }} {{ data['date-out-month'] }} {{ data['date-out-year'] }}
+  {% else %}
+    Awaiting
+  {% endif %}
+{% endmacro %}
+
+{% macro displayAddress() %}
+  {% if data['accommodation-name'] %}
+    {{ data['accommodation-name'] }}
+  {% elif data['address-name'] %}
+    {{ data['address-name'] }}
+  {% elif data['address-line-1'] %}
+    {{ data['address-line-1'] }}
+  {% elif data['accommodation-select-an-address'] %}
+    {{ data['accommodation-select-an-address'] }}
+  {% else %}
+    Awaiting
+  {% endif %}
+{% endmacro %}
+
+{% macro displayOptions(options) %}
+  {% if options %}
+    {% if options is string %}
+      {{ options }}
+    {% elif options | length %}
+      {{ options | join(', ') }}
+    {% else %}
+      Awaiting
+    {% endif %}
+  {% else %}
+    Awaiting
+  {% endif %}
+{% endmacro %}
+
+{% macro displayAccommodationContact() %}
+  {% if data['contactCheck'] == "No" %}
+    No contact details
+  {% elif data['contact-options'] %}
+    {{ displayOptions(data['contact-options']) }}
+  {% else %}
+    Awaiting
+  {% endif %}
+{% endmacro %}
+
+{% macro displayFundingContact() %}
+  {% if data['funding-contact-check'] == "No" %}
+    No contact details
+  {% elif data['funding-contact-options'] %}
+    {{ displayOptions(data['funding-contact-options']) }}
+  {% else %}
+    Awaiting
+  {% endif %}
+{% endmacro %}
+
+{% macro taskRow(title, href, answer, statusHtml) %}
+  <tr class="govuk-table__row">
+    <td class="govuk-table__cell">
+      <a class="govuk-link" href="{{ href }}">{{ title }}</a>
+    </td>
+    <td class="govuk-table__cell">{{ answer }}</td>
+    <td class="govuk-table__cell">{{ statusHtml | safe }}</td>
+  </tr>
+{% endmacro %}
+
+{% set contactOptions = data['contact-options'] %}
+{% set contactComplete = (
+  data['email'] or
+  data['phone-number'] or
+  data['primary-contact'] or
+  contactOptions == "none" or
+  contactOptions == "Email address" or
+  contactOptions == "Phone number" or
+  (contactOptions and (
+    'Email address' in contactOptions or
+    'Phone number' in contactOptions or
+    'none' in contactOptions
+  ))
+) %}
+
+{% set fundingAddressComplete =
+  data['funding-address-line-1'] or
+  data['funding-select-an-address'] or
+  data['fundingAddressCheck'] == "Yes" or
+  data['fundingAddressCheck'] == "No"
+%}
+
+{% set fundingContactOptions = data['funding-contact-options'] %}
+{% set fundingContactComplete = (
+  data['funding-email'] or
+  data['funding-phone-number'] or
+  fundingContactOptions == "none" or
+  fundingContactOptions == "Email address" or
+  fundingContactOptions == "Phone number" or
+  (fundingContactOptions and (
+    'Email address' in fundingContactOptions or
+    'Phone number' in fundingContactOptions or
+    'none' in fundingContactOptions
+  )) or
+  data['funding-contact-check'] == "Yes" or
+  data['funding-contact-check'] == "No"
+) %}
+
+{% set boarderComplete =
+  data['boarder-scenario'] and
+  data['boarder-scenario'] not in ["", "I don't know"]
+%}
+
+{% set similarInstitutionComplete =
+  data['similar-institution'] and
+  data['similar-institution'] not in ["", "I don't know"]
+%}
+
+{% set accommodationEvidenceComplete = data['contactCheck'] in ["Yes", "No"] %}
+
+{% set fundingEvidenceComplete = data['fundingCheck'] in ["Yes", "No"] %}
+
+{% set fundingCheckPaused = data['fundingCheck'] == "Waiting" %}
+
+{% set endDatePaused = data['date-out-check'] == "Yes" %}
+
+{% set stillTherePaused = data['date-out-check'] == "Yes" %}
+
+{% set fundingPaused = data['funding-scenario'] == "I don't know" %}
+
+{% set repaymentPaused = data['repayment-scenario'] == "I don't know" %}
+
+{% set similarInstitutionPaused = data['similar-institution'] == "I don't know" %}
+
+{% set contactPaused = data['contactCheck'] == "Waiting" %}
+
+{% set fundingContactPaused = data['funding-contact-check'] == "Waiting" %}
+
+{% macro newClaimEndDateStayState() %}
+  <h1 class="govuk-heading-l">Stay in hospital</h1>
+  <h2 class="govuk-heading-m">Stay details</h2>
+
+  {{ govukTaskList({
+    idPrefix: "stay-basic",
+    items: [
+      {
+        title: { text: "Accommodation type" },
+        href: "/payability/v5/stay/type",
+        status: { html: taskStatus('done') }
+      },
+      {
+        title: { text: "Start date" },
+        href: "/payability/v5/stay/date-in",
+        status: { html: taskStatus('done') }
+      },
+      {
+        title: { text: "End date" },
+        href: "/payability/v5/stay/date-still-there",
+        status: { html: taskStatus(
+          data['date-out-check'] == "No" and
+          data['date-out-day'] and
+          data['date-out-month'] and
+          data['date-out-year']
+        ) }
+      },
+      {
+        title: { text: "Accommodation address" },
+        href: "/payability/v5/stay/accommodation-lookup-name",
+        status: { html: taskStatus('done') }
+      },
+      {
+        title: { text: "Funding source" },
+        href: "/payability/v5/stay/funding-type",
+        status: { html: taskStatus('done') }
+      },
+      {
+        title: { text: "Funder name" },
+        href: "/payability/v5/stay/funding-name",
+        status: { html: taskStatus('done') }
+      },
+      {
+        title: { text: "Agreement to repay" },
+        href: "/payability/v5/stay/repay",
+        status: { html: taskStatus('done') }
+      }
+    ]
+  }) }}
+
+  <p class="govuk-body">The details below can be completed during processing time.</p>
+
+  {{ govukTaskList({
+    idPrefix: "stay-more",
+    items: [
+      {
+        title: { text: "Boarder status" },
+        href: "accommodation-boarder",
+        status: { html: taskStatus(data['boarder-scenario']) }
+      }
+    ]
+  }) }}
+
+  {% if specialReadyToSubmit %}
+    <div class="govuk-!-margin-bottom-6">
+      {{ govukButton({
+        text: "Save and continue",
+        href: "/payability/v5/stay/final-check-answers"
+      }) }}
+    </div>
+  {% endif %}
+{% endmacro %}
+
+{% from "govuk/components/task-list/macro.njk" import govukTaskList %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set stays = data.stays or [] %}
+{% set stayIndex = data.stayIndex %}
+{% set stay = stays[stayIndex] %}
+{% set ongoing = stay and stay.endDate == null %}
+{% set isNewClaimStayEndDatePersona = data['PayabilityPersona'] == "Agent completing new claim stay end date" %}
+
+{% set basicReady =
+  data['type-scenario'] and
+  data['date-in-day'] and
+  data['date-in-month'] and
+  data['date-in-year'] and
+  (
+    data['date-out-check'] == "No" and
+    data['date-out-day'] and
+    data['date-out-month'] and
+    data['date-out-year']
+  ) and
+  ((data['accommodation-name'] or data['address-name']) and
+   (data['address-line-1'] or data['accommodation-select-an-address'])) and
+  (data['type-scenario'] == "Detention in Legal Custody" or (data['funding-scenario'] and data['funding-scenario'] != "I don't know")) and
+  (data['type-scenario'] == "Detention in Legal Custody" or (data['funding-primary-contact'] and data['funding-primary-contact'] != "I don't know")) and
+  (data['type-scenario'] == "Detention in Legal Custody" or (data['repayment-scenario'] and data['repayment-scenario'] != "I don't know"))
+%}
+
+{% if data['type-scenario'] == "Detention in Legal Custody" %}
+  {% set moreReady = true %}
+{% elseif data['type-scenario'] == "Hospital" and data['funding-scenario'] == "Claimant" %}
+  {% set moreReady = true %}
+{% elseif data['type-scenario'] == "Hospital" and data['funding-scenario'] == "NHS" %}
+  {% set moreReady = data['boarder-scenario'] %}
+{% else %}
+  {% set moreReady =
+    data['boarder-scenario'] and
+    (data['contactCheck'] and data['contactCheck'] != "I don't know") and
+    (data['funding-address-line-1'] or data['funding-select-an-address']) and
+    (data['funding-primary-contact'] and data['funding-primary-contact'] != "I don't know") and
+    (data['similar-institution'] and data['similar-institution'] != "I don't know")
+  %}
+{% endif %}
+
+{% set readyToSubmit = basicReady and moreReady %}
+{% set specialBasicReady =
+  data['type-scenario'] and
+  data['date-in-day'] and
+  data['date-in-month'] and
+  data['date-in-year'] and
+  (
+    data['date-out-check'] == "No" and
+    data['date-out-day'] and
+    data['date-out-month'] and
+    data['date-out-year']
+  ) and
+  ((data['accommodation-name'] or data['address-name']) and
+   (data['address-line-1'] or data['accommodation-select-an-address'])) and
+  (data['funding-scenario'] and data['funding-scenario'] != "I don't know") and
+  (data['funding-primary-contact'] and data['funding-primary-contact'] != "I don't know") and
+  (data['repayment-scenario'] and data['repayment-scenario'] != "I don't know")
+%}
+{% set specialMoreReady = data['boarder-scenario'] and data['boarder-scenario'] != "I don't know" %}
+{% set specialReadyToSubmit = specialBasicReady and specialMoreReady %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <section class="dwp-quick-reference govuk-!-margin-bottom-8">
+      <dl class="dwp-quick-reference__block">
+        <dt class="govuk-visually-hidden">Name:</dt>
+        <dd class="dwp-quick-reference__primary"><a href="#">Jeff Bridges</a></dd>
+
+        <dt class="govuk-visually-hidden">National Insurance number:</dt>
+        <dd class="dwp-quick-reference__secondary">NA 11 22 33 C</dd>
+      </dl>
+    </section>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    {% if isNewClaimStayEndDatePersona %}
+      {{ newClaimEndDateStayState() }}
+    {% else %}
+      <!-- Default state for new stay -->
+       <!--<h1 class="govuk-heading-l">Stay in {{ stay.name or "hospital" }}</h1>-->
+       <h1 class="govuk-heading-l">
+        {% if data['type-scenario'] == "Detention in Legal Custody" %}
+          Detention in Legal Custody
+        {% else %}
+          Stay in {{ data['type-scenario'] | lower }}
+        {% endif %}
+      </h1>
+
+    {% if data['suspend-check'] and (data['suspend-check'] == "Suspend" or 'Suspend' in data['suspend-check']) %}
+
+      {% if data["type-scenario"] == "Care home" %}
+        {{ govukWarningText({
+          text: "Daily living component suspended."
+        }) }}
+      {% else %}
+        {{ govukWarningText({
+          text: "Daily living and mobility components suspended."
+        }) }}
+      {% endif %}
+
+    {% endif %}
+
+
+
+
+    <!--<h1 class="govuk-heading-l">Add stay details</h1>-->
+    <table class="govuk-table padding-bottom-6">
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Status</th>
+        <td class="govuk-table__cell">
+          {% if readyToSubmit %}
+            <strong class="govuk-tag govuk-tag--yellow">Ready to submit</strong>
+          {% else %}
+            <strong class="govuk-tag govuk-tag--blue">Incomplete</strong>
+          {% endif %}
+        </td>
+      </tr>
+      <!--
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Recorded during</th>
+        <td class="govuk-table__cell">
+          {% if data['PayabilityPersona'] == "Agent handling an ongoing claim" %}
+            PIP award
+          {% else %}
+            PIP registration
+          {% endif %}
+        </td>
+      </tr>
+      -->
+    </tbody>
+  </table>
+
+  
+<table class="govuk-table">
+  <caption class="govuk-table__caption govuk-heading-m">Stay details</caption>
+  <tbody class="govuk-table__body">
+    {{ taskRow(
+      "Accommodation type",
+      "/payability/v5/stay/type",
+      displayValue(data['type-scenario']),
+      taskStatus(data['type-scenario'])
+    ) }}
+
+    {{ taskRow(
+      "Start date",
+      "/payability/v5/stay/date-in",
+      displayDate(data['date-in-day'], data['date-in-month'], data['date-in-year']),
+      taskStatus(
+        data['date-in-day'] and
+        data['date-in-month'] and
+        data['date-in-year']
+      )
+    ) }}
+
+    {{ taskRow(
+      "Still in accommodation",
+      "/payability/v5/stay/date-still-there",
+      displayValue(data['date-out-check']),
+      taskStatus(data['date-out-check'], stillTherePaused)
+    ) }}
+
+    {{ taskRow(
+      "End date",
+      "/payability/v5/stay/date-left",
+      displayEndDate(),
+      taskStatus(
+        data['date-out-check'] == "No"
+        and (
+          data['date-out-day'] and
+          data['date-out-month'] and
+          data['date-out-year']
+        ),
+        endDatePaused
+      )
+    ) }}
+
+    {{ taskRow(
+      "Accommodation address",
+      "/payability/v5/stay/accommodation-lookup-name",
+      displayAddress(),
+      taskStatus(
+        (data['accommodation-name'] or data['address-name'])
+        and (data['address-line-1'] or data['accommodation-select-an-address'])
+      )
+    ) }}
+
+    {% if data['type-scenario'] != "Detention in Legal Custody" %}
+          {{ taskRow(
+        "Funding source",
+        "/payability/v5/stay/funding-type",
+        displayValue(data['funding-scenario']),
+        taskStatus(
+          data['type-scenario'] == "Detention in Legal Custody"
+          or (data['funding-scenario'] and data['funding-scenario'] not in ["", "I don't know"]),
+          fundingPaused
+        )
+      ) }}
+    {% endif %}
+    
+    {% if data['type-scenario'] != "Detention in Legal Custody" 
+      and (data['funding-scenario'] == "Local authority" 
+            or data['funding-scenario'] == "Charity") %}
+
+
+      {{ taskRow(
+        "Funder name",
+        "/payability/v5/stay/funding-name",
+        displayValue(data['funding-primary-contact']),
+        taskStatus(
+          data['type-scenario'] == "Detention in Legal Custody"
+          or (data['funding-primary-contact'] and data['funding-primary-contact'] not in ["", "I don't know"])
+        )
+      ) }}
+
+      {{ taskRow(
+        "Agreement to repay",
+        "/payability/v5/stay/repay",
+        displayValue(data['repayment-scenario']),
+        taskStatus(
+          data['type-scenario'] == "Detention in Legal Custody"
+          or (data['repayment-scenario'] and data['repayment-scenario'] not in ["", "I don't know"]),
+          repaymentPaused
+        )
+      ) }}
+    {% endif %}
+  </tbody>
+</table>
+
+ 
+
+{% set showMoreDetails = false %}
+{% set onlyBoarderStatus = false %}
+
+{# Rule 1: Detention in Legal Custody → never show #}
+{% if data['type-scenario'] == "Detention in Legal Custody" %}
+  {% set showMoreDetails = false %}
+
+{# Hospital rules #}
+{% elseif data['type-scenario'] == "Hospital" %}
+
+  {% if data['funding-scenario'] == "NHS" %}
+    {% set showMoreDetails = true %}
+    {% set onlyBoarderStatus = true %}
+
+  {% elseif data['funding-scenario'] == "Claimant" %}
+    {% set showMoreDetails = false %}
+
+  {% elseif
+      data['funding-scenario'] == "Charity"
+      or data['funding-scenario'] == "Local authority"
+  %}
+    {% set showMoreDetails = true %}
+  {% endif %}
+
+{# All other scenarios #}
+{% else %}
+  {% set showMoreDetails = true %}
+{% endif %}
+
+
+{% if showMoreDetails %}
+<br>
+  <p>The details below can be completed during processing time.</p>
+
+  {% set moreItems = [] %}
+
+  {# If NOT restricted to Boarder status only, add the rest #}
+  {% if not onlyBoarderStatus %}
+
+    {% set _ = moreItems.push({
+      title: { text: "Accommodation phone number and email address" },
+      href: "accommodation-contact-select",
+      status: { html: taskStatus(contactComplete, contactPaused) }
+    }) %}
+
+    {% set _ = moreItems.push({
+      title: { text: "Funder address" },
+      href: "funding-address-check",
+      status: { html: taskStatus(fundingAddressComplete, false) }
+    }) %}
+
+    {% set _ = moreItems.push({
+      title: { text: "Funder phone number and email address" },
+      href: "funding-contact-select",
+      status: { html: taskStatus(fundingContactComplete, fundingContactPaused) }
+    }) %}
+
+  {% endif %}
+
+  {# Boarder status appears whenever More details is shown #}
+  {% set _ = moreItems.push({
+    title: { text: "Boarder status" },
+    href: "accommodation-boarder",
+    status: { html: taskStatus(boarderComplete, false) }
+  }) %}
+  {% if not onlyBoarderStatus %}
+    {% set _ = moreItems.push({
+      title: { text: "Similar institution" },
+      href: "similar-institution",
+      status: { html: taskStatus(similarInstitutionComplete, similarInstitutionPaused) }
+    }) %}
+  {% endif %}
+
+  {# Ensure Test item always appears when More details is shown #}
+  {% set _ = moreItems.push({
+    title: { text: "Accommodation" },
+    href: "accommodation-form-check",
+    status: { html: taskStatus(accommodationEvidenceComplete, contactPaused) }
+  }) %}
+  {% set _ = moreItems.push({
+    title: { text: "Funding" },
+    href: "funding-form-check",
+    status: { html: taskStatus(fundingEvidenceComplete, fundingCheckPaused) }
+  }) %}
+
+  {% if moreItems.length %}
+    <table class="govuk-table">
+      <tbody class="govuk-table__body">
+        {% if not onlyBoarderStatus %}
+          {{ taskRow(
+            "Accommodation phone number and email address",
+            "accommodation-contact-select",
+            displayAccommodationContact(),
+            taskStatus(contactComplete, contactPaused)
+          ) }}
+
+          {{ taskRow(
+            "Funder address",
+            "funding-address-check",
+            displayValue(data['funding-address-line-1'] or data['funding-select-an-address']),
+            taskStatus(fundingAddressComplete, false)
+          ) }}
+
+          {{ taskRow(
+            "Funder phone number and email address",
+            "funding-contact-select",
+            displayFundingContact(),
+            taskStatus(fundingContactComplete, fundingContactPaused)
+          ) }}
+        {% endif %}
+
+        {{ taskRow(
+          "Boarder status",
+          "accommodation-boarder",
+          displayValue(data['boarder-scenario']),
+          taskStatus(boarderComplete, false)
+        ) }}
+
+        {% if not onlyBoarderStatus %}
+          {{ taskRow(
+            "Similar institution",
+            "similar-institution",
+            displayValue(data['similar-institution']),
+            taskStatus(similarInstitutionComplete, similarInstitutionPaused)
+          ) }}
+        {% endif %}
+
+        {{ taskRow(
+          "Accommodation evidence",
+          "accommodation-form-check",
+          displayValue(data['contactCheck']),
+          taskStatus(accommodationEvidenceComplete, contactPaused)
+        ) }}
+
+        {{ taskRow(
+          "Funding evidence",
+          "funding-form-check",
+          displayValue(data['fundingCheck']),
+          taskStatus(fundingEvidenceComplete, fundingCheckPaused)
+        ) }}
+      </tbody>
+    </table>
+  {% endif %}
+ {% endif %}
+
+{% if readyToSubmit %}
+  <div class="govuk-!-margin-bottom-6">
+    {{ govukButton({
+      text: "Save and continue",
+      href: "/payability/v5/stay/pip-stay-complete"
+    }) }}
+  </div>
+{% endif %}
+
+<p class="govuk-body govuk-!-padding-top-6">
+  <a href="/payability/v5/person-record/accommodation-history-open-stay" class="govuk-link">Accommodation stay history</a>
+</p>
+
+    {% endif %}
+   <!--<pre>{{ data | dump }}</pre>-->
+  </div>
+</div>
+
+{% endblock %}

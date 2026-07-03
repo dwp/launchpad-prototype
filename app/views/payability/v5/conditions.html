@@ -1,0 +1,109 @@
+{% extends "layouts/payability-internal.html" %}
+{% block beforeContent %}
+{{ govukBreadcrumbs({
+  items: [
+    {
+      text: "Prototype index",
+      href: "../index"
+    },
+    {
+      text: "Payability",
+      href: "index"
+    }
+  ]
+}) }}
+{% endblock %}
+
+
+{% set isDeclarationPre = true %}
+
+
+{% block content %}
+
+<!-- Start row -->
+<div class="govuk-grid-row">
+  <!-- Start column -->
+  <div class="govuk-grid-column-two-thirds">
+    {% include "includes/banner.njk" %}
+    <form class="form" action="/agent" method="post">
+
+      <!--
+              {
+              {
+            value: "Entitlement changed",
+            text: "Reduced PIP entitlement"
+          }, 
+            value: "No change",
+            text: "Stay has no effect on entitlement"
+          }, 
+        {
+            value: "Suspended",
+            text: "Payments suspended"
+          }, 
+                 {
+            value: "Entitlement changed overpayment",
+            text: "Reduced PIP entitlement. Claimant overpaid."
+          }, 
+        {
+            value: "Entitlement changed underpayment",
+            text: "Reduced PIP entitlement. Claimant underpaid."
+          }, 
+        {
+            value: "Entitlement not changed underpayment",
+            text: "Stay has no effect on entitlement. Claimant was underpaid."
+          }, 
+      -->
+
+
+
+      {{ govukRadios({
+        name: "ExtraConditions",
+        fieldset: {
+          legend: {
+            text: "Payability v5: select conditions to simulate",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+
+          {
+            value: "Entitlement changed resume",
+            text: "Ongoing stay with daily living component suspended"
+          }, 
+          {
+            value: "Resume",
+            text: "Payments resume"
+          }, 
+ 
+        {
+            value: "Ready to submit",
+            text: "Stay ready to submit or is reopened to edit"
+          }
+        ]
+      }) }}
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+    </form>
+  </div>
+</div>
+
+<!-- Additional scenarios 
+
+          {
+            value: "No stay + completed stay",
+            text: "Transitioning from no stays recorded to one completed stay recorded"
+          },
+            {
+            value: "No stay + ongoing stay",
+            text: "Transitioning from no stays recorded to one incomplete stay recorded"
+          },
+            {
+            value: "No stay + stay with linked period ",
+            text: "Transitioning from no stays recorded to an instance of linked stays recorded"
+          }
+-->
+
+<!-- End row -->
+{% endblock %}

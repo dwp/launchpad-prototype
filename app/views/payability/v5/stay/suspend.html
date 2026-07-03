@@ -1,0 +1,49 @@
+{% extends "layouts/payability-internal.html" %}
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form class="form" action="stay-task-list" method="post">
+        <h1 class="govuk-heading-l">Suspending payments</h1>
+      {% if data.type-scenario != "Care home" %}
+          {{ govukWarningText({
+            text: "Based on the information entered, payments for the daily living component will be suspended.",
+            iconFallbackText: "Warning"
+          }) }}
+
+        {% else %}
+
+          {{ govukWarningText({
+            text: "Based on the information entered, payments will be suspended.",
+            iconFallbackText: "Warning"
+          }) }}
+
+        {% endif %}
+      <p class="govuk-body govuk-!-padding-bottom-4 govuk-!-padding-top-4">If you need to check the answer, <a href="javascript:history.back()">go back the question</a>.</p>
+
+        {{ govukCheckboxes({
+          name: "suspend-check",
+          items: [
+            {
+              value: "Suspend",
+              text: "I understand that payments will be suspended"
+            }
+          ]
+        }) }}   
+
+
+
+    
+        {{ govukButton({ text: "Save and continue" }) }}
+
+        
+      </form>
+    </div>
+  </div>
+{% endblock %}
