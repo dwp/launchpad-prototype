@@ -69,16 +69,17 @@
 
           {
             value: "Entitlement changed resume",
-            text: "Ongoing stay with daily living component suspended"
+            text: "Ongoing stay with daily living component suspended",
+            hint: {
+              text: "Simulates a long-term care home stay (or similar) where the end date needs to be confirmed."
+            }
           }, 
           {
             value: "Resume",
-            text: "Payments resume"
-          }, 
- 
-        {
-            value: "Ready to submit",
-            text: "Stay ready to submit or is reopened to edit"
+            text: "Complete stay record",
+            hint: {
+              text: "Simulates recording of a discrete stay, where the end date is known, such as in an NHS hospital or similar."
+            }
           }
         ]
       }) }}
@@ -90,6 +91,13 @@
 </div>
 
 <!-- Additional scenarios 
+
+, 
+ 
+        {
+            value: "Ready to submit",
+            text: "Stay ready to submit or is reopened to edit"
+          }
 
           {
             value: "No stay + completed stay",

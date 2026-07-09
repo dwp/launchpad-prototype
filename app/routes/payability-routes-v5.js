@@ -341,6 +341,20 @@ var repay = req.session.data['repayment-scenario'];
   else res.redirect("payability/v5/stay/suspend");
 }); 
 
+// Border funding route
+
+// --- Repayment check ---
+router.post('/boarder-scenario', function(req, res) {
+var funding = req.session.data['funding-scenario'];
+var persona = req.session.data['PayabilityPersona'];
+
+  if (funding === "NHS" || persona === "Agent completing new claim stay end date") {
+    return res.redirect("payability/v5/stay/accommodation-form-check");
+  }
+
+  else res.redirect("payability/v5/stay/similar-institution");
+});
+
 // --- Funding scenario ---
 router.post('/funding-scenario-v5', function(req, res) {
   updateStayObject(req);
@@ -359,7 +373,7 @@ router.post('/funding-scenario-v5', function(req, res) {
   }
 
   if (autoEnd.includes(v)) {
-    return res.redirect("payability/v5/stay/repay");
+    return res.redirect("payability/v5/stay/stay-task-list");
   }
 
   return res.redirect("payability/v5/stay/funding-name");

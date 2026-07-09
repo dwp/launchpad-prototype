@@ -17,7 +17,7 @@
 {% set stays = data.stays or [] %}
 {% set stay = stays | last %}
 {% set ongoing = stay and (stay.endDate == null) %}
-
+{% set stayLink %}{{ data['type-scenario'] }}{% endset %}
 <!-- Case header -->
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
@@ -64,126 +64,39 @@
       {{ govukButton({ text: "Create a stay" }) }}
     </form>
 
-    <!-- SCENARIO: NO STAYS ADDED (If a stay exists → show it, else → show message) -->
-    {% if data['PayabilityPersona'] == "Agent handling an ongoing claim" %}
-      <h2 class="govuk-heading-m">Open stays</h2>
+          <h2 class="govuk-heading-m">Open stays</h2>
       <p class="govuk-body">
         Stays that are ongoing or need more information.
       </p>
-             {{ govukSummaryList({
+
+     {{ govukSummaryList({
         card: {
-          title: { text: "11 September to 15 September 2025" },
+          title: { text: "4 May 2026 - ongoing" },
           actions: {
-            items: [
-              {
-                href: "/payability/v5/stay/stay-task-list",
-                text: "View stay",
-                visuallyHiddenText: "of closed stay"
-              }
-            ]
+            items: [{
+              href: "/payability/v5/stay/pip-stay-complete",
+              text: "View stay",
+              visuallyHiddenText: "of closed stay"
+            }]
           }
         },
         rows: [
           {
             key: { text: "Accommodation type" },
-            value: { text: "Hospital" }
+            value: { html: stayLink }
           },
           {
             key: { text: "Stay type" },
-            value: { html: 'Individual' }
+            value: { text: "Individual" }
           },
           {
             key: { text: "Days affected" },
-            value: { html: '0' }
+            value: { text: "5" }
           }
         ]
-      }) }} 
+      }) }}
 
-      {% for s in data.stays %}
-        {% if not s.endDate %}
 
-          {# Format dates #}
-          {% set startDate =
-            (s.startDate.day or '') ~ ' ' ~
-            (s.startDate.month or '') ~ ' ' ~
-            (s.startDate.year or '')
-          %}
-          {% set endDateText =
-            'Ongoing'
-            if not s.endDate
-            else (
-              (s.endDate.day or '') ~ ' ' ~
-              (s.endDate.month or '') ~ ' ' ~
-              (s.endDate.year or '')
-            )
-          %}
-
-          <h3 class="govuk-heading-s">
-            {{ startDate }} – {{ endDateText }}
-          </h3>
-
-          {# Determine status #}
-          {% set stayComplete =
-            s.completed and
-            s.completed.type and
-            s.completed.startDate and
-            s.completed.endDate and
-            s.completed.address and
-            (s.completed.funding or s.completed.repay)
-          %}
-          {% set statusClass = 'govuk-tag--green' if stayComplete else 'govuk-tag--blue' %}
-          {% set statusText = 'Complete' if stayComplete else 'Incomplete' %}
-
-          {# Recorded during based on persona #}
-          {% set recordedDuring =
-            "PIP registration"
-            if data['PayabilityPersona'] == "Agent handling an ongoing claim"
-            else "PIP award"
-          %}
-
-          {{ govukSummaryList({
-            card: {
-              title: {
-                text: data['type-scenario'] or s.name or "Hospital"
-              },
-              actions: {
-                items: [
-                  {
-                    href: "/payability/v3/stay/stay-task-list",
-                    text: "View",
-                    visuallyHiddenText:
-                      "of " + (data['type-scenario'] or s.name or "accommodation")
-                  }
-                ]
-              }
-            },
-            rows: [
-              {
-                key: { text: "Start date" },
-                value: { text: startDate }
-              },
-              {
-                key: { text: "Recorded during" },
-                value: { text: recordedDuring }
-              },
-              {
-                key: { text: "Status" },
-                value: {
-                  html:
-                    '<strong class="govuk-tag ' +
-                    statusClass +
-                    '">' +
-                    statusText +
-                    '</strong>'
-                }
-              }
-            ]
-          }) }}
-
-        {% endif %}
-      {% endfor %}
-
-    {% endif %}
 
   </div>
 </div>

@@ -25,6 +25,9 @@
 {% set suspend = data["suspend-check"] %}
 {% set suspendSelected = suspend and (suspend == "Suspend" or "Suspend" in suspend) %}
 
+{% set stayLink %}{{ data['type-scenario'] }}{% endset %}
+
+
 <!-- Case header -->
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
@@ -53,7 +56,6 @@
 
     <h1 class="govuk-heading-l">Accommodation stay history</h1>
 
-    {# ✅ Suspended warning #}
     {% if suspendSelected %}
       {% if data["type-scenario"] == "Care home" %}
         {{ govukWarningText({
@@ -86,39 +88,12 @@
        ============================================================ #}
     {% if isOngoingClaimPersona %}
 
-      {{ govukSummaryList({
-        card: {
-          title: { text: "4 May 2026 to 5 July 2026" },
-          actions: {
-            items: [{
-              href: "/payability/v5/stay/pip-stay-complete",
-              text: "View stay",
-              visuallyHiddenText: "of closed stay"
-            }]
-          }
-        },
-        rows: [
-          {
-            key: { text: "Accommodation type" },
-            value: { text: "Care home" }
-          },
-          {
-            key: { text: "Stay type" },
-            value: { text: "Individual" }
-          },
-          {
-            key: { text: "Days affected" },
-            value: { text: "12" }
-          }
-        ]
-      }) }}
 
       {% if data['PayabilityScenario'] == "linked stay" %}
 
-        {% for i in [1,2] %}
           {{ govukSummaryList({
             card: {
-              title: { text: "11 September to 15 September 2025" },
+              title: { text: "22 June 2026 to 25 July 2026" },
               actions: {
                 items: [{
                   href: "/payability/v5/stay/pip-stay-complete",
@@ -130,7 +105,7 @@
             rows: [
               {
                 key: { text: "Accommodation type" },
-                value: { text: "Hospital" }
+                value: { html: stayLink }
               },
               {
                 key: { text: "Stay type" },
@@ -138,11 +113,66 @@
               },
               {
                 key: { text: "Days affected" },
-                value: { text: "5" }
+                value: { text: "33" }
               }
             ]
           }) }}
-        {% endfor %}
+
+          {{ govukSummaryList({
+            card: {
+              title: { text: "4 May 2026 to 14 June 2026" },
+              actions: {
+                items: [{
+                  href: "/payability/v5/stay/pip-stay-complete",
+                  text: "View stay",
+                  visuallyHiddenText: "of closed stay"
+                }]
+              }
+            },
+            rows: [
+              {
+                key: { text: "Accommodation type" },
+                value: { html: stayLink }
+              },
+              {
+                key: { text: "Stay type" },
+                value: { text: "Linked" }
+              },
+              {
+                key: { text: "Days affected" },
+                value: { text: "13" }
+              }
+            ]
+          }) }}
+
+          {% else %}
+           {{ govukSummaryList({
+            card: {
+              title: { text: "4 May 2026 to 14 June 2026" },
+              actions: {
+                items: [{
+                  href: "/payability/v5/stay/pip-stay-complete",
+                  text: "View stay",
+                  visuallyHiddenText: "of closed stay"
+                }]
+              }
+            },
+            rows: [
+              {
+                key: { text: "Accommodation type" },
+                value: { html: stayLink }
+              },
+              {
+                key: { text: "Stay type" },
+                value: { text: "Individual" }
+              },
+              {
+                key: { text: "Days affected" },
+                value: { text: "13" }
+              }
+            ]
+          }) }}
+  
 
       {% endif %}
 
@@ -151,28 +181,15 @@
        ============================================================ #}
     {% elif isNewClaimPersona %}
 
-      {{ govukSummaryList({
-        card: {
-          title: { text: "9 November 2025 to 24 December 2025" },
-          actions: {
-            items: [{
-              href: "/payability/v5/stay/pip-stay-complete-canonical",
-              text: "View stay",
-              visuallyHiddenText: "of closed stay"
-            }]
-          }
-        },
-        rows: [
-          {
-            key: { text: "Accommodation type" },
-            value: { text: "Hospital" }
-          }
-        ]
-      }) }}
 
-      {{ govukSummaryList({
+
+     
+
+    {% endif %}
+    {% if data.PayabilityPersona == "Agent completing new claim stay end date" %}
+     {{ govukSummaryList({
         card: {
-          title: { text: "11 September to 15 September 2025" },
+          title: { text: "4 May 2026 to 14 June 2026" },
           actions: {
             items: [{
               href: "/payability/v5/stay/pip-stay-complete",
@@ -184,20 +201,19 @@
         rows: [
           {
             key: { text: "Accommodation type" },
-            value: { text: "Hospital" }
+            value: { html: "Hospital" }
           },
           {
             key: { text: "Stay type" },
-            value: { text: "Linked" }
+            value: { text: "Individual" }
           },
           {
             key: { text: "Days affected" },
-            value: { text: "5" }
+            value: { text: "41" }
           }
         ]
       }) }}
-
-    {% endif %}
+      {% endif %}
 
   </div>
 </div>

@@ -9,9 +9,43 @@
  Prison details
 {% endif %}
 
-
+<!-- New claims -->
+{% if data.PayabilityPersona == "Agent completing new claim stay end date" %}
+  <table class="govuk-table govuk-!-margin-top-4">
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Status</th>
+        <td class="govuk-table__cell">
+        Complete
+        </td>
+        <!--<td class="govuk-table__cell">Complete</td>-->
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Days in accommodation</th>
+        <td class="govuk-table__cell">
+        41
+        
+        </td>
+      </tr>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">Outcome</th>
+    
+        <td class="govuk-table__cell">
+41 days affected
+        {% if data.ExtraConditions != "Suspended" %}
+        <br><br>
+          <a href="pip-stay-breakdown">View outcome</a>
+        {% endif %}
+        
+        </td>
+      </tr>
+    </tbody>
+  </table>
+{% endif %}
+<!-- End new claims -->
 
 <!-- Ongoing claims -->
+{% if data.PayabilityPersona == "Agent handling an ongoing claim" %}
   <table class="govuk-table govuk-!-margin-top-4">
     <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
@@ -33,7 +67,7 @@
             {% elseif data.ExtraConditions == "Entitlement changed resume" %}
             33
             {% elseif data.ExtraConditions == "Resume" %}
-            40
+            41
           {% endif %}
         
         </td>
@@ -48,7 +82,7 @@
         {% elseif data.ExtraConditions == "No change" %}
         0 days affected
         {% elseif data.ExtraConditions == "Resume" %}
-        12 days affected
+        13 days affected
         {% else %}
         5 days affected
         {% endif %}
@@ -63,6 +97,8 @@
       </tr>
     </tbody>
   </table>
+{% endif %}
+<!-- End ongoing claims -->
   
     <h2 class="govuk-heading-m govuk-!-padding-top-6">Stay details</h2>
       {% set hasStayType = data['type-scenario'] %}
@@ -73,7 +109,7 @@
   {% set hasBoarderStatus = data['boarder-scenario'] and data['boarder-scenario'] not in ["", "I don't know", "Waiting", "Not provided"] %}
   {% set hasSimilarInstitution = data['similar-institution'] and data['similar-institution'] not in ["", "I don't know", "Waiting", "Not provided"] %}
   {% set hasAccommodationEvidence = data['contactCheck'] in ["Yes", "No"] %}
-  {% set hasFundingSource = data['funding-scenario'] in ["Local authority", "Charity"] %}
+ {% set hasFundingSource = data['funding-scenario'] %}
   {% set hasFunderName = hasFundingSource and data['funding-primary-contact'] and data['funding-primary-contact'] not in ["", "I don't know", "Waiting", "Not provided"] %}
   {% set hasRepaymentScenario = hasFundingSource and data['repayment-scenario'] and data['repayment-scenario'] not in ["", "I don't know", "Waiting", "Not provided"] %}
   {% set hasFunderAddress = data['funding-select-an-address'] or data['fundingAddressCheck'] in ["Yes", "No"] %}
@@ -98,6 +134,18 @@
                 data['date-in-month'],
                 data['date-in-year']
               ) }}
+            </td>
+          </tr>
+          {% endif %}
+          {% if data.PayabilityPersona == "Agent completing new claim stay end date" %}
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Accommodation type</th>
+            <td class="govuk-table__cell">Hospital</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Start date</th>
+            <td class="govuk-table__cell">
+              4 May 2026
             </td>
           </tr>
           {% endif %}
@@ -147,8 +195,17 @@
       </table>
       {% if hasFundingDetails %}
       <h2 class="govuk-heading-m govuk-!-padding-top-6">Funding details</h2>
+
         <table class="govuk-table">
         <tbody class="govuk-table__body">
+          {% if data.PayabilityPersona == "Agent completing new claim stay end date" %}
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Funding source</th>
+            <td class="govuk-table__cell">
+              NHS
+            </td>
+          </tr>
+          {% endif %}
           {% if hasFundingSource %}
             <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">Funding source</th>
@@ -188,3 +245,5 @@
         </tbody>
       </table>
       {% endif %}
+
+<!-- End ongoing claims -->

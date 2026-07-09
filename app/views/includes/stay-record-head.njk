@@ -1,7 +1,11 @@
  <!-- Default state for new stay -->
      <!--<h1 class="govuk-heading-l">Stay in {{ (data['type-scenario'] or 'hospital') | lower }}</h1>-->
   {% if data['PayabilityPersona'] != "Agent handling an ongoing claim" %}
+    {% if data['type-scenario'] != "Detention in Legal Custody" %}
      <h1 class="govuk-heading-l">Stay in hospital</h1>
+     {% else %}
+     <h1 class="govuk-heading-l">Detention in legal custody</h1>
+    {% endif %}
     {% if data['suspend-check'] and (data['suspend-check'] == "Suspend" or 'Suspend' in data['suspend-check']) %}
 
       {% if data["type-scenario"] == "Care home" %}

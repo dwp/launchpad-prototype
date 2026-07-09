@@ -341,8 +341,8 @@
           ((data['accommodation-name'] or data['address-name']) and
           (data['address-line-1'] or data['accommodation-select-an-address'])) and
           (data['type-scenario'] == "Detention in Legal Custody" or (data['funding-scenario'] and data['funding-scenario'] != "I don't know")) and
-          (data['type-scenario'] == "Detention in Legal Custody" or data['funding-scenario'] == "NHS" or (data['funding-primary-contact'] and data['funding-primary-contact'] != "I don't know")) and
-          (data['type-scenario'] == "Detention in Legal Custody" or data['funding-scenario'] == "NHS" or (data['repayment-scenario'] and data['repayment-scenario'] != "I don't know"))
+          (data['type-scenario'] == "Detention in Legal Custody" or (data['funding-primary-contact'] and data['funding-primary-contact'] != "I don't know")) and
+          (data['type-scenario'] == "Detention in Legal Custody" or (data['repayment-scenario'] and data['repayment-scenario'] != "I don't know"))
         %}
 
         {% if data['type-scenario'] == "Detention in Legal Custody" %}
@@ -350,11 +350,7 @@
         {% elseif data['type-scenario'] == "Hospital" and data['funding-scenario'] == "Claimant" %}
           {% set moreReady = true %}
         {% elseif data['type-scenario'] == "Hospital" and data['funding-scenario'] == "NHS" %}
-          {% set moreReady =
-            data['boarder-scenario'] and
-            (data['contactCheck'] and data['contactCheck'] != "I don't know") and
-            (data['fundingCheck'] and data['fundingCheck'] != "I don't know")
-          %}
+          {% set moreReady = data['boarder-scenario'] %}
         {% else %}
           {% set moreReady =
             data['boarder-scenario'] and

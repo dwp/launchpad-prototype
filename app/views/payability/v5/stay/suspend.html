@@ -25,7 +25,14 @@
           }) }}
 
         {% endif %}
-      <p class="govuk-body govuk-!-padding-bottom-4 govuk-!-padding-top-4">If you need to check the answer, <a href="javascript:history.back()">go back the question</a>.</p>
+      <p class="govuk-body ">If you need to check the answer, <a href="javascript:history.back()">go back the question</a>.</p>
+      <p class="govuk-body govuk-!-padding-bottom-4 ">
+        
+        {% if data.type-scenario != "Care home" %}
+          Tell the claimant the daily living component will be suspended.</p>
+        {% else %}
+         Tell the claimant the daily living and mobility components will be suspended.</p>
+        {% endif %}
 
         {{ govukCheckboxes({
           name: "suspend-check",

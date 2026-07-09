@@ -1,4 +1,4 @@
-{% extends "layouts/payability.html" %}
+{% extends "layouts/payability-internal.html" %}
 
 {% block pageTitle %}
   Stay task list – {{ serviceName }} – GOV.UK Prototype Kit
@@ -90,10 +90,13 @@
   {% include "includes/stay-record-linked-stay.njk" %}
 
 <p class="govuk-body govuk-!-padding-top-6">
- {% if data.ExtraConditions != "Resume" %}
-  <a href="/payability/v4/person-record/accommodation-history-open-stay" class="govuk-link">Accommodation stay history</a>
+  {% if data.PayabilityPersona == "Agent completing new claim stay end date" %}
+  <a href="/payability/v5/person-record/accommodation-history-complete" class="govuk-link">Accommodation stay history</a>
+  {% elseif data.ExtraConditions != "Resume" %}
+  <a href="/payability/v5/person-record/accommodation-history-open-stay" class="govuk-link">Accommodation stay history</a>
+  
   {% else %}
-  <a href="/payability/v4/person-record/accommodation-history-complete" class="govuk-link">Accommodation stay history</a>
+  <a href="/payability/v5/person-record/accommodation-history-complete" class="govuk-link">Accommodation stay history</a>
   {% endif %}
 </p>
 

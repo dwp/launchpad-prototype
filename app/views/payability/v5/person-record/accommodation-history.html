@@ -103,7 +103,7 @@
 
  {{ govukSummaryList({
         card: {
-          title: { text: "17 March - ongoing" },
+          title: { text: "4 May 2026 - ongoing" },
           actions: {
             items: [
               {
@@ -125,7 +125,7 @@
           },
           {
             key: { text: "Days affected" },
-            value: { html: '5' }
+            value: { html: '13' }
           }
         ]
       }) }}
@@ -142,34 +142,32 @@
       <h2 class="govuk-heading-m">Closed stays</h2>
       <p class="govuk-body">Stays that have all the information recorded and have been submitted.</p>
 
-      {{ govukSummaryList({
+            {{ govukSummaryList({
         card: {
-          title: { text: "9 November 2025 to 24 December 2025" },
+          title: { text: "4 May 2026 to 14 June 2026" },
           actions: {
-            items: [
-              {
-                href: "/payability/v5/stay/stay-task-list",
-                text: "View stay",
-                visuallyHiddenText: "of closed stay"
-              }
-            ]
+            items: [{
+              href: "/payability/v5/stay/pip-stay-complete",
+              text: "View stay",
+              visuallyHiddenText: "of closed stay"
+            }]
           }
         },
         rows: [
           {
             key: { text: "Accommodation type" },
-            value: { text: "Hospital" }
+            value: { text: "Care home" }
           },
           {
             key: { text: "Stay type" },
-            value: { html: 'Individual' }
+            value: { text: "Individual" }
           },
           {
             key: { text: "Days affected" },
-            value: { html: '5' }
+            value: { text: "13" }
           }
         ]
-      }) }} 
+      }) }}
 
 
     {# ============================================================
@@ -184,7 +182,7 @@
 
       {{ govukSummaryList({
         card: {
-          title: { text: "Ongoing stay" },
+          title: { text: "17 September 2026 - ongoing" },
           actions: {
             items: [
               {
@@ -216,91 +214,87 @@
       <h2 class="govuk-heading-m">Closed stays</h2>
       <p class="govuk-body">Stays that have all the information recorded and have been submitted.</p>
 
-      {{ govukSummaryList({
-        card: {
-          title: { text: "9 November 2025 to 24 December 2025" },
-          actions: {
-            items: [
+{{ govukSummaryList({
+            card: {
+              title: { text: "22 June 2026 to 25 July 2026" },
+              actions: {
+                items: [{
+                  href: "/payability/v5/stay/pip-stay-complete",
+                  text: "View stay",
+                  visuallyHiddenText: "of closed stay"
+                }]
+              }
+            },
+            rows: [
               {
-                href: "/payability/v5/stay/stay-task-list",
-                text: "View stay",
-                visuallyHiddenText: "of closed stay"
+                key: { text: "Accommodation type" },
+                value: { text: "Care home" }
+              },
+              {
+                key: { text: "Stay type" },
+                value: { text: "Linked" }
+              },
+              {
+                key: { text: "Days affected" },
+                value: { text: "33" }
               }
             ]
-          }
-        },
-        rows: [
-          {
-            key: { text: "Accommodation type" },
-            value: { text: "Hospital" }
-          },
-          {
-            key: { text: "Stay type" },
-            value: { html: 'Individual' }
-          },
-          {
-            key: { text: "Days affected" },
-            value: { html: '5' }
-          }
-        ]
-      }) }} 
+          }) }}
 
-      {{ govukSummaryList({
-        card: {
-          title: { text: "11 September to 15 September 2025" },
-          actions: {
-            items: [
+          {{ govukSummaryList({
+            card: {
+              title: { text: "4 May 2026 to 14 June 2026" },
+              actions: {
+                items: [{
+                  href: "/payability/v5/stay/pip-stay-complete",
+                  text: "View stay",
+                  visuallyHiddenText: "of closed stay"
+                }]
+              }
+            },
+            rows: [
               {
-                href: "/payability/v5/stay/stay-task-list",
-                text: "View stay",
-                visuallyHiddenText: "of closed stay"
+                key: { text: "Accommodation type" },
+                value: { text: "Care home" }
+              },
+              {
+                key: { text: "Stay type" },
+                value: { text: "Linked" }
+              },
+              {
+                key: { text: "Days affected" },
+                value: { text: "13" }
               }
             ]
-          }
-        },
-        rows: [
-          {
-            key: { text: "Accommodation type" },
-            value: { text: "Hospital" }
-          },
-          {
-            key: { text: "Stay type" },
-            value: { html: 'Linked' }
-          },
-          {
-            key: { text: "Days affected" },
-            value: { html: '5' }
-          }
-        ]
-      }) }} 
-      {{ govukSummaryList({
-        card: {
-          title: { text: "2 September to 9 September 2025" },
-          actions: {
-            items: [
+          }) }}
+
+                   {{ govukSummaryList({
+            card: {
+              title: { text: "1 February 2026 to 5 February 2026" },
+              actions: {
+                items: [{
+                  href: "/payability/v5/stay/pip-stay-complete",
+                  text: "View stay",
+                  visuallyHiddenText: "of closed stay"
+                }]
+              }
+            },
+            rows: [
               {
-                href: "/payability/v5/stay/stay-task-list",
-                text: "View stay",
-                visuallyHiddenText: "of closed stay"
+                key: { text: "Accommodation type" },
+                value: { text: "Hospital" }
+              },
+              {
+                key: { text: "Stay type" },
+                value: { text: "Individual" }
+              },
+              {
+                key: { text: "Days affected" },
+                value: { text: "0" }
               }
             ]
-          }
-        },
-        rows: [
-          {
-            key: { text: "Accommodation type" },
-            value: { text: "Hospital" }
-          },
-          {
-            key: { text: "Stay type" },
-            value: { html: 'Linked' }
-          },
-          {
-            key: { text: "Days affected" },
-            value: { html: '5' }
-          }
-        ]
-      }) }} 
+          }) }}
+      
 
     
 

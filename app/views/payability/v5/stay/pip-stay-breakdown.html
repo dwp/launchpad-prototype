@@ -25,6 +25,7 @@
 {% set isNewClaimPersona = data['PayabilityPersona'] == "Agent completing new claim stay end date" %}
 {% set isOngoingClaimPersona = data['PayabilityPersona'] == "Agent handling an ongoing claim" %}
 {% set isLinkedStay = data['PayabilityScenario'] == "Linked stay" %}-->
+{% set stayLink %}<a href="/payability/v5/stay/pip-stay-complete" class="govuk-link">{{ data['type-scenario'] }}: 4 May 2026 to 14 June 2026</a>{% endset %}
 
 
 <div class="govuk-grid-row">
@@ -80,7 +81,7 @@
             <tr class="govuk-table__row">
               <th scope="row" class="govuk-table__header">Start date</th>
               
-              <td class="govuk-table__cell">26 May 2026</td>
+              <td class="govuk-table__cell">4 May 2026</td>
           </tr>
           <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">End date</th>
@@ -88,7 +89,7 @@
               {% if data.ExtraConditions == "Entitlement changed resume" %}
             Ongoing stay
             {% else %}
-            5 July 2026
+          14 June 2026
             {% endif %}
              <!--Entitlement date changed to [date goes here]<br><br>-->
             <!--Entitlement date changed to [date goes here]<br><br>-->
@@ -101,7 +102,7 @@
               {% if data.ExtraConditions == "Entitlement changed resume" %}
               33
               {% else %}
-              40
+              41
               {% endif %}
             </td>
               
@@ -113,9 +114,9 @@
               {% if data.ExtraConditions == "Entitlement changed resume" %}
               5
               {% elseif data.PayabilityPersona == "Agent completing new claim stay end date" %}
-              0
+              41
               {% else %}
-              12
+              13
               {% endif %}
             </td>
           </tr>
@@ -161,7 +162,7 @@
           <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
               <th scope="row" class="govuk-table__header">Start date</th>
-              <td class="govuk-table__cell">26 May 2025</td>
+              <td class="govuk-table__cell">4 May 2026</td>
           </tr>
           <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">End date</th>
@@ -169,7 +170,7 @@
               {% if data.ExtraConditions == "Entitlement changed resume" %}
             Ongoing stay
             {% else %}
-            5 July 2026
+            25 July 2026
             {% endif %}
              <!--Entitlement date changed to [date goes here]<br><br>-->
             <!--Entitlement date changed to [date goes here]<br><br>-->
@@ -182,7 +183,7 @@
               {% if data.ExtraConditions == "Entitlement changed resume" %}
               33
               {% else %}
-              40
+              74
               {% endif %}
             </td>
               
@@ -194,7 +195,7 @@
               {% if data.ExtraConditions == "Entitlement changed resume" %}
               5
               {% else %}
-              12
+              46
               {% endif %}
             </td>
           </tr>
@@ -250,7 +251,6 @@
       <h2 class="govuk-heading-m govuk-!-padding-top-6">Payable days</h2>
       <p>Payable days for each component.</p>
       {% if data.PayabilityPersona == "Agent handling an ongoing claim" and data.PayabilityScenario != "linked stay" %}
-      <!--<h3 class="govuk-heading-s govuk-!-padding-top-6">Care home: 26 May 2026 - {% if data.ExtraConditions == "Entitlement changed resume" %}ongoing{% else %}5 July 2026{% endif %}</h3>-->
         {% if data.ExtraConditions == "Entitlement changed resume" %}
           {{ govukTable({
             head: [
@@ -267,7 +267,7 @@
             rows: [
               [
                 {
-                  html: " <a href='/payability/v5/stay/pip-stay-complete' class='govuk-link'>Care home: 4 May to 31 May 2026</a>"
+                  html: " <a href='/payability/v5/stay/pip-stay-complete' class='govuk-link'>{{ data['type-scenario'] }}: 4 May - ongoing</a>"
                 },
                       {
                   text: "28"
@@ -294,13 +294,13 @@
             rows: [
               [
                 {
-                  html: " <a href='/payability/v5/stay/pip-stay-complete' class='govuk-link'>Care home: 4 May to 5 July 2026</a>"
+                  html: stayLink
                 },
                       {
                   text: "28"
                 },
                 {
-                  text: "40"
+                  text: "41"
                 }
               ]
             ]
@@ -313,8 +313,7 @@
     <!-- Show only for linked stays -->
       {% if data.PayabilityPersona == "Agent handling an ongoing claim" and data.PayabilityScenario == "linked stay" %}
          
-    <h3 class="govuk-heading-s govuk-!-padding-top-6">Care home: 26 May 2026 - {% if data.ExtraConditions == "Entitlement changed resume" %}ongoing{% else %}5 July 2026{% endif %}</h3>
-        {% if data.ExtraConditions == "Entitlement changed resume" %}
+        {% if data.ExtraConditions != "Entitlement changed resume" %}
           {{ govukTable({
             head: [
               {
@@ -330,21 +329,21 @@
             rows: [
               [
                 {
-                  html: " <a href='/payability/v5/stay/pip-stay-complete' class='govuk-link'>Care home: 4s May to 31 May 2026</a>"
+                  html: " <a href='/payability/v5/stay/pip-stay-complete' class='govuk-link'>Care home: 4 May 2026 to 14 June 2026</a>"
                 },
                       {
                   text: "28"
                 },
                 {
-                  text: "33"
+                  text: "41"
                 }
               ],
               [
                 {
-                  html: " <a href='/payability/v5/stay/pip-stay-complete' class='govuk-link'>Care home: 4s May to 31 May 2026</a>"
+                  html: " <a href='/payability/v5/stay/pip-stay-complete' class='govuk-link'>Care home: 22 June 2026 to 25 July 2026</a>"
                 },
                       {
-                  text: "28"
+                  text: "0"
                 },
                 {
                   text: "33"
@@ -368,7 +367,18 @@
             rows: [
               [
                 {
-                  html: " <a href='/payability/v5/stay/pip-stay-complete' class='govuk-link'>Care home: 4 May to 5 July 2026</a>"
+                  html: " <a href='/payability/v5/stay/pip-stay-complete' class='govuk-link'>Care home: 4 May 2026 to 14 June 2026</a>"
+                },
+                      {
+                  text: "28"
+                },
+                {
+                  text: "40"
+                }
+              ],
+              [
+                {
+                  html: " <a href='/payability/v5/stay/pip-stay-complete' class='govuk-link'>{{ data['type-scenario'] }}: 4 May 2026 to 5 July 2026</a>"
                 },
                       {
                   text: "28"
@@ -384,7 +394,7 @@
     {% endif %}
 
      {% if data.PayabilityPersona == "Agent completing new claim stay end date" %}
-         <h3 class="govuk-heading-s govuk-!-padding-top-6">Hospital: 26 May 2026 - 5 July 2026</h3>
+
         {{ govukTable({
             head: [
               {
@@ -401,13 +411,13 @@
 
               [
                 {
-                  html: " <a href='/payability/v5/stay/pip-stay-complete' class='govuk-link'>Care home: 26 May 2026 to 5 July 2026</a>"
+                  html: " <a href='/payability/v5/stay/pip-stay-complete' class='govuk-link'>Hospital: 4 May 2026 to 14 June 2026</a>"
                 },
                       {
-                  text: "28"
+                  text: "0"
                 },
                 {
-                  text: "33"
+                  text: "0"
                 }
               ]
             ]
@@ -418,7 +428,7 @@
 
 
   <p class="govuk-body govuk-!-padding-top-6">
- {% if data.ExtraConditions != "Resume" %}
+{% if data['ExtraConditions'] != "Resume" and data['PayabilityPersona'] != "Agent completing new claim stay end date" %}
   <a href="/payability/v5/person-record/accommodation-history-open-stay" class="govuk-link">Accommodation stay history</a>
   {% else %}
   <a href="/payability/v5/person-record/accommodation-history-complete" class="govuk-link">Accommodation stay history</a>

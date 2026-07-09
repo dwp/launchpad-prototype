@@ -1,0 +1,172 @@
+{% extends "layouts/payability-internal.html" %}
+
+{% block pageTitle %}
+  Stay task list – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% set pageName = "Agent home" %}
+
+{% block beforeContent %}
+  <!-- back link suppressed -->
+{% endblock %}
+
+{% block content %}
+
+{% macro taskStatus(answer, isPaused=false) %}
+  {% if isPaused %}
+    {{ govukTag({ text: "In progress", classes: "govuk-tag--yellow" }) }}
+  {% elif answer == "I don't know" %}
+    {{ govukTag({ text: "In progress", classes: "govuk-tag--yellow" }) }}
+  {% elif answer %}
+    {{ govukTag({ text: "Done", classes: "govuk-tag--green" }) }}
+  {% else %}
+    {{ govukTag({ text: "To do", classes: "govuk-tag--grey" }) }}
+  {% endif %}
+{% endmacro %}
+
+{% macro displayValue(value) %}
+  {% if value %}{{ value }}{% endif %}
+{% endmacro %}
+
+{% macro displayDate(day, month, year) %}
+  {% if day and month and year %}
+    {% set months = ["January","February","March","April","May","June","July","August","September","October","November","December"] %}
+    {{ day }} {{ months[month | int - 1] }} {{ year }}
+  {% endif %}
+{% endmacro %}
+
+{% macro displayEndDate() %}
+  {% if data['date-out-check'] == "Yes" %}
+    Ongoing
+  {% elif data['date-out-day'] and data['date-out-month'] and data['date-out-year'] %}
+    {% set months = ["January","February","March","April","May","June","July","August","September","October","November","December"] %}
+    {{ data['date-out-day'] }} {{ months[data['date-out-month'] | int - 1] }} {{ data['date-out-year'] }}
+  {% endif %}
+{% endmacro %}
+
+{% macro taskRow(title, href, answer, statusHtml) %}
+  <tr class="govuk-table__row">
+    <td class="govuk-table__cell"><a class="govuk-link" href="{{ href }}">{{ title }}</a></td>
+    <td class="govuk-table__cell">{{ answer }}</td>
+    <td class="govuk-table__cell">{{ statusHtml | safe }}</td>
+  </tr>
+{% endmacro %}
+
+{# Simulation / prefill values for demo purposes #}
+{% set sim_type_scenario = "Hospital" %}
+{% set sim_date_in_day = "4" %}
+{% set sim_date_in_month = "5" %}
+{% set sim_date_in_year = "2026" %}
+{% set sim_accommodation_address = "123 Hospital Street" %}
+{% set sim_funding_scenario = "NHS" %}
+{% set sim_date_out_check = "Yes" %}
+
+{# Compute done flags for each item (used to decide Ready to submit) #}
+{% set done_accommodation = sim_type_scenario %}
+{% set done_start_date = sim_date_in_day and sim_date_in_month and sim_date_in_year %}
+{% set done_still = (sim_date_out_check != "Yes") and (data['date-out-day'] and data['date-out-month'] and data['date-out-year']) %}
+{% set still_value = data['date-out-check'] or sim_date_out_check %}
+{% set done_still = (still_value == "No") and (data['date-out-day'] and data['date-out-month'] and data['date-out-year']) %}
+{% set done_address = sim_accommodation_address %}
+{% set done_funding = sim_funding_scenario %}
+{% set done_boarder = data['boarder-scenario'] and data['boarder-scenario'] not in ["", "I don't know"] %}
+{% set done_accom_evidence = data['contactCheck'] in ["Yes","No"] %}
+{% set done_funding_evidence = data['fundingCheck'] in ["Yes","No"] %}
+
+{% set all_done = (
+  done_accommodation and
+  done_start_date and
+  done_still and
+  done_address and
+  done_funding and
+  done_boarder and
+  done_accom_evidence and
+  done_funding_evidence
+) %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <section class="dwp-quick-reference govuk-!-margin-bottom-8">
+      <dl class="dwp-quick-reference__block">
+        <dt class="govuk-visually-hidden">Name:</dt>
+        <dd class="dwp-quick-reference__primary"><a href="#">Jeff Bridges</a></dd>
+
+        <dt class="govuk-visually-hidden">National Insurance number:</dt>
+        <dd class="dwp-quick-reference__secondary">NA 11 22 33 C</dd>
+      </dl>
+    </section>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-l">Stay in hospital</h1>
+
+    <table class="govuk-table padding-bottom-6">
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">Status</th>
+          <td class="govuk-table__cell">
+            {% if all_done %}
+              <strong class="govuk-tag govuk-tag--yellow">Ready to submit</strong>
+            {% else %}
+              <strong class="govuk-tag govuk-tag--blue">Incomplete</strong>
+            {% endif %}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-heading-m">Stay details</caption>
+      <tbody class="govuk-table__body">
+        {{ taskRow("Accommodation type", "/payability/v5/stay/type", displayValue(sim_type_scenario), taskStatus('done')) }}
+
+        {{ taskRow("Start date", "/payability/v5/stay/date-in", displayDate(sim_date_in_day, sim_date_in_month, sim_date_in_year), taskStatus('done')) }}
+
+        {{ taskRow("Still in accommodation", "/payability/v5/stay/date-still-there", displayValue(still_value), taskStatus(still_value, still_value == 'Yes' or still_value == 'Waiting')) }}
+
+        {{ taskRow("End date", "/payability/v5/stay/date-left", displayEndDate(), taskStatus(data['date-out-check'] == 'No' and (data['date-out-day'] and data['date-out-month'] and data['date-out-year']))) }}
+
+        {{ taskRow("Accommodation address", "/payability/v5/stay/accommodation-lookup-name", displayValue(sim_accommodation_address), taskStatus('done')) }}
+
+        {{ taskRow("Funding source", "/payability/v5/stay/funding-type", displayValue(sim_funding_scenario), taskStatus('done')) }}
+
+      </tbody>
+    </table>
+
+    <p class="govuk-body">The details below can be completed during processing time.</p>
+
+    <table class="govuk-table">
+      <tbody class="govuk-table__body">
+      
+
+        {{ taskRow("Boarder status", "accommodation-boarder", displayValue(data['boarder-scenario']), taskStatus(data['boarder-scenario'])) }}
+
+        {{ taskRow("Accommodation evidence", "accommodation-form-check", displayValue(data['contactCheck']), taskStatus(data['contactCheck'])) }}
+
+        {{ taskRow("Funding evidence", "funding-form-check", displayValue(data['fundingCheck']), taskStatus(data['fundingCheck'])) }}
+      </tbody>
+    </table>
+
+
+ 
+
+    {% if all_done %}
+      <div class="govuk-!-margin-bottom-6">
+        {{ govukButton({
+          text: "Submit",
+          href: "/payability/v5/stay/pip-stay-complete"
+        }) }}
+      </div>
+    {% endif %}
+
+    <p class="govuk-body govuk-!-padding-top-6">
+      <a href="/payability/v5/person-record/accommodation-history-open-stay" class="govuk-link">Accommodation stay history</a>
+    </p>
+  </div>
+</div>
+
+{% endblock %}
