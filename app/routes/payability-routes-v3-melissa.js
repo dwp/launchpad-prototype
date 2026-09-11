@@ -160,7 +160,12 @@ router.get('/payability/v3/stay/task-list-continue', function (req, res) {
   updateStayObject(req);
 
   const next = getNextIncompleteTask(stay);
-  if (next) return res.redirect(next);
+  if (isAllowed) {
+        // If the URL is allowed, proceed with the redirect
+        res.redirect(url);
+    } else {
+        res.status(400).send('Invalid redirect URL');
+    }
 
   return res.redirect('/payability/v3/stay/check-answers');
 });
@@ -487,11 +492,12 @@ router.get('/payability/v3/stay/continue', function (req, res) {
   // Determine next incomplete task
   const next = getNextIncompleteTask(stay);
 
-  if (next) {
-    return res.redirect(next);        // 🚀 send user to next incomplete question
-  } else {
-    return res.redirect('/payability/v3/stay/check-all-answers');  // 🎉 everything complete
-  }
+ if (isAllowed) {
+        // If the URL is allowed, proceed with the redirect
+        res.redirect(url);
+    } else {
+        res.status(400).send('Invalid redirect URL');
+    }
 });
 
 //QUESTION FLOW
