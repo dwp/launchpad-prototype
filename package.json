@@ -1,1 +1,36 @@
-{"scripts":{"dev":"govuk-prototype-kit dev","serve":"govuk-prototype-kit serve","start":"govuk-prototype-kit start"},"engines":{"node":"22.x"},"dependencies":{"@dwp/dwp-frontend":"3.4.0","@govuk-prototype-kit/common-templates":"2.0.1","@govuk-prototype-kit/step-by-step":"2.2.3","axios":"1.20.0","find-an-address-plugin":"github:dwp/find-an-address-plugin","govuk-frontend":"5.14.0","govuk-one-login-service-header":"github:govuk-one-login/service-header","govuk-prototype-kit":"13.20.4","hmrc-frontend":"6.117.0","jquery":"3.7.1","notifications-node-client":"8.5.0","qs":"^6.15.0"},"overrides":{"axios":"1.20.0","jws":"3.2.3","govuk-prototype-kit":{"body-parser":{".":"1.20.3","qs":"6.14.1"},"express":{".":"4.21.2","qs":"6.14.1"},"then-request":{".":"6.0.2","qs":"6.14.1"}}},"name":"launchpad-prototype","description":"Use this template to create new prototypes in DWP. This template is updated with every major version release of the GOVUK prototype kit.","version":"1.0.0","main":"index.js","devDependencies":{"gulp-sass":"6.0.1","prettier":"3.9.6","sass":"1.98.0"},"repository":{"type":"git","url":"git+https://github.com/dwp/launchpad-prototype.git"},"keywords":[],"author":"","license":"ISC","bugs":{"url":"https://github.com/dwp/launchpad-prototype/issues"},"homepage":"https://github.com/dwp/launchpad-prototype#readme"}
+{
+  "engines": {
+    "node": "22.x"
+  },
+  "scripts": {
+    "dev": "govuk-prototype-kit dev",
+    "serve": "govuk-prototype-kit serve",
+    "start": "govuk-prototype-kit start"
+  },
+  "name": "govuk-prototype-kit",
+  "dependencies": {
+    "@dwp/dwp-frontend": "4.1.0",
+    "@govuk-one-login/service-header": "^6.0.0",
+    "@govuk-prototype-kit/common-templates": "3.0.0",
+    "@govuk-prototype-kit/task-list": "2.0.0",
+    "@ministryofjustice/frontend": "^9.0.0",
+    "@scottish-government/design-system": "4.1.1",
+    "@x-govuk/govuk-prototype-filters": "^2.1.0",
+    "express": "4.22.2",
+    "govuk-frontend": "^6.2.0",
+    "govuk-prototype-kit": "13.20.2",
+    "hmrc-frontend": "^7.19.0",
+    "jquery": "4.0.0",
+    "nhsapp-frontend": "^5.0.3",
+    "notifications-node-client": "8.4.0",
+    "path-to-regexp": "^8.4.2",
+    "qs": "^6.15.2"
+  },
+  "overrides": {
+    "marked": "4.3.0",
+    "form-data": "2.5.6",
+    "ws": "8.21.0",
+    "uuid": "11.1.1"
+  }
+  
+}
